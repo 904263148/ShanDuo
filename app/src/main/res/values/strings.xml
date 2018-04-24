@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ShanDuo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="sign_in">sign in</string>
+    <string name="login_in">login in</string>
+
+    <string name="reg_get_check_count_timer">%1$d秒后重新获取</string>
+    <string name="reg_get_check">发送验证码</string>
+    <string name="dialog_loading">加载中&#8230;</string>
+
+    <string name="toast_phone_null">手机号码不能为空</string>
+    <string name="toast_phone_wrong">手机号码格式不正确</string>
+    <string name="toast_code_null">验证码不能为空</string>
+    <string name="toast_pwd_null">密码不能为空</string>
+    <string name="toast_pwd_wrong">密码不能少于八位</string>
+</resources>
