@@ -17,6 +17,7 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+
     }
 
     public static Context getContext() {

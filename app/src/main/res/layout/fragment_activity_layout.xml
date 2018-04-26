@@ -5,12 +5,76 @@
     android:layout_height="match_parent"
     >
 
-    <Button
-        android:id="@+id/btn_publish"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="publish activity"
+        android:background="@color/color_white"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_scan"
+            android:padding="10dp"
+            />
+
+
+        <RadioGroup
+            android:id="@+id/rg_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:checkedButton="@id/rb_activity"
+            android:gravity="center"
+            >
+
+            <RadioButton
+                android:id="@+id/rb_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:text="活动"
+                android:background="@drawable/title_selector_left"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@drawable/font_selector"
+                />
+
+            <RadioButton
+                android:id="@+id/rb_trend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:text="动态"
+                android:background="@drawable/title_selector_right"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:textColor="@drawable/font_selector"
+                />
+
+        </RadioGroup>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_search"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            />
+
+    </RelativeLayout>
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
         />
 
 </RelativeLayout>

@@ -2,6 +2,8 @@ package com.yapin.shanduo.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -33,13 +35,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView(){
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("活动",R.drawable.navtab_home, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("闪多", R.drawable.navtab_live, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("联系人", R.drawable.navtab_rank, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("个人中心", R.drawable.navtab_user, R.color.colorBottomNavigationActiveColored);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem("首页",R.drawable.icon_home, R.color.colorBottomNavigationActiveColored);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem("聊天", R.drawable.icon_chat, R.color.colorBottomNavigationActiveColored);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem("活动" ,R.drawable.icon_add ,R.color.colorBottomNavigationActiveColored);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem("好友", R.drawable.icon_friend, R.color.colorBottomNavigationActiveColored);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem("我的", R.drawable.icon_my, R.color.colorBottomNavigationActiveColored);
 
         bottomNavigationItems.add(item1);
         bottomNavigationItems.add(item2);
+        bottomNavigationItems.add(item5);
         bottomNavigationItems.add(item3);
         bottomNavigationItems.add(item4);
 
@@ -58,7 +62,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
 
     }

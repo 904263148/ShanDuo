@@ -3,4 +3,7 @@
 
     <dimen name="layout_padding_left">15dp</dimen>
     <dimen name="font_size">15dp</dimen>
+
+    <dimen name="act_item_font_size">12dp</dimen>
+
 </resources>

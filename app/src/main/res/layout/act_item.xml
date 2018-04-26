@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="187dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    android:padding="10dp"
+    android:background="@drawable/rounded_rl_item"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingRight="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/head"
+            android:layout_alignParentRight="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:text="SVIP2"
+            android:textSize="7dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@+id/iv_head"
+            android:layout_alignRight="@+id/iv_head"
+            android:background="@drawable/rounded_tv_vip"
+            android:textColor="@color/color_white"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:text="23"
+            android:textSize="7dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@+id/iv_head"
+            android:layout_toLeftOf="@+id/tv_vip"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/rounded_tv_sex_women"
+            android:textColor="@color/color_white"
+            android:gravity="center"
+            android:drawableLeft="@drawable/icon_women"
+            android:drawablePadding="2dp"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tv_kind"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="类别:约饭"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/font_black_color"
+            />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="时间:2018/4/24/14:09星期二"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/font_black_color"
+            />
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="方式:AA制"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/font_black_color"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/tv_man_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/font_black_color"
+                android:text="男:01/05" />
+
+            <TextView
+                android:id="@+id/tv_woman_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女:01/05"
+                android:layout_marginLeft="15dp"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/font_black_color"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_host"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="发起人:小猪佩奇"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/font_black_color"
+            />
+
+        <TextView
+            android:id="@+id/tv_memo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="还在等什么，赶紧加入吧"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/font_black_color"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/icon_place"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/font_black_color"
+                android:text="xx市" />
+
+            <TextView
+                android:id="@+id/tv_mile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.6km"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/home_sex_man_color"
+                />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="截止日期:2018/04/23/23:00"
+                android:layout_alignParentBottom="true"
+                android:textSize="10dp"
+                android:textColor="@color/font_gray_color"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_three_point"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:paddingLeft="15dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="去报名"
+                android:textSize="@dimen/act_item_font_size"
+                android:layout_toLeftOf="@+id/iv_more"
+                android:gravity="center"
+                android:paddingBottom="2dp"
+                android:drawableRight="@drawable/icon_right_arrow_white"
+                android:background="@drawable/rounded_textview_home"
+                android:textColor="@color/color_white"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/tv_evaluation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="历史评价"
+                android:textSize="@dimen/act_item_font_size"
+                android:layout_toLeftOf="@+id/tv_join"
+                android:paddingBottom="2dp"
+                android:gravity="center"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/rounded_textview_home"
+                android:textColor="@color/color_white"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

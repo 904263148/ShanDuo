@@ -44,8 +44,9 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.PublishActivity" />
-        <activity android:name=".ui.activity.PictureFolderActivity"></activity>
+        <activity android:name=".ui.activity.PictureFolderActivity" />
         <activity android:name=".ui.activity.PictureActivity" />
+
     </application>
 
 </manifest>
