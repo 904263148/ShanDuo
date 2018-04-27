@@ -16,4 +16,7 @@ public class ApiUtil {
 
     //登录
     public final static String LOGIN_IN = ConfigUtil.configUrl() + "/shanduoparty/juser/loginuser";
+
+    //修改
+    public final static String MODIFY_IN = ConfigUtil.configUrl() + "/shanduoparty/juser/updateuser";
 }

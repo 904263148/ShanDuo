@@ -34,7 +34,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="a8d7d74bffb4c873802ff83e75bebfc2">
+        </meta-data>
+
+        <activity android:name=".ui.activity.StartpageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,6 +52,8 @@
         <activity android:name=".ui.activity.PublishActivity" />
         <activity android:name=".ui.activity.PictureFolderActivity" />
         <activity android:name=".ui.activity.PictureActivity" />
+        <activity android:name=".ui.activity.EditingformationAcivity"/>
+        <activity android:name=".ui.activity.MainActivity"/>
 
     </application>
 

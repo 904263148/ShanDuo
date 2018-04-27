@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.RegisterActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -52,7 +53,7 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.login , R.id.register})
+    @OnClick({R.id.login , R.id.register,R.id.modify})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.login :
@@ -60,6 +61,9 @@ public class PersonFragment extends Fragment {
                 break;
             case R.id.register:
                 StartActivityUtil.start(activity , RegisterActivity.class);
+                break;
+            case R.id.modify:
+                StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
         }
     }

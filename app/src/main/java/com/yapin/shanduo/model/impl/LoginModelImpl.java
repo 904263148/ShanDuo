@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginModelImpl implements LoginLoadModel{
+public class LoginModelImpl implements LoginLoadModel {
     @Override
     public void load(final OnLoadListener<String> listener, String username, String password) {
         final Context context = ShanDuoPartyApplication.getContext();

@@ -3,7 +3,11 @@ package com.yapin.shanduo.ui.contract;
 import com.yapin.shanduo.base.BasePresenter;
 import com.yapin.shanduo.base.BaseView;
 
-public interface LoginContract{
+/**
+ * Created by dell on 2018/4/19.
+ */
+
+public interface ModifyContract {
 
     interface View extends BaseView {
 
@@ -19,7 +23,6 @@ public interface LoginContract{
     }
 
     interface Presenter extends BasePresenter {
-        void login(String username, String password);
+        void modify(String name, String gender, String birthday, String emotion, String signature, String hometown, String occupation, String school);
     }
-
 }

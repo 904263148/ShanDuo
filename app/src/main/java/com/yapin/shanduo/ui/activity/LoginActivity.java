@@ -6,17 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.LoginPresenter;
 import com.yapin.shanduo.ui.contract.LoginContract;
+import com.yapin.shanduo.ui.manage.UserManage;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
@@ -26,10 +29,10 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity implements LoginContract.View , View.OnFocusChangeListener{
 
-    @BindView(R.id.et_name)
-    EditText etName;
-    @BindView(R.id.et_password)
-    EditText etPwd;
+    @BindView(R.id.et_login_user)
+    EditText et_login_user;
+    @BindView(R.id.et_login_pwd)
+    EditText et_login_pwd;
     @BindView(R.id.iv_name)
     ImageView ivPhone;
     @BindView(R.id.iv_pwd)
@@ -67,8 +70,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         dialog.setMessage("加载中...");
         dialog.setCanceledOnTouchOutside(false);
 
-        etName.setOnFocusChangeListener(this);
-        etPwd.setOnFocusChangeListener(this);
+        et_login_user.setOnFocusChangeListener(this);
+        et_login_pwd.setOnFocusChangeListener(this);
 
 
     }
@@ -84,7 +87,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
                 StartActivityUtil.start(activity , RegisterActivity.class , REGISTER);
                 break;
             case R.id.tv_login :
-                presenter.login(etName.getText().toString().trim() , etPwd.getText().toString().trim());
+
+                String username = et_login_user.getText().toString().trim();
+                String password = et_login_pwd.getText().toString().trim();
+                UserManage.getInstance().saveUserInfo(LoginActivity.this, username, password);
+                if (username.equals("")) {
+                    Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                } else if (password.equals("")) {
+                    Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                } else {
+                    presenter.login(username, password);
+                }
                 break;
         }
     }
@@ -93,6 +106,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
     public void success(String data) {
         dialog.dismiss();
         ToastUtil.showShortToast(context,data);
+        Log.e("token", PrefJsonUtil.getProfile(context).getToken());
+        StartActivityUtil.start(activity,MainActivity.class);
         onBackPressed();
     }
 
@@ -137,17 +152,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
     public void onFocusChange(View v, boolean hasFocus) {
         if(hasFocus) {
             switch (v.getId()) {
-                case R.id.et_name:
+                case R.id.et_login_user:
                     ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-                    if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
+                    if (TextUtils.isEmpty(et_login_pwd.getText().toString().trim())) {
                         ivPwd.setBackgroundResource(R.drawable.icon_password);
                     } else {
                         ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
                     }
                     break;
-                case R.id.et_password:
+                case R.id.et_login_pwd:
                     ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-                    if ( TextUtils.isEmpty(etName.getText().toString().trim()) ) {
+                    if ( TextUtils.isEmpty(et_login_user.getText().toString().trim()) ) {
                         ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
                     } else {
                         ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
