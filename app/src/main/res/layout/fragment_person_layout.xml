@@ -34,6 +34,12 @@
             android:text="modify"
             />
 
+        <Button
+            android:id="@+id/maptext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="maptext"/>
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -13,6 +13,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.MapTextingActivity;
 import com.yapin.shanduo.ui.activity.RegisterActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
@@ -53,7 +54,7 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.login , R.id.register,R.id.modify})
+    @OnClick({R.id.login , R.id.register,R.id.modify,R.id.maptext})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.login :
@@ -64,6 +65,9 @@ public class PersonFragment extends Fragment {
                 break;
             case R.id.modify:
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
+                break;
+            case R.id.maptext:
+                StartActivityUtil.start(activity , MapTextingActivity.class);
                 break;
         }
     }
