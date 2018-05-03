@@ -6,4 +6,6 @@
 
     <dimen name="act_item_font_size">12dp</dimen>
 
+    <dimen name="share_font_size">10dp</dimen>
+
 </resources>

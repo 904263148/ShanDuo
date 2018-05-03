@@ -3,19 +3,38 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 27
+
+    buildToolsVersion '27.0.3'
+
     defaultConfig {
         applicationId "com.yapin.shanduo"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+            // 如果您使用的是商业版，只能使用 armeabi 架构，即：
+            // abiFilters "armeabi",
+        }
+
     }
     buildTypes {
         release {
             buildConfigField("String", "BASE_API", project.BASE_API_PRODUCT)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            lintOptions {
+
+                checkReleaseBuilds false
+
+                abortOnError false
+
+            }
+
         }
         debug {
             buildConfigField("String", "BASE_API", project.BASE_API_DEBUG)
@@ -37,8 +56,11 @@ greendao {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    // 导入腾讯云直播SDK jar
+    implementation fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
+    // 导入短视频SDK aar
+    implementation(name: 'LiteAVSDK_UGC_4.5.4021', ext: 'aar')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -69,7 +91,19 @@ dependencies {
     implementation('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
-    implementation files('libs/AMap_Location_V4.0.0_20180423.jar')
-    implementation files('libs/AMap_Search_V6.1.0_20180330.jar')
-    implementation files('libs/AMap3DMap_6.1.0_AMapNavi_6.0.1_AMapSearch_6.1.0_AMapLocation_4.0.0_20180424.jar')
+    implementation 'com.github.qdxxxx:BezierViewPager:v1.0.2'
+    //腾讯IM
+    implementation project(':presentation')
+    implementation project(':ui')
+    implementation 'com.google.firebase:firebase-core:9.0.0'
+    implementation 'com.google.firebase:firebase-messaging:9.0.0'
+    implementation files('libs/MobCommons-2018.0418.1102.jar')
+    implementation files('libs/MobTools-2018.0419.1211.jar')
+    implementation files('libs/ShareSDK-Core-3.1.4.jar')
+    implementation files('libs/ShareSDK-QQ-3.1.4.jar')
+    implementation files('libs/ShareSDK-QZone-3.1.4.jar')
+    implementation files('libs/ShareSDK-SinaWeibo-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-Core-3.1.4.jar')
+    implementation files('libs/ShareSDK-Wechat-Moments-3.1.4.jar')
 }

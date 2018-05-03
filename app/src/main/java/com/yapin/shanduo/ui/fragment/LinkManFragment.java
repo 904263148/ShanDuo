@@ -9,10 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tencent.TIMConversationType;
+import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.ui.ChatActivity;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,5 +48,18 @@ public class LinkManFragment extends Fragment {
         activity = getActivity();
         return view;
     }
+
+    @OnClick({R.id.btn_go_chat1 , R.id.btn_go_chat2})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.btn_go_chat1:
+                ChatActivity.navToChat(activity , "456789" , TIMConversationType.C2C);
+                break;
+            case R.id.btn_go_chat2:
+                ChatActivity.navToChat(activity , "123456789" , TIMConversationType.C2C);
+                break;
+        }
+    }
+
 
 }

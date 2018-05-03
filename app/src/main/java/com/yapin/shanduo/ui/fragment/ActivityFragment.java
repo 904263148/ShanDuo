@@ -1,21 +1,27 @@
 package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
 
@@ -25,11 +31,14 @@ import butterknife.ButterKnife;
 public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener{
 
     @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
+    LoadMoreRecyclerView recyclerView;
 
     private Context context;
     private Activity activity;
     private ActivityInfoAdapter adapter;
+    private ShanDuoPartyApplication application;
+
+    private LinearLayoutManager layoutManager;
 
     public static ActivityFragment newInstance() {
         ActivityFragment fragment = new ActivityFragment();
@@ -57,11 +66,14 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        layoutManager = new LinearLayoutManager(context);
+
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ActivityInfoAdapter(context, activity);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -78,4 +90,5 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void onItemClick(int position) {
 
     }
+
 }

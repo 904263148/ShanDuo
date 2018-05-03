@@ -1,9 +1,17 @@
 package com.yapin.shanduo.app;
 
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.multidex.MultiDexApplication;
 
+import com.tencent.TIMGroupReceiveMessageOpt;
+import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushListener;
+import com.tencent.TIMOfflinePushNotification;
+import com.tencent.qalsdk.sdk.MsfSdkUtils;
+import com.yapin.shanduo.R;
 import com.yapin.shanduo.db.DBHelper;
+import com.yapin.shanduo.im.utils.Foreground;
 import com.yapin.shanduo.model.entity.DaoMaster;
 import com.yapin.shanduo.model.entity.DaoSession;
 
@@ -13,10 +21,29 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
+    public AppBarLayout appBarLayout;
+
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        initSDK();
+    }
+
+    public void  initSDK(){
+        Foreground.init(this);
+        context = getApplicationContext();
+        if(MsfSdkUtils.isMainProcess(this)) {
+            TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
+                @Override
+                public void handleNotification(TIMOfflinePushNotification notification) {
+                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
+                        //消息被设置为需要提醒
+                        notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
+                    }
+                }
+            });
+        }
 
     }
 

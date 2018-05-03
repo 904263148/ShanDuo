@@ -4,6 +4,9 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+
+import com.yapin.shanduo.utils.Constants;
 
 /**
  * @author Smile Wei
@@ -15,6 +18,8 @@ public class LoadMoreRecyclerView extends RecyclerView {
     private int page = 1;
     private int lastPage = 1;
     private boolean isLoading = false;
+
+    private boolean appBarZero = false;
 
     public LoadMoreRecyclerView(Context context) {
         super(context);
@@ -41,6 +46,7 @@ public class LoadMoreRecyclerView extends RecyclerView {
                 loadMoreListener.onLoadMore();
             }
         }
+
     }
 
     public void setLoading(boolean isLoading) {
@@ -58,6 +64,14 @@ public class LoadMoreRecyclerView extends RecyclerView {
 
     public interface OnLoadMoreListener {
         void onLoadMore();
+    }
+
+    public boolean isAppBarZero() {
+        return appBarZero;
+    }
+
+    public void setAppBarZero(boolean appBarZero) {
+        this.appBarZero = appBarZero;
     }
 
 }

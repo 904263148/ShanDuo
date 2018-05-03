@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.LoginPresenter;
 import com.yapin.shanduo.ui.contract.LoginContract;
 import com.yapin.shanduo.ui.manage.UserManage;
@@ -107,6 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         dialog.dismiss();
         ToastUtil.showShortToast(context,data);
         Log.e("token", PrefJsonUtil.getProfile(context).getToken());
+
         StartActivityUtil.start(activity,MainActivity.class);
         onBackPressed();
     }

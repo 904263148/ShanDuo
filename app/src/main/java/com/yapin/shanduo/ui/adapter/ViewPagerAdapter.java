@@ -8,7 +8,7 @@ import com.yapin.shanduo.ui.fragment.AddActivityFragment;
 import com.yapin.shanduo.ui.fragment.HomeFragment;
 import com.yapin.shanduo.ui.fragment.LinkManFragment;
 import com.yapin.shanduo.ui.fragment.PersonFragment;
-import com.yapin.shanduo.ui.fragment.ShanDuoFragment;
+import com.yapin.shanduo.ui.fragment.ChatFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
         super(fm);
         fragments.clear();
         fragments.add(HomeFragment.newInstance());
-        fragments.add(ShanDuoFragment.newInstance());
+        fragments.add(ChatFragment.newInstance());
         fragments.add(AddActivityFragment.newInstance());
         fragments.add(LinkManFragment.newInstance());
         fragments.add(PersonFragment.newInstance());
