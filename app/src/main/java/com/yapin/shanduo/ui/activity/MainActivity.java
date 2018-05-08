@@ -26,8 +26,6 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
-import com.yapin.shanduo.video.common.utils.FileUtils;
-import com.yapin.shanduo.video.common.utils.TCConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +51,8 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
 
     private PopupWindow popupWindow;
     private View popView;
+
+    private int test;
 
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
@@ -86,8 +86,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
                 }
             }
         }
-
-        copyLicenceToSdcard();
 
     }
 
@@ -130,24 +128,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
         String sdkver = TXLiveBase.getSDKVersionStr();
         Log.d("liteavsdk", "liteav sdk version is : " + sdkver);
 
-    }
-
-    private void copyLicenceToSdcard() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String sdcardFolder = getExternalFilesDir(null).getAbsolutePath();
-                File sdcardLicenceFile = new File(sdcardFolder + File.separator + TCConstants.UGC_LICENCE_NAME);
-                if(sdcardLicenceFile.exists()){
-                    return;
-                }
-                try {
-                    FileUtils.copyFromAssetToSdcard( context, TCConstants.UGC_LICENCE_NAME, sdcardFolder);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
     @Override
