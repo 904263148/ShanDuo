@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
     private PopupWindow popupWindow;
     private View popView;
 
-    private int test222;
+    private int test111;
 
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
