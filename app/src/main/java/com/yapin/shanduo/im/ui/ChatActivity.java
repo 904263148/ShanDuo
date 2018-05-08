@@ -38,6 +38,7 @@ import com.yapin.shanduo.im.model.FriendProfile;
 import com.yapin.shanduo.im.model.FriendshipInfo;
 import com.yapin.shanduo.im.model.GroupInfo;
 import com.yapin.shanduo.im.model.ImageMessage;
+import com.yapin.shanduo.im.model.LocationMessage;
 import com.yapin.shanduo.im.model.Message;
 import com.yapin.shanduo.im.model.MessageFactory;
 import com.yapin.shanduo.im.model.TextMessage;
@@ -338,6 +339,16 @@ public class ChatActivity extends FragmentActivity implements ChatView {
             intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
             startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
+    }
+
+    /**
+     * 发送地理位置消息
+     *
+     */
+    @Override
+    public void sendLocation() {
+        Message message = new LocationMessage(113.93 , 22.54 , "腾讯大厦");
+        presenter.sendMessage(message.getMessage());
     }
 
     /**

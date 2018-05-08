@@ -30,7 +30,6 @@ import com.tencent.qcloud.presentation.event.MessageEvent;
 import com.tencent.qcloud.presentation.event.RefreshEvent;
 import com.tencent.qcloud.presentation.presenter.SplashPresenter;
 import com.tencent.qcloud.presentation.viewfeatures.SplashView;
-import com.tencent.qcloud.tlslibrary.activity.HostLoginActivity;
 import com.tencent.qcloud.tlslibrary.service.TLSService;
 import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.tencent.qcloud.ui.NotifyDialog;
@@ -39,6 +38,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.im.utils.PushUtil;
+import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
@@ -103,7 +103,7 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void navToLogin() {
-        Intent intent = new Intent(getApplicationContext(), HostLoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivityForResult(intent, LOGIN_RESULT_CODE);
     }
 
@@ -228,11 +228,14 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 //        UserInfo.getInstance().setId(id);
 //        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
 
-        UserInfo.getInstance().setId("123456789");
-        UserInfo.getInstance().setUserSig("eJxlj0tvgkAYRff8CjLrpg4Mw2ATFzw09mWDUijdTIgz2i8iUBir1Pjfa2mb0vRuz8m9uUdN13UU3S0us*Wy3BWKq7aSSL-SEUYXv7CqQPBMcVKLf1AeKqglz1ZK1h00KKUmxn0HhCwUrODHMIlFbeYMe0ojNrzb*TKsc4HjmOSPAusO3o9D-9p3VT4d7J4TzwOax-X8-WY2jVQ4mexvw7kf78WYKSYKyyMuuI9tw6KBl2ThNhGQ50FgP7w*zWJ-kyZkEZQvqk2ztJWpvR6NepMKtvL7lGkNMbOY0aNvsm6gLDrBxAY9-8KfQdpJ*wCTJF1E");
+//        UserInfo.getInstance().setId("123456789");
+//        UserInfo.getInstance().setUserSig("eJxlj0tvgkAYRff8CjLrpg4Mw2ATFzw09mWDUijdTIgz2i8iUBir1Pjfa2mb0vRuz8m9uUdN13UU3S0us*Wy3BWKq7aSSL-SEUYXv7CqQPBMcVKLf1AeKqglz1ZK1h00KKUmxn0HhCwUrODHMIlFbeYMe0ojNrzb*TKsc4HjmOSPAusO3o9D-9p3VT4d7J4TzwOax-X8-WY2jVQ4mexvw7kf78WYKSYKyyMuuI9tw6KBl2ThNhGQ50FgP7w*zWJ-kyZkEZQvqk2ztJWpvR6NepMKtvL7lGkNMbOY0aNvsm6gLDrBxAY9-8KfQdpJ*wCTJF1E");
 
 //        UserInfo.getInstance().setId("456789");
 //        UserInfo.getInstance().setUserSig("eJxlj8FOg0AQhu88BeFs7LLslq03hJKgSMXSqlwIlqU7ksIKW0s1vruKTcQ41*-7559513RdN5JweZ5vNs2*Vpk6Sm7oF7qBjLNfKCUUWa4yqy3*Qd5LaHmWl4q3AzQppRihsQMFrxWUcDIIndpsNuJdUWVDyc8C8pVmDFt-FNgO8Gb*6AaxlxISikni2usD8Mjzcejg6G3lxELUIihnLjRVM*dXah8HwomuX1gakEs8Sez7-nkRP3npqpU9bP3lLfOr7m63fljIAxJkVKlgx08fYYoxQ9PxQa*87aCpBwEjk5rYQt9jaB-aJ2noXEM_");
+
+        UserInfo.getInstance().setId("123456");
+        UserInfo.getInstance().setUserSig("eJxFkNtqg0AURf-F59LOJSNa6IMESUwUclHb*CKjM5FDvGWciGnpv9daQ1-X4rD3Pl9G6B*feduCSLlOqRLGq4GMpwnLoQUlU37WUo0YM8YIQg-bS9VBU4*CIMwwoQj9SxCy1nCGv0NCF8ycTQfFiAI3Wnor2AR5dbrsbR1En*XueHfD22rbD0XY05eYefzQ1vGyMP3EAdch2kmSjON15AabMtvhpMIfQ9fY*1g4XqBolfnXa3l4d09vjzBxSadxvy0WYz3LItSepYZKTrMIo9SkFps5z-PmVutU31s5feP7B3rVV3Y_");
 
         presenter = new SplashPresenter(this);
         presenter.start();

@@ -8,10 +8,6 @@ import android.view.MotionEvent;
 
 import com.yapin.shanduo.utils.Constants;
 
-/**
- * @author Smile Wei
- * @since 2016.08.11
- */
 public class LoadMoreRecyclerView extends RecyclerView {
     private OnLoadMoreListener loadMoreListener;
 

@@ -27,8 +27,19 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <uses-feature android:name="android.hardware.Camera"/>
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-feature android:name="android.hardware.Camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <!-- 信鸽SDK所需权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.BATTERY_STATS" />
 
     <!-- mi push -->
     <permission
@@ -37,16 +48,15 @@
 
     <uses-permission android:name="com.tencent.qcloud.timchat.permission.MIPUSH_RECEIVE" />
 
-
-    <!--用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
-    <!--用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <!--用于申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
-    <!--用于申请获取蓝牙信息进行室内定位-->
-    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
+    <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".app.ShanDuoPartyApplication"
@@ -56,20 +66,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.PublishActivity" />
         <activity android:name=".ui.activity.PictureFolderActivity" />
         <activity android:name=".ui.activity.PictureActivity" />
-        <activity android:name=".ui.activity.EditingformationAcivity"/>
-        <activity android:name=".ui.activity.StartpageActivity"/>
-        <activity android:name=".ui.activity.MapTextingActivity"/>
-
-
-        <activity android:name=".im.ui.HomeActivity" />
-        <activity android:name=".im.ui.SplashActivity" >
+        <activity android:name=".ui.activity.EditingformationAcivity" />
+        <activity android:name=".ui.activity.StartpageActivity" />
+        <activity android:name=".ui.activity.MapTextingActivity" />
+        <activity
+            android:name=".im.ui.HomeActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".im.ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -93,11 +104,12 @@
             android:name=".im.ui.GroupProfileActivity"
             android:launchMode="singleTask" />
 
-        <!-- 消息收发service -->
+        <!-- 消息收发 service -->
         <service
             android:name="com.tencent.qalsdk.service.QalService"
             android:exported="false"
             android:process=":QALSERVICE" />
+        <!-- 消息收发辅助 service -->
         <service
             android:name="com.tencent.qalsdk.service.QalAssistService"
             android:exported="false"
@@ -235,14 +247,16 @@
         <!-- PushSDK:Push服务 -->
         <service
             android:name="com.huawei.android.pushagent.PushService"
-            android:process=":HwPushService"/>
+            android:process=":HwPushService" />
         <!-- hwpush -->
 
-        <!-- firebase -->
-        <service android:name="com.yapin.shanduo.im.utils.MyFirebaseInstanceIDService" android:exported="true">
 
+        <!-- firebase -->
+        <service
+            android:name=".im.utils.MyFirebaseInstanceIDService"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- firebase -->
@@ -262,14 +276,17 @@
         <activity android:name=".im.ui.GroupMemberProfileActivity" />
         <activity android:name=".im.ui.FriendshipHandleActivity" />
         <activity android:name=".im.ui.AboutActivity" />
-        <activity android:name=".im.ui.BlackListActivity"></activity>
-        <activity android:name=".im.ui.ImagePreviewActivity"></activity>
-        <activity android:name=".im.ui.MessageNotifySettingActivity"></activity>
-
+        <activity android:name=".im.ui.BlackListActivity" />
+        <activity android:name=".im.ui.ImagePreviewActivity" />
+        <activity android:name=".im.ui.MessageNotifySettingActivity" />
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="258f52ad93738"/>
-        <meta-data android:name="Mob-AppSecret" android:value="2c4ddc682a9c2c237c2c45e0bf986330"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="258f52ad93738" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="2c4ddc682a9c2c237c2c45e0bf986330" />
 
         <activity
             android:name="com.mob.tools.MobUIShell"
@@ -296,15 +313,29 @@
             </intent-filter>
         </activity>
 
-        <!--微信分享回调 -->
+        <!-- 微信分享回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- YOUR_PACKAGE_PATH.CustomPushReceiver需要改为自己的Receiver： -->
+        <receiver
+            android:name=".receiver.MessageReceiver"
+            android:exported="true">
+            <intent-filter>
+
+                <!-- 接收消息透传 -->
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".ui.activity.ScanActivity" />
+        <activity android:name=".ui.activity.MyCodeActivity"></activity>
     </application>
-
-
 
 </manifest>

@@ -13,10 +13,6 @@ import com.yapin.shanduo.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author Smile Wei
- * @since 2016.07.01
- */
 public class LoadingView extends FrameLayout {
     @BindView(R.id.tv_tips)
     TextView tvTips;

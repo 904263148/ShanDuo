@@ -18,8 +18,12 @@ android {
             abiFilters "armeabi", "armeabi-v7a"
             // 如果您使用的是商业版，只能使用 armeabi 架构，即：
             // abiFilters "armeabi",
-        }
 
+            manifestPlaceholders = [
+                    XG_ACCESS_ID : "2100283798",
+                    XG_ACCESS_KEY: "A7E6HU858LWF",
+            ]
+        }
     }
     buildTypes {
         release {
@@ -59,8 +63,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // 导入腾讯云直播SDK jar
     implementation fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
-    // 导入短视频SDK aar
-    implementation(name: 'LiteAVSDK_UGC_4.5.4021', ext: 'aar')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -91,7 +93,6 @@ dependencies {
     implementation('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
-    implementation 'com.github.qdxxxx:BezierViewPager:v1.0.2'
     //腾讯IM
     implementation project(':presentation')
     implementation project(':ui')
@@ -106,4 +107,12 @@ dependencies {
     implementation files('libs/ShareSDK-Wechat-3.1.4.jar')
     implementation files('libs/ShareSDK-Wechat-Core-3.1.4.jar')
     implementation files('libs/ShareSDK-Wechat-Moments-3.1.4.jar')
+
+    //信鸽jar
+    implementation 'com.tencent.xinge:xinge:3.2.3_1-beta'
+    //mid包
+    implementation 'com.tencent.mid:mid:4.0.6-release'
+
+    //扫码
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
 }

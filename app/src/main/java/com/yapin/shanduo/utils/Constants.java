@@ -11,8 +11,9 @@ public class Constants {
 
     public static final int COUNT_MAX_SHOW_PICTURE = 10;
 
-    public static final int IMSDK_ACCOUNT_TYPE= 25943;
-    public static final int IMSDK_APP_ID = 1400088239;
+    public final static int TYPE_SHOW = 0;
+    public final static int TYPE_FOOTER_LOAD = 1;
+    public final static int TYPE_FOOTER_FULL = 2;
 
     /**
      * 缓存文件保存路径

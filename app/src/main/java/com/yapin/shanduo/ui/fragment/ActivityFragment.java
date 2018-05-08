@@ -20,15 +20,20 @@ import android.widget.LinearLayout;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
+import com.yapin.shanduo.ui.contract.HomeActContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener{
+public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , HomeActContract.View{
 
     @BindView(R.id.recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -40,9 +45,12 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     private LinearLayoutManager layoutManager;
 
-    public static ActivityFragment newInstance() {
+    private int position;
+
+    public static ActivityFragment newInstance(int position) {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
+        args.putInt("position" , position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,6 +58,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        position = getArguments().getInt("position");
     }
 
     @Override
@@ -65,7 +74,6 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
-
         layoutManager = new LinearLayoutManager(context);
 
         recyclerView.setLayoutManager(layoutManager);
@@ -91,4 +99,33 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     }
 
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void show(List<ActivityInfo.Act> data, int totalPage) {
+
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
+    }
 }

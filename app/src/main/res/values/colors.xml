@@ -24,6 +24,10 @@
     <color name="home_sex_man_color">#7dd1f0</color>
     <color name="home_vip_color">#febf39</color>
 
+    <color name="cpb_default_color">#FF8E00</color>
+
+    <color name="scan_corner_color">#0effc2</color>
+
     <!--IM-->
     <color name="background">#F9F7F8</color>
     <color name="background_gray1">#EBEBEB</color>

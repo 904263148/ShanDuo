@@ -2,23 +2,35 @@ package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CaptureFragment;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.ScanActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
+import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
+
+import javax.xml.transform.Result;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
@@ -27,6 +39,8 @@ public class HomeFragment extends Fragment {
 
     private Context context;
     private Activity activity;
+
+    private final static int OPEN_SCAN = 1;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -66,8 +80,45 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+
     }
 
+    @OnClick({R.id.btn_scan})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.btn_scan:
+                StartActivityUtil.start(activity ,this , ScanActivity.class , OPEN_SCAN);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != activity.RESULT_OK){
+            return;
+        }
+        /**
+         * 处理二维码扫描结果
+         */
+        if (requestCode == OPEN_SCAN) {
+            //处理扫描结果（在界面上显示）
+            if (null != data) {
+                Bundle bundle = data.getExtras();
+                if (bundle == null) {
+                    return;
+                }
+                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+                    ToastUtil.showShortToast(context, "解析结果:" + result);
+                    Log.d("Scan_Result","解析结果:" + result);
+                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                    ToastUtil.showShortToast(context, "解析二维码失败");
+                    Log.d("Scan_Result","解析二维码失败");
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void onAttach(Context context) {

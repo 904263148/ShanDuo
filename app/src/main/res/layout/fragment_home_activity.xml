@@ -25,14 +25,17 @@
                     <RelativeLayout
                         android:id="@+id/rl_ban"
                         android:layout_width="match_parent"
-                        android:layout_height="176dp"
+                        android:layout_height="wrap_content"
                         app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                        android:clipChildren="false"
                         >
 
-                        <qdx.bezierviewpager_compile.vPage.BezierViewPager
+                        <android.support.v4.view.ViewPager
                             android:id="@+id/img_view_pager"
                             android:layout_width="match_parent"
-                            android:layout_height="176dp"
+                            android:layout_height="130dp"
+                            android:layout_centerInParent="true"
+                            android:clipChildren="false"
                             />
 
                         <com.yapin.shanduo.widget.CirclePageIndicator
@@ -40,7 +43,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
+                            android:layout_below="@+id/img_view_pager"
                             android:padding="8dp" />
                     </RelativeLayout>
 
@@ -68,6 +71,5 @@
         </android.support.design.widget.CoordinatorLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>
-
 
 </RelativeLayout>

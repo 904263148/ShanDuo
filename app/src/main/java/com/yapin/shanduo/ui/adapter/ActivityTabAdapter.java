@@ -22,7 +22,7 @@ public class ActivityTabAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ActivityFragment.newInstance();
+        return ActivityFragment.newInstance(position);
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,26 +19,25 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.ActivityTabAdapter;
 import com.yapin.shanduo.ui.adapter.ImageHomeAdapter;
+import com.yapin.shanduo.ui.adapter.MyViewPagerAdapter;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.CirclePageIndicator;
+import com.yapin.shanduo.widget.MyGallyPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
-import qdx.bezierviewpager_compile.vPage.BezierViewPager;
-import qdx.bezierviewpager_compile.vPage.CardPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeActivityFragment extends Fragment {
+public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
 
     @BindView(R.id.img_view_pager)
-    BezierViewPager imgViewPager;
+    ViewPager imgViewPager;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.tab_layout)
@@ -53,6 +53,7 @@ public class HomeActivityFragment extends Fragment {
     private Activity activity;
 
     private List<String> list;
+    private MyViewPagerAdapter myViewPagerAdapter;
 
     public static HomeActivityFragment newInstance() {
         HomeActivityFragment fragment = new HomeActivityFragment();
@@ -86,30 +87,22 @@ public class HomeActivityFragment extends Fragment {
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984320392&di=8290126f83c2a2c0d45be41e3f88a6d0&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201307%2F19%2F152440r9ov9ololkzdcz7d.jpg");
         list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984407478&di=729b187f4939710e8b2436f9f1306dff&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201505%2F05%2F172352jrr66rda0dwdwdwz.jpg");
 
-        CardPagerAdapter pagerAdapter = new CardPagerAdapter(context);
-        pagerAdapter.addImgUrlList(list);
-
-
-        int mWidth = activity.getWindowManager().getDefaultDisplay().getWidth();
-        float heightRatio = 0.565f;  //高是宽的 0.565 ,根据图片比例
-
-        //设置阴影大小，即vPage  左右两个图片相距边框  maxFactor + 0.3*CornerRadius   *2
-        //设置阴影大小，即vPage 上下图片相距边框  maxFactor*1.5f + 0.3*CornerRadius
-        int maxFactor = mWidth / 25;
-        pagerAdapter.setMaxElevationFactor(maxFactor);
-
-        int mWidthPading = mWidth / 8;
-
-        //因为我们adapter里的cardView CornerRadius已经写死为10dp，所以0.3*CornerRadius=3
-        //设置Elevation之后，控件宽度要减去 (maxFactor + dp2px(3)) * heightRatio
-        //heightMore 设置Elevation之后，控件高度 比  控件宽度* heightRatio  多出的部分
-        float heightMore = (1.5f * maxFactor + Utils.dip2px(context,3)) - (maxFactor + Utils.dip2px(context,3)) * heightRatio;
-        int mHeightPading = (int) (mWidthPading * heightRatio - heightMore);
-        imgViewPager.setLayoutParams(new RelativeLayout.LayoutParams(mWidth, (int) (mWidth * heightRatio)));
-        imgViewPager.setPadding(mWidthPading, mHeightPading, mWidthPading, mHeightPading);
-        imgViewPager.setClipToPadding(false);
-        imgViewPager.setAdapter(pagerAdapter);
-        imgViewPager.showTransformer(0.2f);
+        myViewPagerAdapter = new MyViewPagerAdapter(list , context , activity);
+        imgViewPager.setAdapter(myViewPagerAdapter);
+        imgViewPager.setOffscreenPageLimit(3);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.0f / 5.0f);
+        Log.d("pageWidth",pagerWidth+"");
+        ViewGroup.LayoutParams lp = imgViewPager.getLayoutParams();
+        if (lp == null) {
+            lp = new ViewGroup.LayoutParams(pagerWidth, ViewGroup.LayoutParams.MATCH_PARENT);
+        } else {
+            lp.width = pagerWidth;
+        }
+        imgViewPager.setLayoutParams(lp);
+        //setPageMargin表示设置图片之间的间距
+        imgViewPager.setPageMargin(5);
+        imgViewPager.setPageTransformer(true, new MyGallyPageTransformer());
+        imgViewPager.setCurrentItem(1);
         indicator.setViewPager(imgViewPager);
 
         list = new ArrayList<>();
@@ -141,4 +134,8 @@ public class HomeActivityFragment extends Fragment {
 
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
 }

@@ -2,13 +2,18 @@ package com.yapin.shanduo.app;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
-import com.tencent.TIMGroupReceiveMessageOpt;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.db.DBHelper;
 import com.yapin.shanduo.im.utils.Foreground;
@@ -27,25 +32,27 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        initSDK();
-    }
-
-    public void  initSDK(){
         Foreground.init(this);
-        context = getApplicationContext();
+        // 只能在主进程进行离线推送监听器注册
         if(MsfSdkUtils.isMainProcess(this)) {
+            Log.d("MyApplication", "main process");
+
+            // 设置离线推送监听器
             TIMManager.getInstance().setOfflinePushListener(new TIMOfflinePushListener() {
                 @Override
                 public void handleNotification(TIMOfflinePushNotification notification) {
-                    if (notification.getGroupReceiveMsgOpt() == TIMGroupReceiveMessageOpt.ReceiveAndNotify){
-                        //消息被设置为需要提醒
-                        notification.doNotify(getApplicationContext(), R.mipmap.ic_launcher);
-                    }
+                    Log.d("MyApplication", "recv offline push");
+
+                    // 这里的 doNotify 是 ImSDK 内置的通知栏提醒，应用也可以选择自己利用回调参数 notification 来构造自己的通知栏提醒
+                    notification.doNotify(context, R.mipmap.ic_launcher);
                 }
             });
         }
 
+        //扫码初始化
+        ZXingLibrary.initDisplayOpinion(this);
     }
+
 
     public static Context getContext() {
         return context;
@@ -79,5 +86,9 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
         return daoSession;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
+    }
 }

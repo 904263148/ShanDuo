@@ -8,8 +8,6 @@ import android.widget.ImageView;
 
 import com.yapin.shanduo.R;
 
-import qdx.bezierviewpager_compile.vPage.CardPagerAdapter;
-
 /**
  * 作者：L on 2018/4/26 0026 10:13
  */

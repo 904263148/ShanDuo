@@ -13,7 +13,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
-import com.tencent.rtmp.TXLiveBase;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
@@ -51,8 +49,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
 
     private PopupWindow popupWindow;
     private View popView;
-
-    private int test111;
 
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
@@ -123,10 +119,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow , Popu
 
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
-
-
-        String sdkver = TXLiveBase.getSDKVersionStr();
-        Log.d("liteavsdk", "liteav sdk version is : " + sdkver);
 
     }
 
