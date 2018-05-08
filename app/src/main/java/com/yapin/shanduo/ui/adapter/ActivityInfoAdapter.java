@@ -36,12 +36,12 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private Activity activity;
     private OpenPopupWindow openPopupWindow;
-    private List<ActivityInfo.Act> list;
+//    private List<ActivityInfo.Act> list;
 
-    public ActivityInfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list){
+    public ActivityInfoAdapter (Context context , Activity activity){
         this.context = context;
         this.activity = activity;
-        this.list = list;
+//        this.list = list;
         openPopupWindow = (MainActivity)activity;
     }
 
@@ -65,9 +65,9 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if(viewHolder instanceof ViewHolder){
             ViewHolder holder = (ViewHolder) viewHolder;
-            holder.tvKind.setText(list.get(position).getActivityType());
-            holder.tvTime.setText(list.get(position).getActivityStartTime());
-            holder.tvType.setText(list.get(position).getMode());
+//            holder.tvKind.setText(list.get(position).getActivityType());
+//            holder.tvTime.setText(list.get(position).getActivityStartTime());
+//            holder.tvType.setText(list.get(position).getMode());
 
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,19 +77,14 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }else{
             FooterHolder holder = (FooterHolder) viewHolder;
-            holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
+            holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == 2);
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return list.get(position).getType();
+        return 4;
     }
 
     public interface OnItemClickListener {

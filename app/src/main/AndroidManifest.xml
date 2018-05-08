@@ -279,6 +279,8 @@
         <activity android:name=".im.ui.BlackListActivity" />
         <activity android:name=".im.ui.ImagePreviewActivity" />
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
+        <activity android:name=".ui.activity.AddactivityActivity"/>
+        <activity android:name=".ui.activity.MywalletActivity"/>
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data

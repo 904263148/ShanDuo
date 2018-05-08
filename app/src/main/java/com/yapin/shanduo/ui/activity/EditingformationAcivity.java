@@ -351,14 +351,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     @Override
     public void success(String data) {
         ToastUtil.showShortToast(context,"修改成功");
-        //            name, birthday,gender,emotion,signature,hometown,occupation,school
 
-//        tv_Hometown.setText(hometown);
-//        modify_et_nickname.getText();
-
-//        hometown = tv_Hometown.getText().toString().trim();
-
-        finish();
     }
 
     @Override

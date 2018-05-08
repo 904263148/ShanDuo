@@ -24,19 +24,7 @@
             android:text="发布活动" />
 
     </FrameLayout>
- <!--       <EditText
-            android:background="@drawable/textview_but"
-            android:paddingLeft="5dp"
-            android:textSize="17dp"
-            android:layout_marginTop="23dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center_vertical|left"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:textColor="@color/textview_text_color"
-            android:hint="主题"
-            android:drawableLeft="@drawable/icon_theme"/>-->
+
     <LinearLayout
         android:background="@drawable/textview_but"
         android:layout_marginTop="6dp"
@@ -54,6 +42,7 @@
             android:src="@drawable/icon_theme"/>
 
         <EditText
+            android:id="@+id/et_add_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="主题"
@@ -79,11 +68,13 @@
             android:paddingLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_female"/>
+            android:src="@drawable/icon_o_female"/>
 
         <EditText
+            android:id="@+id/et_add_numberofgirls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             android:hint="女生人数"
             android:paddingLeft="9dp"
             android:background="@null"
@@ -110,9 +101,11 @@
             android:src="@drawable/icon_male"/>
 
         <EditText
+            android:id="@+id/et_add_Numberofboys"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="男生人数"
+            android:inputType="phone"
             android:paddingLeft="9dp"
             android:background="@null"
             android:textColor="@color/textview_text_color"
@@ -137,7 +130,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_location"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_add_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="xx市xx区xx街"
@@ -164,10 +158,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_date"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_add_starttime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="活动日期"
+            android:hint="活动开始日期"
             android:paddingLeft="9dp"
             android:background="@null"
             android:textColor="@color/textview_text_color"
@@ -191,10 +186,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_end"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_add_Deadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="截止时间"
+            android:hint="报名截止时间"
             android:paddingLeft="9dp"
             android:background="@null"
             android:textColor="@color/textview_text_color"
@@ -218,7 +214,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_consumption"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/et_add_Modeofconsumption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="消费方式"
@@ -247,30 +244,45 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_remarks"/>
 
-        <EditText
-            android:layout_width="315dp"
-            android:layout_height="94dp"
-            android:layout_gravity="right|center"
-            android:hint="备注:"
-            android:gravity="left"
-            android:padding="5dp"
-            android:layout_marginRight="14dp"
-            android:background="#f4f4f4"
-            android:textColor="@color/textview_text_color"
-            android:textSize="17dp"
-            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_settopa"
+                />
 
         <TextView
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
             android:layout_marginRight="16dp"
             android:text="点击置顶" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_add_Remarks"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="14dp"
+            android:background="#f4f4f4"
+            android:gravity="left"
+            android:hint="备注:"
+            android:padding="5dp"
+            android:textColor="@color/textview_text_color"
+            android:textSize="17dp" />
 
     </FrameLayout>
 
     <Button
+        android:id="@+id/but_add_Releaseactivities"
         android:layout_marginTop="21dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="197dp"

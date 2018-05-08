@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.AddactivityActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
-import com.yapin.shanduo.ui.activity.LoginActivity;
-import com.yapin.shanduo.ui.activity.MapTextingActivity;
-import com.yapin.shanduo.ui.activity.RegisterActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
 import butterknife.ButterKnife;
@@ -54,20 +52,20 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.login , R.id.register,R.id.modify,R.id.maptext})
+    @OnClick({R.id.modify,R.id.tv_addactivity})
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.login :
-                StartActivityUtil.start(activity , LoginActivity.class);
-                break;
-            case R.id.register:
-                StartActivityUtil.start(activity , RegisterActivity.class);
-                break;
+//            case R.id.login :
+//                StartActivityUtil.start(activity , LoginActivity.class);
+//                break;
+//            case R.id.register:
+//                StartActivityUtil.start(activity , RegisterActivity.class);
+//                break;
             case R.id.modify:
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
-            case R.id.maptext:
-                StartActivityUtil.start(activity , MapTextingActivity.class);
+            case R.id.tv_addactivity:
+                StartActivityUtil.start(activity , AddactivityActivity.class);
                 break;
         }
     }
