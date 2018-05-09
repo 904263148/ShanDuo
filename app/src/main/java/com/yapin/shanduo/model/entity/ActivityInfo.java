@@ -93,6 +93,36 @@ public class ActivityInfo implements Parcelable {
 
 		private double location; //距离
 
+		private String gender; //性别：0:女 1:男
+
+		private Integer manSum; //参加活动男生数量
+
+		private Integer womenSum; //参加活动女生数量
+
+		public String getGender() {
+			return gender;
+		}
+
+		public void setGender(String gender) {
+			this.gender = gender;
+		}
+
+		public Integer getManSum() {
+			return manSum;
+		}
+
+		public void setManSum(Integer manSum) {
+			this.manSum = manSum;
+		}
+
+		public Integer getWomenSum() {
+			return womenSum;
+		}
+
+		public void setWomenSum(Integer womenSum) {
+			this.womenSum = womenSum;
+		}
+
 		public String getId() {
 			return id;
 		}
@@ -284,6 +314,9 @@ public class ActivityInfo implements Parcelable {
 			dest.writeDouble(this.lon);
 			dest.writeDouble(this.lat);
 			dest.writeDouble(this.location);
+			dest.writeString(this.gender);
+			dest.writeValue(this.manSum);
+			dest.writeValue(this.womenSum);
 		}
 
 		protected Act(Parcel in) {
@@ -308,6 +341,9 @@ public class ActivityInfo implements Parcelable {
 			this.lon = in.readDouble();
 			this.lat = in.readDouble();
 			this.location = in.readDouble();
+			this.gender = in.readString();
+			this.manSum = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.womenSum = (Integer) in.readValue(Integer.class.getClassLoader());
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

@@ -67,7 +67,7 @@ public class GlideUtil {
         Glide.with(activity).load(url == null ? "" : url)
                 .error(R.color.color_white)
                 .placeholder(R.color.color_white)
-//                .error(R.mipmap.ic_launcher)
+                .error(R.drawable.head)
 //                .placeholder(R.mipmap.ic_launcher)
                 .transform(transform(context))
                 .into(imageView);

@@ -2,13 +2,19 @@ package com.yapin.shanduo.ui.fragment;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +23,13 @@ import android.widget.RelativeLayout;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.adapter.ActivityTabAdapter;
 import com.yapin.shanduo.ui.adapter.ImageHomeAdapter;
 import com.yapin.shanduo.ui.adapter.MyViewPagerAdapter;
+import com.yapin.shanduo.ui.inter.HomeActFragmentRefresh;
+import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.CirclePageIndicator;
 import com.yapin.shanduo.widget.MyGallyPageTransformer;
@@ -55,6 +65,12 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     private List<String> list;
     private MyViewPagerAdapter myViewPagerAdapter;
 
+    private ActivityTabAdapter adapter;
+
+    private HomeActFragmentRefresh fragmentRefresh;
+
+    private ActivityFragment activityFragment;
+
     public static HomeActivityFragment newInstance() {
         HomeActivityFragment fragment = new HomeActivityFragment();
         Bundle args = new Bundle();
@@ -66,6 +82,11 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         // Required empty public constructor
     }
 
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        activityFragment = (ActivityFragment) childFragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +111,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         myViewPagerAdapter = new MyViewPagerAdapter(list , context , activity);
         imgViewPager.setAdapter(myViewPagerAdapter);
         imgViewPager.setOffscreenPageLimit(3);
-        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.0f / 5.0f);
+        int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.5f / 5.0f);
         Log.d("pageWidth",pagerWidth+"");
         ViewGroup.LayoutParams lp = imgViewPager.getLayoutParams();
         if (lp == null) {
@@ -100,7 +121,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         }
         imgViewPager.setLayoutParams(lp);
         //setPageMargin表示设置图片之间的间距
-        imgViewPager.setPageMargin(5);
+        imgViewPager.setPageMargin(2);
         imgViewPager.setPageTransformer(true, new MyGallyPageTransformer());
         imgViewPager.setCurrentItem(1);
         indicator.setViewPager(imgViewPager);
@@ -110,13 +131,32 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         list.add("附近活动");
         list.add("好友活动");
 
-        ActivityTabAdapter adapter = new ActivityTabAdapter(getChildFragmentManager() , list);
+        adapter = new ActivityTabAdapter(getChildFragmentManager() , list);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
                 Utils.setIndicator(tabLayout , 30 , 30);
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getPosition() == 2 && TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
@@ -132,10 +172,30 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             }
         });
 
+        refreshLayout.setOnRefreshListener(this);
+
+        //广播接收
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager
+                .getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("refreshComplete");
+        BroadcastReceiver br = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Boolean isRefresh = intent.getBooleanExtra("isRefresh" , false);
+                refreshLayout.setRefreshing(isRefresh);
+            }
+
+        };
+        localBroadcastManager.registerReceiver(br, intentFilter);
+
     }
 
     @Override
     public void onRefresh() {
-
+        activityFragment.onRefresh(viewPager.getCurrentItem());
     }
+
+
 }

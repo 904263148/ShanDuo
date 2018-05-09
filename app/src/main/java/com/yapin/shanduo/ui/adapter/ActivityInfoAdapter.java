@@ -15,6 +15,7 @@ import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -36,12 +37,12 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private Activity activity;
     private OpenPopupWindow openPopupWindow;
-//    private List<ActivityInfo.Act> list;
+    private List<ActivityInfo.Act> list;
 
-    public ActivityInfoAdapter (Context context , Activity activity){
+    public ActivityInfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list){
         this.context = context;
         this.activity = activity;
-//        this.list = list;
+        this.list = list;
         openPopupWindow = (MainActivity)activity;
     }
 
@@ -65,9 +66,18 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if(viewHolder instanceof ViewHolder){
             ViewHolder holder = (ViewHolder) viewHolder;
-//            holder.tvKind.setText(list.get(position).getActivityType());
-//            holder.tvTime.setText(list.get(position).getActivityStartTime());
-//            holder.tvType.setText(list.get(position).getMode());
+            holder.tvKind.setText(list.get(position).getActivityType());
+            holder.tvTime.setText(list.get(position).getActivityStartTime());
+            holder.tvType.setText(list.get(position).getMode());
+            holder.tvMan.setText("0/"+list.get(position).getManNumber());
+            holder.tvWoman.setText("0/"+list.get(position).getWomanNumber());
+            holder.tvHost.setText(list.get(position).getUserName());
+            holder.tvMemo.setText(list.get(position).getRemarks());
+            holder.tvPlace.setText(list.get(position).getActivityAddress());
+            holder.tvMile.setText(list.get(position).getLocation()+"km");
+            holder.tvEndTime.setText("截止日期:"+list.get(position).getActivityCutoffTime());
+            GlideUtil.load(context , activity , list.get(position).getHeadPortraitId() ,holder.ivHead);
+            holder.tvAge.setText(list.get(position).getAge()+"");
 
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,14 +87,19 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
         }else{
             FooterHolder holder = (FooterHolder) viewHolder;
-            holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == 2);
+            holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
         }
 
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return list.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return list.get(position).getType();
     }
 
     public interface OnItemClickListener {
@@ -121,6 +136,10 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvEndTime;
         @BindView(R.id.iv_more)
         ImageView ivMore;
+        @BindView(R.id.iv_head)
+        ImageView ivHead;
+        @BindView(R.id.tv_age)
+        TextView tvAge;
 
         public ViewHolder(View itemView) {
             super(itemView);

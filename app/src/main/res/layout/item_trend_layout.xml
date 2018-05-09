@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="223dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    android:background="@drawable/rounded_rl_item"
+    android:paddingLeft="15dp"
+    android:paddingRight="20dp"
+    android:paddingTop="12dp"
+    android:paddingBottom="10dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/head"
+            android:layout_centerVertical="true"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_head"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小猪佩奇"
+                android:textColor="@color/home_title_color"
+                android:textSize="14sp"
+                android:paddingBottom="2dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_vip"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:text="SVIP2"
+                android:textSize="7dp"
+                android:layout_below="@+id/tv_name"
+                android:background="@drawable/rounded_tv_vip"
+                android:textColor="@color/color_white"
+                android:layout_toRightOf="@+id/tv_age"
+                android:layout_marginLeft="2dp"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/tv_age"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:text="23"
+                android:textSize="7dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/rounded_tv_sex_women"
+                android:textColor="@color/color_white"
+                android:gravity="center"
+                android:drawableLeft="@drawable/icon_women"
+                android:drawablePadding="2dp"
+                android:layout_below="@+id/tv_name"
+                />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_mile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.6km"
+            android:textSize="@dimen/act_item_font_size"
+            android:textColor="@color/home_sex_man_color"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/icon_place"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_tag"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="最近都不太想动"
+        android:textColor="@color/font_color_gray"
+        android:textSize="14sp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/rl_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content"
+        android:layout_marginBottom="2dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_img1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/good7"
+            android:scaleType="fitXY"
+            />
+
+        <ImageView
+            android:id="@+id/iv_img2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/good7"
+            android:scaleType="fitXY"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageView
+            android:id="@+id/iv_img3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/good7"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_img"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/iv_good"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_good"
+            android:layout_marginLeft="4dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_comment"
+            android:layout_toRightOf="@+id/iv_good"
+            android:layout_marginLeft="15dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_trend_forward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_trend_forward"
+            android:layout_toRightOf="@+id/iv_comment"
+            android:layout_marginLeft="15dp"
+            />
+
+        <ImageView
+            android:id="@+id/iv_trend_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_horizontal_more"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

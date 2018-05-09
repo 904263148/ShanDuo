@@ -14,19 +14,18 @@ import java.util.List;
  */
 public class HomeActPresenter implements HomeActContract.Presenter{
 
-    private Context context;
     private HomeActContract.View view;
     private HomeActLoadModel loadModel;
 
-    public HomeActPresenter(Context context , HomeActContract.View view){
-        this.context = context;
+    public void init(HomeActContract.View view){
         this.view = view;
-        view.initView();
         loadModel = new HomeActModelImpl();
+        view.initView();
     }
 
     @Override
     public void getData(String type, String lon, String lat, String page, String pageSize) {
+        view.loading();
         loadModel.load(new OnMultiLoadListener<List<ActivityInfo.Act>>() {
             @Override
             public void onSuccess(List<ActivityInfo.Act> success, int totalPage) {

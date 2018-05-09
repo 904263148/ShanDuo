@@ -21,6 +21,7 @@ import com.yapin.shanduo.ui.manage.UserManage;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
@@ -108,6 +109,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         dialog.dismiss();
         ToastUtil.showShortToast(context,data);
         Log.e("token", PrefJsonUtil.getProfile(context).getToken());
+
+        PrefUtil.setToken(context , PrefJsonUtil.getProfile(context).getToken());
 
         StartActivityUtil.start(activity,MainActivity.class);
         onBackPressed();

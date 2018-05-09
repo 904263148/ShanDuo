@@ -20,6 +20,9 @@ public class ApiUtil {
     //修改
     public final static String MODIFY_IN = ConfigUtil.configUrl() + "/juser/updateuser";
 
+    //首页活动
+    public final static String HOME_ACT = ConfigUtil.configUrl() + "/activity/showHotActivity";
+
     //添加活动
     public final static String ADD_ACTIVITY = ConfigUtil.configUrl() +"/activity/saveactivity";
 }

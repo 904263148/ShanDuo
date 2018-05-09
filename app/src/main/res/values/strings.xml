@@ -53,6 +53,16 @@
     <string name="share_sina">微博</string>
     <string name="share_report">举报</string>
 
+    <string name="tips_no_act">暂无活动</string>
+    <string name="tips_no_token">必须登录才能查看好友活动哟~</string>
+
+    <string name="title_home">首页</string>
+    <string name="title_chat">聊天</string>
+    <string name="title_activity">活动</string>
+    <string name="title_linkman">好友</string>
+    <string name="title_my">我的</string>
+
+
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
