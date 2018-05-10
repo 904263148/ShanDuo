@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,7 +63,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
         if(viewHolder instanceof ViewHolder){
             ViewHolder holder = (ViewHolder) viewHolder;
@@ -77,12 +78,24 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvMile.setText(list.get(position).getLocation()+"km");
             holder.tvEndTime.setText("截止日期:"+list.get(position).getActivityCutoffTime());
             GlideUtil.load(context , activity , list.get(position).getHeadPortraitId() ,holder.ivHead);
+
+            Drawable drawable = null;
+            if ("0".equals(list.get(position).getGender())) {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_women);
+                holder.tvAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+            } else {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_men);
+                holder.tvAge.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+            }
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            holder.tvAge.setCompoundDrawables(drawable, null, null, null);
+            holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge()+"");
 
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openPopupWindow.openPopupWindow();
+                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
                 }
             });
         }else{
@@ -138,7 +151,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivMore;
         @BindView(R.id.iv_head)
         ImageView ivHead;
-        @BindView(R.id.tv_age)
+        @BindView(R.id.tv_home_age)
         TextView tvAge;
 
         public ViewHolder(View itemView) {

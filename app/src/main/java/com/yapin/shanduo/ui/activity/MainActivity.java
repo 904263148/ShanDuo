@@ -23,12 +23,18 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
+import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.fragment.ActivityFragment;
 import com.yapin.shanduo.ui.inter.HomeActFragmentRefresh;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +51,7 @@ import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
 
-public class MainActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener {
+public class MainActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener{
 
     @BindView(R.id.iv_home)
     ImageView ivHome;
@@ -75,8 +81,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
     ImageView ivAdd;
     @BindView(R.id.tv_add)
     TextView tvAdd;
-    @BindView(R.id.ll_add)
-    LinearLayout llAdd;
 
     private Context context;
     private Activity activity;
@@ -104,59 +108,21 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
         initView();
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            int REQUEST_CODE_CONTACT = 101;
-            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            //验证是否许可权限
-            for (String str : permissions) {
-                if (this.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    //申请权限
-                    this.requestPermissions(permissions, REQUEST_CODE_CONTACT);
-                    return;
-                }
-            }
-        }
+        Utils.checkPermission(activity);
 
     }
 
-    private void initView() {
-
+    public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem("首页", R.drawable.icon_home, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem("聊天", R.drawable.icon_chat, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem("活动", R.drawable.icon_add, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem("好友", R.drawable.icon_friend, R.color.colorBottomNavigationActiveColored);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem("我的", R.drawable.icon_my, R.color.colorBottomNavigationActiveColored);
-
-        bottomNavigationItems.add(item1);
-        bottomNavigationItems.add(item2);
-        bottomNavigationItems.add(item5);
-        bottomNavigationItems.add(item3);
-        bottomNavigationItems.add(item4);
-
-        bottomNavigation.addItems(bottomNavigationItems);
-        bottomNavigation.setForceTitlesDisplay(true);
-        bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
-        bottomNavigation.setAccentColor(Color.parseColor("#5169ff"));
-        bottomNavigation.setInactiveColor(Color.parseColor("#C0C0C0"));
-
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-
-                viewPager.setCurrentItem(position, false);
-                return true;
-            }
-        });
         viewPager.setCurrentItem(0, false);
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
 
     }
 
-    @OnClick({R.id.ll_home , R.id.ll_chat , R.id.ll_add ,R.id.ll_linkman , R.id.ll_my})
+    @OnClick({R.id.ll_home , R.id.ll_chat , R.id.rl_add ,R.id.ll_linkman , R.id.ll_my})
     public void onClick(View v){
         switch (v.getId()){
             case R.id.ll_home:
@@ -183,7 +149,7 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
                 ivMy.setImageResource(R.drawable.icon_my_unselect);
                 tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
                 break;
-            case R.id.ll_add:
+            case R.id.rl_add:
 //                viewPager.setCurrentItem(2, false);
                 tvAdd.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 ivHome.setImageResource(R.drawable.icon_home_unselect);
@@ -248,10 +214,16 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
 
     @Override
-    public void openPopupWindow() {
+    public void openPopupWindow(Object object , int type) {
         //防止重复按按钮
         if (popupWindow != null && popupWindow.isShowing()) {
             return;
+        }
+
+        if(type == Constants.HOME_ACT){
+            ActivityInfo.Act act = (ActivityInfo.Act) object;
+        }else{
+            TrendInfo.Trend trend = (TrendInfo.Trend) object;
         }
 
         popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,

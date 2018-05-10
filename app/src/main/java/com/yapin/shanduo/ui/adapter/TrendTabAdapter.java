@@ -22,7 +22,7 @@ public class TrendTabAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TrendFragment.newInstance();
+        return TrendFragment.newInstance(position);
     }
 
     @Override

@@ -29,6 +29,24 @@ public class TokenInfo{
 	private String school;//学校
 	private String jurisdiction;//权限 普通用户,商户,vip,svip
 	private String remarks;//备注
+	private String userSig;//IM聊天使用签名
+	private String vip;//vip等级
+
+	public String getUserSig() {
+		return userSig;
+	}
+
+	public void setUserSig(String userSig) {
+		this.userSig = userSig;
+	}
+
+	public String getVip() {
+		return vip;
+	}
+
+	public void setVip(String vip) {
+		this.vip = vip;
+	}
 
 	public String getToken() {
 		return token;

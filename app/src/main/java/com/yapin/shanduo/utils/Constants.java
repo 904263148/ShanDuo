@@ -41,4 +41,7 @@ public class Constants {
     //右滑关闭
     public static final int IS_EVENT = 1;
 
+    //popup判断是活动还是动态
+    public static final int HOME_ACT = 0;
+    public static final int HOME_TREND = 1;
 }

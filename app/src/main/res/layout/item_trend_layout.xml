@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="223dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginLeft="7dp"
     android:layout_marginRight="7dp"
@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_tag"
-        android:singleLine="true"
+        android:maxLines="3"
         android:ellipsize="end"
         android:text="最近都不太想动"
         android:textColor="@color/font_color_gray"
@@ -142,6 +142,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_img"
         android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         >
 
         <ImageView
@@ -173,9 +175,12 @@
         <ImageView
             android:id="@+id/iv_trend_more"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:src="@drawable/icon_horizontal_more"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
             />
 
     </RelativeLayout>

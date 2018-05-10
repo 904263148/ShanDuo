@@ -13,18 +13,18 @@ import java.util.List;
  */
 public class TrendInfo implements Parcelable {
 
-    private int totalpage;
+    private int totalPage;
 
     private int page;
 
     private List<Trend> list;
 
     public int getTotalpage() {
-        return totalpage;
+        return totalPage;
     }
 
     public void setTotalpage(int totalpage) {
-        this.totalpage = totalpage;
+        this.totalPage = totalpage;
     }
 
     public int getPage() {
@@ -58,9 +58,27 @@ public class TrendInfo implements Parcelable {
         private boolean isPraise;//是否点赞
         private double location;//距离
         private String remarks;//备注
-        private Date createDate;//发动态的时间
+        private long createDate;//发动态的时间
         private Integer vip;
         private String gender;//性别
+        private double lon;
+        private double lat;
+
+        public double getLon() {
+            return lon;
+        }
+
+        public void setLon(double lon) {
+            this.lon = lon;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public void setLat(double lat) {
+            this.lat = lat;
+        }
 
         public int getType() {
             return type;
@@ -158,11 +176,11 @@ public class TrendInfo implements Parcelable {
             this.remarks = remarks;
         }
 
-        public Date getCreateDate() {
+        public long getCreateDate() {
             return createDate;
         }
 
-        public void setCreateDate(Date createDate) {
+        public void setCreateDate(long createDate) {
             this.createDate = createDate;
         }
 
@@ -180,6 +198,9 @@ public class TrendInfo implements Parcelable {
 
         public void setGender(String gender) {
             this.gender = gender;
+        }
+
+        public Trend() {
         }
 
         @Override
@@ -201,12 +222,11 @@ public class TrendInfo implements Parcelable {
             dest.writeByte(this.isPraise ? (byte) 1 : (byte) 0);
             dest.writeDouble(this.location);
             dest.writeString(this.remarks);
-            dest.writeLong(this.createDate != null ? this.createDate.getTime() : -1);
+            dest.writeLong(this.createDate);
             dest.writeValue(this.vip);
             dest.writeString(this.gender);
-        }
-
-        public Trend() {
+            dest.writeDouble(this.lon);
+            dest.writeDouble(this.lat);
         }
 
         protected Trend(Parcel in) {
@@ -222,13 +242,14 @@ public class TrendInfo implements Parcelable {
             this.isPraise = in.readByte() != 0;
             this.location = in.readDouble();
             this.remarks = in.readString();
-            long tmpCreateDate = in.readLong();
-            this.createDate = tmpCreateDate == -1 ? null : new Date(tmpCreateDate);
+            this.createDate = in.readLong();
             this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
             this.gender = in.readString();
+            this.lon = in.readDouble();
+            this.lat = in.readDouble();
         }
 
-        public static final Parcelable.Creator<Trend> CREATOR = new Parcelable.Creator<Trend>() {
+        public static final Creator<Trend> CREATOR = new Creator<Trend>() {
             @Override
             public Trend createFromParcel(Parcel source) {
                 return new Trend(source);
@@ -248,7 +269,7 @@ public class TrendInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.totalpage);
+        dest.writeInt(this.totalPage);
         dest.writeInt(this.page);
         dest.writeTypedList(this.list);
     }
@@ -257,7 +278,7 @@ public class TrendInfo implements Parcelable {
     }
 
     protected TrendInfo(Parcel in) {
-        this.totalpage = in.readInt();
+        this.totalPage = in.readInt();
         this.page = in.readInt();
         this.list = in.createTypedArrayList(Trend.CREATOR);
     }

@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener , ViewPager.OnPageChangeListener{
 
 
     @BindView(R.id.img_view_pager)
@@ -126,6 +126,8 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         imgViewPager.setCurrentItem(1);
         indicator.setViewPager(imgViewPager);
 
+        imgViewPager.addOnPageChangeListener(this);
+
         list = new ArrayList<>();
         list.add("热门活动");
         list.add("附近活动");
@@ -133,6 +135,9 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
         adapter = new ActivityTabAdapter(getChildFragmentManager() , list);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.addOnPageChangeListener(this);
+
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.post(new Runnable() {
             @Override
@@ -172,13 +177,14 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             }
         });
 
+        refreshLayout.setColorSchemeResources(R.color.cpb_default_color);
         refreshLayout.setOnRefreshListener(this);
 
         //广播接收
         LocalBroadcastManager localBroadcastManager = LocalBroadcastManager
                 .getInstance(getActivity());
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("refreshComplete");
+        intentFilter.addAction("actRefreshComplete");
         BroadcastReceiver br = new BroadcastReceiver() {
 
             @Override
@@ -198,4 +204,18 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     }
 
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        refreshLayout.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
+    }
 }

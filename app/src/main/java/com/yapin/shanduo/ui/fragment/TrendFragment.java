@@ -3,8 +3,10 @@ package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -13,11 +15,21 @@ import android.view.ViewGroup;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
+import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.model.entity.TrendInfo;
+import com.yapin.shanduo.presenter.HomeActPresenter;
+import com.yapin.shanduo.presenter.HomeTrendPresenter;
+import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
+import com.yapin.shanduo.ui.contract.HomeTrendContract;
+import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +39,7 @@ import butterknife.ButterKnife;
  * Use the {@link TrendFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TrendFragment extends Fragment {
+public class TrendFragment extends Fragment implements HomeTrendContract.View , LoadMoreRecyclerView.OnLoadMoreListener , TrendInfoAdapter.OnItemClickListener ,TrendInfoAdapter.OnLikeClickListener , LikeContract.View{
 
     @BindView(R.id.recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -47,14 +59,21 @@ public class TrendFragment extends Fragment {
     private boolean isRefresh = false;
     private boolean isLoading = false;
 
+    private HomeTrendPresenter presenter;
+    private LikePresenter likePresenter;
+
+    private List<TrendInfo.Trend> list = new ArrayList<>();
+    private TrendInfo.Trend footerItem = new TrendInfo.Trend();
+
     public TrendFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static TrendFragment newInstance() {
+    public static TrendFragment newInstance(int position) {
         TrendFragment fragment = new TrendFragment();
         Bundle args = new Bundle();
+        args.putInt("position" , position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,6 +81,7 @@ public class TrendFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        position = getArguments().getInt("position");
     }
 
     @Override
@@ -71,19 +91,117 @@ public class TrendFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_trend, container, false);
         ButterKnife.bind(this , view);
-        initView();
+        presenter = new HomeTrendPresenter();
+        presenter.init(this);
+        likePresenter = new LikePresenter();
+        likePresenter.init(this);
         return view;
     }
 
+    @Override
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
         layoutManager = new LinearLayoutManager(context);
 
+        footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new TrendInfoAdapter(context, activity);
+        adapter = new TrendInfoAdapter(context, activity , list);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this);
+        adapter.setLikeClickListener(this);
+        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+        recyclerView.setOnLoadMoreListener(this);
     }
 
+    /**
+     * 设置刷新和加载更多的状态
+     *
+     * @param isRefresh 刷新状态
+     * @param isLoading 加载更多状态
+     */
+    public void setRefreshLoading(boolean isRefresh, boolean isLoading) {
+        this.isRefresh = isRefresh;
+        this.isLoading = isLoading;
+
+        if (!isRefresh && !isLoading) {
+            recyclerView.setLoading(false);
+
+            //注册广播
+            Intent intent = new Intent("trendRefreshComplete");
+            intent.putExtra("isRefresh",false);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }
+    }
+
+    @Override
+    public void onLoadMore() {
+        page++;
+        setRefreshLoading(false, true);
+        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+    }
+
+    @Override
+    public void show(List<TrendInfo.Trend> data, int totalPage) {
+        if (!isLoading) {
+            if (totalPage == 0) {
+                loadingView.noData(R.string.tips_no_act);
+            } else {
+                loadingView.setGone();
+            }
+            list.clear();
+            list.add(footerItem);
+        }
+        recyclerView.setPage(page, totalPage);
+        footerItem.setType(page < totalPage ? Constants.TYPE_FOOTER_LOAD : Constants.TYPE_FOOTER_FULL);
+        list.addAll(list.size() - 1, data);
+        adapter.notifyDataSetChanged();
+        setRefreshLoading(false, false);
+    }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context,data);
+    }
+
+    @Override
+    public void loading() {
+        if (!isRefresh && !isLoading)
+            loadingView.loading();
+    }
+
+    @Override
+    public void networkError() {
+        loadingView.loadError();
+        setRefreshLoading(false, false);
+    }
+
+    @Override
+    public void error(String msg) {
+//        loadingView.loadError();
+        setRefreshLoading(false, false);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        loadingView.loadError();
+        setRefreshLoading(false, false);
+    }
+
+    public void onRefresh(int position) {
+        setRefreshLoading(true, false);
+        page = 1 ;
+        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onLikeClick(String id) {
+        likePresenter.onLike(id);
+    }
 }

@@ -156,36 +156,52 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_add"
+    <RelativeLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:layout_marginBottom="@dimen/home_align_bottom"
         >
 
-        <ImageView
-            android:id="@+id/iv_add"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/icon_add"
-            />
+        <RelativeLayout
+            android:id="@+id/rl_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_add"
+            android:background="@color/color_white"
+            >
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_circle"
+                />
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_add"
+                android:layout_centerInParent="true"
+                />
+        </RelativeLayout>
         <TextView
             android:id="@+id/tv_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_activity"
-            android:layout_marginBottom="@dimen/home_align_bottom"
             android:textSize="@dimen/home_title_size"
             android:textColor="@color/font_color_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <TextView

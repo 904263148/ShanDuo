@@ -24,5 +24,9 @@ public class ApiUtil {
     public final static String HOME_ACT = ConfigUtil.configUrl() + "/activity/showHotActivity";
 
     //添加活动
-    public final static String ADD_ACTIVITY = ConfigUtil.configUrl() +"/activity/saveactivity";
+    public final static String ADD_ACTIVITY = ConfigUtil.configUrl() + "/activity/saveactivity";
+
+    //首页动态
+    public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/homeList";
+
 }

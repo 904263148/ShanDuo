@@ -2,13 +2,17 @@ package com.yapin.shanduo.ui.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -42,7 +46,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener , ViewPager.OnPageChangeListener{
 
     @BindView(R.id.img_view_pager)
     ViewPager imgViewPager;
@@ -66,6 +70,8 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
 
     private TrendTabAdapter adapter;
 
+    private TrendFragment trendFragment;
+
     public HomeTrendFragment() {
         // Required empty public constructor
     }
@@ -75,6 +81,12 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        trendFragment = (TrendFragment) childFragment;
     }
 
     @Override
@@ -119,12 +131,15 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
         imgViewPager.setCurrentItem(1);
         indicator.setViewPager(imgViewPager);
 
+        imgViewPager.addOnPageChangeListener(this);
+
         list = new ArrayList<>();
         list.add("附近动态");
         list.add("好友动态");
 
         adapter = new TrendTabAdapter(getChildFragmentManager() , list);
         viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.post(new Runnable() {
             @Override
@@ -144,8 +159,24 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
                 }
             }
         });
-
+        refreshLayout.setColorSchemeResources(R.color.cpb_default_color);
         refreshLayout.setOnRefreshListener(this);
+
+        //广播接收
+        LocalBroadcastManager localBroadcastManager = LocalBroadcastManager
+                .getInstance(getActivity());
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("trendRefreshComplete");
+        BroadcastReceiver br = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Boolean isRefresh = intent.getBooleanExtra("isRefresh" , false);
+                refreshLayout.setRefreshing(isRefresh);
+            }
+
+        };
+        localBroadcastManager.registerReceiver(br, intentFilter);
 
     }
 
@@ -189,6 +220,21 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
+        trendFragment.onRefresh(viewPager.getCurrentItem());
+    }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        refreshLayout.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
     }
 }

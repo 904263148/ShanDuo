@@ -136,7 +136,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
             recyclerView.setLoading(false);
 
             //注册广播
-            Intent intent = new Intent("refreshComplete");
+            Intent intent = new Intent("actRefreshComplete");
             intent.putExtra("isRefresh",false);
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
@@ -181,7 +181,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void error(String msg) {
-//        loadingView.loadError();
+        loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
@@ -194,9 +194,6 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void onRefresh(int position) {
         setRefreshLoading(true, false);
         page = 1 ;
-        if(presenter == null){
-            presenter = new HomeActPresenter();
-        }
         presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
     }
 }

@@ -7,6 +7,6 @@ import android.view.View;
  */
 public interface OpenPopupWindow {
 
-    void openPopupWindow();
+    void openPopupWindow(Object object , int type);
 
 }
