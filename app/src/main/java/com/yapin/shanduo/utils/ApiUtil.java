@@ -29,4 +29,7 @@ public class ApiUtil {
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/homeList";
 
+    //参加活动
+    public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/participateActivities";
+
 }

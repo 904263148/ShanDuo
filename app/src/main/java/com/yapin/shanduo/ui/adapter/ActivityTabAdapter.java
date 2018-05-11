@@ -1,9 +1,12 @@
 package com.yapin.shanduo.ui.adapter;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.view.ViewGroup;
 
 import com.yapin.shanduo.ui.fragment.ActivityFragment;
 
@@ -23,6 +26,17 @@ public class ActivityTabAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         return ActivityFragment.newInstance(position);
+    }
+
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        ActivityFragment fragment = (ActivityFragment) super.instantiateItem(container, position);
+        return fragment;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return PagerAdapter.POSITION_NONE;
     }
 
     @Override

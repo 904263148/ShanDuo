@@ -67,7 +67,7 @@ public abstract class JavaOkCallback implements okhttp3.Callback{
 
         } catch (JSONException e) {
             e.printStackTrace();
-            onFailure("");
+            onFailure("服务器连接异常");
         }
 
     }

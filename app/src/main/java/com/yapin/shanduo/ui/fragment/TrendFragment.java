@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,13 @@ import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.HomeTrendPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
+import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeTrendContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
@@ -189,12 +193,6 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         setRefreshLoading(false, false);
     }
 
-    public void onRefresh(int position) {
-        setRefreshLoading(true, false);
-        page = 1 ;
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
-    }
-
     @Override
     public void onItemClick(int position) {
 
@@ -202,6 +200,15 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     @Override
     public void onLikeClick(String id) {
-        likePresenter.onLike(id);
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+        }else {
+            likePresenter.onLike(id);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

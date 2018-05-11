@@ -55,8 +55,9 @@
                     app:tabIndicatorColor="@color/font_black_color"
                     app:tabSelectedTextColor="@color/font_black_color"
                     app:tabTextColor="@color/font_gray_color"
-                    app:tabGravity="center"
+                    app:tabGravity="fill"
                     app:tabMode="fixed"
+                    app:tabPadding="10dp"
                     />
 
             </android.support.design.widget.AppBarLayout>

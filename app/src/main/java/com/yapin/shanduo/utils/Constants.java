@@ -58,4 +58,11 @@ public class Constants {
     //popup判断是活动还是动态
     public static final int HOME_ACT = 0;
     public static final int HOME_TREND = 1;
+
+    //打开loginActivity
+    public static final int OPEN_LOGIN_ACTIVITY = 1;
+
+    //活动item点击
+    public static final int ACT_JOIN = 1;
+
 }

@@ -39,7 +39,7 @@ public class Utils {
     public static void checkPermission(Activity activity){
         if (Build.VERSION.SDK_INT >= 23) {
             int REQUEST_CODE_CONTACT = 101;
-            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE , Manifest.permission.CAMERA};
+            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE , Manifest.permission.CAMERA };
             //验证是否许可权限
             for (String str : permissions) {
                 if (activity.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
@@ -316,6 +316,19 @@ public class Utils {
     public static int sp2px(Context context, float spValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
+    }
+
+
+    //判断vip等级
+    public static String vipLevel(int level){
+        String vipLevel = "";
+        if(level > 0 && level < 11){
+            vipLevel = "VIP" +level;
+        }
+        if(level >= 11 ){
+            vipLevel = "SVIP" + (level -10);
+        }
+        return vipLevel;
     }
 
 }

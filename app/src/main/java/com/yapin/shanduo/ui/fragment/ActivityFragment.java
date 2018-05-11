@@ -18,10 +18,15 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.presenter.HomeActPresenter;
+import com.yapin.shanduo.presenter.JoinActPresenter;
+import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeActContract;
+import com.yapin.shanduo.ui.contract.JoinActContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
 
@@ -31,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , HomeActContract.View{
+public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , HomeActContract.View , JoinActContract.View{
 
     @BindView(R.id.recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -56,6 +61,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     private ProgressDialog dialog;
 
+    private JoinActPresenter joinActPresenter;
+
     public static ActivityFragment newInstance(int position) {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -63,7 +70,6 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         ButterKnife.bind(this , view);
         presenter= new HomeActPresenter();
         presenter.init(this);
+        joinActPresenter = new JoinActPresenter();
+        joinActPresenter.init(this);
         return view;
     }
 
@@ -86,6 +94,10 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
+        dialog = new ProgressDialog(activity);
+        dialog.setMessage("加载中...");
+        dialog.setCancelable(false);
+
         layoutManager = new LinearLayoutManager(context);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
@@ -101,10 +113,6 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         }
         presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
-
-        dialog = new ProgressDialog(activity);
-        dialog.setMessage("加载中...");
-        dialog.setCancelable(false);
     }
 
     @Override
@@ -120,6 +128,18 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     @Override
     public void onItemClick(int position) {
 
+    }
+
+    @Override
+    public void onTextClick(int position, ActivityInfo.Act act , int type) {
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            StartActivityUtil.start(activity ,this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+            return;
+        }
+        if(type == Constants.ACT_JOIN){
+            joinActPresenter.join(act.getId());
+            dialog.show();
+        }
     }
 
     /**
@@ -165,6 +185,13 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         list.addAll(list.size() - 1, data);
         adapter.notifyDataSetChanged();
         setRefreshLoading(false, false);
+        dialog.dismiss();
+    }
+
+    @Override
+    public void success(String data) {
+        dialog.dismiss();
+        ToastUtil.showShortToast(context ,data);
     }
 
     @Override
@@ -175,25 +202,29 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void networkError() {
+        dialog.dismiss();
         loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
     @Override
+    public void joinError(String msg) {
+        dialog.dismiss();
+        ToastUtil.showShortToast(context , msg);
+    }
+
+    @Override
     public void error(String msg) {
+        dialog.dismiss();
         loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
     @Override
     public void showFailed(String msg) {
+        dialog.dismiss();
         loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
-    public void onRefresh(int position) {
-        setRefreshLoading(true, false);
-        page = 1 ;
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
-    }
 }

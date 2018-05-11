@@ -3,6 +3,7 @@ package com.yapin.shanduo.ui.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -160,8 +161,9 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
                 tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
                 ivMy.setImageResource(R.drawable.icon_my_unselect);
                 tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
+
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class);
+                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
                 }else {
                     StartActivityUtil.start(activity, AddactivityActivity.class);
                 }
@@ -271,7 +273,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         platform.share(sp);
     }
 
-
     //设置屏幕背景透明效果
     public void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -299,4 +300,11 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         //取消分享的回调
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK){
+            return;
+        }
+    }
 }

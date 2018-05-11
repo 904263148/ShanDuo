@@ -30,12 +30,28 @@ android {
         multiDexEnabled = true
     }
 
+    signingConfigs {
+        release {
+            storeFile file('F:/ShanDuo/app/keystore.jks')
+            storePassword 'shanduo'
+            keyAlias 'shanduo'
+            keyPassword 'shanduo'
+//            v1SigningEnabled false
+//            v2SigningEnabled false
+        }
+        debug {
+            storeFile file('F:/ShanDuo/app/keystore_debug.jks')
+            storePassword 'shanduo'
+            keyAlias 'shanduo'
+            keyPassword 'shanduo'
+        }
+    }
+
     buildTypes {
         release {
             buildConfigField("String", "BASE_API", project.BASE_API_PRODUCT)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
             lintOptions {
 
                 checkReleaseBuilds false
@@ -43,10 +59,11 @@ android {
                 abortOnError false
 
             }
-
+            signingConfig signingConfigs.release
         }
         debug {
             buildConfigField("String", "BASE_API", project.BASE_API_DEBUG)
+            signingConfig signingConfigs.debug
         }
     }
 
@@ -116,14 +133,10 @@ dependencies {
     implementation files('libs/ShareSDK-Wechat-3.1.4.jar')
     implementation files('libs/ShareSDK-Wechat-Core-3.1.4.jar')
     implementation files('libs/ShareSDK-Wechat-Moments-3.1.4.jar')
-
     //信鸽jar
     implementation 'com.tencent.xinge:xinge:3.2.3_1-beta'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-
     //扫码
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
-
-
 }

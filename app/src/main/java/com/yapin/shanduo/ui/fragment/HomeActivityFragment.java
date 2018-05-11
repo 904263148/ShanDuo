@@ -62,7 +62,8 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     private Context context;
     private Activity activity;
 
-    private List<String> list;
+    private List<String> tabList;
+    private List<String> imgList;
     private MyViewPagerAdapter myViewPagerAdapter;
 
     private ActivityTabAdapter adapter;
@@ -102,13 +103,18 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
-        list = new ArrayList<>();
-        list.add("http://img.ph.126.net/cAhwYnhHyFdr0-eFOTdUGw==/1097752409188465061.jpg");
-        list.add("http://p1.so.qhmsg.com/t01953e7a5cda90d046.jpg");
-        list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984320392&di=8290126f83c2a2c0d45be41e3f88a6d0&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201307%2F19%2F152440r9ov9ololkzdcz7d.jpg");
-        list.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984407478&di=729b187f4939710e8b2436f9f1306dff&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201505%2F05%2F172352jrr66rda0dwdwdwz.jpg");
+        imgList = new ArrayList<>();
 
-        myViewPagerAdapter = new MyViewPagerAdapter(list , context , activity);
+        imgList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984407478&di=729b187f4939710e8b2436f9f1306dff&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201505%2F05%2F172352jrr66rda0dwdwdwz.jpg");
+
+        imgList.add("http://img.ph.126.net/cAhwYnhHyFdr0-eFOTdUGw==/1097752409188465061.jpg");
+        imgList.add("http://p1.so.qhmsg.com/t01953e7a5cda90d046.jpg");
+        imgList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984320392&di=8290126f83c2a2c0d45be41e3f88a6d0&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201307%2F19%2F152440r9ov9ololkzdcz7d.jpg");
+        imgList.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1490984407478&di=729b187f4939710e8b2436f9f1306dff&imgtype=0&src=http%3A%2F%2Ffile.mumayi.com%2Fforum%2F201505%2F05%2F172352jrr66rda0dwdwdwz.jpg");
+
+        imgList.add("http://img.ph.126.net/cAhwYnhHyFdr0-eFOTdUGw==/1097752409188465061.jpg");
+
+        myViewPagerAdapter = new MyViewPagerAdapter(imgList , context , activity);
         imgViewPager.setAdapter(myViewPagerAdapter);
         imgViewPager.setOffscreenPageLimit(3);
         int pagerWidth = (int) (getResources().getDisplayMetrics().widthPixels * 3.5f / 5.0f);
@@ -123,17 +129,39 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         //setPageMargin表示设置图片之间的间距
         imgViewPager.setPageMargin(2);
         imgViewPager.setPageTransformer(true, new MyGallyPageTransformer());
-        imgViewPager.setCurrentItem(1);
         indicator.setViewPager(imgViewPager);
+        imgViewPager.setCurrentItem(1);
+        imgViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        imgViewPager.addOnPageChangeListener(this);
+            }
 
-        list = new ArrayList<>();
-        list.add("热门活动");
-        list.add("附近活动");
-        list.add("好友活动");
+            @Override
+            public void onPageSelected(int position) {
+                if (position == imgList.size() - 1) {
+                    // 设置当前值为1
+                    imgViewPager.setCurrentItem(1 ,false);
+                } else if (position == 0) {
+                    // 如果索引值为0了,就设置索引值为倒数第二个
+                    imgViewPager.setCurrentItem(imgList.size() - 2 , false);
+                } else {
+                    imgViewPager.setCurrentItem(position);
+                }
+            }
 
-        adapter = new ActivityTabAdapter(getChildFragmentManager() , list);
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tabList = new ArrayList<>();
+        tabList.add("热门活动");
+        tabList.add("附近活动");
+        tabList.add("好友活动");
+
+        adapter = new ActivityTabAdapter(getChildFragmentManager() , tabList);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(this);
@@ -200,18 +228,23 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        activityFragment.onRefresh(viewPager.getCurrentItem());
+//        activityFragment.onRefresh(viewPager.getCurrentItem());
+        adapter.notifyDataSetChanged();
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                Utils.setIndicator(tabLayout , 30 , 30);
+            }
+        });
     }
 
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
-
     }
 
     @Override

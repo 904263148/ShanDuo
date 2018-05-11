@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tencent.qcloud.tlslibrary.helper.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.presenter.LikePresenter;
@@ -20,6 +22,7 @@ import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -83,6 +86,11 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvMile.setText(list.get(position).getLocation()+"km");
             holder.tvContent.setText(list.get(position).getContent());
 
+            if(TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))){
+                holder.tvVip.setVisibility(View.GONE);
+            }else {
+                holder.tvVip.setText(Utils.vipLevel(list.get(position).getVip()));
+            }
             int size = list.get(position).getPicture().size();
             switch (size){
                 case 0:

@@ -70,8 +70,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvKind.setText(list.get(position).getActivityType());
             holder.tvTime.setText(list.get(position).getActivityStartTime());
             holder.tvType.setText(list.get(position).getMode());
-            holder.tvMan.setText("0/"+list.get(position).getManNumber());
-            holder.tvWoman.setText("0/"+list.get(position).getWomanNumber());
+            holder.tvMan.setText(list.get(position).getManSum() +"/" + list.get(position).getManNumber());
+            holder.tvWoman.setText(list.get(position).getWomenSum() +"/" + list.get(position).getWomanNumber());
             holder.tvHost.setText(list.get(position).getUserName());
             holder.tvMemo.setText(list.get(position).getRemarks());
             holder.tvPlace.setText(list.get(position).getActivityAddress());
@@ -98,6 +98,14 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
                 }
             });
+
+            holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onTextClick(position ,list.get(position) , Constants.ACT_JOIN);
+                }
+            });
+
         }else{
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
@@ -117,6 +125,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
+        void onTextClick(int position , ActivityInfo.Act act,int type);
     }
 
     private ActivityInfoAdapter.OnItemClickListener listener;
@@ -124,6 +134,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setOnItemClickListener(ActivityInfoAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -153,6 +164,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivHead;
         @BindView(R.id.tv_home_age)
         TextView tvAge;
+        @BindView(R.id.tv_join)
+        TextView tvJoin;
 
         public ViewHolder(View itemView) {
             super(itemView);

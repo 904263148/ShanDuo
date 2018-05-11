@@ -109,10 +109,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         dialog.dismiss();
         ToastUtil.showShortToast(context,data);
         Log.e("token", PrefJsonUtil.getProfile(context).getToken());
-
         PrefUtil.setToken(context , PrefJsonUtil.getProfile(context).getToken());
-
-        StartActivityUtil.start(activity,MainActivity.class);
+        setResult(RESULT_OK);
         onBackPressed();
     }
 
