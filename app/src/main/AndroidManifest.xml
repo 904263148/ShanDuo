@@ -6,26 +6,18 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-feature android:name="android.hardware.camera" />
@@ -57,6 +49,16 @@
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 地图用的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".app.ShanDuoPartyApplication"
@@ -66,6 +68,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="fa401cf925250ff1eeb1c0691b04dbd8" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTop" />
@@ -76,7 +85,6 @@
         <activity android:name=".ui.activity.PictureActivity" />
         <activity android:name=".ui.activity.EditingformationAcivity" />
         <activity android:name=".ui.activity.StartpageActivity" />
-        <activity android:name=".ui.activity.MapTextingActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />
@@ -279,8 +287,11 @@
         <activity android:name=".im.ui.BlackListActivity" />
         <activity android:name=".im.ui.ImagePreviewActivity" />
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
-        <activity android:name=".ui.activity.AddactivityActivity"/>
+        <activity android:name=".ui.activity.AddactivityActivity" />
         <activity android:name=".ui.activity.MywalletActivity"/>
+        <activity android:name=".ui.activity.MapGaodeActivity"/>
+
+
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data

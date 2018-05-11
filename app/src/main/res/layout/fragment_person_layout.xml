@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.PersonFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="个人资料"
+        android:textSize="15dp"
+        android:textColor="@color/textview_text_color"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        />
 
 
     <LinearLayout
-
+        android:layout_marginTop="5dp"
         android:id="@+id/ll_person_a"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="75dp"
         android:orientation="horizontal"
-        android:background="@drawable/timg"
+        android:background="@color/white"
         >
 
         <ImageView
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:src="@drawable/default_user"
+            android:layout_width="53dp"
+            android:layout_height="53dp"
+            android:src="@drawable/icon_eadportrait"
             android:layout_gravity="left|center"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="16dp"
 
             />
         <LinearLayout
@@ -28,15 +39,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="8dp">
             <TextView
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小猪佩奇"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/textview_text_color"
                 />
 
             <RelativeLayout
+                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
@@ -46,7 +59,7 @@
                     android:layout_height="10dp"
                     android:text="23"
                     android:paddingLeft="3dp"
-                    android:textSize="8sp"
+                    android:textSize="7sp"
                     android:textColor="@color/colorPrimary"
                     android:drawableLeft="@drawable/icon_women"
                     />
@@ -56,7 +69,7 @@
                     android:layout_width="30dp"
                     android:layout_height="10dp"
                     android:scaleType="fitXY"
-                    android:textSize="8sp"
+                    android:textSize="7sp"
                     android:paddingLeft="4dp"
                     android:text="SVIP2"
                     android:textColor="@color/colorPrimary"
@@ -65,11 +78,34 @@
 
             </RelativeLayout>
 
+
+
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="15dp"
+            >
+        <Button
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/signin_shape"
+            android:layout_width="40dp"
+            android:layout_height="15dp"
+            android:layout_alignParentRight="true"
+            android:text="签到"
+            android:textColor="@color/colorAccent"
+            android:textSize="9sp"
+            android:drawableRight="@drawable/icon_forward"
+            />
+        </RelativeLayout>
 
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="5dp"
         android:id="@+id/ll_person_b"
         android:layout_below="@id/ll_person_a"
         android:layout_width="match_parent"
@@ -77,10 +113,7 @@
         android:orientation="vertical"
         android:background="@color/background_color"
         >
-        <TextView
-            android:background="@color/color_white"
-            android:layout_width="match_parent"
-            android:layout_height="25dp" />
+
 
         <TextView
             android:id="@+id/tv_addactivity"
@@ -91,9 +124,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
             android:drawableLeft="@drawable/icon_activity"
             android:text="我的活动"/>
+        <!--android:drawableRight="@drawable/icon_img_return"-->
+
 
         <TextView
             android:textColor="@color/font_color_gray"
@@ -104,7 +138,6 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
             android:drawableLeft="@drawable/icon_smallbell"
             android:text="我的动态"/>
 
@@ -117,7 +150,6 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
             android:drawableLeft="@drawable/icon_collection"
             android:text="收藏"/>
 
@@ -130,7 +162,6 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
             android:drawableLeft="@drawable/icon_wallet"
             android:text="我的钱包"/>
 
@@ -143,25 +174,11 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
             android:drawableLeft="@drawable/icon_member"
             android:text="会员中心"/>
 
         <TextView
             android:id="@+id/modify"
-            android:textColor="@color/font_color_gray"
-            android:layout_marginTop="5dp"
-            android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
-            android:drawableLeft="@drawable/icon_edit"
-            android:text="修改个人资料"/>
-
-        <TextView
             android:textColor="@color/font_color_gray"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
@@ -170,7 +187,18 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_img_return"
+            android:drawableLeft="@drawable/icon_credit"
+            android:text="信用中心"/>
+
+        <TextView
+            android:textColor="@color/font_color_gray"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_white"
+            android:paddingLeft="16dp"
+            android:paddingRight="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
             android:drawableLeft="@drawable/icon_setup"
             android:text="设置"/>
 
@@ -275,4 +303,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>

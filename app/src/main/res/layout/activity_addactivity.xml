@@ -134,12 +134,11 @@
             android:id="@+id/tv_add_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:hint="xx市xx区xx街"
             android:paddingLeft="9dp"
-            android:background="@null"
             android:textColor="@color/textview_text_color"
-            android:textSize="17dp"
-            />
+            android:textSize="17dp" />
 
     </LinearLayout>
     <LinearLayout

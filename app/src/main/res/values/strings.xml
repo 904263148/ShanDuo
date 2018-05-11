@@ -365,4 +365,6 @@
     <string name="message_notify_c2c_music">自定义C2C消息推送声音</string>
     <string name="message_notify_group_music">自定义群消息推送声音</string>
 
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+
 </resources>

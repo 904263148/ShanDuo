@@ -18,13 +18,18 @@ android {
             abiFilters "armeabi", "armeabi-v7a"
             // 如果您使用的是商业版，只能使用 armeabi 架构，即：
             // abiFilters "armeabi",
+        }
+        aaptOptions{
+            cruncherEnabled = false
+        }
 
             manifestPlaceholders = [
                     XG_ACCESS_ID : "2100283798",
                     XG_ACCESS_KEY: "A7E6HU858LWF",
             ]
-        }
+        multiDexEnabled = true
     }
+
     buildTypes {
         release {
             buildConfigField("String", "BASE_API", project.BASE_API_PRODUCT)
@@ -52,7 +57,6 @@ android {
         }
     }
 
-
 }
 
 greendao {
@@ -63,6 +67,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // 导入腾讯云直播SDK jar
     implementation fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
+    implementation 'com.android.support:multidex:1.0.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -93,6 +98,10 @@ dependencies {
     implementation('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
         exclude module: 'support-v4'
     }
+    //高德地图
+    implementation 'com.amap.api:3dmap:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
+    implementation 'com.amap.api:location:latest.integration'
     //腾讯IM
     implementation project(':presentation')
     implementation project(':ui')
@@ -115,4 +124,6 @@ dependencies {
 
     //扫码
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
+
+
 }
