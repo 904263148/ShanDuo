@@ -18,5 +18,26 @@ public class PrefUtil {
         return sp.getString(TOKEN, "");
     }
 
+    private static final String LON = "lon";
+    private static final String LAT = "lat";
 
+    public static void setLon(Context context, String token) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(LON, token).commit();
+    }
+
+    public static String getLon(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(LON, "");
+    }
+
+    public static void setLat(Context context, String token) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(LAT, token).commit();
+    }
+
+    public static String getLat(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(LAT, "");
+    }
 }

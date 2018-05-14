@@ -37,12 +37,13 @@
                         android:clipChildren="false"
                         />
 
-                    <com.yapin.shanduo.widget.CirclePageIndicator
+                    <LinearLayout
                         android:id="@+id/indicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_below="@+id/img_view_pager"
+                        android:orientation="horizontal"
                         android:padding="8dp" />
                 </RelativeLayout>
 

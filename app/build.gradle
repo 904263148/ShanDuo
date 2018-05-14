@@ -19,14 +19,14 @@ android {
             // 如果您使用的是商业版，只能使用 armeabi 架构，即：
             // abiFilters "armeabi",
         }
-        aaptOptions{
+        aaptOptions {
             cruncherEnabled = false
         }
 
-            manifestPlaceholders = [
-                    XG_ACCESS_ID : "2100283798",
-                    XG_ACCESS_KEY: "A7E6HU858LWF",
-            ]
+        manifestPlaceholders = [
+                XG_ACCESS_ID : "2100283798",
+                XG_ACCESS_KEY: "A7E6HU858LWF",
+        ]
         multiDexEnabled = true
     }
 

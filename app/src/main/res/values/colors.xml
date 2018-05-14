@@ -28,8 +28,10 @@
 
     <color name="scan_corner_color">#0effc2</color>
     <color name="progress_dialog_color">#FF8E00</color>
-
+    <color name="location_blue">#3782ff</color>
     <color name="home_title_select_color">#5169ff</color>
+
+    <color name="bg_color">#F7F8FF</color>
 
 
     <!--IM-->

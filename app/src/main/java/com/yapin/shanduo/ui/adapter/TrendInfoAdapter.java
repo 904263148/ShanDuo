@@ -13,17 +13,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tencent.qcloud.tlslibrary.helper.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
-import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.ui.activity.MainActivity;
-import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
+import com.yapin.shanduo.widget.MyGridView;
 
 import java.util.List;
 
@@ -39,6 +38,8 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<TrendInfo.Trend> list;
     private OpenPopupWindow openPopupWindow;
     private Activity activity;
+
+    private TrendGridViewAdapter adapter;
 
     public TrendInfoAdapter(Context context, Activity activity, List<TrendInfo.Trend> list) {
         this.context = context;
@@ -81,52 +82,56 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             holder.tvAge.setCompoundDrawables(drawable, null, null, null);
             holder.tvAge.setCompoundDrawablePadding(2);
-            holder.tvAge.setText(list.get(position).getAge()+"");
+            holder.tvAge.setText(list.get(position).getAge() + "");
 
-            holder.tvMile.setText(list.get(position).getLocation()+"km");
+            holder.tvMile.setText(list.get(position).getLocation() + "km");
             holder.tvContent.setText(list.get(position).getContent());
 
-            if(TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))){
+            if (TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))) {
                 holder.tvVip.setVisibility(View.GONE);
-            }else {
+            } else {
                 holder.tvVip.setText(Utils.vipLevel(list.get(position).getVip()));
             }
-            int size = list.get(position).getPicture().size();
-            switch (size){
-                case 0:
-                    holder.rlImg.setVisibility(View.GONE);
-                    break;
-                case 1:
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
-                    holder.ivImg2.setVisibility(View.GONE);
-                    holder.ivImg3.setVisibility(View.GONE);
-                    break;
-                case 2:
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(1) ,holder.ivImg2 ,5 );
-                    holder.ivImg3.setVisibility(View.GONE);
-                    break;
-                default:
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(1) ,holder.ivImg2 ,5 );
-                    GlideUtil.load(context ,activity ,list.get(position).getPicture().get(2) ,holder.ivImg3 ,5 );
-                        break;
-            }
-
-            holder.ivMore.setOnClickListener(new View.OnClickListener() {
+            holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_TREND);
+                    openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_TREND);
                 }
             });
 
-            holder.ivGood.setOnClickListener(new View.OnClickListener() {
+            holder.ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(likeClickListener != null)
+                    if (likeClickListener != null)
                         likeClickListener.onLikeClick(list.get(position).getId());
                 }
             });
+
+            int size = list.get(position).getPicture().size();
+            switch (size){
+                case 0:
+                    holder.gridview.setVisibility(View.GONE);
+                    holder.rlImg1.setVisibility(View.GONE);
+                    break;
+                case 1:
+                    holder.gridview.setVisibility(View.GONE);
+                    holder.rlImg1.setVisibility(View.VISIBLE);
+                    GlideUtil.load(context ,activity , ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
+                    holder.ivImg2.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    holder.gridview.setVisibility(View.GONE);
+                    holder.rlImg1.setVisibility(View.VISIBLE);
+                    GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
+                    GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(1) ,holder.ivImg2 ,5 );
+                    break;
+                default:
+                    holder.gridview.setVisibility(View.VISIBLE);
+                    holder.rlImg1.setVisibility(View.GONE);
+                    adapter = new TrendGridViewAdapter(context, list.get(position).getPicture(), activity);
+                    holder.gridview.setAdapter(adapter);
+                    break;
+            }
 
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
@@ -154,7 +159,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.listener = listener;
     }
 
-    public interface OnLikeClickListener{
+    public interface OnLikeClickListener {
         void onLikeClick(String id);
     }
 
@@ -166,34 +171,44 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.tv_tag)
+        TextView tvTag;
         @BindView(R.id.iv_head)
         ImageView ivHead;
         @BindView(R.id.tv_name)
         TextView tvName;
-        @BindView(R.id.tv_age)
-        TextView tvAge;
         @BindView(R.id.tv_vip)
         TextView tvVip;
+        @BindView(R.id.tv_age)
+        TextView tvAge;
+        @BindView(R.id.tv_mile)
+        TextView tvMile;
+        @BindView(R.id.rl_user_info)
+        RelativeLayout rlUserInfo;
+        @BindView(R.id.tv_content)
+        TextView tvContent;
+        @BindView(R.id.gridview)
+        MyGridView gridview;
+        @BindView(R.id.tv_publish_time)
+        TextView tvPublishTime;
+        @BindView(R.id.rl_trend_info)
+        RelativeLayout rlTrendInfo;
+        @BindView(R.id.iv_comment)
+        ImageView ivComment;
+        @BindView(R.id.tv_comment)
+        TextView tvComment;
+        @BindView(R.id.iv_like)
+        ImageView ivLike;
+        @BindView(R.id.tv_like)
+        TextView tvLike;
+        @BindView(R.id.iv_share)
+        ImageView ivShare;
         @BindView(R.id.iv_img1)
         ImageView ivImg1;
         @BindView(R.id.iv_img2)
         ImageView ivImg2;
-        @BindView(R.id.iv_img3)
-        ImageView ivImg3;
-        @BindView(R.id.iv_good)
-        ImageView ivGood;
-        @BindView(R.id.iv_comment)
-        ImageView ivComment;
-        @BindView(R.id.iv_trend_forward)
-        ImageView ivForward;
-        @BindView(R.id.iv_trend_more)
-        ImageView ivMore;
-        @BindView(R.id.tv_mile)
-        TextView tvMile;
-        @BindView(R.id.tv_content)
-        TextView tvContent;
-        @BindView(R.id.rl_img)
-        RelativeLayout rlImg;
+        @BindView(R.id.rl_img1)
+        RelativeLayout rlImg1;
 
         public ViewHolder(View itemView) {
             super(itemView);

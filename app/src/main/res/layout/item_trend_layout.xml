@@ -3,186 +3,249 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginLeft="7dp"
-    android:layout_marginRight="7dp"
-    android:background="@drawable/rounded_rl_item"
-    android:paddingLeft="15dp"
-    android:paddingRight="20dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="10dp"
     >
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_below="@+id/rl_title"
+        />
 
     <RelativeLayout
-        android:id="@+id/rl_tag"
+        android:id="@+id/rl_trend_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="9dp"
+        android:paddingTop="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8dp"
+        android:layout_below="@+id/tv_tag"
+        android:background="@color/color_white"
         >
 
-        <ImageView
-            android:id="@+id/iv_head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/head"
-            android:layout_centerVertical="true"
-            />
-
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/rl_user_info"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_head"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:paddingTop="9dp"
             >
 
-            <TextView
-                android:id="@+id/tv_name"
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/head"
+                android:layout_centerVertical="true"
+                />
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小猪佩奇"
-                android:textColor="@color/home_title_color"
-                android:textSize="14sp"
-                android:paddingBottom="2dp"
+                android:layout_toRightOf="@+id/iv_head"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小猪佩奇"
+                    android:textColor="@color/home_title_color"
+                    android:textSize="12dp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_vip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:text="SVIP2"
+                    android:textSize="7dp"
+                    android:layout_below="@+id/tv_name"
+                    android:background="@drawable/rounded_tv_vip"
+                    android:textColor="@color/color_white"
+                    android:layout_toRightOf="@+id/tv_age"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:text="23"
+                    android:textSize="7dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/rounded_tv_sex_women"
+                    android:textColor="@color/color_white"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/icon_women"
+                    android:drawablePadding="2dp"
+                    android:layout_below="@+id/tv_name"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_mile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.6km"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/location_blue"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableLeft="@drawable/icon_place"
                 />
 
-            <TextView
-                android:id="@+id/tv_vip"
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:text="SVIP2"
-                android:textSize="7dp"
-                android:layout_below="@+id/tv_name"
-                android:background="@drawable/rounded_tv_vip"
-                android:textColor="@color/color_white"
-                android:layout_toRightOf="@+id/tv_age"
-                android:layout_marginLeft="2dp"
-                android:gravity="center"
-                />
-
-            <TextView
-                android:id="@+id/tv_age"
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:text="23"
-                android:textSize="7dp"
-                android:layout_marginRight="2dp"
-                android:background="@drawable/rounded_tv_sex_women"
-                android:textColor="@color/color_white"
-                android:gravity="center"
-                android:drawableLeft="@drawable/icon_women"
-                android:drawablePadding="2dp"
-                android:layout_below="@+id/tv_name"
-                />
         </RelativeLayout>
+
         <TextView
-            android:id="@+id/tv_mile"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1.6km"
-            android:textSize="@dimen/act_item_font_size"
-            android:textColor="@color/home_sex_man_color"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:drawableLeft="@drawable/icon_place"
+            android:layout_below="@+id/rl_user_info"
+            android:text="最近都不太想动"
+            android:textColor="@color/home_title_color"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="12dp"
             />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/tv_content"
+            >
+            <RelativeLayout
+                android:id="@+id/rl_img1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_img1"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_img2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/iv_img1"
+                    />
+
+            </RelativeLayout>
+
+            <com.yapin.shanduo.widget.MyGridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:numColumns="3"
+                android:visibility="gone"
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                >
+
+            </com.yapin.shanduo.widget.MyGridView>
+
+            <TextView
+                android:id="@+id/tv_publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:text="刚刚发布"
+                android:textSize="10dp"
+                android:textColor="@color/font_color_gray"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tv_content"
+        android:id="@+id/tv_gray"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_tag"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:text="最近都不太想动"
-        android:textColor="@color/font_color_gray"
-        android:textSize="14sp"
+        android:layout_height="2dp"
+        android:layout_below="@+id/rl_trend_info"
+        android:background="@color/bg_color"
         />
 
     <RelativeLayout
-        android:id="@+id/rl_img"
+        android:id="@+id/rl_like"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_content"
-        android:layout_marginBottom="2dp"
+        android:layout_below="@+id/tv_gray"
+        android:paddingTop="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="8dp"
+        android:background="@color/color_white"
         >
-
-        <ImageView
-            android:id="@+id/iv_img1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/good7"
-            android:scaleType="fitXY"
-            />
-
-        <ImageView
-            android:id="@+id/iv_img2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/good7"
-            android:scaleType="fitXY"
-            android:layout_centerHorizontal="true"
-            />
-
-        <ImageView
-            android:id="@+id/iv_img3"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/good7"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_img"
-        android:gravity="center"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        >
-
-        <ImageView
-            android:id="@+id/iv_good"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_good"
-            android:layout_marginLeft="4dp"
-            />
 
         <ImageView
             android:id="@+id/iv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_comment"
-            android:layout_toRightOf="@+id/iv_good"
-            android:layout_marginLeft="15dp"
+            android:src="@drawable/icon_gray_comment"
+            android:layout_marginTop="2dp"
             />
 
-        <ImageView
-            android:id="@+id/iv_trend_forward"
+        <TextView
+            android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_trend_forward"
+            android:text="863"
             android:layout_toRightOf="@+id/iv_comment"
-            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:textSize="10dp"
+            android:textColor="@color/font_color_gray"
             />
 
         <ImageView
-            android:id="@+id/iv_trend_more"
+            android:id="@+id/iv_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_horizontal_more"
-            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_gray_like"
+            android:layout_toRightOf="@+id/tv_comment"
+            android:layout_marginLeft="12dp"
             android:layout_centerVertical="true"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="134"
+            android:layout_toRightOf="@+id/iv_like"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:textSize="10dp"
+            android:textColor="@color/font_color_gray"
+            />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_gray_forward"
+            android:layout_alignParentRight="true"
             />
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/rl_like"
+        android:background="@color/bg_color"
+        />
 
 </RelativeLayout>

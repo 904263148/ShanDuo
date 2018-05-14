@@ -15,4 +15,6 @@
 
     <dimen name="home_align_bottom">3dp</dimen>
     <dimen name="home_title_size">12dp</dimen>
+
+    <dimen name="title_size">18sp</dimen>
 </resources>

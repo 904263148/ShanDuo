@@ -1,13 +1,9 @@
 package com.yapin.shanduo.ui.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -31,7 +27,6 @@ import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
-import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
@@ -106,13 +101,15 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
         initView();
 
-        Utils.checkPermission(activity);
-
     }
 
     public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = this;
+
+        Utils.checkPermission(activity);
+
+        Utils.setLocation(context);
 
         viewPager.setCurrentItem(0, false);
         viewPager.setOffscreenPageLimit(5);
@@ -304,4 +301,5 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
             return;
         }
     }
+
 }

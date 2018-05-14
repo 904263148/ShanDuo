@@ -18,11 +18,10 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-feature android:name="android.hardware.Camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -68,7 +67,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="380003ad22c77846268687091133613c" />
@@ -288,10 +286,8 @@
         <activity android:name=".im.ui.ImagePreviewActivity" />
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
         <activity android:name=".ui.activity.AddactivityActivity" />
-        <activity android:name=".ui.activity.MywalletActivity"/>
-        <activity android:name=".ui.activity.MapGaodeActivity"/>
-
-
+        <activity android:name=".ui.activity.MywalletActivity" />
+        <activity android:name=".ui.activity.MapGaodeActivity" />
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data
@@ -348,6 +344,8 @@
         </receiver>
 
         <activity android:name=".ui.activity.ScanActivity" />
+        <activity android:name=".ui.activity.MyCodeActivity" />
+        <activity android:name=".ui.activity.TrendInfoActivity"></activity>
         <activity android:name=".ui.activity.MyCodeActivity"></activity>
         <activity android:name=".ui.activity.PublishingdynamicsActivity" />
     </application>

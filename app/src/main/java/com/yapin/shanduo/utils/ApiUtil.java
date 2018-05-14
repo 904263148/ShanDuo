@@ -32,4 +32,10 @@ public class ApiUtil {
     //参加活动
     public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/participateActivities";
 
+    //首页轮播
+    public final static String HOME_CAROUSEL = ConfigUtil.configUrl() +"/jcarousel/carouselList";
+
+    //图片url
+    public final static String IMG_URL = ConfigUtil.configUrl() +"/picture/";
+
 }

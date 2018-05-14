@@ -2,11 +2,13 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 
 import java.util.List;
@@ -37,10 +39,17 @@ public class MyViewPagerAdapter extends PagerAdapter {
     }
 
     @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView vp_iv = new ImageView(context);
-        vp_iv.setScaleType(ImageView.ScaleType.FIT_XY);
-        GlideUtil.load(context ,activity , list.get(position) ,vp_iv , 20);
+
+        ImageView vp_iv= new ImageView(context);
+            vp_iv.setScaleType(ImageView.ScaleType.FIT_XY);
+            GlideUtil.load(context ,activity , ApiUtil.IMG_URL + list.get(position) ,vp_iv , 10);
+
         container.addView(vp_iv);
         return vp_iv;
     }
@@ -49,4 +58,5 @@ public class MyViewPagerAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
     }
+
 }
