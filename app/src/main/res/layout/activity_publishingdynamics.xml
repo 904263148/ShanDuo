@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_color">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="96px"
+        android:paddingLeft="15dp"
+        android:paddingRight="16dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorAccent"
+        >
+
+        <TextView
+            android:id="@+id/tv_pd_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:text="@string/cancel"
+            android:textSize="20dp"
+             />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textColor="@color/mainfont"
+            android:text="动态发布"
+            />
+
+        <TextView
+            android:id="@+id/tv_pd_Publish"
+            android:layout_gravity="right|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"
+            android:textColor="@color/signin"
+            android:textSize="20dp"
+            />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_pd_text"
+        android:textColor="@color/textview_text"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:text="说说你觉得有趣儿的事吧！"
+        android:paddingLeft="15dp"
+        android:paddingTop="18dp"
+        android:textSize="15dp"
+        android:background="@color/colorAccent"
+
+        />
+
+    <FrameLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="19dp"
+        android:paddingBottom="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        >
+
+
+        <LinearLayout
+            android:id="@+id/ll_textview_camera"
+            android:background="@drawable/imagebutton_shape"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/icon_camera"
+            android:text="拍照/相册"
+            />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="right|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/ib_pd_Expression"
+            android:background="@color/colorAccent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_expression"
+            />
+
+            <ImageButton
+                android:id="@+id/ib_pd_Location"
+                android:layout_marginLeft="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
+                android:src="@drawable/icon_activity_location"
+                />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>

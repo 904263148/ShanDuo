@@ -349,6 +349,7 @@
 
         <activity android:name=".ui.activity.ScanActivity" />
         <activity android:name=".ui.activity.MyCodeActivity"></activity>
+        <activity android:name=".ui.activity.PublishingdynamicsActivity" />
     </application>
 
 </manifest>

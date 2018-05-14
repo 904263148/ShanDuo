@@ -63,4 +63,11 @@
 
     <color name="signin">#4660FF</color>
 
+    <color name="imagebutton">#eaeaea</color>
+    <color name="textview_text">#c6c6c6</color>
+
+    <color name="mainfont">#333333</color>
+
+    <color name="yablack">#666666</color>
+
 </resources>

@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class AddactivityModelImpl implements AddactivityModel {
     @Override
-    public void load(final OnLoadListener<String> listener, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat) {
+    public void load(final OnLoadListener<String> listener, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -42,6 +42,7 @@ public class AddactivityModelImpl implements AddactivityModel {
         params.put("activityCutoffTime",activityCutoffTime);
         params.put("lon",lon);
         params.put("lat",lat);
+        params.put("detailedAddress",detailedAddress);
 
         OkHttp.post(context, ApiUtil.ADD_ACTIVITY, params, new JavaOkCallback() {
             @Override

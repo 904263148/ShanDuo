@@ -32,7 +32,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('F:/ShanDuo/app/keystore.jks')
+            storeFile file('G:/as/ShanDuo/app/keystore.jks')
             storePassword 'shanduo'
             keyAlias 'shanduo'
             keyPassword 'shanduo'
@@ -40,7 +40,7 @@ android {
 //            v2SigningEnabled false
         }
         debug {
-            storeFile file('F:/ShanDuo/app/keystore_debug.jks')
+            storeFile file('G:/as/ShanDuo/app/keystore_debug.jks')
             storePassword 'shanduo'
             keyAlias 'shanduo'
             keyPassword 'shanduo'

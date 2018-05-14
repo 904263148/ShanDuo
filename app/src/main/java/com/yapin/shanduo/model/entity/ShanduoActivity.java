@@ -20,23 +20,8 @@ public class ShanduoActivity implements Parcelable {
     private String activityCutoffTime;      //活动报名截止时间
     private String lon;     //经度
     private String lat;     //维度
+    private String detailedAddress;     //详细地址
 
-    @Override
-    public String toString() {
-        return "ShanduoActivity{" +
-                "token='" + token + '\'' +
-                ", activityType='" + activityType + '\'' +
-                ", activityStartTime='" + activityStartTime + '\'' +
-                ", activityAddress='" + activityAddress + '\'' +
-                ", mode='" + mode + '\'' +
-                ", manNumber='" + manNumber + '\'' +
-                ", womanNumber='" + womanNumber + '\'' +
-                ", remarks='" + remarks + '\'' +
-                ", activityCutoffTime='" + activityCutoffTime + '\'' +
-                ", lon='" + lon + '\'' +
-                ", lat='" + lat + '\'' +
-                '}';
-    }
 
     public String getToken() {
         return token;
@@ -126,8 +111,33 @@ public class ShanduoActivity implements Parcelable {
         this.lat = lat;
     }
 
-    public ShanduoActivity(String token, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat) {
+    public String getDetailedAddress() {
+        return detailedAddress;
+    }
 
+    public void setDetailedAddress(String detailedAddress) {
+        this.detailedAddress = detailedAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "ShanduoActivity{" +
+                "token='" + token + '\'' +
+                ", activityType='" + activityType + '\'' +
+                ", activityStartTime='" + activityStartTime + '\'' +
+                ", activityAddress='" + activityAddress + '\'' +
+                ", mode='" + mode + '\'' +
+                ", manNumber='" + manNumber + '\'' +
+                ", womanNumber='" + womanNumber + '\'' +
+                ", remarks='" + remarks + '\'' +
+                ", activityCutoffTime='" + activityCutoffTime + '\'' +
+                ", lon='" + lon + '\'' +
+                ", lat='" + lat + '\'' +
+                ", detailedAddress='" + detailedAddress + '\'' +
+                '}';
+    }
+
+    public ShanduoActivity(String token, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat, String detailedAddress) {
         this.token = token;
         this.activityType = activityType;
         this.activityStartTime = activityStartTime;
@@ -139,6 +149,7 @@ public class ShanduoActivity implements Parcelable {
         this.activityCutoffTime = activityCutoffTime;
         this.lon = lon;
         this.lat = lat;
+        this.detailedAddress = detailedAddress;
     }
 
     @Override
@@ -159,6 +170,7 @@ public class ShanduoActivity implements Parcelable {
         dest.writeString(this.activityCutoffTime);
         dest.writeString(this.lon);
         dest.writeString(this.lat);
+        dest.writeString(this.detailedAddress);
     }
 
     protected ShanduoActivity(Parcel in) {
@@ -173,6 +185,7 @@ public class ShanduoActivity implements Parcelable {
         this.activityCutoffTime = in.readString();
         this.lon = in.readString();
         this.lat = in.readString();
+        this.detailedAddress = in.readString();
     }
 
     public static final Creator<ShanduoActivity> CREATOR = new Creator<ShanduoActivity>() {

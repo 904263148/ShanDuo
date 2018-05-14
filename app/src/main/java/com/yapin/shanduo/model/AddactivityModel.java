@@ -8,6 +8,6 @@ import com.yapin.shanduo.presenter.OnLoadListener;
 
 public interface AddactivityModel {
 
-    void load(OnLoadListener<String> listener, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat);
+    void load(OnLoadListener<String> listener, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress);
 
 }

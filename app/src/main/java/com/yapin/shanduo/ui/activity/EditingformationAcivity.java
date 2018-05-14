@@ -1,11 +1,11 @@
 package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -131,7 +131,9 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
 
+
                             String gender= modify_tv_rg.getText().toString().trim();
+
                             presenter.modify("",gender,"","","","","","");
                         }
                     });
@@ -213,7 +215,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                             break;
                 case R.id.tv_Personalitysignature:
                     AlertDialog.Builder builder3 = new AlertDialog.Builder(activity);
-                    builder3.setTitle("请输入你要修改的昵称");
+                    builder3.setTitle("请输入你要修改的");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
                     View view1 = LayoutInflater.from(activity).inflate(R.layout.personalitysignature, null);
                     //    设置我们自己定义的布局文件作为弹出框的Content

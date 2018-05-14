@@ -28,7 +28,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:checkedButton="@id/rb_activity"
             android:gravity="center"
             >
 

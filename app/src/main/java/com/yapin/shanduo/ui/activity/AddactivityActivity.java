@@ -1,12 +1,12 @@
 package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,12 +44,16 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     TextView tv_add_starttime;
     @BindView(R.id.tv_add_Deadline)
     TextView tv_add_Deadline;
+    @BindView(R.id.tv_add_timedate)
+    TextView tv_add_timedate;
     @BindView(R.id.et_add_Modeofconsumption)
     TextView et_add_Modeofconsumption;
-    @BindView(R.id.et_add_Remarks)
-    EditText et_add_Remarks;
+    @BindView(R.id.et_add_title_remarks)
+    EditText et_add_title_remarks;
     @BindView(R.id.but_add_Releaseactivities)
     Button but_add_Releaseactivities;
+    @BindView(R.id.tv_add_place_remarks)
+    TextView tv_add_place_remarks;
 
     String activityCutoffTime;
     String activityStartTime;
@@ -62,6 +66,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     String womanNumber;
     String activityType;
     String textlonlat;
+    String detailedAddress;
 
     private Addactivitypresenter presenter;
     private Context context;
@@ -114,22 +119,6 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
             }
         });
 
-        tv_add_Deadline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
-                dateTimePicKDialog.dateTimePicKDialog(tv_add_Deadline, 0, true);
-            }
-        });
-
-        tv_add_starttime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
-                dateTimePicKDialog.dateTimePicKDialog(tv_add_starttime, 0, true);
-            }
-        });
-
         tv_add_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,7 +138,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
 //            data.getStringExtra("textTitle");
             setText(data.getStringExtra("textTitle"));
             textlonlat = data.getStringExtra("textlonlat");
-            Log.i("test","/n地址是："+tv_add_place+"/n经纬度是："+textlonlat);
+//            Log.i("test","/n地址是："+tv_add_place+"/n经纬度是："+textlonlat);
         }
     }
     //绑定定位选择的数据
@@ -163,7 +152,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
 
     }
 
-    @OnClick({R.id.but_add_Releaseactivities })
+    @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_timedate })
     public void onClick(View view){
 //        activityType ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
         switch (view.getId()) {
@@ -172,19 +161,61 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                 String []ary = textlonlat.split("\\,");
                 lat=ary[0];
                 lon=ary[1];
-                Log.i("test","/n经度："+lon+"/n纬度："+lat);
+//                Log.i("test","/n经度："+lon+"/n纬度："+lat);
                 activityType = et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
                 manNumber = et_add_Numberofboys.getText().toString().trim();
-
+                detailedAddress = tv_add_place_remarks.getText().toString().trim();
                 activityAddress = tv_add_place.getText().toString().trim();
-                remarks = et_add_Remarks.getText().toString().trim();
+                remarks = et_add_title_remarks.getText().toString().trim();
 
                 activityCutoffTime =tv_add_Deadline.getText().toString().trim();
                 activityStartTime=tv_add_starttime.getText().toString().trim();
 
-                presenter.addactivity(activityType,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat);
+                presenter.addactivity(activityType,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
                 break;
+
+            case R.id.tv_add_timedate:
+                final android.support.v7.app.AlertDialog.Builder builder2 = new android.support.v7.app.AlertDialog.Builder(activity);
+                final String[] emotion = {"请选择活动开始时间", "请选择活动报名截止时间"};
+                //    设置一个单项选择下拉框
+                builder2.setSingleChoiceItems(emotion, 3, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+
+//                        Toast.makeText(activity, "你选择的是：" + emotion[which], Toast.LENGTH_SHORT).show();
+                        if (which == 0){
+                        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
+                        dateTimePicKDialog.dateTimePicKDialog(tv_add_starttime, 0, true);
+                    }else {
+                        DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
+                        dateTimePicKDialog.dateTimePicKDialog(tv_add_Deadline, 0, true);
+                        }
+                    }
+                });
+                builder2.setPositiveButton("确定", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+//                        activityCutoffTime =tv_add_Deadline.getText().toString().trim();
+//                        activityStartTime=tv_add_starttime.getText().toString().trim();
+//                         tv_add_timedate.getText().toString().trim();
+//                         tv_add_Deadline.getText().toString().trim();
+                    }
+                });
+//                builder2.setNegativeButton("取消", new DialogInterface.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which)
+//                    {
+//                    }
+//                });
+
+                builder2.show();
+
         }
 
     }

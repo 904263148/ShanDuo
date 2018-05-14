@@ -458,6 +458,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 //在Intent对象当中添加一个键值对
                 intent.putExtra("textTitle",textTitle+","+textSubTitle);
                 intent.putExtra("textlonlat",textlonlat);
+                intent.putExtra("textSubTitle",textSubTitle);
                 setResult(RESULT_OK , intent);
                 finish();
 

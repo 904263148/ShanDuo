@@ -27,7 +27,6 @@ import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.adapter.ActivityTabAdapter;
 import com.yapin.shanduo.ui.adapter.ImageHomeAdapter;
 import com.yapin.shanduo.ui.adapter.MyViewPagerAdapter;
-import com.yapin.shanduo.ui.inter.HomeActFragmentRefresh;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.Utils;
@@ -67,8 +66,6 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     private MyViewPagerAdapter myViewPagerAdapter;
 
     private ActivityTabAdapter adapter;
-
-    private HomeActFragmentRefresh fragmentRefresh;
 
     private ActivityFragment activityFragment;
 
