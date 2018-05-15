@@ -31,7 +31,7 @@ public class HomeCarouselModelImpl implements HomeCarouselLoadModel{
             return;
         }
         Map<String,String> params = new HashMap<>();
-        OkHttp.get(context, "http://192.168.1.166:8080/shanduoparty/jcarousel/carouselList", params, new JavaOkCallback() {
+        OkHttp.get(context, ApiUtil.HOME_CAROUSEL, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
                 listener.onError(msg);

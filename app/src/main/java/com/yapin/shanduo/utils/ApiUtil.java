@@ -38,6 +38,9 @@ public class ApiUtil {
     //图片url
     public final static String IMG_URL = ConfigUtil.configUrl() +"/picture/";
 
+    //点赞
+    public final static String PRESS_LIKE = ConfigUtil.configUrl() +"/jdynamic/ispraise";
+
     //发布动态
     public final static String ADD_Publishingdynamics = ConfigUtil.configUrl() +"/jdynamic/savedynamic";
 

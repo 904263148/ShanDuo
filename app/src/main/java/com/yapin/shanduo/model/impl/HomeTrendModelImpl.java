@@ -40,7 +40,7 @@ public class HomeTrendModelImpl implements HomeTrendLoadModel{
         params.put("lon" , lon);
         params.put("page" , page);
         params.put("pageSize" ,pageSize);
-        OkHttp.post(context, "http://192.168.1.166:8080/shanduoparty/jdynamic/homeList", params, new JavaOkCallback() {
+        OkHttp.post(context, ApiUtil.HOME_TREND, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
                 Log.d("trend_result" , msg);

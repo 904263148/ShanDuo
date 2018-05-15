@@ -7,6 +7,7 @@ import com.yapin.shanduo.model.LikeLoadModel;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
 import com.yapin.shanduo.presenter.OnLoadListener;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 
@@ -30,7 +31,7 @@ public class LikeModelImpl implements LikeLoadModel{
         Map<String, String> params = new HashMap<>();
         params.put("token", PrefUtil.getToken(context));
         params.put("dynamicId" , dynamicId);
-        OkHttp.get(context, "http://192.168.1.166:8080/shanduoparty/jdynamic/ispraise", params, new JavaOkCallback() {
+        OkHttp.get(context, ApiUtil.PRESS_LIKE, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
                 listener.onError(msg);

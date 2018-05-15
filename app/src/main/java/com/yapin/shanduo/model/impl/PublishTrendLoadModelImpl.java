@@ -3,7 +3,7 @@ package com.yapin.shanduo.model.impl;
 import android.content.Context;
 
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.PublishingdynamicsModel;
+import com.yapin.shanduo.model.PublishTrendLoadModel;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
 import com.yapin.shanduo.presenter.OnLoadListener;
@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by dell on 2018/5/14.
  */
 
-public class PublishingdynamicsModelImpl implements PublishingdynamicsModel {
+public class PublishTrendLoadModelImpl implements PublishTrendLoadModel {
     @Override
     public void load(final OnLoadListener<String> listener, String content, String picture, String lat, String lon) {
         Context context = ShanDuoPartyApplication.getContext();

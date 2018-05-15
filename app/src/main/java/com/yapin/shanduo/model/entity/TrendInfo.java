@@ -63,6 +63,15 @@ public class TrendInfo implements Parcelable {
         private String gender;//性别
         private double lon;
         private double lat;
+        private Integer dynamicCount;
+
+        public Integer getDynamicCount() {
+            return dynamicCount;
+        }
+
+        public void setDynamicCount(Integer dynamicCount) {
+            this.dynamicCount = dynamicCount;
+        }
 
         public double getLon() {
             return lon;
@@ -227,6 +236,7 @@ public class TrendInfo implements Parcelable {
             dest.writeString(this.gender);
             dest.writeDouble(this.lon);
             dest.writeDouble(this.lat);
+            dest.writeValue(this.dynamicCount);
         }
 
         protected Trend(Parcel in) {
@@ -247,6 +257,7 @@ public class TrendInfo implements Parcelable {
             this.gender = in.readString();
             this.lon = in.readDouble();
             this.lat = in.readDouble();
+            this.dynamicCount = (Integer) in.readValue(Integer.class.getClassLoader());
         }
 
         public static final Creator<Trend> CREATOR = new Creator<Trend>() {

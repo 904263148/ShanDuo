@@ -17,7 +17,6 @@ public class UploadPresenter implements UploadContract.Presenter{
     public void init(Context context , UploadContract.View view){
         this.context = context ;
         this.view = view ;
-        view.initView();
         loadModel = new UploadModelImpl();
     }
 
@@ -26,7 +25,7 @@ public class UploadPresenter implements UploadContract.Presenter{
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String data) {
-                view.success(data);
+                view.uploadSuccess(data);
             }
 
             @Override

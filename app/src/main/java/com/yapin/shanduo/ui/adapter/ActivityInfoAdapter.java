@@ -70,8 +70,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvKind.setText(list.get(position).getActivityType());
             holder.tvTime.setText(list.get(position).getActivityStartTime());
             holder.tvType.setText(list.get(position).getMode());
-            holder.tvMan.setText(list.get(position).getManSum() +"/" + list.get(position).getManNumber());
-            holder.tvWoman.setText(list.get(position).getWomenSum() +"/" + list.get(position).getWomanNumber());
+            holder.tvMan.setText(list.get(position).getManNumber());
+            holder.tvWoman.setText(list.get(position).getWomanNumber());
             holder.tvHost.setText(list.get(position).getUserName());
             holder.tvMemo.setText(list.get(position).getRemarks());
             holder.tvPlace.setText(list.get(position).getActivityAddress());

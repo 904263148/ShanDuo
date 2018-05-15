@@ -22,6 +22,7 @@ import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.HomeTrendPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.TrendInfoActivity;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeTrendContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
@@ -195,7 +196,9 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     @Override
     public void onItemClick(int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("trendInfo" , list.get(position));
+        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
     }
 
     @Override

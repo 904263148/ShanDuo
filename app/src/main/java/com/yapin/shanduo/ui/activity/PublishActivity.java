@@ -147,8 +147,8 @@ public class PublishActivity extends BaseActivity implements ShowPictureAdapter.
     }
 
     @Override
-    public void success(String data) {
-        ToastUtil.showShortToast(context , data);
+    public void uploadSuccess(String imgIds) {
+        ToastUtil.showShortToast(context , imgIds);
     }
 
     @Override

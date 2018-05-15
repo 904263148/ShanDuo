@@ -21,7 +21,6 @@
         android:layout_weight="1"
         android:layout_marginTop="21dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         >
 
         <TextView
@@ -33,7 +32,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_shanduo_friend"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -46,7 +45,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_wechat_coment"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -59,7 +58,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_wechat"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -72,7 +71,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_qq"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -85,7 +84,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_qzone"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -98,7 +97,7 @@
             android:gravity="center_horizontal"
             android:text="@string/share_sina"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
@@ -109,7 +108,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="17dp"
         >
@@ -123,17 +121,22 @@
             android:gravity="center_horizontal"
             android:text="@string/share_report"
             android:textSize="@dimen/share_font_size"
-            android:textColor="@color/home_title_color"
+            android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
             />
 
         <TextView
+            android:id="@+id/share_delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:textSize="12dp"
-            android:textColor="@color/home_title_color"
+            android:drawableTop="@drawable/icon_delete"
+            android:text="@string/share_delete"
+            android:textSize="@dimen/share_font_size"
+            android:textColor="@color/font_color_gray"
+            android:background="?android:attr/selectableItemBackground"
+            android:visibility="invisible"
             />
 
         <TextView

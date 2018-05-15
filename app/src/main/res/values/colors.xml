@@ -32,7 +32,7 @@
     <color name="home_title_select_color">#5169ff</color>
 
     <color name="bg_color">#F7F8FF</color>
-
+    <color name="replay_name_color">#4660ff</color>
 
     <!--IM-->
     <color name="background">#F9F7F8</color>

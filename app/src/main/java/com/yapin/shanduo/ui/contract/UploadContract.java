@@ -7,7 +7,7 @@ import java.util.List;
 public interface UploadContract {
 
     interface View extends BaseView{
-        void success(String data);
+        void uploadSuccess(String imgIds);
 
         void loading();
 

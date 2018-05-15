@@ -7,7 +7,7 @@ import com.yapin.shanduo.base.BaseView;
  * Created by dell on 2018/5/14.
  */
 
-public interface PublishingdynamicsContract {
+public interface PublishTrendContract {
 
     interface View extends BaseView {
 
@@ -23,7 +23,7 @@ public interface PublishingdynamicsContract {
     }
 
     interface Presenter extends BasePresenter {
-        void Publishingdynamics( String content, String picture, String lat, String lon);
+        void publish( String content, String picture, String lat, String lon);
     }
 
 

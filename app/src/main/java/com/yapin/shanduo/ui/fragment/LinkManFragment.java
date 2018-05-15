@@ -10,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tencent.TIMConversationType;
-import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
-import com.yapin.shanduo.ui.activity.PublishingdynamicsActivity;
+import com.yapin.shanduo.ui.activity.PublishTrendActivity;
 import com.yapin.shanduo.ui.activity.RegisterActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
@@ -73,7 +72,7 @@ public class LinkManFragment extends Fragment {
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
             case R.id.add_pd:
-                StartActivityUtil.start(activity , PublishingdynamicsActivity.class);
+                StartActivityUtil.start(activity , PublishTrendActivity.class);
                 break;
 
         }

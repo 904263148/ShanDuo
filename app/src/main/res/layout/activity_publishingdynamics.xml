@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
             android:text="@string/cancel"
-            android:textSize="20dp"
+            android:textSize="15dp"
              />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/mainfont"
             android:text="动态发布"
             />
@@ -39,14 +39,13 @@
             android:layout_height="wrap_content"
             android:text="发表"
             android:textColor="@color/signin"
-            android:textSize="20dp"
+            android:textSize="15dp"
             />
 
     </FrameLayout>
 
     <EditText
         android:id="@+id/tv_pd_text"
-
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="120dp"
@@ -56,44 +55,32 @@
         android:paddingTop="18dp"
         android:textSize="15dp"
         android:background="@color/colorAccent"
-
         />
     <!--android:textColor="@color/textview_text"-->
 
-    <FrameLayout
-        android:paddingLeft="15dp"
-        android:paddingRight="19dp"
-        android:paddingBottom="16dp"
-        android:layout_marginTop="1dp"
-        android:background="@color/colorAccent"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         >
 
-
-        <LinearLayout
-            android:id="@+id/ll_textview_camera"
-            android:background="@drawable/imagebutton_shape"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/icon_camera"
-            android:text="拍照/相册"
+        <com.yapin.shanduo.widget.ShowAllRecyclerView
+            android:id="@+id/rv_show"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:layout_toLeftOf="@+id/ll_icon"
             />
 
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_gravity="right|bottom"
+            android:id="@+id/ll_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/rv_show"
+            android:paddingLeft="10dp"
+            >
 
         <ImageButton
             android:id="@+id/ib_pd_Expression"
@@ -113,9 +100,6 @@
                 />
 
         </LinearLayout>
-
-    </FrameLayout>
-
-
+    </RelativeLayout>
 
 </LinearLayout>

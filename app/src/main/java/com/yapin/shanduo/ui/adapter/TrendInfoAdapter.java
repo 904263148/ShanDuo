@@ -87,6 +87,9 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvMile.setText(list.get(position).getLocation() + "km");
             holder.tvContent.setText(list.get(position).getContent());
 
+            holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
+            holder.tvLikeCount.setText(list.get(position).getPraise()+"");
+
             if (TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))) {
                 holder.tvVip.setVisibility(View.GONE);
             } else {
@@ -99,7 +102,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
-            holder.ivLike.setOnClickListener(new View.OnClickListener() {
+            holder.tvLikeCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (likeClickListener != null)
@@ -193,14 +196,6 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvPublishTime;
         @BindView(R.id.rl_trend_info)
         RelativeLayout rlTrendInfo;
-        @BindView(R.id.iv_comment)
-        ImageView ivComment;
-        @BindView(R.id.tv_comment)
-        TextView tvComment;
-        @BindView(R.id.iv_like)
-        ImageView ivLike;
-        @BindView(R.id.tv_like)
-        TextView tvLike;
         @BindView(R.id.iv_share)
         ImageView ivShare;
         @BindView(R.id.iv_img1)
@@ -209,6 +204,10 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ImageView ivImg2;
         @BindView(R.id.rl_img1)
         RelativeLayout rlImg1;
+        @BindView(R.id.tv_replay_count)
+        TextView tvRelayCount;
+        @BindView(R.id.tv_like_count)
+        TextView tvLikeCount;
 
         public ViewHolder(View itemView) {
             super(itemView);
