@@ -55,6 +55,7 @@ public class PublishingdynamicsActivity extends BaseActivity implements Publishi
     ImageButton ib_pd_Expression;
     @BindView(R.id.tv_pd_Publish)   //发表
     TextView tv_pd_Publish;
+    int i=0;
 
 
 
