@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:background="@color/color_gray">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/pop_layout"
@@ -35,6 +34,7 @@
             android:textSize="18sp" />
 
         <Button
+            android:layout_marginBottom="20dp"
             android:background="@color/colorAccent"
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"

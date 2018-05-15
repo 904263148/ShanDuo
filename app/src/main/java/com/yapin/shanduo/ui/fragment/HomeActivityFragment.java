@@ -35,7 +35,6 @@ import com.yapin.shanduo.ui.adapter.ActivityTabAdapter;
 import com.yapin.shanduo.ui.adapter.ImageHomeAdapter;
 import com.yapin.shanduo.ui.adapter.MyViewPagerAdapter;
 import com.yapin.shanduo.ui.contract.HomeCarouselContract;
-import com.yapin.shanduo.ui.inter.HomeActFragmentRefresh;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;

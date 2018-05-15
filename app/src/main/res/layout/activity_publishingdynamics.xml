@@ -44,19 +44,21 @@
 
     </FrameLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/tv_pd_text"
-        android:textColor="@color/textview_text"
+
         android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:text="说说你觉得有趣儿的事吧！"
+        android:hint="说说你觉得有趣儿的事吧！"
+        android:gravity="left|top"
         android:paddingLeft="15dp"
         android:paddingTop="18dp"
         android:textSize="15dp"
         android:background="@color/colorAccent"
 
         />
+    <!--android:textColor="@color/textview_text"-->
 
     <FrameLayout
         android:paddingLeft="15dp"

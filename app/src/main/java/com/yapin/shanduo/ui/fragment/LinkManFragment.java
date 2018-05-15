@@ -16,6 +16,7 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.PublishingdynamicsActivity;
 import com.yapin.shanduo.ui.activity.RegisterActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
@@ -53,7 +54,7 @@ public class LinkManFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.btn_go_chat1 , R.id.btn_go_chat2,R.id.login , R.id.register,R.id.modify})
+    @OnClick({R.id.btn_go_chat1 , R.id.btn_go_chat2,R.id.login , R.id.register,R.id.modify,R.id.add_pd})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_go_chat1:
@@ -70,6 +71,9 @@ public class LinkManFragment extends Fragment {
                 break;
             case R.id.modify:
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
+                break;
+            case R.id.add_pd:
+                StartActivityUtil.start(activity , PublishingdynamicsActivity.class);
                 break;
 
         }

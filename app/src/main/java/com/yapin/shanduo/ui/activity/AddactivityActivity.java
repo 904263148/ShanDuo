@@ -152,12 +152,14 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
 
     }
 
-    @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_timedate })
+    @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_timedate,R.id.tv_add_finish })
     public void onClick(View view){
 //        activityType ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
         switch (view.getId()) {
+            case R.id.tv_add_finish:
+                finish();
+                break;
             case R.id.but_add_Releaseactivities:
-
                 String []ary = textlonlat.split("\\,");
                 lat=ary[0];
                 lon=ary[1];
