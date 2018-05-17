@@ -84,7 +84,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge() + "");
 
-            holder.tvMile.setText(list.get(position).getLocation() + "km");
+            holder.tvMile.setText(list.get(position).getDistance() + "km");
             holder.tvContent.setText(list.get(position).getContent());
 
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
@@ -94,6 +94,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.tvVip.setVisibility(View.GONE);
             } else {
                 holder.tvVip.setText(Utils.vipLevel(list.get(position).getVip()));
+
             }
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override

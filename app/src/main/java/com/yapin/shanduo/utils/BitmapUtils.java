@@ -55,6 +55,33 @@ public class BitmapUtils {
     }
 
     /**
+     * 写图片文件到SD卡
+     *
+     * @param context  context
+     * @param filePath 文件路径
+     * @param fileName 文件名字
+     * @param bitmap   图片流
+     * @param quality  图片质量
+     * @throws IOException
+     */
+    public static boolean saveMapImageToSD(Context context, String filePath, String fileName, Bitmap bitmap, int quality) throws IOException {
+        if (bitmap == null || filePath == null || context == null || fileName == null)
+            return false;
+        FileUtil.mkDir(filePath);
+        File newFile = new File(filePath, fileName);
+        if (!newFile.exists()) {
+            newFile.createNewFile();
+        }
+        BufferedOutputStream bos = new BufferedOutputStream(
+                new FileOutputStream(newFile));
+        boolean b = bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
+        bos.flush();
+        bos.close();
+        ToastUtil.showShortToast(context, "图片已保存在" + filePath + "文件夹");
+        return b;
+    }
+
+    /**
      * 通知系统更新图片，让Gallery上能马上看到该图片
      *
      * @param context context

@@ -37,7 +37,7 @@ public class HomeActModelImpl implements HomeActLoadModel{
             return;
         }
         Map<String,String> params = new HashMap<>();
-        if(type.equals(3)){
+        if(type.equals("3")){
             params.put("token" , PrefJsonUtil.getProfile(context).getToken());
         }
         params.put("type",type);

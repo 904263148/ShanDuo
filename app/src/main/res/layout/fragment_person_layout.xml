@@ -204,7 +204,12 @@
             android:drawableLeft="@drawable/icon_setup"
             android:text="设置"/>
 
-
+        <Button
+            android:id="@+id/exit_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            />
 
     </LinearLayout>
 
@@ -301,8 +306,6 @@
 
 
     </LinearLayout>
-
-
 
 
 </LinearLayout>

@@ -10,6 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -81,6 +83,9 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
     private PopupWindow popupWindow;
     private View popView;
 
+    private PopupWindow publishPopupWindow;
+    private View publishPopView;
+
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
     @BindView(R.id.bottom_navigation)
@@ -90,6 +95,13 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
 
+    private boolean isPublish = false;
+
+    private final int PUBLISH_ACT_OPEN_LOGIN = 1;
+    private final int PUBLISH_TREND_OPEN_LOGIN = 2;
+
+    private final int OPEN_OTHER_ACTIVITY = 3;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +110,7 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
         //设置PopupWindow的View
         popView = LayoutInflater.from(this).inflate(R.layout.share_popup, null);
-
+        publishPopView = LayoutInflater.from(this).inflate(R.layout.publish_popupwindow , null);
         initView();
 
     }
@@ -114,6 +126,9 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         viewPager.setCurrentItem(0, false);
         viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+
+        publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
+        publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
 
     }
 
@@ -147,20 +162,28 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
             case R.id.rl_add:
 //                viewPager.setCurrentItem(2, false);
                 tvAdd.setTextColor(getResources().getColor(R.color.home_title_select_color));
-                ivHome.setImageResource(R.drawable.icon_home_unselect);
-                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
-                ivChat.setImageResource(R.drawable.icon_chat_unselect);
-                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
-                ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
-                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
-                ivMy.setImageResource(R.drawable.icon_my_unselect);
-                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                ivHome.setImageResource(R.drawable.icon_home_unselect);
+//                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                ivChat.setImageResource(R.drawable.icon_chat_unselect);
+//                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
+//                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                ivMy.setImageResource(R.drawable.icon_my_unselect);
+//                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
 
-                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
-                }else {
-                    StartActivityUtil.start(activity, AddactivityActivity.class);
-                }
+
+                Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_35);
+                rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
+                ivAdd.startAnimation(rotateAnimation);
+                isPublish = true;
+                openPublishPopup();
+//                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+//                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+//                }else {
+//                    StartActivityUtil.start(activity, AddactivityActivity.class);
+//                }
+
+
                 break;
             case R.id.ll_linkman:
                 viewPager.setCurrentItem(3, false);
@@ -205,9 +228,22 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
                 break;
             case R.id.share_report:
                 break;
+            case R.id.ll_publish_act:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , PUBLISH_ACT_OPEN_LOGIN);
+                }else {
+                    StartActivityUtil.start(activity , AddactivityActivity.class , OPEN_OTHER_ACTIVITY);
+                }
+                break;
+            case R.id.ll_publish_trend:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , PUBLISH_TREND_OPEN_LOGIN);
+                }else {
+                    StartActivityUtil.start(activity , PublishTrendActivity.class , OPEN_OTHER_ACTIVITY);
+                }
+                break;
         }
     }
-
 
     @Override
     public void openPopupWindow(Object object , int type) {
@@ -240,6 +276,26 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
         setPopupClick();
     }
+
+    public void openPublishPopup(){
+        publishPopupWindow = new PopupWindow(publishPopView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        //设置背景,这个没什么效果，不添加会报错
+        publishPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置点击弹窗外隐藏自身
+        publishPopupWindow.setFocusable(true);
+        publishPopupWindow.setOutsideTouchable(true);
+        //设置动画
+        publishPopupWindow.setAnimationStyle(R.style.PopupWindow);
+        //设置位置
+        publishPopupWindow.showAtLocation(ivAdd, Gravity.BOTTOM, 0, 200);
+        //设置消失监听
+        publishPopupWindow.setOnDismissListener(this);
+        //设置背景色
+        setBackgroundAlpha(0.5f);
+
+    }
+
 
     private void setPopupClick() {
         popView.findViewById(R.id.share_friend).setOnClickListener(this);
@@ -277,6 +333,12 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
+        if(isPublish){
+            Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_45);
+            rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
+            ivAdd.startAnimation(rotateAnimation);
+            isPublish = false;
+        }
     }
 
     @Override
@@ -299,6 +361,20 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode != RESULT_OK){
             return;
+        }
+        if(publishPopupWindow.isShowing() && publishPopupWindow != null){
+            publishPopupWindow.dismiss();
+        }
+        if(popupWindow.isShowing() && popupWindow != null){
+            popupWindow.dismiss();
+        }
+        switch (requestCode){
+            case PUBLISH_ACT_OPEN_LOGIN:
+                StartActivityUtil.start(activity , AddactivityActivity.class);
+                break;
+            case PUBLISH_TREND_OPEN_LOGIN:
+                StartActivityUtil.start(activity , PublishTrendActivity.class);
+                break;
         }
     }
 

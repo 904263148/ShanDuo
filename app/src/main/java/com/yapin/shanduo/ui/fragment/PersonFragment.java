@@ -14,7 +14,9 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.AddactivityActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,7 +55,7 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.modify,R.id.tv_MyDynamics})
+    @OnClick({R.id.modify,R.id.tv_addactivity , R.id.exit_login,R.id.tv_MyDynamics})
     public void onClick(View view){
         switch (view.getId()){
 //            case R.id.login :
@@ -67,6 +69,10 @@ public class PersonFragment extends Fragment {
                 break;
             case R.id.tv_MyDynamics:
                 StartActivityUtil.start(activity , MyDynamicsActivity.class);
+                break;
+            case R.id.exit_login:
+                PrefUtil.setToken(context ,"");
+                ToastUtil.showShortToast(context , "logout success");
                 break;
         }
     }

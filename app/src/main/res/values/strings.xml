@@ -66,6 +66,11 @@
     <string name="title_trend_info">动态详情</string>
     <string name="comment_place">评论区</string>
     <string name="toast_count_picture">最多选取9张图片</string>
+    <string name="publish_act">发活动</string>
+    <string name="publish_trend">发动态</string>
+    <string name="title_search">搜索</string>
+    <string name="title_link">通讯录</string>
+    <string name="title_search_friend">搜索好友</string>
 
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>

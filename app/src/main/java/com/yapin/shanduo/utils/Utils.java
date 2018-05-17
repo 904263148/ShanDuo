@@ -329,7 +329,7 @@ public class Utils {
     //判断vip等级
     public static String vipLevel(int level){
         String vipLevel = "";
-        if(level > 0 && level < 11){
+        if(level > 0 && level < 9){
             vipLevel = "VIP" +level;
         }
         if(level >= 11 ){

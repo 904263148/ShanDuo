@@ -1,72 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.LinkManFragment">
+    tools:context=".ui.fragment.LinkManFragment"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-
-
-    <Button
-        android:id="@+id/btn_go_chat1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GOCHAT1"
-        android:layout_centerInParent="true"
-        />
-
-    <Button
-        android:id="@+id/btn_go_chat2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GOCHAT2"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/btn_go_chat1"
-        />
-
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="48dp"
+        android:background="@color/white"
+        >
 
-        <Button
-            android:id="@+id/register"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:text="@string/sign_in"/>
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_in"/>
-
-        <Button
-            android:id="@+id/modify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="modify"
+            android:text="@string/title_link"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="@color/home_title_color"
             />
 
-        <Button
-            android:id="@+id/maptext"
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="maptext"/>
+            android:src="@drawable/icon_link_add"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/add_pd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="发布动态"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_text_bg"
         />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="horizontal"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tv_search"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/rounded_search"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_link_search"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_search_friend"
+                android:textSize="@dimen/egg_font_size"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/font_color_gray"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:background="@drawable/rounded_textview_home"
+            android:text="@string/title_search"
+            android:gravity="center"
+            android:textSize="@dimen/egg_font_size"
+            android:textColor="@color/white"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_text_bg"
+        />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@android:color/white"
+        android:layout_below="@+id/rl_ban"
+        app:tabIndicatorColor="@color/tab_indicator_color"
+        app:tabSelectedTextColor="@color/font_black_color"
+        app:tabTextColor="@color/font_gray_color"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabPadding="10dp"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

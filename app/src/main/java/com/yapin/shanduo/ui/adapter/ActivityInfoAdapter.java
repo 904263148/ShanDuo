@@ -15,6 +15,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.widget.FooterLoading;
@@ -67,7 +68,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         if(viewHolder instanceof ViewHolder){
             ViewHolder holder = (ViewHolder) viewHolder;
-            holder.tvKind.setText(list.get(position).getActivityType());
+            holder.tvKind.setText(list.get(position).getActivityName());
             holder.tvTime.setText(list.get(position).getActivityStartTime());
             holder.tvType.setText(list.get(position).getMode());
             holder.tvMan.setText(list.get(position).getManNumber());
@@ -76,8 +77,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvMemo.setText(list.get(position).getRemarks());
             holder.tvPlace.setText(list.get(position).getActivityAddress());
             holder.tvMile.setText(list.get(position).getLocation()+"km");
-            holder.tvEndTime.setText("截止日期:"+list.get(position).getActivityCutoffTime());
-            GlideUtil.load(context , activity , list.get(position).getHeadPortraitId() ,holder.ivHead);
+            holder.tvEndTime.setText("报名截止日期:"+list.get(position).getActivityCutoffTime());
+            GlideUtil.load(context , activity , ApiUtil.IMG_URL+ list.get(position).getHeadPortraitId() ,holder.ivHead);
 
             Drawable drawable = null;
             if ("0".equals(list.get(position).getGender())) {

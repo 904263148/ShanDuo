@@ -4,7 +4,9 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,16 @@ import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.PublishTrendActivity;
 import com.yapin.shanduo.ui.activity.RegisterActivity;
+import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
+import com.yapin.shanduo.ui.adapter.LinkTabAdapter;
+import com.yapin.shanduo.ui.adapter.TrendTabAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,8 +37,15 @@ import butterknife.OnClick;
  */
 public class LinkManFragment extends Fragment {
 
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+
     private Context context;
     private Activity activity;
+
+    private LinkTabAdapter adapter;
 
     public static LinkManFragment newInstance() {
         LinkManFragment fragment = new LinkManFragment();
@@ -48,34 +65,28 @@ public class LinkManFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_linkman_layout,container,false);
         ButterKnife.bind(this,view);
-        context = ShanDuoPartyApplication.getContext();
-        activity = getActivity();
+        initView();
         return view;
     }
 
-    @OnClick({R.id.btn_go_chat1 , R.id.btn_go_chat2,R.id.login , R.id.register,R.id.modify,R.id.add_pd})
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.btn_go_chat1:
-                ChatActivity.navToChat(activity , "456789" , TIMConversationType.C2C);
-                break;
-            case R.id.btn_go_chat2:
-                ChatActivity.navToChat(activity , "123456789" , TIMConversationType.C2C);
-                break;
-            case R.id.login :
-                StartActivityUtil.start(activity , LoginActivity.class);
-                break;
-            case R.id.register:
-                StartActivityUtil.start(activity , RegisterActivity.class);
-                break;
-            case R.id.modify:
-                StartActivityUtil.start(activity , EditingformationAcivity.class);
-                break;
-            case R.id.add_pd:
-                StartActivityUtil.start(activity , PublishTrendActivity.class);
-                break;
+    public void initView(){
+        context = ShanDuoPartyApplication.getContext();
+        activity = getActivity();
 
-        }
+        List<String> tabList = new ArrayList<>();
+        tabList.add("我的好友");
+        tabList.add("我的群组");
+
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(new LinkTabAdapter(getChildFragmentManager(), tabList));
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                Utils.setIndicator(tabLayout , 55 , 55);
+            }
+        });
+
     }
 
 }

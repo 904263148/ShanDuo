@@ -21,7 +21,46 @@
             android:background="?android:attr/selectableItemBackground"
             />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
+            
+            <RelativeLayout
+                android:id="@+id/rl_act"
+                android:layout_width="63dp"
+                android:layout_height="28dp"
+                android:background="@drawable/rounded_home"
+                >
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_home_act"
+                    android:layout_centerInParent="true"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_trend"
+                android:layout_width="63dp"
+                android:layout_height="28dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_home_trend"
+                    android:layout_centerInParent="true"
+                    />
+
+            </RelativeLayout>
+            
+        </LinearLayout>
+        
+        
         <RadioGroup
             android:id="@+id/rg_title"
             android:layout_width="wrap_content"
@@ -30,6 +69,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:checkedButton="@+id/rb_activity"
+            android:visibility="gone"
             >
 
             <RadioButton
@@ -72,11 +112,19 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_text_bg"
+        android:layout_below="@+id/rl_title"
+        />
+
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rl_title"
+        android:layout_below="@+id/tv_tag"
         />
 
 </RelativeLayout>

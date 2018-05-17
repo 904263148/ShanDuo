@@ -81,6 +81,8 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
     private HomeCarouselPresenter presenter;
 
+    private final int OPEN_LOGIN = 1;
+
     public static HomeActivityFragment newInstance() {
         HomeActivityFragment fragment = new HomeActivityFragment();
         Bundle args = new Bundle();
@@ -132,7 +134,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if(tab.getPosition() == 2 && TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class);
+                    StartActivityUtil.start(activity ,HomeActivityFragment.this , LoginActivity.class ,OPEN_LOGIN);
                 }
             }
 
@@ -177,6 +179,16 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
         };
         localBroadcastManager.registerReceiver(br, intentFilter);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != activity.RESULT_OK) {
+            viewPager.setCurrentItem(0);
+            return;
+        }
 
     }
 

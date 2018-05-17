@@ -57,7 +57,7 @@ public class ActivityInfo implements Parcelable {
 
 		private String userName; //用户昵称
 
-		private String activityName;
+		private String activityName;//标题
 
 		private String mode; //消费方式
 
@@ -95,9 +95,25 @@ public class ActivityInfo implements Parcelable {
 
 		private String gender; //性别：0:女 1:男
 
-		private Integer manSum; //参加活动男生数量
+		private Integer vipGrade; //会员等级
 
-		private Integer womenSum; //参加活动女生数量
+		private Integer evaluationSign; // 评价标识
+
+		public Integer getVipGrade() {
+			return vipGrade;
+		}
+
+		public void setVipGrade(Integer vipGrade) {
+			this.vipGrade = vipGrade;
+		}
+
+		public Integer getEvaluationSign() {
+			return evaluationSign;
+		}
+
+		public void setEvaluationSign(Integer evaluationSign) {
+			this.evaluationSign = evaluationSign;
+		}
 
 		public String getGender() {
 			return gender;
@@ -105,22 +121,6 @@ public class ActivityInfo implements Parcelable {
 
 		public void setGender(String gender) {
 			this.gender = gender;
-		}
-
-		public Integer getManSum() {
-			return manSum;
-		}
-
-		public void setManSum(Integer manSum) {
-			this.manSum = manSum;
-		}
-
-		public Integer getWomenSum() {
-			return womenSum;
-		}
-
-		public void setWomenSum(Integer womenSum) {
-			this.womenSum = womenSum;
 		}
 
 		public String getId() {
@@ -315,8 +315,8 @@ public class ActivityInfo implements Parcelable {
 			dest.writeDouble(this.lat);
 			dest.writeDouble(this.location);
 			dest.writeString(this.gender);
-			dest.writeValue(this.manSum);
-			dest.writeValue(this.womenSum);
+			dest.writeValue(this.vipGrade);
+			dest.writeValue(this.evaluationSign);
 		}
 
 		protected Act(Parcel in) {
@@ -342,8 +342,8 @@ public class ActivityInfo implements Parcelable {
 			this.lat = in.readDouble();
 			this.location = in.readDouble();
 			this.gender = in.readString();
-			this.manSum = (Integer) in.readValue(Integer.class.getClassLoader());
-			this.womenSum = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.vipGrade = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.evaluationSign = (Integer) in.readValue(Integer.class.getClassLoader());
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

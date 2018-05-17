@@ -19,20 +19,16 @@ android {
             // 如果您使用的是商业版，只能使用 armeabi 架构，即：
             // abiFilters "armeabi",
         }
-        aaptOptions {
-            cruncherEnabled = false
-        }
 
         manifestPlaceholders = [
                 XG_ACCESS_ID : "2100283798",
                 XG_ACCESS_KEY: "A7E6HU858LWF",
         ]
-        multiDexEnabled = true
     }
 
     signingConfigs {
         release {
-            storeFile file('G:/as/ShanDuo/app/keystore.jks')
+            storeFile file('F:/ShanDuo/app/keystore.jks')
             storePassword 'shanduo'
             keyAlias 'shanduo'
             keyPassword 'shanduo'
@@ -40,7 +36,7 @@ android {
 //            v2SigningEnabled false
         }
         debug {
-            storeFile file('G:/as/ShanDuo/app/keystore_debug.jks')
+            storeFile file('F:/ShanDuo/app/keystore_debug.jks')
             storePassword 'shanduo'
             keyAlias 'shanduo'
             keyPassword 'shanduo'
@@ -52,13 +48,6 @@ android {
             buildConfigField("String", "BASE_API", project.BASE_API_PRODUCT)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            lintOptions {
-
-                checkReleaseBuilds false
-
-                abortOnError false
-
-            }
             signingConfig signingConfigs.release
         }
         debug {
@@ -139,4 +128,7 @@ dependencies {
     implementation 'com.tencent.mid:mid:4.0.6-release'
     //扫码
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
+
+    //汉字转拼音
+    implementation 'com.belerweb:pinyin4j:2.5.0'
 }

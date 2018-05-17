@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -21,7 +20,6 @@ import com.yapin.shanduo.ui.contract.RegisterContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
 import com.yapin.shanduo.utils.ToastUtil;
-import com.yapin.shanduo.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -157,7 +155,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
             public void onFinish() {
                 tvCode.setEnabled(true);
                 tvCode.setText(context.getString(R.string.reg_get_check));
-                tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim));
+                tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim_login));
             }
         }.start();
     }
@@ -186,7 +184,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         if (type == Constants.IS_CODE) {
             tvCode.setEnabled(true);
             tvCode.setText(context.getString(R.string.reg_get_check));
-            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim));
+            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim_login));
         }
         ToastUtil.showShortToast(context , "网络连接异常");
         dialog.dismiss();
@@ -197,7 +195,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         if (type == Constants.IS_CODE) {
             tvCode.setEnabled(true);
             tvCode.setText(context.getString(R.string.reg_get_check));
-            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim));
+            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim_login));
         }
         ToastUtil.showShortToast(context,msg);
         dialog.dismiss();
@@ -208,7 +206,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         if (type == Constants.IS_CODE) {
             tvCode.setEnabled(true);
             tvCode.setText(context.getString(R.string.reg_get_check));
-            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim));
+            tvCode.setBackground(context.getDrawable(R.drawable.rounded_confrim_login));
         }
         ToastUtil.showShortToast(context , msg);
         dialog.dismiss();

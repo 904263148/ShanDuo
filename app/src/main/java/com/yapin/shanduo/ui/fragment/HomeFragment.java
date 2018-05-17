@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
@@ -36,6 +37,10 @@ public class HomeFragment extends Fragment{
     AHBottomNavigationViewPager viewPager;
     @BindView(R.id.rg_title)
     RadioGroup radioGroup;
+    @BindView(R.id.rl_act)
+    RelativeLayout rlAct;
+    @BindView(R.id.rl_trend)
+    RelativeLayout rlTrend;
 
     private Context context;
     private Activity activity;
@@ -83,11 +88,21 @@ public class HomeFragment extends Fragment{
 
     }
 
-    @OnClick({R.id.btn_scan})
+    @OnClick({R.id.btn_scan ,R.id.rl_act , R.id.rl_trend})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
                 StartActivityUtil.start(activity ,this , ScanActivity.class , OPEN_SCAN);
+                break;
+            case R.id.rl_act:
+                rlAct.setBackground(activity.getResources().getDrawable(R.drawable.rounded_home));
+                rlTrend.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                viewPager.setCurrentItem(0,false);
+                break;
+            case R.id.rl_trend:
+                rlTrend.setBackground(activity.getResources().getDrawable(R.drawable.rounded_home));
+                rlAct.setBackgroundColor(activity.getResources().getColor(R.color.white));
+                viewPager.setCurrentItem(1,false);
                 break;
         }
     }

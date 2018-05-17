@@ -90,6 +90,7 @@ public class TrendInfoActivity extends BaseActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trend_info);
+
         ButterKnife.bind(this);
         trend = getIntent().getParcelableExtra("trendInfo");
         initView();
@@ -98,6 +99,8 @@ public class TrendInfoActivity extends BaseActivity{
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = this;
+
+        setIsEvent(Constants.IS_EVENT);
 
         GlideUtil.load(context, activity, trend.getPortraitId(), ivHead);
         tvName.setText(trend.getName());
@@ -115,11 +118,11 @@ public class TrendInfoActivity extends BaseActivity{
         tvAge.setCompoundDrawablePadding(2);
         tvAge.setText(trend.getAge() + "");
 
-        tvMile.setText(trend.getLocation() + "km");
+        tvMile.setText(trend.getDistance() + "km");
         tvContent.setText(trend.getContent());
 
         tvReplayCount.setText(trend.getDynamicCount()+"");
-        tvCommentCount.setText(trend.getDynamicCount()+"");
+        tvCommentCount.setText("("+trend.getDynamicCount()+")");
         tvLikeCount.setText(trend.getPraise()+"");
 
         if (TextUtils.isEmpty(Utils.vipLevel(trend.getVip()))) {
@@ -155,10 +158,13 @@ public class TrendInfoActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.iv_share})
+    @OnClick({R.id.iv_share , R.id.rl_back})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_share:
+                break;
+            case R.id.rl_back:
+                onBackPressed();
                 break;
         }
     }

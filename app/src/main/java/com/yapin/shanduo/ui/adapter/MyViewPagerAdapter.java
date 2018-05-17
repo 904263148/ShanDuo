@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.yapin.shanduo.R;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 
@@ -49,7 +50,7 @@ public class MyViewPagerAdapter extends PagerAdapter {
         ImageView vp_iv= new ImageView(context);
             vp_iv.setScaleType(ImageView.ScaleType.FIT_XY);
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + list.get(position) ,vp_iv , 10);
-
+        vp_iv.setBackgroundColor(activity.getResources().getColor(R.color.bg_color));
         container.addView(vp_iv);
         return vp_iv;
     }

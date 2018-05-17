@@ -20,8 +20,8 @@
     <color name="selector_color">#d2282c</color>
 
     <color name="home_title_color">#333333</color>
-    <color name="home_sex_women_color">#ff6369</color>
-    <color name="home_sex_man_color">#7dd1f0</color>
+    <color name="home_sex_women_color">#ff9bf0</color>
+    <color name="home_sex_man_color">#3782ff</color>
     <color name="home_vip_color">#febf39</color>
 
     <color name="cpb_default_color">#FF8E00</color>
@@ -33,6 +33,10 @@
 
     <color name="bg_color">#F7F8FF</color>
     <color name="replay_name_color">#4660ff</color>
+    <color name="tab_indicator_color">#5e75ff</color>
+    <color name="home_title_bg">#CFD7FF</color>
+
+    <color name="home_text_bg">#F4F4F4</color>
 
     <!--IM-->
     <color name="background">#F9F7F8</color>

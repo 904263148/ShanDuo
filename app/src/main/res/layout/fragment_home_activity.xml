@@ -28,6 +28,7 @@
                         android:layout_height="wrap_content"
                         app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                         android:clipChildren="false"
+                        android:background="@color/bg_color"
                         >
 
                         <android.support.v4.view.ViewPager
@@ -36,6 +37,7 @@
                             android:layout_height="150dp"
                             android:layout_centerInParent="true"
                             android:clipChildren="false"
+                            android:background="@color/bg_color"
                             />
 
                         <LinearLayout
@@ -45,21 +47,28 @@
                             android:layout_alignParentBottom="true"
                             android:layout_below="@+id/img_view_pager"
                             android:orientation="horizontal"
-                            android:padding="8dp" />
+                            android:padding="8dp"
+                            />
                     </RelativeLayout>
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tab_layout"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:background="@android:color/white"
+                        android:background="@drawable/rounded_input"
                         android:layout_below="@+id/rl_ban"
-                        app:tabIndicatorColor="@color/font_black_color"
+                        app:tabIndicatorColor="@color/tab_indicator_color"
                         app:tabMode="fixed"
                         app:tabSelectedTextColor="@color/font_black_color"
                         app:tabTextColor="@color/font_gray_color"
                          />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bg_color"
+                    android:layout_below="@+id/tab_layout"
+                    />
             </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager

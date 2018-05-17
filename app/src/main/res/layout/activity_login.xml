@@ -162,7 +162,7 @@
         android:id="@+id/tv_login"
         android:layout_width="265dp"
         android:layout_height="30dp"
-        android:background="@drawable/rounded_confrim"
+        android:background="@drawable/rounded_confrim_login"
         android:layout_below="@+id/rl_forget"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"

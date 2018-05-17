@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
@@ -50,13 +53,30 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.ui.adapter.SearchResultAdapter;
+import com.yapin.shanduo.utils.BitmapUtils;
+import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.FileUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.glide.SegmentedGroup;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MapGaodeActivity extends AppCompatActivity implements LocationSource,
         AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener{
+
+    @BindView(R.id.tv_send)
+    TextView tvSend;
 
     private ListView listView;
     private SegmentedGroup mSegmentedGroup;
@@ -94,11 +114,15 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private boolean isfirstinput = true;
     private PoiItem firstItem;
 
+    private boolean chat_map = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.map_gaode);
+        ButterKnife.bind(this);
+        chat_map = getIntent().getBooleanExtra("chat_map" , false);
 
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -108,9 +132,14 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
 
         resultData = new ArrayList<>();
 
+
+
     }
 
     private void initView() {
+
+        if(chat_map)
+            tvSend.setVisibility(View.VISIBLE);
 
         listView = (ListView) findViewById(R.id.listview);
         searchResultAdapter = new SearchResultAdapter(MapGaodeActivity.this);
@@ -182,6 +211,54 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         progDialog = new ProgressDialog(this);
 
         hideSoftKey(searchText);
+    }
+
+    @OnClick(R.id.tv_send)
+    public void onClick(View view){
+        aMap.getMapScreenShot(new AMap.OnMapScreenShotListener() {
+            @Override
+            public void onMapScreenShot(Bitmap bitmap) {
+                Intent intent = new Intent();
+                if(null == bitmap){
+                    return;
+                }
+
+                try {
+//                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH +"map_shot.png");
+
+                    boolean b = BitmapUtils.saveMapImageToSD(getApplicationContext() , Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH , "map.jpg", bitmap, 100);
+
+//                    boolean b = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//                    try {
+//                        fos.flush();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    try {
+//                        fos.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+                    StringBuffer buffer = new StringBuffer();
+                    if (b) {
+                        buffer.append("截屏成功 ");
+                        setResult(RESULT_OK , intent);
+                    }else {
+                        buffer.append("截屏失败 ");
+                    }
+                    ToastUtil.show(getApplicationContext(), buffer.toString());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                finish();
+            }
+
+            @Override
+            public void onMapScreenShot(Bitmap bitmap, int i) {
+
+            }
+        });
     }
 
     /**
@@ -450,6 +527,9 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 searchResultAdapter.setSelectedPosition(position);
                 searchResultAdapter.notifyDataSetChanged();
 
+                if(chat_map)
+                    return;
+
                 String textTitle = resultData.get(position).getTitle().toString().trim();
                 String textlonlat = resultData.get(position).getLatLonPoint().toString().trim();
                 String textSubTitle = resultData.get(position).getCityName()+poiItem.getAdName() + poiItem.getSnippet().toString().trim();
@@ -459,12 +539,11 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 intent.putExtra("textTitle",textTitle+","+textSubTitle);
                 intent.putExtra("textlonlat",textlonlat);
                 intent.putExtra("textSubTitle",textSubTitle);
-                intent.putExtra("Title",textTitle);
                 setResult(RESULT_OK , intent);
                 finish();
 
-//            }
-        }
+            }
+//        }
     };
 
     public void showDialog() {

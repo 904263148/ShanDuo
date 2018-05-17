@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
@@ -47,7 +48,9 @@ import com.yapin.shanduo.im.model.VoiceMessage;
 import com.yapin.shanduo.im.utils.FileUtil;
 import com.yapin.shanduo.im.utils.MediaUtil;
 import com.yapin.shanduo.im.utils.RecorderUtil;
+import com.yapin.shanduo.ui.activity.MapGaodeActivity;
 import com.yapin.shanduo.utils.ActivityTransitionUtil;
+import com.yapin.shanduo.utils.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,6 +79,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     private TIMConversationType type;
     private String titleStr;
     private Handler handler = new Handler();
+
+    private static final int OPEN_GAODEMAP = 1;
 
     public static void navToChat(Context context, String identify, TIMConversationType type){
         Intent intent = new Intent(context, ChatActivity.class);
@@ -347,8 +352,14 @@ public class ChatActivity extends FragmentActivity implements ChatView {
      */
     @Override
     public void sendLocation() {
-        Message message = new LocationMessage(113.93 , 22.54 , "腾讯大厦");
-        presenter.sendMessage(message.getMessage());
+
+//        Message message = new LocationMessage(113.93 , 22.54 , "腾讯大厦");
+//        presenter.sendMessage(message.getMessage());
+
+        Intent intent =new Intent(activity ,MapGaodeActivity.class);
+        intent.putExtra("chat_map",true);
+        startActivityForResult(intent , OPEN_GAODEMAP);
+
     }
 
     /**
@@ -508,6 +519,18 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                 }else{
                     Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
                 }
+            }
+        } else if(requestCode == OPEN_GAODEMAP){
+            File file = new File(Environment.getExternalStorageDirectory() + Constants.PICTURE_PATH +"map.jpg");
+            if (file.exists() && file.length() > 0){
+                if (file.length() > 1024 * 1024 * 10){
+                    Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
+                }else{
+                    Message message = new ImageMessage(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH +"map.jpg",false);
+                    presenter.sendMessage(message.getMessage());
+                }
+            }else{
+                Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
             }
         }
 

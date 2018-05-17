@@ -56,8 +56,8 @@ public class TrendInfo implements Parcelable {
         private List<String> picture;//动态图片或视频
         private Integer praise;//点赞人数
         private boolean isPraise;//是否点赞
-        private double distance;//距离
         private String location;//位置
+        private double distance;//距离
         private String remarks;//备注
         private long createDate;//发动态的时间
         private Integer vip;
@@ -66,7 +66,13 @@ public class TrendInfo implements Parcelable {
         private double lat;
         private Integer dynamicCount;
 
+        public String getLocation() {
+            return location;
+        }
 
+        public void setLocation(String location) {
+            this.location = location;
+        }
 
         public double getDistance() {
             return distance;
@@ -180,13 +186,6 @@ public class TrendInfo implements Parcelable {
             isPraise = praise;
         }
 
-        public String getLocation() {
-            return location;
-        }
-
-        public void setLocation(String location) {
-            this.location = location;
-        }
 
         public String getRemarks() {
             return remarks;
@@ -221,7 +220,6 @@ public class TrendInfo implements Parcelable {
         }
 
         public Trend() {
-
         }
 
         @Override
@@ -241,8 +239,8 @@ public class TrendInfo implements Parcelable {
             dest.writeStringList(this.picture);
             dest.writeValue(this.praise);
             dest.writeByte(this.isPraise ? (byte) 1 : (byte) 0);
-            dest.writeDouble(this.distance);
             dest.writeString(this.location);
+            dest.writeDouble(this.distance);
             dest.writeString(this.remarks);
             dest.writeLong(this.createDate);
             dest.writeValue(this.vip);
@@ -263,8 +261,8 @@ public class TrendInfo implements Parcelable {
             this.picture = in.createStringArrayList();
             this.praise = (Integer) in.readValue(Integer.class.getClassLoader());
             this.isPraise = in.readByte() != 0;
-            this.distance = in.readDouble();
             this.location = in.readString();
+            this.distance = in.readDouble();
             this.remarks = in.readString();
             this.createDate = in.readLong();
             this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
