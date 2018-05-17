@@ -23,6 +23,6 @@ public interface AddactivityContract {
     }
 
     interface Presenter extends BasePresenter {
-        void addactivity(String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress);
+        void addactivity(String activityName, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress);
     }
 }

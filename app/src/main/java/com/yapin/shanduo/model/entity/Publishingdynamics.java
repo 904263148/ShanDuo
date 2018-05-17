@@ -11,5 +11,6 @@ public class Publishingdynamics {
     private String picture;
     private String lat;
     private String lon;
+    private String location;
 
 }

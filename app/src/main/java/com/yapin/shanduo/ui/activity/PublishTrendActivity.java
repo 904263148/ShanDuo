@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,14 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     TextView tv_pd_Publish;
     @BindView(R.id.rv_show)
     ShowAllRecyclerView rvShow;
+    @BindView(R.id.tv_pd_address)       //当前位置显示
+    TextView tv_pd_address;
+
+    String content="";
+    String location ="";
+    String textlonlat;
+    String lat = null;
+    String lon = null;
 
     private List<String> listShow = new ArrayList<>();
     private ShowPictureAdapter showAdapter;
@@ -91,6 +100,9 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
         presenter.init(context,this);
         uploadPresenter = new UploadPresenter();
         uploadPresenter.init(context ,this);
+
+        tv_pd_address.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -118,17 +130,38 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
         }
     }
 
-    @OnClick({R.id.tv_pd_Publish,R.id.tv_pd_cancel})
+    @OnClick({R.id.tv_pd_Publish,R.id.tv_pd_cancel,R.id.ib_pd_Location})
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_pd_cancel:
                 finish();
                 break;
             case R.id.tv_pd_Publish:
-                listShow.remove(0);
-                uploadPresenter.upload(listShow);
+                location = tv_pd_address.getText().toString().trim();
+                if (lon==null){
+                    lon = PrefUtil.getLon(context);
+                }
+                if (lat==null){
+                    lat = PrefUtil.getLat(context);
+                }
+                if (listShow==null) {
+                    listShow.remove(0);
+                    uploadPresenter.upload(listShow);
+                }else{
+                    publishTrend("");
+                }
+                break;
+            case R.id.ib_pd_Location:
+                Intent intent =new Intent(activity ,MapGaodeActivity.class);
+                startActivityForResult(intent , 19);
                 break;
         }
+    }
+
+    //绑定定位选择的数据
+    public void setText(String data){
+        tv_pd_address.setText(data);
+        tv_pd_address.setVisibility(View.VISIBLE);
     }
 
 
@@ -204,6 +237,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode != RESULT_OK)
             return;
         List<String> paths = new ArrayList<>();
@@ -218,7 +252,17 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             }
             case Constants.REQUEST_CODE_FOR_TAKE_PHOTO_SHOW:{
                 paths.add(PictureUtil.compressPicture(PictureUtil.currentPhotoPath));
-
+                break;
+            }
+            case Constants.RELEASEDYNAMICPOSITIONING:{
+            //获取定位信息
+            setText(data.getStringExtra("Title"));
+            textlonlat = data.getStringExtra("textlonlat");
+            String []ary = textlonlat.split("\\,");
+            lat=ary[0];
+            lon=ary[1];
+//            Log.i("test","地址是：--"+tv_pd_address+"--经纬度是："+textlonlat);
+            break;
             }
         }
         show(paths);
@@ -243,7 +287,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     }
 
     public void publishTrend(String imgIds){
-        presenter.publish(tv_pd_text.getText().toString().trim() ,imgIds , PrefUtil.getLat(context) , PrefUtil.getLon(context));
+        content=tv_pd_text.getText().toString().trim();
+        presenter.publish(content , imgIds, lon, lat, location);
     }
 
     @Override
@@ -258,7 +303,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void error(String msg) {
-        ToastUtil.showShortToast(context,msg);
+//        ToastUtil.showShortToast(context,msg);
     }
 
     @Override

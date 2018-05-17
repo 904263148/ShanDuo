@@ -65,4 +65,6 @@ public class Constants {
     //活动item点击
     public static final int ACT_JOIN = 1;
 
+    //发布动态获取定位的点击
+    public static final int RELEASEDYNAMICPOSITIONING= 19;
 }

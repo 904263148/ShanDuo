@@ -24,7 +24,7 @@ public class ApiUtil {
     public final static String HOME_ACT = ConfigUtil.configUrl() + "/activity/showHotActivity";
 
     //添加活动
-    public final static String ADD_ACTIVITY = ConfigUtil.configUrl() + "/activity/saveactivity";
+    public final static String ADD_ACTIVITY =  "http://192.168.1.123:8080/shanduoparty/activity/saveactivity";
 
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/homeList";
@@ -44,4 +44,6 @@ public class ApiUtil {
     //发布动态
     public final static String ADD_Publishingdynamics = ConfigUtil.configUrl() +"/jdynamic/savedynamic";
 
+    //我的动态
+    public final static String MY_DYNAMICS = ConfigUtil.configUrl() +"/jdynamic/dynamicList";
 }

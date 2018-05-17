@@ -10,7 +10,7 @@ import android.os.Parcelable;
 public class ShanduoActivity implements Parcelable {
 
     private String token;
-    private String activityType;    //活动类型
+    private String activityName;    //活动类型
     private String activityStartTime;   //活动开始时间
     private String activityAddress;     //活动地址
     private String mode;    //消费方式
@@ -31,12 +31,12 @@ public class ShanduoActivity implements Parcelable {
         this.token = token;
     }
 
-    public String getActivityType() {
-        return activityType;
+    public String getActivityName() {
+        return activityName;
     }
 
     public void setActivityType(String activityType) {
-        this.activityType = activityType;
+        this.activityName = activityName;
     }
 
     public String getActivityStartTime() {
@@ -123,7 +123,7 @@ public class ShanduoActivity implements Parcelable {
     public String toString() {
         return "ShanduoActivity{" +
                 "token='" + token + '\'' +
-                ", activityType='" + activityType + '\'' +
+                ", activityType='" + activityName + '\'' +
                 ", activityStartTime='" + activityStartTime + '\'' +
                 ", activityAddress='" + activityAddress + '\'' +
                 ", mode='" + mode + '\'' +
@@ -139,7 +139,7 @@ public class ShanduoActivity implements Parcelable {
 
     public ShanduoActivity(String token, String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat, String detailedAddress) {
         this.token = token;
-        this.activityType = activityType;
+        this.activityName = activityType;
         this.activityStartTime = activityStartTime;
         this.activityAddress = activityAddress;
         this.mode = mode;
@@ -160,7 +160,7 @@ public class ShanduoActivity implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.token);
-        dest.writeString(this.activityType);
+        dest.writeString(this.activityName);
         dest.writeString(this.activityStartTime);
         dest.writeString(this.activityAddress);
         dest.writeString(this.mode);
@@ -175,7 +175,7 @@ public class ShanduoActivity implements Parcelable {
 
     protected ShanduoActivity(Parcel in) {
         this.token = in.readString();
-        this.activityType = in.readString();
+        this.activityName = in.readString();
         this.activityStartTime = in.readString();
         this.activityAddress = in.readString();
         this.mode = in.readString();

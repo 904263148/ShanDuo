@@ -31,7 +31,7 @@ public class PublishTrendPresenter implements PublishTrendContract.Presenter {
     }
 
     @Override
-    public void publish(String content, String picture, String lat, String lon) {
+    public void publish(String content, String picture, String lat, String lon , String location) {
         publishTrendLoadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -47,6 +47,6 @@ public class PublishTrendPresenter implements PublishTrendContract.Presenter {
             public void networkError() {
                 view.networkError();
             }
-        },content,picture,lat,lon);
+        },content,picture,lat,lon , location);
     }
 }

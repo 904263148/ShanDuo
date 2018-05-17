@@ -40,4 +40,28 @@ public class PrefUtil {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(LAT, "");
     }
+
+//    private static final String AoiName = "AoiName";
+//    public static void setAoiName(Context context, String token) {
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//        sp.edit().putString(AoiName, token).commit();
+//    }
+//
+//    public static String getAoiName(Context context) {
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//        return sp.getString(AoiName, "");
+//    }
+
+//    private static final String Accuracy = "Accuracy";
+//    public static void setAccuracy(Context context, String token) {
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//        sp.edit().putString(Accuracy, token).commit();
+//    }
+//
+//    public static String getAccuracy(Context context) {
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+//        return sp.getString(Accuracy, "");
+//    }
+
+
 }

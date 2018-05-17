@@ -1,31 +1,30 @@
-package com.yapin.shanduo.ui.fragment;
-
+package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
-import com.yapin.shanduo.presenter.HomeActPresenter;
-import com.yapin.shanduo.presenter.HomeTrendPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
-import com.yapin.shanduo.ui.activity.LoginActivity;
-import com.yapin.shanduo.ui.activity.TrendInfoActivity;
+import com.yapin.shanduo.presenter.MyDynamicsPresenter;
+import com.yapin.shanduo.ui.activity.BaseActivity;
+import com.yapin.shanduo.ui.adapter.MyDynamicsAdapter;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
-import com.yapin.shanduo.ui.contract.HomeTrendContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
+import com.yapin.shanduo.ui.contract.MyDynamicsContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -34,29 +33,30 @@ import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link TrendFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Created by dell on 2018/5/3.
  */
-public class TrendFragment extends Fragment implements HomeTrendContract.View , LoadMoreRecyclerView.OnLoadMoreListener , TrendInfoAdapter.OnItemClickListener ,TrendInfoAdapter.OnLikeClickListener , LikeContract.View{
 
-    @BindView(R.id.recycler_view)
-    LoadMoreRecyclerView recyclerView;
-    @BindView(R.id.loading_view)
-    LoadingView loadingView;
+public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View , LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnItemClickListener , MyDynamicsAdapter.OnLikeClickListener ,  LikeContract.View{
 
     private Context context;
     private Activity activity;
 
-    private TrendInfoAdapter adapter;
-    private LinearLayoutManager layoutManager;
+    @BindView(R.id.recycler_my_view)
+    LoadMoreRecyclerView recyclerView;
+    @BindView(R.id.loading_my_view)
+    LoadingView loadingView;
 
+    private MyDynamicsAdapter adapter;
+    private LinearLayoutManager layoutManager;
     private int position;
 
     private int page = 1;
@@ -64,61 +64,48 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     private boolean isRefresh = false;
     private boolean isLoading = false;
 
-    private HomeTrendPresenter presenter;
+    private MyDynamicsPresenter presenter;
     private LikePresenter likePresenter;
 
     private List<TrendInfo.Trend> list = new ArrayList<>();
     private TrendInfo.Trend footerItem = new TrendInfo.Trend();
 
-    public TrendFragment() {
-        // Required empty public constructor
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static TrendFragment newInstance(int position) {
-        TrendFragment fragment = new TrendFragment();
-        Bundle args = new Bundle();
-        args.putInt("position" , position);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt("position");
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_trend, container, false);
-        ButterKnife.bind(this , view);
-        presenter = new HomeTrendPresenter();
-        presenter.init(this);
-        likePresenter = new LikePresenter();
-        likePresenter.init(this);
-        return view;
-    }
-
-    @Override
-    public void initView(){
+        setContentView(R.layout.activity_mydynamics);
         context = ShanDuoPartyApplication.getContext();
-        activity = getActivity();
+        activity = this;
+        ButterKnife.bind(this );
+        presenter = new MyDynamicsPresenter();
+        presenter.init(this);
         layoutManager = new LinearLayoutManager(context);
+        initView();
+    }
 
+    @Override
+    public void initView() {
+        layoutManager = new LinearLayoutManager(context);
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new TrendInfoAdapter(context, activity , list);
+        adapter = new MyDynamicsAdapter(context, activity , list);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         adapter.setLikeClickListener(this);
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+        presenter.getdynamics( PrefUtil.getLon(context) , PrefUtil.getLat(context) ,page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
     }
+
+    @OnClick({R.id.tv_md_cancel})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_md_cancel:
+                finish();
+                break;
+        }
+    }
+
 
     /**
      * 设置刷新和加载更多的状态
@@ -141,10 +128,8 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     }
 
     @Override
-    public void onLoadMore() {
-        page++;
-        setRefreshLoading(false, true);
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+    public void success(String data) {
+        ToastUtil.showShortToast(context,data);
     }
 
     @Override
@@ -155,7 +140,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
             } else {
                 loadingView.setGone();
             }
-            list.clear();
+                list.clear();
             list.add(footerItem);
         }
         recyclerView.setPage(page, totalPage);
@@ -163,11 +148,6 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         list.addAll(list.size() - 1, data);
         adapter.notifyDataSetChanged();
         setRefreshLoading(false, false);
-    }
-
-    @Override
-    public void success(String data) {
-        ToastUtil.showShortToast(context,data);
     }
 
     @Override
@@ -184,7 +164,6 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     @Override
     public void error(String msg) {
-//        loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
@@ -195,21 +174,28 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     }
 
     @Override
+    public void onLoadMore() {
+        page++;
+        setRefreshLoading(false, true);
+        presenter.getdynamics(PrefUtil.getLon(context) , PrefUtil.getLat(context),page+"" , pageSize+"");
+
+    }
+
+    @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("trendInfo" , list.get(position));
-//        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
+        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
     }
 
     @Override
     public void onLikeClick(String id) {
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+            StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
         }else {
             likePresenter.onLike(id);
         }
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

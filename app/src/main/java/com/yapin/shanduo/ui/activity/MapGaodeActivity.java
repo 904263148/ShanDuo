@@ -422,7 +422,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
      */
     private void updateListview(List<PoiItem> poiItems) {
         resultData.clear();
-        searchResultAdapter.setSelectedPosition(0);
+//        searchResultAdapter.setSelectedPosition(0);
         resultData.add(firstItem);
         resultData.addAll(poiItems);
 
@@ -439,7 +439,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position != searchResultAdapter.getSelectedPosition()) {
+//            if (position != searchResultAdapter.getSelectedPosition()) {
                 PoiItem poiItem = (PoiItem) searchResultAdapter.getItem(position);
                 LatLng curLatlng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
 
@@ -459,10 +459,11 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 intent.putExtra("textTitle",textTitle+","+textSubTitle);
                 intent.putExtra("textlonlat",textlonlat);
                 intent.putExtra("textSubTitle",textSubTitle);
+                intent.putExtra("Title",textTitle);
                 setResult(RESULT_OK , intent);
                 finish();
 
-            }
+//            }
         }
     };
 

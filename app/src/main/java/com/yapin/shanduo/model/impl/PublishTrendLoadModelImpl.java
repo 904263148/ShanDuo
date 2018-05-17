@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class PublishTrendLoadModelImpl implements PublishTrendLoadModel {
     @Override
-    public void load(final OnLoadListener<String> listener, String content, String picture, String lat, String lon) {
+    public void load(final OnLoadListener<String> listener, String content, String picture, String lat, String lon , String location) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -36,6 +36,7 @@ public class PublishTrendLoadModelImpl implements PublishTrendLoadModel {
         params.put("picture",picture);
         params.put("lat",lat);
         params.put("lon",lon);
+        params.put("location" , location);
 
         OkHttp.post(context, ApiUtil.ADD_Publishingdynamics, params, new JavaOkCallback() {
             @Override

@@ -216,7 +216,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     @Override
     public void error(String msg) {
         dialog.dismiss();
-        loadingView.loadError();
+//        loadingView.loadError();
         setRefreshLoading(false, false);
     }
 

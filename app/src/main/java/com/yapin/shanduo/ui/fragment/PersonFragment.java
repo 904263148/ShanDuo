@@ -13,6 +13,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.AddactivityActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
+import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
 import butterknife.ButterKnife;
@@ -52,7 +53,7 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.modify,R.id.tv_addactivity})
+    @OnClick({R.id.modify,R.id.tv_MyDynamics})
     public void onClick(View view){
         switch (view.getId()){
 //            case R.id.login :
@@ -64,8 +65,8 @@ public class PersonFragment extends Fragment {
             case R.id.modify:
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
-            case R.id.tv_addactivity:
-                StartActivityUtil.start(activity , AddactivityActivity.class);
+            case R.id.tv_MyDynamics:
+                StartActivityUtil.start(activity , MyDynamicsActivity.class);
                 break;
         }
     }

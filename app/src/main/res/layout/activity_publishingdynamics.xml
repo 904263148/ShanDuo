@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="96px"
+        android:layout_height="40dp"
         android:paddingLeft="15dp"
         android:paddingRight="16dp"
         android:gravity="center_vertical"
@@ -58,48 +58,115 @@
         />
     <!--android:textColor="@color/textview_text"-->
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dp"
         >
 
         <com.yapin.shanduo.widget.ShowAllRecyclerView
             android:id="@+id/rv_show"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
-            android:layout_toLeftOf="@+id/ll_icon"
+
             />
 
-
-        <LinearLayout
-            android:id="@+id/ll_icon"
+        <TextView
+            android:id="@+id/tv_pd_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@+id/rv_show"
-            android:paddingLeft="10dp"
-            >
+            android:drawableLeft="@drawable/icon_place"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_icon"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/rv_show"
+        android:paddingLeft="10dp"
+        android:background="@color/colorAccent"
+        >
 
         <ImageButton
             android:id="@+id/ib_pd_Expression"
             android:background="@color/colorAccent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_expression"
+            android:src="@drawable/icon_pd_wechat"
             />
 
-            <ImageButton
-                android:id="@+id/ib_pd_Location"
-                android:layout_marginLeft="18dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:src="@drawable/icon_activity_location"
-                />
+        <ImageButton
 
-        </LinearLayout>
-    </RelativeLayout>
+            android:layout_marginLeft="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:src="@drawable/icon_pd_micro_blog"
+            />
+
+        <ImageButton
+            android:layout_marginLeft="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:src="@drawable/icon_pd_qq"
+            />
+
+    </LinearLayout>
+    <ScrollView
+        android:paddingBottom="10dp"
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none" >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom" >
+
+        <ImageButton
+            android:background="@color/colorAccent"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_weight="1"
+            android:src="@drawable/icon_pd_expression"
+            />
+        <ImageButton
+            android:background="@color/colorAccent"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_weight="1"
+            android:src="@drawable/icon_pd_photograph"
+            />
+        <ImageButton
+            android:background="@color/colorAccent"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_weight="1"
+            android:src="@drawable/icon_pd_image"
+            />
+        <ImageButton
+            android:id="@+id/ib_pd_Location"
+            android:background="@color/colorAccent"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_weight="1"
+            android:src="@drawable/icon_pd_location"
+            />
+
+
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

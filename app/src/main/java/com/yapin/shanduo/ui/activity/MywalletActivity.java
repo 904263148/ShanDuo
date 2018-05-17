@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.ui.fragment.CustomdynamicsListView;
 
 import butterknife.BindView;
 
@@ -21,7 +20,7 @@ public class MywalletActivity extends BaseActivity {
     private Context context;
     private Activity activity;
 
-    private CustomdynamicsListView adapter;
+    private MyDynamicsActivity adapter;
 
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;

@@ -368,14 +368,15 @@ public class Utils {
                         amapLocation.getLatitude();//获取纬度
                         amapLocation.getLongitude();//获取经度
                         amapLocation.getAccuracy();//获取精度信息
+                        amapLocation.getAoiName();//获取当前定位点的AOI信息
                         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date date = new Date(amapLocation.getTime());
                         df.format(date);//定位时间
-
                         PrefUtil.setLon(context , amapLocation.getLongitude()+"");
                         PrefUtil.setLat(context , amapLocation.getLatitude()+"");
-
-                        Log.d("lon--------------lat" , "经度:"+amapLocation.getLongitude()+"-------纬度:" +amapLocation.getLatitude());
+//                        PrefUtil.setAoiName(context,amapLocation.getAoiName()+"");
+//                        PrefUtil.setAccuracy(context,amapLocation.getAccuracy()+"");
+                        Log.i("lon--------------lat" , "经度:"+amapLocation.getLongitude()+"-------纬度:" +amapLocation.getLatitude()+"精确经纬度-----"+amapLocation.getAccuracy());
 
                         mlocationClient.stopLocation();
 

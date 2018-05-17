@@ -2,16 +2,19 @@ package com.yapin.shanduo.ui.contract;
 
 import com.yapin.shanduo.base.BasePresenter;
 import com.yapin.shanduo.base.BaseView;
+import com.yapin.shanduo.model.entity.TrendInfo;
+
+import java.util.List;
 
 /**
- * Created by dell on 2018/5/14.
+ * Created by dell on 2018/5/15.
  */
 
-public interface PublishTrendContract {
+public interface MyDynamicsContract {
 
     interface View extends BaseView {
 
-        void success(String data);
+        void show(List<TrendInfo.Trend> data , int totalPage);
 
         void loading();
 
@@ -21,10 +24,7 @@ public interface PublishTrendContract {
 
         void showFailed(String msg);
     }
-
-    interface Presenter extends BasePresenter {
-        void publish( String content, String picture, String lat, String lon , String location);
+    interface Presenter {
+        void getdynamics( String lon , String lat, String page, String pageSize);
     }
-
-
 }

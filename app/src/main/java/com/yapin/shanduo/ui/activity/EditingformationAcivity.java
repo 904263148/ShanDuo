@@ -98,9 +98,12 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     }
 
     @OnClick({R.id.modify_tv_rg,R.id.date_display,R.id.tv_Emotionalstate,R.id.modify_et_nickname,
-            R.id.tv_Personalitysignature,R.id.tv_Hometown,R.id.tv_School,R.id.tv_Occupation})
+            R.id.tv_Personalitysignature,R.id.tv_Hometown,R.id.tv_School,R.id.tv_Occupation,R.id.iv_back})
     public void onClick(View v){
             switch (v.getId()){
+                case R.id.iv_back:
+                    finish();
+                    break;
                 case R.id.modify_tv_rg:     //性别
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("请选择性别");

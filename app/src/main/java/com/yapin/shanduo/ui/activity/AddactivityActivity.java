@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,8 +45,6 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     TextView tv_add_starttime;
     @BindView(R.id.tv_add_Deadline)
     TextView tv_add_Deadline;
-    @BindView(R.id.tv_add_timedate)
-    TextView tv_add_timedate;
     @BindView(R.id.et_add_Modeofconsumption)
     TextView et_add_Modeofconsumption;
     @BindView(R.id.et_add_title_remarks)
@@ -64,7 +63,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     String activityAddress;
     String manNumber;
     String womanNumber;
-    String activityType;
+    String activityName;
     String textlonlat;
     String detailedAddress;
 
@@ -84,6 +83,9 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
         presenter = new Addactivitypresenter();
         presenter.init(context,this);
         tv_add_starttime.setOnClickListener(this);
+
+        tv_add_Deadline.setVisibility(View.GONE);
+
 
         et_add_Modeofconsumption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +136,6 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-
 //            data.getStringExtra("textTitle");
             setText(data.getStringExtra("textTitle"));
             textlonlat = data.getStringExtra("textlonlat");
@@ -146,15 +147,14 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
         tv_add_place.setText(data);
     }
 
-
     @Override
     public void initView() {
 
     }
 
-    @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_timedate,R.id.tv_add_finish })
+    @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_starttime,R.id.tv_add_finish })
     public void onClick(View view){
-//        activityType ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
+//        activityName ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
         switch (view.getId()) {
             case R.id.tv_add_finish:
                 finish();
@@ -164,20 +164,18 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                 lat=ary[0];
                 lon=ary[1];
 //                Log.i("test","/n经度："+lon+"/n纬度："+lat);
-                activityType = et_add_title.getText().toString().trim();
+                activityName = et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
                 manNumber = et_add_Numberofboys.getText().toString().trim();
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();
                 activityAddress = tv_add_place.getText().toString().trim();
                 remarks = et_add_title_remarks.getText().toString().trim();
-
                 activityCutoffTime =tv_add_Deadline.getText().toString().trim();
                 activityStartTime=tv_add_starttime.getText().toString().trim();
-
-                presenter.addactivity(activityType,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
+                presenter.addactivity(activityName,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
                 break;
 
-            case R.id.tv_add_timedate:
+            case R.id.tv_add_starttime:
                 final android.support.v7.app.AlertDialog.Builder builder2 = new android.support.v7.app.AlertDialog.Builder(activity);
                 final String[] emotion = {"请选择活动开始时间", "请选择活动报名截止时间"};
                 //    设置一个单项选择下拉框
@@ -194,6 +192,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                     }else {
                         DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
                         dateTimePicKDialog.dateTimePicKDialog(tv_add_Deadline, 0, true);
+                            tv_add_Deadline.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -202,10 +201,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-//                        activityCutoffTime =tv_add_Deadline.getText().toString().trim();
-//                        activityStartTime=tv_add_starttime.getText().toString().trim();
-//                         tv_add_timedate.getText().toString().trim();
-//                         tv_add_Deadline.getText().toString().trim();
+
                     }
                 });
 //                builder2.setNegativeButton("取消", new DialogInterface.OnClickListener()

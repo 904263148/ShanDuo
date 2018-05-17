@@ -8,7 +8,7 @@ import com.yapin.shanduo.presenter.OnLoadListener;
 
 public interface PublishTrendLoadModel {
 
-    void load(OnLoadListener<String> listener, String content,String picture,String lat,String lon);
+    void load(OnLoadListener<String> listener, String content,String picture,String lat,String lon , String location);
 
 
 }

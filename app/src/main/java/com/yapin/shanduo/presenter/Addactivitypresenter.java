@@ -30,7 +30,7 @@ public class Addactivitypresenter implements AddactivityContract.Presenter{
     }
 
     @Override
-    public void addactivity(String activityType, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress) {
+    public void addactivity(String activityName, String activityStartTime, String activityAddress, String mode, String manNumber, String womanNumber, String remarks, String activityCutoffTime, String lon, String lat,String detailedAddress) {
         addactivityModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -46,6 +46,6 @@ public class Addactivitypresenter implements AddactivityContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        },activityType,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
+        },activityName,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
     }
 }
