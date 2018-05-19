@@ -27,7 +27,7 @@
             android:id="@+id/rl_user_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="9dp"
+            android:layout_marginTop="9dp"
             >
 
             <ImageView
@@ -58,24 +58,24 @@
 
                 <TextView
                     android:id="@+id/tv_vip"
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="10dp"
                     android:text="SVIP2"
-                    android:textSize="7dp"
+                    android:textSize="7sp"
                     android:layout_below="@+id/tv_name"
                     android:background="@drawable/rounded_tv_vip"
                     android:textColor="@color/color_white"
-                    android:layout_toRightOf="@+id/tv_age"
+                    android:layout_toRightOf="@+id/tv_home_age"
                     android:layout_marginLeft="2dp"
                     android:gravity="center"
                     />
 
                 <TextView
-                    android:id="@+id/tv_age"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_home_age"
+                    android:layout_width="25dp"
                     android:layout_height="10dp"
                     android:text="23"
-                    android:textSize="7dp"
+                    android:textSize="7sp"
                     android:layout_marginRight="2dp"
                     android:background="@drawable/rounded_tv_sex_women"
                     android:textColor="@color/color_white"
@@ -223,6 +223,7 @@
             android:src="@drawable/icon_three_point"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="10dp"
             />
 
     </RelativeLayout>

@@ -198,7 +198,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("trendInfo" , list.get(position));
-//        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
+        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
     }
 
     @Override

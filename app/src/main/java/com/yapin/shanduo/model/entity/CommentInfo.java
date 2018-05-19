@@ -64,9 +64,28 @@ public class CommentInfo implements Parcelable {
 		private String portraitId;//头像
 		private String name;//昵称
 		private String comment;//评论内容
-		private List<String> picture;//图片
-		private String delFlag;//删除标记
+		private String gender;//性别
+		private Integer age;//年龄
+		private Integer count;//2级回复数量
+		private long createDate;//评论时间
 		private List<SecondComment.Comments> comments;//2级回复集合
+
+		public Integer getAge() {
+			return age;
+		}
+
+		public void setAge(Integer age) {
+			this.age = age;
+		}
+
+		public Integer getCount() {
+			return count;
+		}
+
+		public void setCount(Integer count) {
+			this.count = count;
+		}
+
 
 		public String getId() {
 			return id;
@@ -116,20 +135,20 @@ public class CommentInfo implements Parcelable {
 			this.comment = comment;
 		}
 
-		public List<String> getPicture() {
-			return picture;
+		public String getGender() {
+			return gender;
 		}
 
-		public void setPicture(List<String> picture) {
-			this.picture = picture;
+		public void setGender(String gender) {
+			this.gender = gender;
 		}
 
-		public String getDelFlag() {
-			return delFlag;
+		public long getCreateDate() {
+			return createDate;
 		}
 
-		public void setDelFlag(String delFlag) {
-			this.delFlag = delFlag;
+		public void setCreateDate(long createDate) {
+			this.createDate = createDate;
 		}
 
 		public List<SecondComment.Comments> getComments() {
@@ -157,9 +176,11 @@ public class CommentInfo implements Parcelable {
 			dest.writeString(this.portraitId);
 			dest.writeString(this.name);
 			dest.writeString(this.comment);
-			dest.writeStringList(this.picture);
-			dest.writeString(this.delFlag);
-			dest.writeList(this.comments);
+			dest.writeString(this.gender);
+			dest.writeValue(this.age);
+			dest.writeValue(this.count);
+			dest.writeLong(this.createDate);
+			dest.writeTypedList(this.comments);
 		}
 
 		protected Comment(Parcel in) {
@@ -170,10 +191,11 @@ public class CommentInfo implements Parcelable {
 			this.portraitId = in.readString();
 			this.name = in.readString();
 			this.comment = in.readString();
-			this.picture = in.createStringArrayList();
-			this.delFlag = in.readString();
-			this.comments = new ArrayList<SecondComment.Comments>();
-			in.readList(this.comments, SecondComment.Comments.class.getClassLoader());
+			this.gender = in.readString();
+			this.age = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.count = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.createDate = in.readLong();
+			this.comments = in.createTypedArrayList(SecondComment.Comments.CREATOR);
 		}
 
 		public static final Creator<Comment> CREATOR = new Creator<Comment>() {
@@ -210,7 +232,7 @@ public class CommentInfo implements Parcelable {
 		this.list = in.createTypedArrayList(Comment.CREATOR);
 	}
 
-	public static final Parcelable.Creator<CommentInfo> CREATOR = new Parcelable.Creator<CommentInfo>() {
+	public static final Creator<CommentInfo> CREATOR = new Creator<CommentInfo>() {
 		@Override
 		public CommentInfo createFromParcel(Parcel source) {
 			return new CommentInfo(source);

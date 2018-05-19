@@ -31,6 +31,13 @@ public class StartActivityUtil {
         ActivityTransitionUtil.startActivityTransition(activity);
     }
 
+    public static void start(Activity activity,Fragment fragment, Class<?> cls) {
+        Intent intent = new Intent();
+        intent.setClass(activity, cls);
+        fragment.startActivity(intent);
+        ActivityTransitionUtil.startActivityTransition(activity);
+    }
+
     public static void start(Activity activity,Fragment fragment, Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
         intent.putExtras(bundle);

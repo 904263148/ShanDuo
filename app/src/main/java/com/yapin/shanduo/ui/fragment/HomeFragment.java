@@ -20,6 +20,7 @@ import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.PublishActivity;
 import com.yapin.shanduo.ui.activity.ScanActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -88,7 +89,7 @@ public class HomeFragment extends Fragment{
 
     }
 
-    @OnClick({R.id.btn_scan ,R.id.rl_act , R.id.rl_trend})
+    @OnClick({R.id.btn_scan ,R.id.rl_act , R.id.rl_trend ,R.id.iv_search})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
@@ -103,6 +104,9 @@ public class HomeFragment extends Fragment{
                 rlTrend.setBackground(activity.getResources().getDrawable(R.drawable.rounded_home));
                 rlAct.setBackgroundColor(activity.getResources().getColor(R.color.white));
                 viewPager.setCurrentItem(1,false);
+                break;
+            case R.id.iv_search:
+                StartActivityUtil.start(activity , this , PublishActivity.class , 5);
                 break;
         }
     }

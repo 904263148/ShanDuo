@@ -22,7 +22,8 @@
     <color name="home_title_color">#333333</color>
     <color name="home_sex_women_color">#ff9bf0</color>
     <color name="home_sex_man_color">#3782ff</color>
-    <color name="home_vip_color">#febf39</color>
+    <color name="home_svip_color">#ffde2f</color>
+    <color name="home_vip_color">#ff6369</color>
 
     <color name="cpb_default_color">#FF8E00</color>
 
@@ -37,6 +38,14 @@
     <color name="home_title_bg">#CFD7FF</color>
 
     <color name="home_text_bg">#F4F4F4</color>
+
+    <color name="color_red">#FF5722</color>
+    <color name="color_orange">#FF9800</color>
+    <color name="color_yellow">#FFC107</color>
+    <color name="color_green">#3FB830</color>
+    <color name="color_blue">#00BAED</color>
+
+    <color name="divider_color">#e6e9ff</color>
 
     <!--IM-->
     <color name="background">#F9F7F8</color>

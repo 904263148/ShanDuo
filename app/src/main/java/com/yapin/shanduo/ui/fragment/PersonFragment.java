@@ -55,7 +55,7 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.modify,R.id.tv_addactivity , R.id.exit_login,R.id.tv_MyDynamics})
+    @OnClick({R.id.modify, R.id.exit_login,R.id.tv_MyDynamics})
     public void onClick(View view){
         switch (view.getId()){
 //            case R.id.login :

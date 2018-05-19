@@ -93,6 +93,19 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge()+"");
 
+            int level = list.get(position).getVipGrade();
+            if(level == 0){
+                holder.tvVip.setVisibility(View.GONE);
+            }else if(level > 0 && level < 9){
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("VIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
+            }
+
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -167,6 +180,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvAge;
         @BindView(R.id.tv_join)
         TextView tvJoin;
+        @BindView(R.id.tv_vip)
+        TextView tvVip;
 
         public ViewHolder(View itemView) {
             super(itemView);

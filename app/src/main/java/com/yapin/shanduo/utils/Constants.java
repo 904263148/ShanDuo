@@ -67,4 +67,9 @@ public class Constants {
 
     //发布动态获取定位的点击
     public static final int RELEASEDYNAMICPOSITIONING= 19;
+
+    //获取好友列表时的typeId
+    public static final String ALL_FRIEND = "1";
+    public static final String BLACK_FRIEND = "2";
+
 }

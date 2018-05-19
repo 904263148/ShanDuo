@@ -88,11 +88,19 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.tvMile.setText(list.get(position).getLocation() + "km");
             holder.tvContent.setText(list.get(position).getContent());
 
-            if (TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))) {
+            int level = list.get(position).getVip();
+            if(level == 0){
                 holder.tvVip.setVisibility(View.GONE);
-            } else {
-                holder.tvVip.setText(Utils.vipLevel(list.get(position).getVip()));
+            }else if(level > 0 && level < 9){
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("VIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
+
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

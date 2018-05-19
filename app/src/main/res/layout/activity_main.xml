@@ -23,24 +23,29 @@
         android:layout_above="@+id/ll_bottom"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/home_text_bg"
+        android:layout_above="@+id/ll_bottom"
+        />
+
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:clipChildren="false"
-        android:background="@drawable/home_bottom_title"
-        android:paddingTop="5dp"
         >
 
         <LinearLayout
             android:id="@+id/ll_home"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="?attr/selectableItemBackground"
             >
 
@@ -56,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_home"
                 android:textColor="@color/home_title_select_color"
-                android:layout_marginBottom="@dimen/home_align_bottom"
                 android:textSize="@dimen/home_title_size"
                 />
 
@@ -66,9 +70,9 @@
             android:id="@+id/ll_chat"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="?attr/selectableItemBackground"
             >
 
@@ -83,7 +87,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_chat"
-                android:layout_marginBottom="@dimen/home_align_bottom"
                 android:textSize="@dimen/home_title_size"
                 android:textColor="@color/font_color_gray"
                 />
@@ -104,9 +107,9 @@
             android:id="@+id/ll_linkman"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="?attr/selectableItemBackground"
             >
             <ImageView
@@ -120,7 +123,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_linkman"
-                android:layout_marginBottom="@dimen/home_align_bottom"
                 android:textSize="@dimen/home_title_size"
                 android:textColor="@color/font_color_gray"
                 />
@@ -131,9 +133,9 @@
             android:id="@+id/ll_my"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="?attr/selectableItemBackground"
             >
             <ImageView
@@ -147,7 +149,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/title_my"
-                android:layout_marginBottom="@dimen/home_align_bottom"
                 android:textSize="@dimen/home_title_size"
                 android:textColor="@color/font_color_gray"
                 />
@@ -165,7 +166,7 @@
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="@dimen/home_align_bottom"
+        android:layout_marginBottom="6dp"
         >
 
         <RelativeLayout

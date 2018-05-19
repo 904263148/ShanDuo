@@ -119,7 +119,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
         adapter = new ActivityTabAdapter(getChildFragmentManager() , tabList);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(2);
+//        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(this);
 
         tabLayout.setupWithViewPager(viewPager);

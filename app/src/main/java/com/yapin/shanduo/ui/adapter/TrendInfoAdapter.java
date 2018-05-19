@@ -68,7 +68,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         if (viewHolder instanceof ViewHolder) {
             ViewHolder holder = (ViewHolder) viewHolder;
-            GlideUtil.load(context, activity, list.get(position).getPortraitId(), holder.ivHead);
+            GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getName());
 
             Drawable drawable = null;
@@ -90,12 +90,19 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
             holder.tvLikeCount.setText(list.get(position).getPraise()+"");
 
-            if (TextUtils.isEmpty(Utils.vipLevel(list.get(position).getVip()))) {
+            int level = list.get(position).getVip();
+            if(level == 0){
                 holder.tvVip.setVisibility(View.GONE);
-            } else {
-                holder.tvVip.setText(Utils.vipLevel(list.get(position).getVip()));
-
+            }else if(level > 0 || level < 9){
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("VIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
+
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -183,7 +190,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvName;
         @BindView(R.id.tv_vip)
         TextView tvVip;
-        @BindView(R.id.tv_age)
+        @BindView(R.id.tv_home_age)
         TextView tvAge;
         @BindView(R.id.tv_mile)
         TextView tvMile;

@@ -7,29 +7,19 @@
     tools:context=".ui.activity.PublishActivity"
     android:background="@color/color_white"
     android:orientation="vertical"
+    android:gravity="center"
     >
 
-    <include layout="@layout/layout_toolbar"></include>
+    <com.yapin.shanduo.widget.DashboardView3
+        android:id="@+id/dashboard_view_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-
-    <EditText
-        android:id="@+id/et_msg"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lines="6"
-        android:background="@null"
-        android:textCursorDrawable="@color/font_black_color"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:text="dong"
         />
-
-    <com.yapin.shanduo.widget.ShowAllRecyclerView
-        android:id="@+id/rv_show"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"
-        android:layout_margin="30dp"
-        android:padding="8dp" />
-
 
 </LinearLayout>

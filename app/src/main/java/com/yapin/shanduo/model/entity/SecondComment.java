@@ -45,13 +45,13 @@ public class SecondComment implements Parcelable {
         private int type = Constants.TYPE_SHOW;
         private String id;//2级评论ID
         private String dynamicId;//动态ID
-        private Integer userIdOne;//评论人ID
-        private String nameOne;//评论人昵称
+        private Integer userId;//评论人ID
+        private String userName;//评论人昵称
         private String portraitId;//评论人头像
-        private Integer userIdTwo;//被回复人ID
-        private String nameTwo;//被回复人昵称
+        private Integer replyId;//被回复人ID
+        private String replyName;//被回复人昵称
         private String comment;//回复内容
-        private List<String> picture;//回复图片
+        private long createDate;//回复时间
 
         public int getType() {
             return type;
@@ -77,20 +77,20 @@ public class SecondComment implements Parcelable {
             this.dynamicId = dynamicId;
         }
 
-        public Integer getUserIdOne() {
-            return userIdOne;
+        public Integer getUserId() {
+            return userId;
         }
 
-        public void setUserIdOne(Integer userIdOne) {
-            this.userIdOne = userIdOne;
+        public void setUserId(Integer userId) {
+            this.userId = userId;
         }
 
-        public String getNameOne() {
-            return nameOne;
+        public String getUserName() {
+            return userName;
         }
 
-        public void setNameOne(String nameOne) {
-            this.nameOne = nameOne;
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
 
         public String getPortraitId() {
@@ -101,20 +101,20 @@ public class SecondComment implements Parcelable {
             this.portraitId = portraitId;
         }
 
-        public Integer getUserIdTwo() {
-            return userIdTwo;
+        public Integer getReplyId() {
+            return replyId;
         }
 
-        public void setUserIdTwo(Integer userIdTwo) {
-            this.userIdTwo = userIdTwo;
+        public void setReplyId(Integer replyId) {
+            this.replyId = replyId;
         }
 
-        public String getNameTwo() {
-            return nameTwo;
+        public String getReplyName() {
+            return replyName;
         }
 
-        public void setNameTwo(String nameTwo) {
-            this.nameTwo = nameTwo;
+        public void setReplyName(String replyName) {
+            this.replyName = replyName;
         }
 
         public String getComment() {
@@ -125,12 +125,15 @@ public class SecondComment implements Parcelable {
             this.comment = comment;
         }
 
-        public List<String> getPicture() {
-            return picture;
+        public long getCreateDate() {
+            return createDate;
         }
 
-        public void setPicture(List<String> picture) {
-            this.picture = picture;
+        public void setCreateDate(long createDate) {
+            this.createDate = createDate;
+        }
+
+        public Comments() {
         }
 
         @Override
@@ -143,32 +146,29 @@ public class SecondComment implements Parcelable {
             dest.writeInt(this.type);
             dest.writeString(this.id);
             dest.writeString(this.dynamicId);
-            dest.writeValue(this.userIdOne);
-            dest.writeString(this.nameOne);
+            dest.writeValue(this.userId);
+            dest.writeString(this.userName);
             dest.writeString(this.portraitId);
-            dest.writeValue(this.userIdTwo);
-            dest.writeString(this.nameTwo);
+            dest.writeValue(this.replyId);
+            dest.writeString(this.replyName);
             dest.writeString(this.comment);
-            dest.writeStringList(this.picture);
-        }
-
-        public Comments() {
+            dest.writeLong(this.createDate);
         }
 
         protected Comments(Parcel in) {
             this.type = in.readInt();
             this.id = in.readString();
             this.dynamicId = in.readString();
-            this.userIdOne = (Integer) in.readValue(Integer.class.getClassLoader());
-            this.nameOne = in.readString();
+            this.userId = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.userName = in.readString();
             this.portraitId = in.readString();
-            this.userIdTwo = (Integer) in.readValue(Integer.class.getClassLoader());
-            this.nameTwo = in.readString();
+            this.replyId = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.replyName = in.readString();
             this.comment = in.readString();
-            this.picture = in.createStringArrayList();
+            this.createDate = in.readLong();
         }
 
-        public static final Parcelable.Creator<Comments> CREATOR = new Parcelable.Creator<Comments>() {
+        public static final Creator<Comments> CREATOR = new Creator<Comments>() {
             @Override
             public Comments createFromParcel(Parcel source) {
                 return new Comments(source);
@@ -202,7 +202,7 @@ public class SecondComment implements Parcelable {
         this.list = in.createTypedArrayList(Comments.CREATOR);
     }
 
-    public static final Parcelable.Creator<SecondComment> CREATOR = new Parcelable.Creator<SecondComment>() {
+    public static final Creator<SecondComment> CREATOR = new Creator<SecondComment>() {
         @Override
         public SecondComment createFromParcel(Parcel source) {
             return new SecondComment(source);
