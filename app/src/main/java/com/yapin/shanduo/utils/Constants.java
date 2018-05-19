@@ -17,6 +17,8 @@ public class Constants {
     public final static int TYPE_FOOTER_LOAD = 1;
     public final static int TYPE_FOOTER_FULL = 2;
 
+    //我的活动
+    public final static int MY_ACTIVITY = 5;
     /**
      * 缓存文件保存路径
      */

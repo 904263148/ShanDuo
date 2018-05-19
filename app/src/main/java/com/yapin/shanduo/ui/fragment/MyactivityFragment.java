@@ -17,12 +17,13 @@ import android.view.ViewGroup;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
-import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.JoinActPresenter;
+import com.yapin.shanduo.presenter.MyactivityPresenter;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
-import com.yapin.shanduo.ui.contract.HomeActContract;
+import com.yapin.shanduo.ui.adapter.MyactivityinfoAdapter;
 import com.yapin.shanduo.ui.contract.JoinActContract;
+import com.yapin.shanduo.ui.contract.MyactivityContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -36,16 +37,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActivityFragment extends Fragment implements ActivityInfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , HomeActContract.View , JoinActContract.View{
+/**
+ * Created by dell on 2018/5/18.
+ */
 
-    @BindView(R.id.recycler_view)
+public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View {
+
+    @BindView(R.id.my_recycler_view)
     LoadMoreRecyclerView recyclerView;
-    @BindView(R.id.loading_view)
+    @BindView(R.id.my_loading_view)
     LoadingView loadingView;
 
     private Context context;
     private Activity activity;
-    private ActivityInfoAdapter adapter;
+    private MyactivityinfoAdapter adapter;
     private ShanDuoPartyApplication application;
     private LinearLayoutManager layoutManager;
 
@@ -55,7 +60,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     private int pageSize = 10;
     private boolean isRefresh = false;
     private boolean isLoading = false;
-    private HomeActPresenter presenter;
+    private MyactivityPresenter presenter;
     private List<ActivityInfo.Act> list = new ArrayList<>();
     private ActivityInfo.Act footerItem = new ActivityInfo.Act();
 
@@ -63,8 +68,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     private JoinActPresenter joinActPresenter;
 
-    public static ActivityFragment newInstance(int position) {
-        ActivityFragment fragment = new ActivityFragment();
+    public static MyactivityFragment newInstance(int position) {
+        MyactivityFragment fragment = new MyactivityFragment();
         Bundle args = new Bundle();
         args.putInt("position" , position);
         fragment.setArguments(args);
@@ -81,9 +86,9 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_activity, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_activities, container, false);
         ButterKnife.bind(this , view);
-        presenter= new HomeActPresenter();
+        presenter= new MyactivityPresenter();
         presenter.init(this);
         joinActPresenter = new JoinActPresenter();
         joinActPresenter.init(this);
@@ -103,15 +108,15 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new ActivityInfoAdapter(context, activity , list);
+        adapter = new MyactivityinfoAdapter(context, activity , list);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this);
+        adapter.setOnItemClickListener(MyactivityFragment.this);
 
         if(TextUtils.isEmpty(PrefUtil.getToken(context)) && position == 2){
             loadingView.noData(R.string.tips_no_token);
             return;
         }
-        presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
+        presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
     }
 
@@ -166,7 +171,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void onLoadMore() {
         page++;
         setRefreshLoading(false, true);
-        presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
+        presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
     }
 
     @Override

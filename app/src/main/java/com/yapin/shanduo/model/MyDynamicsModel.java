@@ -11,7 +11,7 @@ import java.util.List;
  */
 
 public interface MyDynamicsModel {
-//    void load(OnLoadListener<TrendInfo.Trend> listener);
+
     void load (OnMultiLoadListener<List<TrendInfo.Trend>> listener ,String lon , String lat, String page , String pageSize);
 
 }

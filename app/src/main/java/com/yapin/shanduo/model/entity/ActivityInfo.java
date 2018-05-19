@@ -99,6 +99,16 @@ public class ActivityInfo implements Parcelable {
 
 		private Integer evaluationSign; // 评价标识
 
+		private Integer beEvaluationSign; // 发起者评论标识
+
+		public Integer getBeEvaluationSign() {
+			return beEvaluationSign;
+		}
+
+		public void setBeEvaluationSign(Integer beEvaluationSign) {
+			this.beEvaluationSign = beEvaluationSign;
+		}
+
 		public Integer getVipGrade() {
 			return vipGrade;
 		}
@@ -317,6 +327,7 @@ public class ActivityInfo implements Parcelable {
 			dest.writeString(this.gender);
 			dest.writeValue(this.vipGrade);
 			dest.writeValue(this.evaluationSign);
+			dest.writeValue(this.beEvaluationSign);
 		}
 
 		protected Act(Parcel in) {
@@ -344,6 +355,7 @@ public class ActivityInfo implements Parcelable {
 			this.gender = in.readString();
 			this.vipGrade = (Integer) in.readValue(Integer.class.getClassLoader());
 			this.evaluationSign = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.beEvaluationSign = (Integer) in.readValue(Integer.class.getClassLoader());
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

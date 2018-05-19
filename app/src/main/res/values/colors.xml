@@ -85,4 +85,6 @@
 
     <color name="yablack">#666666</color>
 
+    <color name="backgroundcolor">#f7f8ff</color>
+
 </resources>

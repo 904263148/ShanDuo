@@ -190,11 +190,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
     @Override
     public void onLikeClick(String id) {
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
-        }else {
-            likePresenter.onLike(id);
-        }
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

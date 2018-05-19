@@ -4,81 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_color"
+    android:background="@color/backgroundcolor"
     tools:context=".ui.fragment.PersonFragment">
 
-    <TextView
+
+
+    <FrameLayout
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="个人资料"
-        android:textSize="15dp"
-        android:textColor="@color/textview_text_color"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        />
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        >
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center"
+            android:background="@color/colorAccent"
+            android:src="@drawable/icon_p_setup"
+            />
+
+        <TextView
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainfont"
+            android:text="我的" />
+
+    </FrameLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="5dp"
         android:id="@+id/ll_person_a"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
-        >
+        android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="53dp"
-            android:layout_height="53dp"
-            android:src="@drawable/icon_eadportrait"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="left|center"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/icon_eadportrait"
 
             />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center"
-            android:orientation="vertical"
-            android:layout_marginLeft="8dp">
+            android:layout_marginLeft="5dp"
+            android:orientation="vertical">
+
             <TextView
-                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小猪佩奇"
                 android:textColor="@color/textview_text_color"
-                />
+                android:textSize="12dp" />
 
             <RelativeLayout
-                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
                 <TextView
                     android:id="@+id/tv_sex"
-                    android:background="@drawable/tv_back_shape"
-                    android:layout_width="25dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="10dp"
-                    android:text="23"
-                    android:paddingLeft="3dp"
-                    android:textSize="7sp"
-                    android:textColor="@color/colorPrimary"
+                    android:background="@drawable/tv_back_shape"
                     android:drawableLeft="@drawable/icon_women"
-                    />
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:text="23"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="7sp" />
+
                 <TextView
                     android:id="@+id/tv_svip"
-                    android:layout_toRightOf="@+id/tv_sex"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="10dp"
-                    android:scaleType="fitXY"
-                    android:textSize="7sp"
-                    android:paddingLeft="4dp"
-                    android:text="SVIP2"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tv_sex"
                     android:background="@drawable/tv_backsvip_shape"
-                    />
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:scaleType="fitXY"
+                    android:text="SVIP"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="7sp" />
 
             </RelativeLayout>
-
 
 
         </LinearLayout>
@@ -87,20 +107,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="15dp"
-            >
-        <Button
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:background="@drawable/signin_shape"
-            android:layout_width="40dp"
-            android:layout_height="15dp"
-            android:layout_alignParentRight="true"
-            android:text="签到"
-            android:textColor="@color/colorAccent"
-            android:textSize="9sp"
-            android:drawableRight="@drawable/icon_forward"
-            />
+            android:layout_marginRight="15dp">
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="23dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/signin_shape"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="签到"
+                android:textColor="@color/colorAccent"
+                android:textSize="12dp" />
         </RelativeLayout>
 
     </LinearLayout>
@@ -112,104 +130,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/background_color"
+        android:background="@color/backgroundcolor"
         >
 
 
         <TextView
-
-            android:textColor="@color/font_color_gray"
+            android:id="@+id/tv_Myactivities"
+            android:textColor="@color/textview_text_color"
             android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_activity"
-            android:text="我的活动"/>
+            android:drawableLeft="@drawable/icon_p_activity"
+            android:drawableRight="@drawable/icon_p_forward"
+            android:text="\t我的活动"/>
         <!--android:drawableRight="@drawable/icon_img_return"-->
 
 
         <TextView
             android:id="@+id/tv_MyDynamics"
-            android:textColor="@color/font_color_gray"
+            android:textColor="@color/textview_text_color"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_smallbell"
-            android:text="我的动态"/>
+            android:drawableLeft="@drawable/icon_p_dynamic"
+            android:drawableRight="@drawable/icon_p_forward"
+            android:text="\t我的动态"/>
 
         <TextView
-            android:textColor="@color/font_color_gray"
+            android:textColor="@color/textview_text_color"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_collection"
-            android:text="收藏"/>
+            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableLeft="@drawable/icon_p_credit"
+            android:text="\t信用中心"/>
 
         <TextView
-            android:textColor="@color/font_color_gray"
+            android:textColor="@color/textview_text_color"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_wallet"
-            android:text="我的钱包"/>
+            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableLeft="@drawable/icon_p_wallet"
+            android:text="\t我的钱包"/>
 
         <TextView
-            android:textColor="@color/font_color_gray"
+            android:textColor="@color/textview_text_color"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_member"
-            android:text="会员中心"/>
-
-        <TextView
-            android:id="@+id/modify"
-            android:textColor="@color/font_color_gray"
-            android:layout_marginTop="1dp"
-            android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_credit"
-            android:text="信用中心"/>
-
-        <TextView
-            android:textColor="@color/font_color_gray"
-            android:layout_marginTop="5dp"
-            android:background="@color/color_white"
-            android:paddingLeft="16dp"
-            android:paddingRight="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/icon_setup"
-            android:text="设置"/>
-
-        <Button
-            android:id="@+id/exit_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="退出登录"
-            />
+            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableLeft="@drawable/icon_p_member"
+            android:text="\t会员中心"/>
 
     </LinearLayout>
 
@@ -306,6 +297,8 @@
 
 
     </LinearLayout>
+
+
 
 
 </LinearLayout>

@@ -24,7 +24,7 @@ public class ApiUtil {
     public final static String HOME_ACT = ConfigUtil.configUrl() + "/activity/showHotActivity";
 
     //添加活动
-    public final static String ADD_ACTIVITY = ConfigUtil.configUrl() +  "/activity/saveactivity";
+    public final static String ADD_ACTIVITY =  ConfigUtil.configUrl() +"/activity/saveactivity";
 
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/homeList";
@@ -46,6 +46,9 @@ public class ApiUtil {
 
     //我的动态
     public final static String MY_DYNAMICS = ConfigUtil.configUrl() +"/jdynamic/dynamicList";
+
+    //我的活动
+    public final static String MY_ACTIVITY = ConfigUtil.configUrl() +"/activity/showOneActivity";
 
     //动态回复
     public final static String TREND_FIRST_REPLAY = ConfigUtil.configUrl() +"/jdynamic/commentList";
