@@ -6,11 +6,10 @@
 
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="7dp"
         android:gravity="center_vertical"
         >
 
@@ -28,25 +27,140 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="20dp"
-            android:textColor="@color/color_editing"
-            android:text="我的活动"
-            />
-
-        <TextView
-            android:layout_gravity="right|center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="编辑"
-            android:textColor="@color/font_color_gray"
-            android:textSize="20dp"
+            android:textColor="@color/mainfont"
+            android:text="闪多钱包"
             />
 
     </FrameLayout>
 
-    <com.yapin.shanduo.widget.LoadMoreRecyclerView
-        android:id="@+id/recyclerview"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="150dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:textColor="@color/tab_indicator_color"
+                android:textSize="30dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="钱包余额"
+                android:textColor="@color/font_color_gray"
+                android:textSize="10dp"
+                />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="1dp"
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textColor="@color/tab_indicator_color"
+                android:textSize="30dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="闪多豆"
+                android:textColor="@color/font_color_gray"
+                android:textSize="10dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_recharge"
+
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="充值"
+                android:textColor="@color/home_title_color"
+                android:textSize="12dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="1dp"
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/icon_transactionrecord"
+
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="交易记录"
+                android:textColor="@color/home_title_color"
+                android:textSize="12dp"
+                />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

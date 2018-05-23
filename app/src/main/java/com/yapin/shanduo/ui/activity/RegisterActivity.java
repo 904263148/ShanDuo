@@ -24,8 +24,8 @@ import com.yapin.shanduo.utils.ToastUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View , View.OnFocusChangeListener{
+//  View.OnFocusChangeListener
+public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View {
 
     @BindView(R.id.et_phone)
     EditText etPhone;
@@ -35,12 +35,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
     EditText etCode;
     @BindView(R.id.tv_code)
     TextView tvCode;
-    @BindView(R.id.iv_name)
-    ImageView ivPhone;
-    @BindView(R.id.iv_code)
-    ImageView ivCode;
-    @BindView(R.id.iv_pwd)
-    ImageView ivPwd;
+
 
     private Context context;
     private Activity activity;
@@ -73,57 +68,57 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         dialog.setMessage(context.getString(R.string.dialog_loading));
         dialog.setCanceledOnTouchOutside(false);
 
-        etCode.setOnFocusChangeListener(this);
-        etPhone.setOnFocusChangeListener(this);
-        etPwd.setOnFocusChangeListener(this);
+//        etCode.setOnFocusChangeListener(this);
+//        etPhone.setOnFocusChangeListener(this);
+//        etPwd.setOnFocusChangeListener(this);
     }
 
-    @Override
-    public void onFocusChange(View v, boolean hasFocus) {
-        if(hasFocus) {
-            switch (v.getId()) {
-                case R.id.et_phone:
-                    ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-                    if ( TextUtils.isEmpty(etCode.getText().toString().trim())) {
-                        ivCode.setBackgroundResource(R.drawable.icon_code_unchecked);
-                    } else {
-                        ivCode.setBackgroundResource(R.drawable.icon_code_checked);
-                    }
-                    if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
-                        ivPwd.setBackgroundResource(R.drawable.icon_password);
-                    } else {
-                        ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-                    }
-                    break;
-                case R.id.et_code:
-                    ivCode.setBackgroundResource(R.drawable.icon_code_checked);
-                    if ( TextUtils.isEmpty(etPhone.getText().toString().trim()) ) {
-                        ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
-                    } else {
-                        ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-                    }
-                    if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
-                        ivPwd.setBackgroundResource(R.drawable.icon_password);
-                    } else {
-                        ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-                    }
-                    break;
-                case R.id.et_password:
-                    ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-                    if ( TextUtils.isEmpty(etPhone.getText().toString().trim()) ) {
-                        ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
-                    } else {
-                        ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-                    }
-                    if ( TextUtils.isEmpty(etCode.getText().toString().trim())) {
-                        ivCode.setBackgroundResource(R.drawable.icon_code_unchecked);
-                    } else {
-                        ivCode.setBackgroundResource(R.drawable.icon_code_checked);
-                    }
-                    break;
-            }
-        }
-    }
+//    @Override
+//    public void onFocusChange(View v, boolean hasFocus) {
+//        if(hasFocus) {
+//            switch (v.getId()) {
+//                case R.id.et_phone:
+//                    ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
+//                    if ( TextUtils.isEmpty(etCode.getText().toString().trim())) {
+//                        ivCode.setBackgroundResource(R.drawable.icon_code_unchecked);
+//                    } else {
+//                        ivCode.setBackgroundResource(R.drawable.icon_code_checked);
+//                    }
+//                    if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
+//                        ivPwd.setBackgroundResource(R.drawable.icon_password);
+//                    } else {
+//                        ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
+//                    }
+//                    break;
+//                case R.id.et_code:
+//                    ivCode.setBackgroundResource(R.drawable.icon_code_checked);
+//                    if ( TextUtils.isEmpty(etPhone.getText().toString().trim()) ) {
+//                        ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
+//                    } else {
+//                        ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
+//                    }
+//                    if (TextUtils.isEmpty(etPwd.getText().toString().trim())) {
+//                        ivPwd.setBackgroundResource(R.drawable.icon_password);
+//                    } else {
+//                        ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
+//                    }
+//                    break;
+//                case R.id.et_password:
+//                    ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
+//                    if ( TextUtils.isEmpty(etPhone.getText().toString().trim()) ) {
+//                        ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
+//                    } else {
+//                        ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
+//                    }
+//                    if ( TextUtils.isEmpty(etCode.getText().toString().trim())) {
+//                        ivCode.setBackgroundResource(R.drawable.icon_code_unchecked);
+//                    } else {
+//                        ivCode.setBackgroundResource(R.drawable.icon_code_checked);
+//                    }
+//                    break;
+//            }
+//        }
+//    }
 
     @OnClick({R.id.iv_back , R.id.tv_code , R.id.tv_reg})
     public void onClick(View view){

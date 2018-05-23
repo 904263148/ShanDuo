@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
-import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -37,7 +37,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context context;
     private List<TrendInfo.Trend> list;
-//    private OpenPopupWindow openPopupWindow;
+    private OpenPopupWindow openPopupWindow;
     private Activity activity;
 
     private TrendGridViewAdapter adapter;
@@ -46,7 +46,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.context = context;
         this.activity = activity;
         this.list = list;
-//        openPopupWindow = (MainActivity) activity;
+//        openPopupWindow = (MyDynamicsActivity) activity;
     }
 
     @NonNull

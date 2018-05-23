@@ -78,8 +78,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     @BindView(R.id.tv_pd_address)       //当前位置显示
     TextView tv_pd_address;
 
-    String content="";
-    String location ="";
+    String content = "";
+    String location = "";
     String textlonlat;
     String lat = null;
     String lon = null;
@@ -130,13 +130,13 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
         }
     }
 
-    @OnClick({R.id.tv_pd_Publish,R.id.tv_pd_cancel,R.id.ib_pd_Location})
+    @OnClick({R.id.tv_pd_Publish,R.id.tv_pd_cancel,R.id.ib_pd_Location ,R.id.ib_pick_photo , R.id.ib_take_photo })
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.tv_pd_cancel:
+            case R.id.tv_pd_cancel:         //取消
                 finish();
                 break;
-            case R.id.tv_pd_Publish:
+            case R.id.tv_pd_Publish:        //发布
                 location = tv_pd_address.getText().toString().trim();
                 if (lon==null){
                     lon = PrefUtil.getLon(context);
@@ -144,17 +144,30 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 if (lat==null){
                     lat = PrefUtil.getLat(context);
                 }
-                if (listShow==null) {
+                if (listShow!=null) {
                     listShow.remove(0);
                     uploadPresenter.upload(listShow);
                 }else{
                     publishTrend("");
                 }
+
                 break;
-            case R.id.ib_pd_Location:
+            case R.id.ib_pd_Location:       //定位
                 Intent intent =new Intent(activity ,MapGaodeActivity.class);
                 startActivityForResult(intent , 19);
                 break;
+
+            case R.id.ib_pick_photo:        //拍摄
+                PublishTrendActivityPermissionsDispatcher.showAllWithCheck(PublishTrendActivity.this);
+                break;
+
+            case R.id.ib_take_photo:    //相册
+                Bundle bundle = new Bundle();
+                bundle.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
+                bundle.putInt("source", 0);
+                StartActivityUtil.start(activity, PictureFolderActivity.class, bundle , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW );
+                break;
+
         }
     }
 
@@ -259,8 +272,9 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             setText(data.getStringExtra("Title"));
             textlonlat = data.getStringExtra("textlonlat");
             String []ary = textlonlat.split("\\,");
-            lat=ary[0];
-            lon=ary[1];
+
+            lon=ary[0];
+            lat=ary[1];
 //            Log.i("test","地址是：--"+tv_pd_address+"--经纬度是："+textlonlat);
             break;
             }

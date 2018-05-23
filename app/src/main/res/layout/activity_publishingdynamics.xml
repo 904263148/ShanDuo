@@ -142,6 +142,7 @@
             android:src="@drawable/icon_pd_expression"
             />
         <ImageButton
+            android:id="@+id/ib_pick_photo"
             android:background="@color/colorAccent"
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -149,6 +150,7 @@
             android:src="@drawable/icon_pd_photograph"
             />
         <ImageButton
+            android:id="@+id/ib_take_photo"
             android:background="@color/colorAccent"
             android:layout_width="22dp"
             android:layout_height="22dp"

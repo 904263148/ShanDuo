@@ -61,8 +61,8 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     String lon;
     String remarks;
     String activityAddress;
-    String manNumber;
-    String womanNumber;
+    String manNumber="0";
+    String womanNumber="0";
     String activityName;
     String textlonlat;
     String detailedAddress;

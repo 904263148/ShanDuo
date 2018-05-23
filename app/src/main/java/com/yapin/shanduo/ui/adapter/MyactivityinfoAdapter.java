@@ -91,7 +91,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
+//                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
                 }
             });
 

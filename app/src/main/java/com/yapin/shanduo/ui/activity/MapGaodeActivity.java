@@ -116,6 +116,8 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
 
     private boolean chat_map = false;
 
+    private String s1="nullnull";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -533,12 +535,19 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 String textTitle = resultData.get(position).getTitle().toString().trim();
                 String textlonlat = resultData.get(position).getLatLonPoint().toString().trim();
                 String textSubTitle = resultData.get(position).getCityName()+poiItem.getAdName() + poiItem.getSnippet().toString().trim();
+            /**
+             * 删除textSubTitle里面包含string = s1 的值
+             */
+            if (textSubTitle.contains(s1)){
+                    textSubTitle = textSubTitle.replace(textSubTitle.substring(textSubTitle.indexOf(s1), textSubTitle.length()), "");
+                }
 //                Toast.makeText(MapGaodeActivity.this, "名字是："+textTitle+"地址是："+textSubTitle+"经纬度是："+textlonlat, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 //在Intent对象当中添加一个键值对
                 intent.putExtra("textTitle",textTitle+","+textSubTitle);
                 intent.putExtra("textlonlat",textlonlat);
                 intent.putExtra("textSubTitle",textSubTitle);
+                intent.putExtra("Title",textTitle);
                 setResult(RESULT_OK , intent);
                 finish();
 

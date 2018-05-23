@@ -21,6 +21,7 @@
 
     <color name="home_title_color">#333333</color>
     <color name="home_sex_women_color">#ff9bf0</color>
+    <color name="home_sex_women_coloraa">#ff6369</color>
     <color name="home_sex_man_color">#3782ff</color>
     <color name="home_svip_color">#ffde2f</color>
     <color name="home_vip_color">#ff6369</color>
@@ -86,5 +87,7 @@
     <color name="yablack">#666666</color>
 
     <color name="backgroundcolor">#f7f8ff</color>
+
+    <color name="textcolor_textview">#5c70ff</color>
 
 </resources>

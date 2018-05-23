@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -48,6 +49,10 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     @BindView(R.id.my_loading_view)
     LoadingView loadingView;
 
+    @BindView(R.id.sr_refresh)
+    SwipeRefreshLayout refreshLayout;
+
+
     private Context context;
     private Activity activity;
     private MyactivityinfoAdapter adapter;
@@ -80,6 +85,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt("position");
+
     }
 
     @Override
@@ -111,6 +117,14 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         adapter = new MyactivityinfoAdapter(context, activity , list);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setRefreshLoading(true, false);
+                page = 1;
+                presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
+            }
+        });
 
         if(TextUtils.isEmpty(PrefUtil.getToken(context)) && position == 2){
             loadingView.noData(R.string.tips_no_token);
@@ -159,11 +173,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
 
         if (!isRefresh && !isLoading) {
             recyclerView.setLoading(false);
+            refreshLayout.setRefreshing(false);
 
-            //注册广播
-            Intent intent = new Intent("actRefreshComplete");
-            intent.putExtra("isRefresh",false);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 

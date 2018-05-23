@@ -4,7 +4,7 @@
 
     <corners android:radius="10dp" ></corners>
 
-    <solid android:color="@color/home_sex_women_color"></solid>
+    <solid android:color="@color/home_sex_women_coloraa"></solid>
 
 
 </shape>

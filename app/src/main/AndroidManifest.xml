@@ -87,7 +87,7 @@
         <activity android:name=".ui.activity.MyactivitiesActivity"/>
 
 
-        <activity android:name=".ui.activity.MyDynamicsActivity" />
+        <activity android:name=".ui.activity.SetupActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -60,6 +61,10 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     @BindView(R.id.tv_School)
     TextView tv_School;
 
+    String gender;
+    String emotion;
+
+
 
         @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,14 +102,14 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             mDay = ca.get(Calendar.DAY_OF_MONTH);
     }
 
-    @OnClick({R.id.modify_tv_rg,R.id.date_display,R.id.tv_Emotionalstate,R.id.modify_et_nickname,
-            R.id.tv_Personalitysignature,R.id.tv_Hometown,R.id.tv_School,R.id.tv_Occupation,R.id.iv_back})
+    @OnClick({R.id.fl_rg,R.id.fl_date,R.id.fl_emot,R.id.modify_et_nickname,
+            R.id.fl_person,R.id.fl_hom,R.id.fl_scho,R.id.fl_occup,R.id.iv_back})
     public void onClick(View v){
             switch (v.getId()){
                 case R.id.iv_back:
                     finish();
                     break;
-                case R.id.modify_tv_rg:     //性别
+                case R.id.fl_rg:     //性别
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("请选择性别");
                     final String[] sex = {"男", "女"};
@@ -119,24 +124,21 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-//                            Toast.makeText(activity, "性别为：" + sex[which], Toast.LENGTH_SHORT).show();
                             // 自动生成的方法存根
                             if (which == 0) {//男
-                                modify_tv_rg.setText("1");
-                            }else {//女
-                                modify_tv_rg.setText("0");
+                                gender = "1";
+                            }else if(which == 1){//女
+                                gender = "0";
                             }
                         }
                     });
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
+
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-
-
-                            String gender= modify_tv_rg.getText().toString().trim();
-
+//                            Log.i("gender",gender.toString()+"");
                             presenter.modify("",gender,"","","","","","");
                         }
                     });
@@ -149,26 +151,24 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     });
                     builder.show();
                     break;
-                case R.id.date_display:     //出生年月
+                case R.id.fl_date:     //出生年月
                     show();
                     break;
-                case R.id.tv_Emotionalstate:    //感情状态
+                case R.id.fl_emot:    //感情状态
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                    final String[] emotion = {"已婚", "未婚","保密"};
+                    final String[] emotions = {"已婚", "未婚","保密"};
                     //    设置一个单项选择下拉框
-                    builder1.setSingleChoiceItems(emotion, 3, new DialogInterface.OnClickListener()
+                    builder1.setSingleChoiceItems(emotions, getIsEvent(), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            Toast.makeText(activity, "感情状态为：" + emotion[which], Toast.LENGTH_SHORT).show();
-                            // 自动生成的方法存根
-                            if (which == 0) {//已婚
-                                tv_Emotionalstate.setText("1");
-                            }else if(which == 1){//未婚
-                                tv_Emotionalstate.setText("2");
-                            }else {     //保密
-                                tv_Emotionalstate.setText("0");
+                            if (which == 0) {
+                                emotion = "1";
+                            }else if(which == 1){
+                                emotion = "2";
+                            }else if (which ==2){
+                                emotion = "0";
                             }
                         }
                     });
@@ -177,7 +177,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            String emotion= tv_Emotionalstate.getText().toString().trim();
                             presenter.modify("","","",emotion,"","","","");
                         }
                     });
@@ -216,9 +215,9 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                             });
                             builder2.show();
                             break;
-                case R.id.tv_Personalitysignature:
+                case R.id.fl_person:
                     AlertDialog.Builder builder3 = new AlertDialog.Builder(activity);
-                    builder3.setTitle("请输入你要修改的");
+                    builder3.setTitle("请输入你要修改的个性签名");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
                     View view1 = LayoutInflater.from(activity).inflate(R.layout.personalitysignature, null);
                     //    设置我们自己定义的布局文件作为弹出框的Content
@@ -242,7 +241,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     });
                     builder3.show();
                     break;
-                case R.id.tv_Hometown:  //家乡
+                case R.id.fl_hom:  //家乡
                     AlertDialog.Builder builder4 = new AlertDialog.Builder(activity);
                     builder4.setTitle("请输入你要修改的家乡");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
@@ -268,7 +267,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     });
                     builder4.show();
                     break;
-                case R.id.tv_School:    //毕业学校
+                case R.id.fl_scho:    //毕业学校
                     AlertDialog.Builder builder5 = new AlertDialog.Builder(activity);
                     builder5.setTitle("请输入你要修改的昵称");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
@@ -294,9 +293,9 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     });
                     builder5.show();
                     break;
-                case R.id.tv_Occupation:    //职业
+                case R.id.fl_occup:    //职业
                     AlertDialog.Builder builder6 = new AlertDialog.Builder(activity);
-                    builder6.setTitle("请输入你要修改的昵称");
+                    builder6.setTitle("请输入你要修改的职业");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
                     View view4 = LayoutInflater.from(activity).inflate(R.layout.occupation, null);
                     //    设置我们自己定义的布局文件作为弹出框的Content
@@ -355,6 +354,17 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
 
     @Override
     public void success(String data) {
+        if ("1".equals(gender)) {//男
+            modify_tv_rg.setText("男");
+        }else if("0".equals(gender)){//女
+            modify_tv_rg.setText("女");
+        }else if ("0".equals(emotion)) {
+            tv_Emotionalstate.setText("保密");
+        }else if("1".equals(emotion)){
+            tv_Emotionalstate.setText("已婚");
+        }else if("2".equals(emotion)){
+            tv_Emotionalstate.setText("未婚");
+        }
         ToastUtil.showShortToast(context,"修改成功");
 
     }

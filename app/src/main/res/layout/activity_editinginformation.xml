@@ -137,6 +137,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/fl_rg"
         android:paddingTop="0.5dp"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
@@ -169,6 +170,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/fl_date"
         android:background="@color/colorPrimary"
         android:paddingTop="0.5dp"
         android:layout_width="match_parent"
@@ -202,6 +204,7 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/fl_emot"
         android:background="@color/colorPrimary"
         android:paddingTop="0.5dp"
         android:layout_width="match_parent"
@@ -244,6 +247,7 @@
             android:gravity="center_vertical|left"/>
 
         <FrameLayout
+            android:id="@+id/fl_person"
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -275,6 +279,7 @@
 
 
         <FrameLayout
+            android:id="@+id/fl_hom"
             android:background="@color/colorPrimary"
             android:paddingTop="0.5dp"
             android:layout_width="match_parent"
@@ -306,6 +311,7 @@
 
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/fl_occup"
             android:background="@color/colorPrimary"
             android:paddingTop="0.5dp"
             android:layout_width="match_parent"
@@ -337,6 +343,7 @@
 
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/fl_scho"
             android:background="@color/colorPrimary"
             android:paddingTop="0.5dp"
             android:layout_width="match_parent"

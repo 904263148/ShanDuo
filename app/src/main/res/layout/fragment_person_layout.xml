@@ -17,13 +17,13 @@
         android:paddingRight="10dp"
         >
 
-        <ImageButton
+<!--        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center"
             android:background="@color/colorAccent"
             android:src="@drawable/icon_p_setup"
-            />
+            />-->
 
         <TextView
             android:textSize="15dp"
@@ -40,11 +40,12 @@
         android:id="@+id/ll_person_a"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="5dp"
         android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/ib_Headportrait"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="left|center"
@@ -61,6 +62,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="小猪佩奇"
@@ -123,6 +125,10 @@
 
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_marginTop="5dp"
         android:id="@+id/ll_person_b"
@@ -144,7 +150,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/icon_p_activity"
-            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableRight="@drawable/icon_my_forward"
             android:text="\t我的活动"/>
         <!--android:drawableRight="@drawable/icon_img_return"-->
 
@@ -152,7 +158,7 @@
         <TextView
             android:id="@+id/tv_MyDynamics"
             android:textColor="@color/textview_text_color"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:background="@color/color_white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
@@ -160,23 +166,24 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/icon_p_dynamic"
-            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableRight="@drawable/icon_my_forward"
             android:text="\t我的动态"/>
 
         <TextView
             android:textColor="@color/textview_text_color"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="5dp"
             android:background="@color/color_white"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_credit"
             android:text="\t信用中心"/>
 
         <TextView
+            android:id="@+id/text_mywallet"
             android:textColor="@color/textview_text_color"
             android:layout_marginTop="1dp"
             android:background="@color/color_white"
@@ -185,7 +192,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_wallet"
             android:text="\t我的钱包"/>
 
@@ -198,11 +205,27 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical"
-            android:drawableRight="@drawable/icon_p_forward"
+            android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_member"
             android:text="\t会员中心"/>
 
+        <TextView
+            android:id="@+id/text_setup"
+            android:textColor="@color/textview_text_color"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/icon_my_forward"
+            android:drawableLeft="@drawable/icon_my_upset"
+            android:text="\t设置"/>
+
     </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:background="@drawable/ll_suspension_shape"

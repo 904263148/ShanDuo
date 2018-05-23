@@ -46,6 +46,16 @@
 
     </FrameLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/sr_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <com.yapin.shanduo.widget.LoadMoreRecyclerView
         android:id="@+id/recycler_my_view"
         android:layout_width="match_parent"
@@ -56,5 +66,9 @@
         android:id="@+id/loading_my_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

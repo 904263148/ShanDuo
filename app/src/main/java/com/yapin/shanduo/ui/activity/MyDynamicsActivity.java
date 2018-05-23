@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -54,6 +55,8 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     LoadMoreRecyclerView recyclerView;
     @BindView(R.id.loading_my_view)
     LoadingView loadingView;
+    @BindView(R.id.sr_refresh)
+    SwipeRefreshLayout refreshLayout;
 
     private MyDynamicsAdapter adapter;
     private LinearLayoutManager layoutManager;
@@ -95,13 +98,24 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         adapter.setLikeClickListener(this);
         presenter.getdynamics( PrefUtil.getLon(context) , PrefUtil.getLat(context) ,page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setRefreshLoading(true, false);
+                page = 1;
+                presenter.getdynamics(PrefUtil.getLon(context) , PrefUtil.getLat(context),page+"" , pageSize+"");
+            }
+        });
     }
 
-    @OnClick({R.id.tv_md_cancel})
+    @OnClick({R.id.tv_md_cancel , R.id.tv_md_Release})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.tv_md_cancel:
                 finish();
+                break;
+            case R.id.tv_md_Release:
+                StartActivityUtil.start(activity , PublishTrendActivity.class);
                 break;
         }
     }
@@ -119,11 +133,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
         if (!isRefresh && !isLoading) {
             recyclerView.setLoading(false);
-
-            //注册广播
-            Intent intent = new Intent("trendRefreshComplete");
-            intent.putExtra("isRefresh",false);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            refreshLayout.setRefreshing(false);
         }
     }
 

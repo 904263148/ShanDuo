@@ -3,12 +3,16 @@ package com.yapin.shanduo.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
@@ -18,18 +22,20 @@ import com.yapin.shanduo.ui.adapter.MyactivityAdapter;
 import com.yapin.shanduo.ui.contract.MyactivityContract;
 import com.yapin.shanduo.utils.Utils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
  * Created by dell on 2018/5/18.
  */
 //  implements SwipeRefreshLayout.OnRefreshListener , ViewPager.OnPageChangeListener , MyactivityContract.View
-public class MyactivitiesActivity extends BaseActivity{
+public class MyactivitiesActivity extends BaseActivity {
 
     private Context context;
     private Activity activity;
@@ -44,7 +50,6 @@ public class MyactivitiesActivity extends BaseActivity{
     @BindView(R.id.my_main_tab)
     TabLayout tabLayout;
 
-    private List<String> list;
 
     private final int OPEN_LOGIN = 1;
 
@@ -65,116 +70,62 @@ public class MyactivitiesActivity extends BaseActivity{
         mTableLayout.setupWithViewPager(mViewPager);
         mTableLayout.setTabMode(TabLayout.MODE_FIXED);
 
+
     }
 
-//
-//    @Override
-//    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//    }
-//
-//    @Override
-//    public void onPageSelected(int position) {
-//
-//    }
-//
-//    @Override
-//    public void onPageScrollStateChanged(int state) {
-//
-//    }
-//
-//    @Override
-//    public void onRefresh() {
-//        mAdapter.notifyDataSetChanged();
-//        tabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                Utils.setIndicator(tabLayout , 30 , 30);
-//            }
-//        });
-//    }
-//
-//    @Override
-//    public void initView() {
-//        list = new ArrayList<>();
-//        list.add("已参加");
-//        list.add("已报名");
-//        list.add("我的");
-//
-//        mAdapter = new MyactivityAdapter( list);
-//        viewPager.setAdapter(mAdapter);
-//        viewPager.setOffscreenPageLimit(2);
-//        viewPager.addOnPageChangeListener(this);
-//
-//        tabLayout.setupWithViewPager(viewPager);
-//        tabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                Utils.setIndicator(tabLayout , 30 , 30);
-//            }
-//        });
-//
-//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-////                if(tab.getPosition() == 2 && TextUtils.isEmpty(PrefUtil.getToken(context))){
-////                    StartActivityUtil.start(activity ,MyactivitiesActivity.this , LoginActivity.class ,OPEN_LOGIN);
-////                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//
-//
-//    }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(resultCode != activity.RESULT_OK) {
-//            viewPager.setCurrentItem(0);
-//            return;
-//        }
-//
-//    }
-//
-//
-//    @Override
-//    public void show(List<ActivityInfo.Act> data, int totalPage) {
-//
-//    }
-//
-//    @Override
-//    public void loading() {
-//
-//    }
-//
-//    @Override
-//    public void networkError() {
-//
-//    }
-//
-//    @Override
-//    public void error(String msg) {
-//
-//    }
-//
-//    @Override
-//    public void showFailed(String msg) {
-//
-//    }
-//
-//    @Override
-//    public void onPointerCaptureChanged(boolean hasCapture) {
-//
-//    }
+    @OnClick({R.id.tv_my_finish})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_my_finish:
+                finish();
+                break;
+        }
+    }
+
+    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        tabStrip.setAccessible(true);
+        LinearLayout llTab = null;
+        try {
+            llTab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
+        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
+
+        for (int i = 0; i < llTab.getChildCount(); i++) {
+            View child = llTab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                setIndicator(tabLayout, 40, 40);
+            }
+        });
+    }
+
+
 
 }
