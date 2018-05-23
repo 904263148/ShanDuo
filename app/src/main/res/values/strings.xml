@@ -57,6 +57,7 @@
     <string name="share_delete">删除</string>
 
     <string name="tips_no_act">暂无活动</string>
+    <string name="tips_no_trend">暂无动态</string>
     <string name="tips_no_token">必须登录才能查看好友活动哟~</string>
     <string name="tips_my_no_token">请先登录哦</string>
 
@@ -76,6 +77,9 @@
     <string name="title_search_friend">搜索好友</string>
 
     <string name="tips_no_friend">暂无好友</string>
+    <string name="tips_no_login">请先登录</string>
+
+    <string name="title_add">添加</string>
 
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>
@@ -106,6 +110,10 @@
     <string name="env_test">当前连接测试环境</string>
     <string name="file_not_found">未找到文件，请稍后重试</string>
     <string name="google_service_not_available">google推送服务不可用，请检查google play设置</string>
+
+    <!-- WXPayEntryActivity -->
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
 
     <!-- home activity -->
     <string name="send_success">发送成功</string>

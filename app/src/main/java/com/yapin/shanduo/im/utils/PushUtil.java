@@ -39,8 +39,6 @@ public class PushUtil implements Observer {
         return instance;
     }
 
-
-
     private void PushNotify(TIMMessage msg){
         //系统消息，自己发的消息，程序在前台的时候不通知
         if (msg==null||Foreground.get().isForeground()||

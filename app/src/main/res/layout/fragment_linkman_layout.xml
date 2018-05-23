@@ -8,6 +8,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -24,6 +30,7 @@
             />
 
         <ImageView
+            android:id="@+id/iv_add_friend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_link_add"
@@ -42,24 +49,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@color/white"
         >
 
         <LinearLayout
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_search"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/rounded_search"
             android:gravity="center_vertical"
             >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@drawable/icon_link_search"
                 android:layout_marginLeft="10dp"
                 />
@@ -74,23 +82,6 @@
                 />
 
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tv_search"
-            android:layout_width="50dp"
-            android:layout_height="25dp"
-            android:background="@drawable/rounded_textview_home"
-            android:text="@string/title_search"
-            android:gravity="center"
-            android:textSize="@dimen/egg_font_size"
-            android:textColor="@color/white"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_alignParentRight="true"
-            />
 
     </RelativeLayout>
 
@@ -119,5 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    </LinearLayout>
 
 </LinearLayout>

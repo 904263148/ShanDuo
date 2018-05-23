@@ -3,9 +3,12 @@ package com.yapin.shanduo.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +23,30 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.tencent.TIMConversation;
+import com.tencent.TIMConversationType;
+import com.tencent.TIMManager;
+import com.tencent.TIMMessage;
+import com.tencent.TIMValueCallBack;
+import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
+import com.tencent.open.utils.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
+import com.yapin.shanduo.ui.fragment.ChatFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
+import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,8 +59,10 @@ import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.tencent.qzone.QZone;
 import cn.sharesdk.wechat.friends.Wechat;
 import cn.sharesdk.wechat.moments.WechatMoments;
+import cn.sharesdk.wechat.utils.WXImageObject;
+import cn.sharesdk.wechat.utils.WXMediaMessage;
 
-public class MainActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener{
+public class MainActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener , RefreshAll{
 
     @BindView(R.id.iv_home)
     ImageView ivHome;
@@ -102,17 +118,35 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
     private final int OPEN_OTHER_ACTIVITY = 3;
 
+    private ViewPagerAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setTheme(R.style.NoTranslucent);
+
         //设置PopupWindow的View
         popView = LayoutInflater.from(this).inflate(R.layout.share_popup, null);
         publishPopView = LayoutInflater.from(this).inflate(R.layout.publish_popupwindow , null);
         initView();
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent == null)
+            return;
+        setIntent(intent);
+        initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void initView() {
@@ -125,7 +159,8 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
         viewPager.setCurrentItem(0, false);
         viewPager.setOffscreenPageLimit(5);
-        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
 
         publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
         publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
@@ -309,12 +344,19 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
 
     private void showShare(String name) {
         Platform.ShareParams sp = new Platform.ShareParams();
+
+        if(name.equals(Wechat.NAME)){
+            sp.setShareType(Platform.SHARE_WEBPAGE);
+            sp.setText("闪多测试。");
+        }
+
         sp.setTitle("测试分享的标题");
-        sp.setTitleUrl("http://sharesdk.cn"); // 标题的超链接
+        sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
         sp.setText("测试分享的文本");
-        sp.setImageUrl("http://www.baidu.com");
-        sp.setSite("发布分享的网站名称");
-        sp.setSiteUrl("发布分享网站的地址");
+        sp.setImageUrl("http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg");
+        sp.setSite("闪多");
+        sp.setSiteUrl("http://www.baidu.com");
+        sp.setUrl("http://www.baidu.com");
 
         Platform platform = ShareSDK.getPlatform(name);
         // 设置分享事件回调（注：回调放在不能保证在主线程调用，不可以在里面直接处理UI操作）
@@ -344,16 +386,19 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
     @Override
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         //失败的回调，arg:平台对象，arg1:表示当前的动作，arg2:异常信息
+        Log.d("shareSDK" , hashMap.toString());
     }
 
     @Override
     public void onError(Platform platform, int i, Throwable throwable) {
         //分享成功的回调
+        Log.d("shareSDK" , throwable.toString());
     }
 
     @Override
     public void onCancel(Platform platform, int i) {
         //取消分享的回调
+        Log.d("shareSDK" , "取消了~");
     }
 
     @Override
@@ -362,11 +407,15 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         if(resultCode != RESULT_OK){
             return;
         }
-        if(publishPopupWindow.isShowing() && publishPopupWindow != null){
-            publishPopupWindow.dismiss();
+        if(publishPopupWindow != null){
+            if(publishPopupWindow.isShowing()) {
+                publishPopupWindow.dismiss();
+            }
         }
-        if(popupWindow.isShowing() && popupWindow != null){
-            popupWindow.dismiss();
+        if(popupWindow != null){
+            if(popupWindow.isShowing()) {
+                popupWindow.dismiss();
+            }
         }
         switch (requestCode){
             case PUBLISH_ACT_OPEN_LOGIN:
@@ -376,6 +425,11 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
                 StartActivityUtil.start(activity , PublishTrendActivity.class);
                 break;
         }
+    }
+
+    @Override
+    public void refresh() {
+        adapter.notifyDataSetChanged();
     }
 
 }

@@ -6,21 +6,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMCallBack;
+import com.tencent.qcloud.presentation.business.LoginBusiness;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.presentation.event.GroupEvent;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.LoginPresenter;
 import com.yapin.shanduo.ui.contract.LoginContract;
 import com.yapin.shanduo.ui.manage.UserManage;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
@@ -32,9 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-//, View.OnFocusChangeListener
-
-public class LoginActivity extends BaseActivity implements LoginContract.View {
+public class LoginActivity extends BaseActivity implements LoginContract.View , TIMCallBack{
 
     @BindView(R.id.et_login_user)
     EditText et_login_user;
@@ -118,8 +119,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         ToastUtil.showShortToast(context,data);
         Log.e("token", PrefJsonUtil.getProfile(context).getToken());
         PrefUtil.setToken(context , PrefJsonUtil.getProfile(context).getToken());
-        setResult(RESULT_OK);
-        onBackPressed();
+
+        UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
+        UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());
+
+        Log.d("user_im_sign","用户的IM签名"+PrefJsonUtil.getProfile(context).getUserSig());
+        Log.d("user_id","用户的id"+PrefJsonUtil.getProfile(context).getUserId());
+
+        //登录之前要初始化群和好友关系链缓存
+        FriendshipEvent.getInstance().init();
+        GroupEvent.getInstance().init();
+        LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
+        FriendshipManagerPresenter.setMyInfo(PrefJsonUtil.getProfile(context).getName() , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() ,this);
     }
 
     @Override
@@ -182,4 +193,15 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 //            }
 //        }
 //    }
+
+    @Override
+    public void onError(int i, String s) {
+
+    }
+
+    @Override
+    public void onSuccess() {
+        setResult(RESULT_OK);
+        onBackPressed();
+    }
 }

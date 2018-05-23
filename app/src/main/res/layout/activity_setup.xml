@@ -100,10 +100,10 @@
         android:gravity="center_horizontal">
 
         <Button
+            android:id="@+id/bt_logout"
             android:layout_marginTop="30dp"
             android:layout_width="300dp"
             android:layout_height="40dp"
-            android:background="@drawable/button_shape"
             android:text="退出登录"
             android:textColor="@color/colorAccent"
             android:textSize="15dp"

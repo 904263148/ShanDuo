@@ -35,6 +35,7 @@ import com.yapin.shanduo.ui.adapter.ActivityTabAdapter;
 import com.yapin.shanduo.ui.adapter.ImageHomeAdapter;
 import com.yapin.shanduo.ui.adapter.MyViewPagerAdapter;
 import com.yapin.shanduo.ui.contract.HomeCarouselContract;
+import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -83,6 +84,8 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
     private final int OPEN_LOGIN = 1;
 
+    private RefreshAll refreshAll;
+
     public static HomeActivityFragment newInstance() {
         HomeActivityFragment fragment = new HomeActivityFragment();
         Bundle args = new Bundle();
@@ -109,6 +112,8 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
+
+        refreshAll = (RefreshAll) activity;
 
         presenter.load();
 
@@ -189,7 +194,9 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             viewPager.setCurrentItem(0);
             return;
         }
-
+        if(requestCode == OPEN_LOGIN){
+            refreshAll.refresh();
+        }
     }
 
     @Override

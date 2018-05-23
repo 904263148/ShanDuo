@@ -78,9 +78,9 @@ public class LinkFriendAdapter extends BaseAdapter {
         }
 
         viewHolder.tvName.setText(this.list.get(position).getName());
-        GlideUtil.load(mContext ,activity , ApiUtil.IMG_URL+fInfoList.get(position).getPicture()  , viewHolder.ivHead);
+        GlideUtil.load(mContext ,activity , ApiUtil.IMG_URL+list.get(position).getPicture()  , viewHolder.ivHead);
         Drawable drawable = null;
-        if ("0".equals(fInfoList.get(position).getGender())) {
+        if ("0".equals(list.get(position).getGender())) {
             drawable = activity.getResources().getDrawable(R.drawable.icon_women);
             viewHolder.tvAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
         } else {
@@ -90,9 +90,9 @@ public class LinkFriendAdapter extends BaseAdapter {
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         viewHolder.tvAge.setCompoundDrawables(drawable, null, null, null);
         viewHolder.tvAge.setCompoundDrawablePadding(2);
-        viewHolder.tvAge.setText(fInfoList.get(position).getAge()+"");
+        viewHolder.tvAge.setText(list.get(position).getAge()+"");
 
-        int level = fInfoList.get(position).getVip();
+        int level = list.get(position).getVip();
         if(level == 0){
             viewHolder.tvVip.setVisibility(View.GONE);
         }else if(level > 0 && level < 9){
@@ -101,11 +101,11 @@ public class LinkFriendAdapter extends BaseAdapter {
             viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
         }else {
             viewHolder.tvVip.setVisibility(View.VISIBLE);
-            viewHolder.tvVip.setText("SVIP"+level);
+            viewHolder.tvVip.setText("SVIP"+(level-10));
             viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
 
-        viewHolder.tvSign.setText(fInfoList.get(position).getSignature());
+        viewHolder.tvSign.setText(list.get(position).getSignature());
 
         return view;
     }

@@ -30,7 +30,7 @@ public class TokenInfo{
 	private String jurisdiction;//权限 普通用户,商户,vip,svip
 	private String remarks;//备注
 	private String userSig;//IM聊天使用签名
-	private String vip;//vip等级
+	private Integer vip;//vip等级
 
 	public String getUserSig() {
 		return userSig;
@@ -40,11 +40,11 @@ public class TokenInfo{
 		this.userSig = userSig;
 	}
 
-	public String getVip() {
+	public Integer getVip() {
 		return vip;
 	}
 
-	public void setVip(String vip) {
+	public void setVip(Integer vip) {
 		this.vip = vip;
 	}
 

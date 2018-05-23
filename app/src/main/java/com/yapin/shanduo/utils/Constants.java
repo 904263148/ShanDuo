@@ -74,4 +74,7 @@ public class Constants {
     public static final String ALL_FRIEND = "1";
     public static final String BLACK_FRIEND = "2";
 
+    //微信支付appid
+    public static final String WECHAT_APPID ="wx3dd985759741b34e";
+
 }

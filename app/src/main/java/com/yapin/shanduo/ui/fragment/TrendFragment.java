@@ -151,7 +151,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     public void show(List<TrendInfo.Trend> data, int totalPage) {
         if (!isLoading) {
             if (totalPage == 0) {
-                loadingView.noData(R.string.tips_no_act);
+                loadingView.noData(R.string.tips_no_trend);
             } else {
                 loadingView.setGone();
             }
@@ -185,6 +185,9 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     @Override
     public void error(String msg) {
 //        loadingView.loadError();
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            loadingView.noData(R.string.tips_no_login);
+        }
         setRefreshLoading(false, false);
     }
 

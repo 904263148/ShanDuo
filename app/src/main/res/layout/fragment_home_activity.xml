@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragment.HomeActivityFragment">
+    tools:context=".ui.fragment.HomeActivityFragment"
+    android:background="@color/white"
+    >
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
@@ -25,7 +27,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_ban"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="168dp"
                         app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                         android:clipChildren="false"
                         android:background="@color/bg_color"
@@ -51,6 +53,13 @@
                             />
                     </RelativeLayout>
 
+                <LinearLayout
+                    android:id="@+id/ll_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/bg_color"
+                    >
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tab_layout"
                         android:layout_width="match_parent"
@@ -62,12 +71,13 @@
                         app:tabSelectedTextColor="@color/font_black_color"
                         app:tabTextColor="@color/font_gray_color"
                          />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/bg_color"
-                    android:layout_below="@+id/tab_layout"
+                    android:layout_below="@+id/ll_tag"
                     />
             </android.support.design.widget.AppBarLayout>
 

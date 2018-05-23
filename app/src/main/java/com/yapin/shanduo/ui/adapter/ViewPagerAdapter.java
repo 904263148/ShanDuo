@@ -1,8 +1,10 @@
 package com.yapin.shanduo.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 
 import com.yapin.shanduo.ui.fragment.AddActivityFragment;
 import com.yapin.shanduo.ui.fragment.HomeFragment;
@@ -32,6 +34,12 @@ public class ViewPagerAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
         return fragments.get(position);
     }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return PagerAdapter.POSITION_NONE;
+    }
+
 
     @Override
     public int getCount() {

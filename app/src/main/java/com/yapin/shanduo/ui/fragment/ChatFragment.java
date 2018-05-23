@@ -1,7 +1,13 @@
 package com.yapin.shanduo.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +30,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.adapters.ConversationAdapter;
 import com.yapin.shanduo.im.model.Conversation;
 import com.yapin.shanduo.im.model.CustomMessage;
@@ -33,12 +40,19 @@ import com.yapin.shanduo.im.model.MessageFactory;
 import com.yapin.shanduo.im.model.NomalConversation;
 import com.yapin.shanduo.im.ui.HomeActivity;
 import com.yapin.shanduo.im.utils.PushUtil;
+import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.onekeyshare.OnekeyShareTheme;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 
 public class ChatFragment extends Fragment implements ConversationView,FriendshipMessageView,GroupManageMessageView {
@@ -54,6 +68,7 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
     private FriendshipConversation friendshipConversation;
     private GroupManageConversation groupManageConversation;
 
+    private LoadingView loadingView;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -69,7 +84,7 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (view == null){
+//        if (view == null){
             view = inflater.inflate(R.layout.fragment_conversation, container, false);
             listView = (ListView) view.findViewById(R.id.list);
             adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
@@ -89,9 +104,21 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
             presenter = new ConversationPresenter(this);
             presenter.getConversation();
             registerForContextMenu(listView);
-        }
-        adapter.notifyDataSetChanged();
+
+            view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+
+            loadingView = view.findViewById(R.id.loading_view);
+//        }
+//        adapter.notifyDataSetChanged();
         return view;
+    }
+
+    public void setLoadView(){
+        loadingView.noData(R.string.tips_my_no_token);
     }
 
     @Override
@@ -99,9 +126,13 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
         super.onResume();
         refresh();
         PushUtil.getInstance().reset();
+        if(TextUtils.isEmpty(PrefUtil.getToken(ShanDuoPartyApplication.getContext()))){
+            loadingView.noData(R.string.tips_no_login);
+            loadingView.setVisibility(View.VISIBLE);
+        }else {
+            loadingView.setGone();
+        }
     }
-
-
 
     /**
      * 初始化界面或刷新界面
