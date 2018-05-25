@@ -65,10 +65,37 @@ public class GlideUtil {
      */
     public static void load(Context context, Activity activity, String url, ImageView imageView) {
         Glide.with(activity).load(url == null ? "" : url)
-                .error(R.color.color_white)
                 .placeholder(R.color.color_white)
                 .error(R.drawable.head)
-//                .placeholder(R.mipmap.ic_launcher)
+                .transform(transform(context))
+                .into(imageView);
+    }
+
+    /**
+     * 加载头像url
+     *
+     * @param activity  activity
+     * @param imageView 头像view
+     */
+    public static void load(Activity activity, int res, ImageView imageView) {
+        Glide.with(activity).load(res)
+                .placeholder(R.color.color_white)
+                .error(R.color.color_white)
+                .transform(transform(activity))
+                .into(imageView);
+    }
+
+    /**
+     * 加载头像url
+     *
+     * @param context   context
+     * @param url       头像url
+     * @param imageView 头像view
+     */
+    public static void load(Context context, String url, ImageView imageView) {
+        Glide.with(context).load(url == null ? "" : url)
+                .placeholder(R.color.color_white)
+                .error(R.drawable.head)
                 .transform(transform(context))
                 .into(imageView);
     }

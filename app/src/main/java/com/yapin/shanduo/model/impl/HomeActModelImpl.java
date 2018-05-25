@@ -30,14 +30,14 @@ import java.util.Map;
 public class HomeActModelImpl implements HomeActLoadModel{
 
     @Override
-    public void load(final OnMultiLoadListener<List<ActivityInfo.Act>> listener, String type, String lon, String lat, String page, String pageSize) {
+    public void load(final OnMultiLoadListener<List<ActivityInfo.Act>> listener, String type, String lon, String lat, String page, String pageSize , String userId) {
         final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
             return;
         }
         Map<String,String> params = new HashMap<>();
-        if(type.equals("3")){
+        if(type.equals("3") || "7".equals(type)){
             params.put("token" , PrefJsonUtil.getProfile(context).getToken());
         }
         params.put("type",type);
@@ -45,6 +45,7 @@ public class HomeActModelImpl implements HomeActLoadModel{
         params.put("lat",lat);
         params.put("page",page);
         params.put("pageSize",pageSize);
+        if("7".equals(type)) params.put("userId" , userId);
         OkHttp.post(context, ApiUtil.HOME_ACT, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

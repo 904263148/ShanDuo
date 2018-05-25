@@ -1,5 +1,6 @@
 package com.yapin.shanduo.im.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.TextView;
 
 
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.im.model.FriendshipInfo;
 import com.yapin.shanduo.im.model.Message;
+import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 
 import java.util.List;
 
@@ -27,6 +32,11 @@ public class ChatAdapter extends ArrayAdapter<Message> {
     private View view;
     private ViewHolder viewHolder;
 
+    private String identify;
+
+    private Context context;
+    private Activity activity;
+
     /**
      * Constructor
      *
@@ -35,9 +45,12 @@ public class ChatAdapter extends ArrayAdapter<Message> {
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public ChatAdapter(Context context, int resource, List<Message> objects) {
+    public ChatAdapter(Context context, Activity activity , int resource, List<Message> objects , String identify) {
         super(context, resource, objects);
         resourceId = resource;
+        this.identify = identify;
+        this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -57,12 +70,21 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             viewHolder.sender = (TextView) view.findViewById(R.id.sender);
             viewHolder.rightDesc = (TextView) view.findViewById(R.id.rightDesc);
             viewHolder.systemMessage = (TextView) view.findViewById(R.id.systemMessage);
+            viewHolder.leftHead = view.findViewById(R.id.leftAvatar);
+            viewHolder.RightHead = view.findViewById(R.id.rightAvatar);
             view.setTag(viewHolder);
         }
         if (position < getCount()){
             final Message data = getItem(position);
             data.showMessage(viewHolder, getContext());
         }
+
+//        String path = "";
+//        if(FriendshipInfo.getInstance().getProfile(identify).getAvatarUrl() != null){
+//            path = FriendshipInfo.getInstance().getProfile(identify).getAvatarUrl();
+//        }
+//        GlideUtil.load(context ,activity , path , viewHolder.leftHead);
+//        GlideUtil.load(context ,activity , ApiUtil.IMG_URL +PrefJsonUtil.getProfile(context).getPicture() , viewHolder.RightHead);
         return view;
     }
 
@@ -77,5 +99,6 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         public TextView sender;
         public TextView systemMessage;
         public TextView rightDesc;
+        public ImageView leftHead , RightHead;
     }
 }

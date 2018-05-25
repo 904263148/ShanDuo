@@ -7,8 +7,12 @@ import android.widget.RelativeLayout;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageStatus;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.adapters.ChatAdapter;
 import com.yapin.shanduo.im.utils.TimeUtil;
+import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 
 /**
  * 消息数据基类
@@ -20,6 +24,8 @@ public abstract class Message {
     TIMMessage message;
 
     private boolean hasTime;
+
+    private Context context = ShanDuoPartyApplication.getContext();
 
     /**
      * 消息描述信息
@@ -52,6 +58,9 @@ public abstract class Message {
         if (message.isSelf()){
             viewHolder.leftPanel.setVisibility(View.GONE);
             viewHolder.rightPanel.setVisibility(View.VISIBLE);
+
+            GlideUtil.load(context  , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , viewHolder.RightHead);
+
             return viewHolder.rightMessage;
         }else{
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
@@ -63,9 +72,13 @@ public abstract class Message {
                 if (message.getSenderGroupMemberProfile()!=null) name = message.getSenderGroupMemberProfile().getNameCard();
                 if (name.equals("")&&message.getSenderProfile()!=null) name = message.getSenderProfile().getNickName();
                 if (name.equals("")) name = message.getSender();
+                if(message.getSenderProfile().getFaceUrl() != null && !("".equals(message.getSenderProfile().getFaceUrl())))
+                    GlideUtil.load(context  , message.getSenderProfile().getFaceUrl() , viewHolder.leftHead);
                 viewHolder.sender.setText(name);
             }else{
                 viewHolder.sender.setVisibility(View.GONE);
+                if(FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() != null && !("".equals(FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl())))
+                    GlideUtil.load(context  , FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() , viewHolder.leftHead);
             }
             return viewHolder.leftMessage;
         }

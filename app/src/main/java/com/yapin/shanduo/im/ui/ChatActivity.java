@@ -112,7 +112,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
-        adapter = new ChatAdapter(this, R.layout.item_message, messageList);
+        adapter = new ChatAdapter(context ,activity, R.layout.item_message, messageList , identify);
         listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
         listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
@@ -447,6 +447,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
     @Override
     public void showDraft(TIMMessageDraft draft) {
         input.getText().append(TextMessage.getString(draft.getElems(), this));
+        adapter.notifyDataSetChanged();
     }
 
 

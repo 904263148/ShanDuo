@@ -86,7 +86,6 @@
         <activity android:name=".ui.activity.MyDynamicsActivity" />
         <activity android:name=".ui.activity.MyactivitiesActivity" />
         <activity android:name=".ui.activity.MyDynamicsActivity" />
-
         <activity android:name=".ui.activity.SetupActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
@@ -103,8 +102,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".im.ui.SearchFriendActivity" />
-        <activity android:name=".im.ui.AddFriendActivity" />
+        <activity
+            android:name=".im.ui.SearchFriendActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".im.ui.AddFriendActivity"
+            android:theme="@style/MyTheme" />
         <activity
             android:name=".im.ui.ProfileActivity"
             android:launchMode="singleTask" />
@@ -290,9 +293,9 @@
         <activity android:name=".im.ui.BlackListActivity" />
         <activity android:name=".im.ui.ImagePreviewActivity" />
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
-        <activity android:name=".ui.activity.AddactivityActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+        <activity
+            android:name=".ui.activity.AddactivityActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.MywalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity
@@ -353,11 +356,21 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.ScanActivity" />
-        <activity android:name=".ui.activity.MyCodeActivity" />
-        <activity android:name=".ui.activity.TrendInfoActivity" />
-        <activity android:name=".ui.activity.MyCodeActivity" />
-        <activity android:name=".ui.activity.ReplayInfoActivity" />
+        <activity
+            android:name=".ui.activity.ScanActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".ui.activity.MyCodeActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".ui.activity.TrendInfoActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".ui.activity.MyCodeActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".ui.activity.ReplayInfoActivity"
+            android:theme="@style/MyTheme" />
         <activity android:name=".wxapi.WXPayEntryActivity" />
 
         <!-- alipay sdk begin -->
@@ -367,17 +380,23 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- alipay sdk end -->
 
-        <activity android:name=".ui.activity.AddHumanGroupActivity"></activity>
+        <activity
+            android:name=".ui.activity.AddHumanGroupActivity"
+            android:theme="@style/MyTheme" />
+        <activity
+            android:name=".ui.activity.SearchAllActivity"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".ui.activity.UserProfActivity"></activity>
     </application>
 
 </manifest>

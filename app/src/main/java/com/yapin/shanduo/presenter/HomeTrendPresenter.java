@@ -25,7 +25,7 @@ public class HomeTrendPresenter implements HomeTrendContract.Presenter{
 
 
     @Override
-    public void getData(String typeId, String lon, String lat, String page, String pageSize) {
+    public void getData(String typeId, String lon, String lat, String page, String pageSize , String userId) {
         loadModel.load(new OnMultiLoadListener<List<TrendInfo.Trend>>() {
             @Override
             public void onSuccess(List<TrendInfo.Trend> success, int totalPage) {
@@ -41,6 +41,6 @@ public class HomeTrendPresenter implements HomeTrendContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , typeId , lon , lat , page , pageSize);
+        } , typeId , lon , lat , page , pageSize , userId);
     }
 }

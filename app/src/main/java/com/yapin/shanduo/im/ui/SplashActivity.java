@@ -140,11 +140,11 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 break;
             case 6200:
                 Toast.makeText(this,getString(R.string.login_error_timeout),Toast.LENGTH_SHORT).show();
-//                navToLogin();
+                navToHome();
                 break;
             default:
                 Toast.makeText(this,getString(R.string.login_error),Toast.LENGTH_SHORT).show();
-//                navToLogin();
+                navToHome();
                 break;
         }
 

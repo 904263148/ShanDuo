@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -41,11 +42,15 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private OpenPopupWindow openPopupWindow;
     private List<ActivityInfo.Act> list;
 
-    public ActivityInfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list){
+    public ActivityInfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int position){
         this.context = context;
         this.activity = activity;
         this.list = list;
-        openPopupWindow = (MainActivity)activity;
+        if(position == 6){
+            openPopupWindow = (UserProfActivity) activity;
+        }else {
+            openPopupWindow = (MainActivity) activity;
+        }
     }
 
     @NonNull
@@ -96,7 +101,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             int level = list.get(position).getVipGrade();
             if(level == 0){
                 holder.tvVip.setVisibility(View.GONE);
-            }else if(level > 0 && level < 9){
+            }else if(level < 9){
                 holder.tvVip.setVisibility(View.VISIBLE);
                 holder.tvVip.setText("VIP"+level);
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);

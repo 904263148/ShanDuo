@@ -73,6 +73,14 @@ public class GroupManageConversation extends Conversation {
         return R.drawable.ic_news;
     }
 
+    @Override
+    public String getAvatarUrls() {
+        FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+        String avatar="";
+        avatar= profile == null?"":profile.getAvatarUrl();
+        return avatar;
+    }
+
     /**
      * 跳转到聊天界面或会话详情
      *

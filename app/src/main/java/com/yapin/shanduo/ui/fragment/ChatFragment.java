@@ -1,12 +1,9 @@
 package com.yapin.shanduo.ui.fragment;
 
-import android.content.BroadcastReceiver;
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -49,12 +46,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import cn.sharesdk.framework.Platform;
-import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.onekeyshare.OnekeyShareTheme;
-import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
-
-
 public class ChatFragment extends Fragment implements ConversationView,FriendshipMessageView,GroupManageMessageView {
 
     private View view;
@@ -70,6 +61,9 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
 
     private LoadingView loadingView;
 
+    private Context context;
+    private Activity activity;
+
     public ChatFragment() {
         // Required empty public constructor
     }
@@ -84,10 +78,13 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        if (view == null){
+        if (view == null){
+            context = ShanDuoPartyApplication.getContext();
+            activity = getActivity();
+
             view = inflater.inflate(R.layout.fragment_conversation, container, false);
             listView = (ListView) view.findViewById(R.id.list);
-            adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
+            adapter = new ConversationAdapter(context , activity, R.layout.item_conversation, conversationList);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -112,13 +109,9 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
             });
 
             loadingView = view.findViewById(R.id.loading_view);
-//        }
-//        adapter.notifyDataSetChanged();
+        }
+        adapter.notifyDataSetChanged();
         return view;
-    }
-
-    public void setLoadView(){
-        loadingView.noData(R.string.tips_my_no_token);
     }
 
     @Override

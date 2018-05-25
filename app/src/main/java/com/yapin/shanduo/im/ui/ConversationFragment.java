@@ -1,6 +1,8 @@
 package com.yapin.shanduo.im.ui;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -25,6 +27,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ConversationView;
 import com.tencent.qcloud.presentation.viewfeatures.FriendshipMessageView;
 import com.tencent.qcloud.presentation.viewfeatures.GroupManageMessageView;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.adapters.ConversationAdapter;
 import com.yapin.shanduo.im.model.Conversation;
 import com.yapin.shanduo.im.model.CustomMessage;
@@ -58,6 +61,8 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     private FriendshipConversation friendshipConversation;
     private GroupManageConversation groupManageConversation;
 
+    private Context context;
+    private Activity activity;
 
     public ConversationFragment() {
         // Required empty public constructor
@@ -67,10 +72,12 @@ public class ConversationFragment extends Fragment implements ConversationView,F
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context = ShanDuoPartyApplication.getContext();
+        activity = getActivity();
         if (view == null){
             view = inflater.inflate(R.layout.fragment_conversation, container, false);
             listView = (ListView) view.findViewById(R.id.list);
-            adapter = new ConversationAdapter(getActivity(), R.layout.item_conversation, conversationList);
+            adapter = new ConversationAdapter(context ,activity, R.layout.item_conversation, conversationList);
             listView.setAdapter(adapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

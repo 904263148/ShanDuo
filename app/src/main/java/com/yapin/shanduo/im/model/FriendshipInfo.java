@@ -131,7 +131,7 @@ public class FriendshipInfo extends Observable implements Observer {
     public FriendProfile getProfile(String identify){
         for (String key : friends.keySet()){
             for (FriendProfile profile : friends.get(key)){
-                if (identify.equals(profile.getIdentify())) return profile;
+                if (profile.getIdentify().equals(identify)) return profile;
             }
         }
         return null;

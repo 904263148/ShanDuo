@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -41,11 +42,15 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     private TrendGridViewAdapter adapter;
 
-    public TrendInfoAdapter(Context context, Activity activity, List<TrendInfo.Trend> list) {
+    public TrendInfoAdapter(Context context, Activity activity, List<TrendInfo.Trend> list , int position) {
         this.context = context;
         this.activity = activity;
         this.list = list;
-        openPopupWindow = (MainActivity) activity;
+        if(position == 3){
+            openPopupWindow = (UserProfActivity) activity;
+        }else {
+            openPopupWindow = (MainActivity) activity;
+        }
     }
 
     @NonNull
@@ -93,13 +98,13 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             int level = list.get(position).getVip();
             if(level == 0){
                 holder.tvVip.setVisibility(View.GONE);
-            }else if(level > 0 || level < 9){
+            }else if(level > 0 && level < 9){
                 holder.tvVip.setVisibility(View.VISIBLE);
                 holder.tvVip.setText("VIP"+level);
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
             }else {
                 holder.tvVip.setVisibility(View.VISIBLE);
-                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setText("SVIP"+(level-10));
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
 
@@ -127,14 +132,14 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 case 1:
                     holder.gridview.setVisibility(View.GONE);
                     holder.rlImg1.setVisibility(View.VISIBLE);
-                    GlideUtil.load(context ,activity , ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
+                    GlideUtil.load(activity , ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 );
                     holder.ivImg2.setVisibility(View.GONE);
                     break;
                 case 2:
                     holder.gridview.setVisibility(View.GONE);
                     holder.rlImg1.setVisibility(View.VISIBLE);
-                    GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
-                    GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(1) ,holder.ivImg2 ,5 );
+                    GlideUtil.load(activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1  );
+                    GlideUtil.load(activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(1) ,holder.ivImg2  );
                     break;
                 default:
                     holder.gridview.setVisibility(View.VISIBLE);

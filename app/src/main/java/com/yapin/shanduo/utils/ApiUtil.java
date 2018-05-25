@@ -27,7 +27,7 @@ public class ApiUtil {
     public final static String ADD_ACTIVITY =  ConfigUtil.configUrl() +"/activity/saveactivity";
 
     //首页动态
-    public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/homeList";
+    public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/dynamicList";
 
     //参加活动
     public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/participateActivities";
@@ -58,5 +58,11 @@ public class ApiUtil {
 
     //查询好友或黑名单
     public final static String ALL_FRIEND = ConfigUtil.configUrl() + "/jattention/attentionList";
+
+    //按条件查找用户
+    public final static String SEARCH_HUMAN = ConfigUtil.configUrl() + "/jattention/seekuser";
+
+    //查找用户资料
+    public final static String USER_PROF = ConfigUtil.configUrl() +"/jattention/userdetails";
 
 }

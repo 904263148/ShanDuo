@@ -17,15 +17,17 @@ import java.util.List;
  */
 public class ActivityTabAdapter extends FragmentPagerAdapter {
     private List<String> list;
+    private String userId;
 
-    public ActivityTabAdapter(FragmentManager fm, List<String> list) {
+    public ActivityTabAdapter(FragmentManager fm, List<String> list , String userId) {
         super(fm);
         this.list = list;
+        this.userId = userId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ActivityFragment.newInstance(position);
+        return ActivityFragment.newInstance(position , userId);
     }
 
     @Override

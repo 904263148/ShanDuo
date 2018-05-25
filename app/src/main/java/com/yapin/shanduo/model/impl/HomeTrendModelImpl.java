@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class HomeTrendModelImpl implements HomeTrendLoadModel{
     @Override
-    public void load(final OnMultiLoadListener<List<TrendInfo.Trend>> listener, String typeId, String lon, String lat, String page, String pageSize) {
+    public void load(final OnMultiLoadListener<List<TrendInfo.Trend>> listener, String typeId, String lon, String lat, String page, String pageSize , String userId) {
         final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -40,6 +40,7 @@ public class HomeTrendModelImpl implements HomeTrendLoadModel{
         params.put("lon" , lon);
         params.put("page" , page);
         params.put("pageSize" ,pageSize);
+        if("4".equals(typeId)) params.put("userId",userId);
         OkHttp.post(context, ApiUtil.HOME_TREND, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

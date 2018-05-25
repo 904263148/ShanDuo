@@ -1,5 +1,6 @@
 package com.yapin.shanduo.im.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.tencent.qcloud.ui.CircleImageView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.im.model.Conversation;
 import com.yapin.shanduo.im.utils.TimeUtil;
+import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.GlideUtil;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
     private View view;
     private ViewHolder viewHolder;
 
+    private Context context;
+    private Activity activity;
     /**
      * Constructor
      *
@@ -31,8 +36,10 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
      *                 instantiating views.
      * @param objects  The objects to represent in the ListView.
      */
-    public ConversationAdapter(Context context, int resource, List<Conversation> objects) {
+    public ConversationAdapter(Context context, Activity activity ,int resource, List<Conversation> objects) {
         super(context, resource, objects);
+        this.context = context;
+        this.activity = activity;
         resourceId = resource;
     }
 
@@ -53,7 +60,8 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }
         final Conversation data = getItem(position);
         viewHolder.tvName.setText(data.getName());
-        viewHolder.avatar.setImageResource(data.getAvatar());
+        GlideUtil.load(context ,activity ,data.getAvatarUrls() , viewHolder.avatar );
+//        viewHolder.avatar.setImageResource(data.getAvatarUrls());
         viewHolder.lastMessage.setText(data.getLastMessageSummary());
         viewHolder.time.setText(TimeUtil.getTimeStr(data.getLastMessageTime()));
         long unRead = data.getUnreadNum();

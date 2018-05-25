@@ -28,6 +28,8 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.ui.SearchFriendActivity;
+import com.yapin.shanduo.im.ui.SearchGroupActivity;
 import com.yapin.shanduo.model.entity.PayResult;
 import com.yapin.shanduo.ui.activity.AddHumanGroupActivity;
 import com.yapin.shanduo.ui.adapter.LinkTabAdapter;
@@ -111,7 +113,11 @@ public class LinkManFragment extends Fragment {
                 StartActivityUtil.start(activity , this , AddHumanGroupActivity.class);
                 break;
             case R.id.ll_search:
-
+                if (viewPager.getCurrentItem() == 0) {
+                    StartActivityUtil.start(activity ,this , SearchFriendActivity.class);
+                }else {
+                    StartActivityUtil.start(activity ,this , SearchGroupActivity.class);
+                }
                 break;
         }
     }

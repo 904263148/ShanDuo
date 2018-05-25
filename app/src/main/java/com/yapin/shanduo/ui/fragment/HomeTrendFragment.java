@@ -109,7 +109,7 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
         tabList.add("附近动态");
         tabList.add("好友动态");
 
-        adapter = new TrendTabAdapter(getChildFragmentManager() , tabList);
+        adapter = new TrendTabAdapter(getChildFragmentManager() , tabList , "");
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);

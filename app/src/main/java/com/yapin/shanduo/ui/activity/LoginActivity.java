@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMCallBack;
+import com.tencent.TIMFriendshipManager;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.event.GroupEvent;
@@ -130,7 +131,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         FriendshipEvent.getInstance().init();
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
-        FriendshipManagerPresenter.setMyInfo(PrefJsonUtil.getProfile(context).getName() , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() ,this);
+
+        FriendshipManagerPresenter.setMyNick(PrefJsonUtil.getProfile(context).getName() ,this);
+
+        setResult(RESULT_OK);
+        onBackPressed();
     }
 
     @Override
@@ -196,12 +201,23 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 
     @Override
     public void onError(int i, String s) {
-
+        Log.d("TIM_Change_Profile",s);
     }
 
     @Override
     public void onSuccess() {
-        setResult(RESULT_OK);
-        onBackPressed();
+        Log.d("TIM_Change_Profile","success");
+        TIMFriendshipManager.getInstance().setFaceUrl(ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture(), new TIMCallBack(){
+            @Override
+            public void onError(int code, String desc) {
+                //错误码 code 和错误描述 desc，可用于定位请求失败原因
+                //错误码 code 列表请参见错误码表
+                Log.e("TIM_Change_Head", "setFaceUrl failed: " + code + " desc" + desc);
+            }
+            @Override
+            public void onSuccess() {
+                Log.e("TIM_Change_Head", "setFaceUrl succ");
+            }
+        });
     }
 }

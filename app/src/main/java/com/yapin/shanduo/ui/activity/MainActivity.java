@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -62,7 +63,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import cn.sharesdk.wechat.utils.WXImageObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 
-public class MainActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener , RefreshAll{
+public class MainActivity extends AppCompatActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener , RefreshAll{
 
     @BindView(R.id.iv_home)
     ImageView ivHome;
@@ -142,11 +143,6 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
             return;
         setIntent(intent);
         initView();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     public void initView() {
@@ -400,6 +396,23 @@ public class MainActivity extends BaseActivity implements OpenPopupWindow, Popup
         //取消分享的回调
         Log.d("shareSDK" , "取消了~");
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(publishPopupWindow != null){
+            if(publishPopupWindow.isShowing()) {
+                publishPopupWindow.dismiss();
+            }
+        }
+        if(popupWindow != null){
+            if(popupWindow.isShowing()) {
+                popupWindow.dismiss();
+            }
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

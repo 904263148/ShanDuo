@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface HomeActLoadModel {
 
-    void load(OnMultiLoadListener<List<ActivityInfo.Act>> listener , String type , String lon , String lat , String page , String pageSize);
+    void load(OnMultiLoadListener<List<ActivityInfo.Act>> listener , String type , String lon , String lat , String page , String pageSize , String userId);
 }

@@ -54,7 +54,7 @@ public class TrendGridViewAdapter extends BaseAdapter{
             imageView = (ImageView) convertView;
         }
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        GlideUtil.load(context , activity , ApiUtil.IMG_URL + list.get(position) , imageView , 5);
+        GlideUtil.load(context , activity , ApiUtil.IMG_URL + list.get(position) , imageView , 2);
         return imageView;
     }
 }

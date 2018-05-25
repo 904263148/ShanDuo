@@ -45,6 +45,16 @@ public class NomalConversation extends Conversation {
         return 0;
     }
 
+    @Override
+    public String getAvatarUrls() {
+        FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+        String avatar="";
+        if(  ! (profile == null) ){
+            avatar = profile.getAvatarUrl();
+        }
+        return avatar;
+    }
+
     /**
      * 跳转到聊天界面或会话详情
      *

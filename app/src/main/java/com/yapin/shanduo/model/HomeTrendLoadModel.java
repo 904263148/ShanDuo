@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface HomeTrendLoadModel {
 
-    void load(OnMultiLoadListener<List<TrendInfo.Trend>> listener , String typeId, String lat , String  lon , String page , String pageSize);
+    void load(OnMultiLoadListener<List<TrendInfo.Trend>> listener , String typeId, String lat , String  lon , String page , String pageSize , String userId);
 }

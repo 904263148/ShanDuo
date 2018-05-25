@@ -75,11 +75,19 @@
     <string name="title_search">搜索</string>
     <string name="title_link">通讯录</string>
     <string name="title_search_friend">搜索好友</string>
+    <string name="title_search_group">搜索群组名字或群号</string>
+    <string name="title_search_human">搜索用户</string>
 
     <string name="tips_no_friend">暂无好友</string>
     <string name="tips_no_login">请先登录</string>
 
     <string name="title_add">添加</string>
+
+    <string name="title_add_link_friend">添加通讯录好友</string>
+    <string name="title_add_wechat_friend">添加微信好友</string>
+    <string name="title_add_qq_friend">添加QQ好友</string>
+
+    <string name="shanduo_search_hint">搜索闪多号或手机号</string>
 
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>

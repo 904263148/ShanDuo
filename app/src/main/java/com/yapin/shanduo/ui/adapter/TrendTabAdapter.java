@@ -17,15 +17,17 @@ import java.util.List;
  */
 public class TrendTabAdapter extends FragmentPagerAdapter {
     private List<String> list;
+    private String userId;
 
-    public TrendTabAdapter(FragmentManager fm, List<String> list) {
+    public TrendTabAdapter(FragmentManager fm, List<String> list , String userId) {
         super(fm);
         this.list = list;
+        this.userId =userId;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return TrendFragment.newInstance(position);
+        return TrendFragment.newInstance(position, userId);
     }
 
     @Override

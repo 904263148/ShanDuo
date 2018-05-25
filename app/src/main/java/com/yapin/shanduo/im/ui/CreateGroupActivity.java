@@ -3,11 +3,13 @@ package com.yapin.shanduo.im.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.TIMGroupManager;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.yapin.shanduo.R;
@@ -39,6 +41,29 @@ public class CreateGroupActivity extends Activity {
                 }
             }
         });
+
+        findViewById(R.id.bt_create_group).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TIMGroupManager.CreateGroupParam param = TIMGroupManager.getInstance().new CreateGroupParam();
+                param.setGroupType("Public");
+                param.setGroupName("hello");
+                param.setIntroduction("hello world");
+                param.setNotification("welcome to hello group");
+                //创建群组
+                TIMGroupManager.getInstance().createGroup(param, new TIMValueCallBack<String>() {
+                    @Override
+                    public void onError(int code, String desc) {
+                        Log.d("TIM_create_group", "create group failed. code: " + code + " errmsg: " + desc);
+                    }
+                    @Override
+                    public void onSuccess(String s) {
+                        Log.d("TIM_create_group", "create group succ, groupId:" + s);
+                    }
+                });
+            }
+        });
+
     }
 
     @Override

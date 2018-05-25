@@ -11,7 +11,7 @@ import android.os.Parcelable;
  * @date 2018年4月16日 下午3:25:19
  *
  */
-public class TokenInfo{
+public class TokenInfo implements Parcelable {
 	private String token;//token
 	private String userId;//闪多号
 	private String name;//昵称
@@ -31,6 +31,15 @@ public class TokenInfo{
 	private String remarks;//备注
 	private String userSig;//IM聊天使用签名
 	private Integer vip;//vip等级
+	private Integer age;
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
 	public String getUserSig() {
 		return userSig;
@@ -183,4 +192,71 @@ public class TokenInfo{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(this.token);
+		dest.writeString(this.userId);
+		dest.writeString(this.name);
+		dest.writeString(this.picture);
+		dest.writeString(this.phone);
+		dest.writeString(this.ageId);
+		dest.writeString(this.birthday);
+		dest.writeString(this.gender);
+		dest.writeString(this.emotion);
+		dest.writeString(this.signature);
+		dest.writeString(this.background);
+		dest.writeString(this.labelId);
+		dest.writeString(this.hometown);
+		dest.writeString(this.occupation);
+		dest.writeString(this.school);
+		dest.writeString(this.jurisdiction);
+		dest.writeString(this.remarks);
+		dest.writeString(this.userSig);
+		dest.writeValue(this.vip);
+		dest.writeValue(this.age);
+	}
+
+	public TokenInfo() {
+	}
+
+	protected TokenInfo(Parcel in) {
+		this.token = in.readString();
+		this.userId = in.readString();
+		this.name = in.readString();
+		this.picture = in.readString();
+		this.phone = in.readString();
+		this.ageId = in.readString();
+		this.birthday = in.readString();
+		this.gender = in.readString();
+		this.emotion = in.readString();
+		this.signature = in.readString();
+		this.background = in.readString();
+		this.labelId = in.readString();
+		this.hometown = in.readString();
+		this.occupation = in.readString();
+		this.school = in.readString();
+		this.jurisdiction = in.readString();
+		this.remarks = in.readString();
+		this.userSig = in.readString();
+		this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.age = (Integer) in.readValue(Integer.class.getClassLoader());
+	}
+
+	public static final Parcelable.Creator<TokenInfo> CREATOR = new Parcelable.Creator<TokenInfo>() {
+		@Override
+		public TokenInfo createFromParcel(Parcel source) {
+			return new TokenInfo(source);
+		}
+
+		@Override
+		public TokenInfo[] newArray(int size) {
+			return new TokenInfo[size];
+		}
+	};
 }

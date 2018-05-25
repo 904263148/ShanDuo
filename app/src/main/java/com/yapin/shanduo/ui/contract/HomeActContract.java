@@ -25,7 +25,7 @@ public interface HomeActContract {
     }
 
     interface Presenter{
-        void getData(String type, String lon, String lat, String page, String pageSize);
+        void getData(String type, String lon, String lat, String page, String pageSize , String userId);
     }
 
 }

@@ -122,7 +122,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         tabList.add("附近活动");
         tabList.add("好友活动");
 
-        adapter = new ActivityTabAdapter(getChildFragmentManager() , tabList);
+        adapter = new ActivityTabAdapter(getChildFragmentManager() , tabList , "");
         viewPager.setAdapter(adapter);
 //        viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(this);

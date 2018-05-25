@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tencent.qcloud.ui.CircleImageView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.im.model.ProfileSummary;
+import com.yapin.shanduo.utils.GlideUtil;
 
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class ProfileSummaryAdapter extends ArrayAdapter<ProfileSummary> {
     private View view;
     private ViewHolder viewHolder;
 
+    private Context context;
+
     /**
      * Constructor
      *
@@ -34,6 +37,7 @@ public class ProfileSummaryAdapter extends ArrayAdapter<ProfileSummary> {
      */
     public ProfileSummaryAdapter(Context context, int resource, List<ProfileSummary> objects) {
         super(context, resource, objects);
+        this.context = context;
         resourceId = resource;
     }
 
@@ -51,7 +55,8 @@ public class ProfileSummaryAdapter extends ArrayAdapter<ProfileSummary> {
             view.setTag(viewHolder);
         }
         ProfileSummary data = getItem(position);
-        viewHolder.avatar.setImageResource(data.getAvatarRes());
+        GlideUtil.load(context ,data.getAvatarUrl() , viewHolder.avatar );
+//        viewHolder.avatar.setBackgroundResource(R.drawable.head);
         viewHolder.name.setText(data.getName());
         return view;
     }

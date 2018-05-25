@@ -58,6 +58,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     private LinearLayoutManager layoutManager;
 
     private int position;
+    private String userId = "";
 
     private int page = 1;
     private int pageSize = 10;
@@ -75,10 +76,11 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     }
 
     // TODO: Rename and change types and number of parameters
-    public static TrendFragment newInstance(int position) {
+    public static TrendFragment newInstance(int position , String userId) {
         TrendFragment fragment = new TrendFragment();
         Bundle args = new Bundle();
         args.putInt("position" , position);
+        args.putString("userId" , userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,6 +89,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         position = getArguments().getInt("position");
+        userId = getArguments().getString("userId");
     }
 
     @Override
@@ -112,11 +115,11 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new TrendInfoAdapter(context, activity , list);
+        adapter = new TrendInfoAdapter(context, activity , list , position);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         adapter.setLikeClickListener(this);
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+        presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
         recyclerView.setOnLoadMoreListener(this);
     }
 
@@ -144,7 +147,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     public void onLoadMore() {
         page++;
         setRefreshLoading(false, true);
-        presenter.getData((position+1)+"" , "113.93" , "22.54" , page+"" , pageSize+"");
+        presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
     }
 
     @Override

@@ -26,7 +26,7 @@ public interface HomeTrendContract {
     }
 
     interface Presenter{
-        void getData(String typeId, String lon, String lat, String page, String pageSize);
+        void getData(String typeId, String lon, String lat, String page, String pageSize , String userId);
     }
 
 }

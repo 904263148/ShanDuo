@@ -24,7 +24,7 @@ public class HomeActPresenter implements HomeActContract.Presenter{
     }
 
     @Override
-    public void getData(String type, String lon, String lat, String page, String pageSize) {
+    public void getData(String type, String lon, String lat, String page, String pageSize , String userId) {
         view.loading();
         loadModel.load(new OnMultiLoadListener<List<ActivityInfo.Act>>() {
             @Override
@@ -41,6 +41,6 @@ public class HomeActPresenter implements HomeActContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        }, type, lon, lat, page, pageSize);
+        }, type, lon, lat, page, pageSize , userId);
     }
 }
