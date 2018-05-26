@@ -183,7 +183,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String newText = s.toString().trim();
                 if (newText.length() > 0) {
-                    InputtipsQuery inputquery = new InputtipsQuery(newText, "长沙");
+                    InputtipsQuery inputquery = new InputtipsQuery(newText, "");
                     Inputtips inputTips = new Inputtips(MapGaodeActivity.this, inputquery);
                     inputquery.setCityLimit(true);
                     inputTips.setInputtipsListener(inputtipsListener);
@@ -437,7 +437,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     protected void doSearchQuery() {
 //        Log.i("MY", "doSearchQuery");
         currentPage = 0;
-        query = new PoiSearch.Query(searchKey, searchType, "长沙");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query = new PoiSearch.Query(searchKey, searchType, "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setCityLimit(true);
         query.setPageSize(20);
         query.setPageNum(currentPage);

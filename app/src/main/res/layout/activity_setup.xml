@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:textColor="@color/mainfont"
             android:text="设置"
             />
@@ -104,6 +104,7 @@
             android:layout_marginTop="30dp"
             android:layout_width="300dp"
             android:layout_height="40dp"
+            android:background="@drawable/button_shape"
             android:text="退出登录"
             android:textColor="@color/colorAccent"
             android:textSize="15dp"

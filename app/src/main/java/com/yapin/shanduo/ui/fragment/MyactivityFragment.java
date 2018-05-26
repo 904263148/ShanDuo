@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ import butterknife.ButterKnife;
  * Created by dell on 2018/5/18.
  */
 
-public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View {
+public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View  , SwipeRefreshLayout.OnRefreshListener{
 
     @BindView(R.id.my_recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -117,20 +118,14 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         adapter = new MyactivityinfoAdapter(context, activity , list);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                setRefreshLoading(true, false);
-                page = 1;
-                presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
-            }
-        });
+        refreshLayout.setOnRefreshListener(this);
 
-        if(TextUtils.isEmpty(PrefUtil.getToken(context)) && position == 2){
-            loadingView.noData(R.string.tips_no_token);
-            return;
-        }
-        presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
+//        if(TextUtils.isEmpty(PrefUtil.getToken(context)) && position == 2){
+//            loadingView.noData(R.string.tips_no_token);
+//            return;
+//        }
+        presenter.getmyactivity((position+4)+"", PrefUtil.getLat(context), PrefUtil.getLon(context)  , page+"" , pageSize+"");
+        Log.i("loglon",PrefUtil.getLon(context)+"" + PrefUtil.getLat(context)+"");
         recyclerView.setOnLoadMoreListener(this);
     }
 
@@ -182,7 +177,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void onLoadMore() {
         page++;
         setRefreshLoading(false, true);
-        presenter.getmyactivity((position+1)+"", PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"");
+        presenter.getmyactivity((position+4)+"",  PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
     }
 
     @Override
@@ -243,4 +238,10 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         setRefreshLoading(false, false);
     }
 
+    @Override
+    public void onRefresh() {
+        setRefreshLoading(true, false);
+        page = 1;
+        presenter.getmyactivity((position+4)+"",   PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
+    }
 }

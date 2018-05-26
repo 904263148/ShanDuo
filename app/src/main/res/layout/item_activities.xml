@@ -19,7 +19,6 @@
             android:id="@+id/rl_user_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="9dp"
             android:paddingRight="10dp"
             >
 
@@ -101,16 +100,7 @@
                     android:layout_below="@+id/tv_time"
                     />
 
-                <TextView
-                    android:id="@+id/tv_mile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="35dp"
-                    android:text="1.6km"
-                    android:textColor="@color/home_sex_man_color"
-                    android:textSize="@dimen/share_font_size" />
+
 
             </RelativeLayout>
 
@@ -176,9 +166,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_place"
-                android:textSize="@dimen/share_font_size"
+                android:text="xx市"
                 android:textColor="@color/font_black_color"
-                android:text="xx市" />
+                android:textSize="@dimen/share_font_size" />
+
+            <TextView
+                android:id="@+id/tv_mile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="1.6km"
+                android:textColor="@color/home_sex_man_color"
+                android:textSize="@dimen/share_font_size" />
 
         </LinearLayout>
 

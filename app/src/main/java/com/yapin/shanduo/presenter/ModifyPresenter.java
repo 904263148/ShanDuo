@@ -27,7 +27,7 @@ public class ModifyPresenter implements ModifyContract.Presenter{
     }
 
     @Override
-    public void modify(String name, String gender,String birthday ,String emotion,String signature,String hometown,String occupation,String school) {
+    public void modify(String name, String gender,String birthday ,String emotion,String signature,String hometown,String occupation,String school  , String picture , String background) {
         modifyLoadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -43,7 +43,7 @@ public class ModifyPresenter implements ModifyContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } ,name,gender, birthday,emotion,signature,hometown,occupation,school);
+        } ,name,gender, birthday,emotion,signature,hometown,occupation,school , picture , background);
     }
 
     @Override

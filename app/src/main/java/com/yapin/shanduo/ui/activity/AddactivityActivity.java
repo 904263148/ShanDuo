@@ -204,18 +204,8 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
 
                     }
                 });
-//                builder2.setNegativeButton("取消", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which)
-//                    {
-//                    }
-//                });
-
                 builder2.show();
-
         }
-
     }
 
     @Override
@@ -243,7 +233,5 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     public void showFailed(String msg) {
 
     }
-
-
 
 }

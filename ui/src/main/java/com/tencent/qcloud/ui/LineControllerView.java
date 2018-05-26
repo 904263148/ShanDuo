@@ -29,7 +29,7 @@ public class LineControllerView extends LinearLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LineControllerView, 0, 0);
         try {
             name = ta.getString(R.styleable.LineControllerView_name);
-            content = ta.getString(R.styleable.LineControllerView_content);
+            content = ta.getString(R.styleable.LineControllerView_text);
             isBottom = ta.getBoolean(R.styleable.LineControllerView_isBottom, false);
             canNav = ta.getBoolean(R.styleable.LineControllerView_canNav,false);
             isSwitch = ta.getBoolean(R.styleable.LineControllerView_isSwitch,false);

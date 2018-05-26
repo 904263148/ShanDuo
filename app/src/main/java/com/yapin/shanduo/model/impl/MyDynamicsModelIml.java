@@ -38,7 +38,7 @@ public class MyDynamicsModelIml implements MyDynamicsModel{
 
         Map<String,String> params = new HashMap<>();
         params.put("token", PrefJsonUtil.getProfile(context).getToken());
-        params.put("typeId","1");
+        params.put("typeId","3");
         params.put("lon",lon);
         params.put("lat",lat);
         params.put("page" , page);

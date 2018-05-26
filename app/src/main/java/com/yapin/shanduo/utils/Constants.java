@@ -34,6 +34,7 @@ public class Constants {
     public static final int REQUEST_CODE_FOR_SELECT_PHOTO = 5;
     public static final int REQUEST_CODE_FOR_TAKE_PHOTO_SHOW = 15;
     public static final int REQUEST_CODE_FOR_SELECT_PHOTO_SHOW = 16;
+    public static final int REQUEST_CODE_FOR_SELECT_PHOTO_SHOW_THEBACKGROUND = 10;
 
     //获取验证码
     public static final String GET_CODE_REG = "1";

@@ -48,7 +48,7 @@ public class ApiUtil {
     public final static String MY_DYNAMICS = ConfigUtil.configUrl() +"/jdynamic/dynamicList";
 
     //我的活动
-    public final static String MY_ACTIVITY = ConfigUtil.configUrl() +"/activity/showOneActivity";
+    public final static String MY_ACTIVITY = ConfigUtil.configUrl() +"/activity/showHotActivity";
 
     //动态回复
     public final static String TREND_FIRST_REPLAY = ConfigUtil.configUrl() +"/jdynamic/commentList";

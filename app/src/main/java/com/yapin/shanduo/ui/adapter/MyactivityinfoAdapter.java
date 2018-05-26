@@ -50,10 +50,10 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         switch (viewType){
             case Constants.TYPE_SHOW:
                 view = LayoutInflater.from(context).inflate(R.layout.item_activities,parent,false);
-                return new MyactivityinfoAdapter.ViewHolder(view);
+                return new ViewHolder(view);
             default:
                 view = LayoutInflater.from(context).inflate(R.layout.item_footer_loading,parent,false);
-                return new MyactivityinfoAdapter.FooterHolder(view);
+                return new FooterHolder(view);
         }
 
     }
@@ -61,8 +61,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
-        if(viewHolder instanceof MyactivityinfoAdapter.ViewHolder){
-            MyactivityinfoAdapter.ViewHolder holder = (MyactivityinfoAdapter.ViewHolder) viewHolder;
+        if(viewHolder instanceof ViewHolder){
+            ViewHolder holder = (ViewHolder) viewHolder;
             holder.tvKind.setText(list.get(position).getActivityName());
             holder.tvTime.setText(list.get(position).getActivityStartTime());
             holder.tvType.setText(list.get(position).getMode());
@@ -71,7 +71,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.tvHost.setText(list.get(position).getUserName());
             holder.tvMemo.setText(list.get(position).getRemarks());
             holder.tvPlace.setText(list.get(position).getActivityAddress());
-            holder.tvMile.setText(list.get(position).getLocation()+"");
+            holder.tvMile.setText(list.get(position).getLocation()+"km");
             holder.tvEndTime.setText("报名截止日期:"+list.get(position).getActivityCutoffTime());
             GlideUtil.load(context , activity , ApiUtil.IMG_URL+ list.get(position).getHeadPortraitId() ,holder.ivHead);
 
@@ -103,7 +103,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
 
         }else{
-            MyactivityinfoAdapter.FooterHolder holder = (MyactivityinfoAdapter.FooterHolder) viewHolder;
+            FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
         }
 
@@ -122,12 +122,12 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public interface OnItemClickListener {
         void onItemClick(int position);
 
-        void onTextClick(int position , ActivityInfo.Act act,int type);
+        void onTextClick(int position, ActivityInfo.Act act, int type);
     }
 
-    private MyactivityinfoAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
-    public void setOnItemClickListener(MyactivityinfoAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 

@@ -56,10 +56,10 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         switch (viewType) {
             case Constants.TYPE_SHOW:
                 view = LayoutInflater.from(context).inflate(R.layout.item_my_dynamics, parent, false);
-                return new MyDynamicsAdapter.ViewHolder(view);
+                return new ViewHolder(view);
             default:
                 view = LayoutInflater.from(context).inflate(R.layout.item_footer_loading, parent, false);
-                return new MyDynamicsAdapter.FooterHolder(view);
+                return new FooterHolder(view);
         }
 
     }
@@ -67,9 +67,9 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
-        if (viewHolder instanceof MyDynamicsAdapter.ViewHolder) {
-            MyDynamicsAdapter.ViewHolder holder = (MyDynamicsAdapter.ViewHolder) viewHolder;
-            GlideUtil.load(context, activity, list.get(position).getPortraitId(), holder.ivHead);
+        if (viewHolder instanceof ViewHolder) {
+            ViewHolder holder = (ViewHolder) viewHolder;
+            GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getName());
 
             Drawable drawable = null;
@@ -85,8 +85,11 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge() + "");
 
-            holder.tvMile.setText(list.get(position).getLocation() + "km");
+            holder.tvMile.setText(list.get(position).getLocation() + "");
             holder.tvContent.setText(list.get(position).getContent());
+
+            holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
+            holder.tvLikeCount.setText(list.get(position).getPraise()+"");
 
             int level = list.get(position).getVip();
             if(level == 0){
@@ -108,7 +111,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
-            holder.ivLike.setOnClickListener(new View.OnClickListener() {
+            holder.tvLikeCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (likeClickListener != null)
@@ -143,7 +146,8 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
 
         } else {
-            MyDynamicsAdapter.FooterHolder holder = (MyDynamicsAdapter.FooterHolder) viewHolder;
+//            MyDynamicsAdapter.FooterHolder holder = (MyDynamicsAdapter.FooterHolder) viewHolder;
+            FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
         }
     }
@@ -162,9 +166,9 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onItemClick(int position);
     }
 
-    private MyDynamicsAdapter.OnItemClickListener listener;
+    private OnItemClickListener listener;
 
-    public void setOnItemClickListener(MyDynamicsAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -172,9 +176,9 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         void onLikeClick(String id);
     }
 
-    private MyDynamicsAdapter.OnLikeClickListener likeClickListener;
+    private OnLikeClickListener likeClickListener;
 
-    public void setLikeClickListener(MyDynamicsAdapter.OnLikeClickListener likeClickListener) {
+    public void setLikeClickListener(OnLikeClickListener likeClickListener) {
         this.likeClickListener = likeClickListener;
     }
 
@@ -202,14 +206,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView tvPublishTime;
         @BindView(R.id.rl_trend_my_info)
         RelativeLayout rlTrendInfo;
-        @BindView(R.id.iv_my_comment)
-        ImageView ivComment;
-        @BindView(R.id.tv_my_comment)
-        TextView tvComment;
-        @BindView(R.id.iv_my_like)
-        ImageView ivLike;
-        @BindView(R.id.tv_my_like)
-        TextView tvLike;
         @BindView(R.id.iv_my_share)
         ImageView ivShare;
         @BindView(R.id.iv_my_img1)
@@ -218,6 +214,10 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ImageView ivImg2;
         @BindView(R.id.rl_my_img1)
         RelativeLayout rlImg1;
+        @BindView(R.id.tv_replay_count)
+        TextView tvRelayCount;
+        @BindView(R.id.tv_like_count)
+        TextView tvLikeCount;
 
         public ViewHolder(View itemView) {
             super(itemView);

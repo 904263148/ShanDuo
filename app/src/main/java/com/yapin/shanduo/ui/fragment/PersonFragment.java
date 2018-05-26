@@ -32,6 +32,7 @@ import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.ui.activity.AddactivityActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.inter.RefreshAll;
@@ -64,15 +65,15 @@ public class PersonFragment extends Fragment {
     private final int MYACTIVITIESACTIVITY =4;
     private final int EDITING=5;
     private final int MYWALLET=6;
+    private final int SETUP=7;
+    private final int MEMBER_CENTER = 8;
 
-//    @BindView(R.id.ib_Headportrait)
-//    ImageButton ib_Headportrait;
-//    @BindView(R.id.tv_nickname)
       private TextView tv_nickname;
       private ImageView ib_Headportrait;
       private TextView tv_sex;
       private LinearLayout ll_person_a;
-
+      private LinearLayout ll_person_aa;
+      private TextView tv_login_reg;
 
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
@@ -94,6 +95,9 @@ public class PersonFragment extends Fragment {
         ib_Headportrait = view.findViewById(R.id.ib_Headportrait);
         tv_sex = view.findViewById(R.id.tv_sex);
         ll_person_a = view.findViewById(R.id.ll_person_a);
+        ll_person_aa = view.findViewById(R.id.ll_person_aa);
+        tv_login_reg = view.findViewById(R.id.tv_login_reg);
+
 
         initView();
         return view;
@@ -104,18 +108,28 @@ public class PersonFragment extends Fragment {
         activity = getActivity();
 
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-
+            ll_person_a.setVisibility(View.GONE);
+            ll_person_aa.setVisibility(View.VISIBLE);
         }else {
+            ll_person_aa.setVisibility(View.GONE);
+            ll_person_a.setVisibility(View.VISIBLE);
             tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
-//            ib_Headportrait.setImageDrawable(Drawable.createFromPath(PrefJsonUtil.getProfile(context).getPicture()));
-//            tv_sex.setText(PrefJsonUtil.getProfile(context).getAgeId());
+
         }
 
     }
 
-    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet})
+    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.tv_member_center:     //会员中心
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , MEMBER_CENTER);
+                }else {
+                    StartActivityUtil.start(activity , MembercenterActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                }
+                break;
+
             case R.id.tv_MyDynamics:    //我的动态
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , PUBLISH_ACT_OPEN_LOGIN);
@@ -139,7 +153,8 @@ public class PersonFragment extends Fragment {
                 }
                 break;
             case R.id.text_setup:       //设置
-                StartActivityUtil.start(activity , SetupActivity.class);
+
+                    StartActivityUtil.start(activity , SetupActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 break;
 
             case R.id.text_mywallet:        //我的钱包
@@ -149,9 +164,17 @@ public class PersonFragment extends Fragment {
                     StartActivityUtil.start(activity , MywalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
-
+            case R.id.tv_login_reg:
+                StartActivityUtil.start(activity , LoginActivity.class);
+                break;
         }
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        ll_person_a.setVisibility(View.VISIBLE);
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -170,6 +193,9 @@ public class PersonFragment extends Fragment {
                 break;
             case MYWALLET:
                 StartActivityUtil.start(activity , MywalletActivity.class);
+                break;
+            case MEMBER_CENTER:
+                StartActivityUtil.start(activity , MembercenterActivity.class);
                 break;
         }
     }

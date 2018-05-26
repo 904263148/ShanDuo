@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class ModifyModelImpI implements ModifyLoadModel {
     @Override
-    public void load(final OnLoadListener<String> listener, String name, String gender, String birthday , String emotion, String signature, String hometown, String occupation, String school) {
-        Context context = ShanDuoPartyApplication.getContext();
+    public void load(final OnLoadListener<String> listener, String name, String gender, String birthday , String emotion, String signature, String hometown, String occupation, String school , String picture , String background) {
+        final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
             return;
@@ -42,6 +42,8 @@ public class ModifyModelImpI implements ModifyLoadModel {
         params.put("hometown",hometown);
         params.put("occupation",occupation);
         params.put("school",school);
+        params.put("picture",picture);
+        params.put("background",background);
         OkHttp.post(context, ApiUtil.MODIFY_IN, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
@@ -51,7 +53,8 @@ public class ModifyModelImpI implements ModifyLoadModel {
             @Override
             public void onResponse(String response) {
                 try {
-                    listener.onSuccess(new JSONObject(response).getString("result"));
+                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
+                    listener.onSuccess("修改成功");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

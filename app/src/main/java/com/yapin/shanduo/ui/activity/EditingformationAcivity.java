@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -11,17 +15,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.ModifyPresenter;
+import com.yapin.shanduo.presenter.UploadPresenter;
+import com.yapin.shanduo.ui.adapter.ShowPictureAdapter;
 import com.yapin.shanduo.ui.contract.ModifyContract;
+import com.yapin.shanduo.ui.contract.UploadContract;
+import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.DateTimePickDialogUtil;
+import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.ImageFilterUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.widget.ScrollGridLayoutManager;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +56,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/4/19.
  */
 
-public class EditingformationAcivity extends BaseActivity implements ModifyContract.View{
+public class EditingformationAcivity extends BaseActivity implements ModifyContract.View ,ShowPictureAdapter.OnItemClickListener ,UploadContract.View{
     private ModifyPresenter presenter;
     private Context context;
     private Activity activity;
@@ -40,6 +65,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
 
     int mYear, mMonth, mDay;
     final int DATE_DIALOG = 1;
+
+    private List<String> listShow = new ArrayList<>();
 
 
     @BindView(R.id.modify_tv_rg)
@@ -60,10 +87,22 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     TextView tv_Occupation;
     @BindView(R.id.tv_School)
     TextView tv_School;
+    @BindView(R.id.ib_Head_portrait)
+    ImageButton ib_Head_portrait;
+    @BindView(R.id.iv_background)
+    ImageView iv_background;
+    @BindView(R.id.ll_thebackground)
+    LinearLayout ll_thebackground;
 
     String gender;
     String emotion;
-
+    String name;
+    String occupation;
+    String signature;
+    String school;
+    private Bitmap bitmap;
+    private ShowPictureAdapter showAdapter;
+    private UploadPresenter uploadPresenter;
 
 
         @Override
@@ -73,7 +112,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         context = ShanDuoPartyApplication.getContext();
         activity = this;
         ButterKnife.bind(this);
-//            name, birthday,gender,emotion,signature,hometown,occupation,school
+            uploadPresenter = new UploadPresenter();
+            uploadPresenter.init(context ,this);
 
         modify_tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
         modify_et_nickname.setText(PrefJsonUtil.getProfile(context).getName());
@@ -91,21 +131,68 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         tv_Hometown.setText(PrefJsonUtil.getProfile(context).getHometown());
         tv_Occupation.setText(PrefJsonUtil.getProfile(context).getOccupation());
         tv_School.setText(PrefJsonUtil.getProfile(context).getSchool());
+        GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Head_portrait);
+        GlideUtil.load(activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getBackground() , iv_background);
+
+            //异步处理
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    //高斯模糊处理图片
+                    bitmap = ImageFilterUtil.doBlur(getBitmap(ApiUtil.IMG_URL +PrefJsonUtil.getProfile(context).getBackground()), 10, false);
+                    //处理完成后返回主线程
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            iv_background.setImageBitmap(bitmap);
+                        }
+                    });
+                }
+            }).start();
 
         presenter = new ModifyPresenter();
         presenter.init(context,this);
+    }
 
-            //日期选择
-            final Calendar ca = Calendar.getInstance();
-            mYear = ca.get(Calendar.YEAR);
-            mMonth = ca.get(Calendar.MONTH);
-            mDay = ca.get(Calendar.DAY_OF_MONTH);
+    //网络图片转Bitmap
+    public Bitmap getBitmap(String url) {
+        Bitmap bm = null;
+        try {
+            URL iconUrl = new URL(url);
+            URLConnection conn = iconUrl.openConnection();
+            HttpURLConnection http = (HttpURLConnection) conn;
+
+            int length = http.getContentLength();
+            conn.connect();
+            // 获得图像的字符流
+            InputStream is = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(is, length);
+            bm = BitmapFactory.decodeStream(bis);
+            bis.close();
+            is.close();// 关闭流
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bm;
     }
 
     @OnClick({R.id.fl_rg,R.id.fl_date,R.id.fl_emot,R.id.modify_et_nickname,
-            R.id.fl_person,R.id.fl_hom,R.id.fl_scho,R.id.fl_occup,R.id.iv_back})
+            R.id.fl_person,R.id.fl_hom,R.id.fl_scho,R.id.fl_occup,R.id.iv_back ,R.id.ib_Head_portrait , R.id.ll_thebackground})
     public void onClick(View v){
             switch (v.getId()){
+                case R.id.ll_thebackground:     //修改背景图片
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
+                    bundle1.putInt("source", 0);
+                    StartActivityUtil.start(activity, PictureFolderActivity.class, bundle1 , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW_THEBACKGROUND );
+                    break;
+                case R.id.ib_Head_portrait:     //修改头像
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
+                    bundle.putInt("source", 0);
+                    StartActivityUtil.start(activity, PictureFolderActivity.class, bundle , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW );
+                    break;
                 case R.id.iv_back:
                     finish();
                     break;
@@ -139,7 +226,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
 //                            Log.i("gender",gender.toString()+"");
-                            presenter.modify("",gender,"","","","","","");
+                            presenter.modify("",gender,"","","","","","", "" , "");
                         }
                     });
                     builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -152,7 +239,26 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     builder.show();
                     break;
                 case R.id.fl_date:     //出生年月
-                    show();
+//                      show();
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(EditingformationAcivity.this,
+                            R.style.MyDatePickerDialogTheme,
+                            new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                    mYear = year;
+                                    mMonth = month;
+                                    mDay = dayOfMonth;
+                                    date_display.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
+                                    String birthday = date_display.getText().toString().trim();
+                                    presenter.modify("","",birthday,"","","","","", "" , "");
+                                }
+                            },
+                            mYear, mMonth, mDay);
+                    //设置起始日期和结束日期
+                    DatePicker datePicker = datePickerDialog.getDatePicker();
+                    //datePicker.setMinDate();
+                    datePicker.setMaxDate(System.currentTimeMillis());
+                    datePickerDialog.show();
                     break;
                 case R.id.fl_emot:    //感情状态
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
@@ -177,7 +283,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            presenter.modify("","","",emotion,"","","","");
+                            presenter.modify("","","",emotion,"","","","", "" , "");
                         }
                     });
                     builder1.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -202,14 +308,15 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
                                 {
-                                    String name = et_nickname.getText().toString().trim();
-                                    presenter.modify(name,"","","","","","","");
+                                    name = et_nickname.getText().toString().trim();
+                                    presenter.modify(name,"","","","","","","", "" , "");
                                 }
                             });
                             builder2.setNegativeButton("取消", new DialogInterface.OnClickListener()
                             {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which)
+
                                 {
                                 }
                             });
@@ -228,8 +335,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            String signature = tv_Personalitysignature.getText().toString().trim();
-                            presenter.modify("","","","",signature,"","","");
+                            signature = tv_Personalitysignature.getText().toString().trim();
+                            presenter.modify("","","","",signature,"","","", "" , "");
                         }
                     });
                     builder3.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -255,7 +362,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             hometown = tv_Hometown.getText().toString().trim();
-                            presenter.modify("","","","","",hometown,"","");
+                            presenter.modify("","","","","",hometown,"","", "" , "");
                         }
                     });
                     builder4.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -269,7 +376,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     break;
                 case R.id.fl_scho:    //毕业学校
                     AlertDialog.Builder builder5 = new AlertDialog.Builder(activity);
-                    builder5.setTitle("请输入你要修改的昵称");
+                    builder5.setTitle("请输入你要修改的学校");
                     //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
                     View view3 = LayoutInflater.from(activity).inflate(R.layout.school, null);
                     //    设置我们自己定义的布局文件作为弹出框的Content
@@ -280,8 +387,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            String school = tv_School.getText().toString().trim();
-                            presenter.modify("","","","","","","",school);
+                            school = tv_School.getText().toString().trim();
+                            presenter.modify("","","","","","","",school, "" , "");
                         }
                     });
                     builder5.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -306,8 +413,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
-                            String occupation = tv_Occupation.getText().toString().trim();
-                            presenter.modify("","","","","","",occupation,"");
+                            occupation = tv_Occupation.getText().toString().trim();
+                            presenter.modify("","","","","","",occupation,"", "" , "");
                         }
                     });
                     builder6.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -322,33 +429,10 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             }
 
     }
-    private void show() {
-        //获取当前年月日
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);//当前年
-        int month = calendar.get(Calendar.MONTH);//当前月
-        int day = calendar.get(Calendar.DAY_OF_MONTH);//当前日
-        //new一个日期选择对话框的对象,并设置默认显示时间为当前的年月日时间.
-        DatePickerDialog dialog = new DatePickerDialog(this, mdateListener, year, month, day);
-        dialog.show();
-    }
-    /**
-     * 日期选择的回调监听
-     */
-    private DatePickerDialog.OnDateSetListener mdateListener = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int years, int monthOfYear, int dayOfMonth) {
-            // 绑定选中的日期
-            date_display.setText(years+"-"+(monthOfYear+1)+"-"+dayOfMonth);
-            String birthday = date_display.getText().toString().trim();
-            presenter.modify("","",birthday,"","","","","");
-        }
-
-    };
 
     @Override
     public void initView() {
+        listShow.add("");
 
     }
 
@@ -365,13 +449,73 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         }else if("2".equals(emotion)){
             tv_Emotionalstate.setText("未婚");
         }
+        modify_et_nickname.setText(name);
+        tv_Personalitysignature.setText(signature);
+        tv_Hometown.setText(hometown);
+        tv_School.setText(school);
+        tv_Occupation.setText(occupation);
+
         ToastUtil.showShortToast(context,"修改成功");
 
+    }
+
+    private void show(List<String> paths){
+        int size = listShow.size();
+        listShow.addAll(paths);
+        listShow.remove(0);
+        uploadPresenter.upload(listShow);
+//        showAdapter.notifyItemRangeInserted(size, listShow.size() - size);
+    }
+
+    private int uploadType = 1;
+
+    @Override
+    public void uploadSuccess(String imgIds) {
+        publishTrend(imgIds);
+    }
+
+    public void publishTrend(String imgIds){
+        if (uploadType == 1) {
+            presenter.modify("", "", "", "", "", "", "", "", imgIds, "");
+        }else if (uploadType == 2){
+            presenter.modify("", "", "", "", "", "", "", "", "", imgIds);
+        }
     }
 
     @Override
     public void loading() {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK)
+            return;
+        List<String> paths = new ArrayList<>();
+        switch (requestCode) {
+            case Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW: {
+                if (data == null) {
+                    return;
+                }
+                paths.addAll(data.getStringArrayListExtra("path"));
+                uploadType = 1;
+//                presenter.upload(paths);
+                break;
+            }
+            case Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW_THEBACKGROUND:{
+                if (data == null) {
+                    return;
+                }
+                paths.addAll(data.getStringArrayListExtra("path"));
+                uploadType = 2;
+//                presenter.upload(paths);
+                break;
+            }
+
+        }
+
+        show(paths);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -388,5 +532,11 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     public void showFailed(String msg) {
 
     }
+
+    @Override
+    public void onItemClick(int position, int source) {
+
+    }
+
 
 }

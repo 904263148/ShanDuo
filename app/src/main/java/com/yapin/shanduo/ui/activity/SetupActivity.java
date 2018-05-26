@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.tencent.TIMCallBack;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
@@ -16,10 +18,13 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.FriendshipInfo;
 import com.yapin.shanduo.im.model.GroupInfo;
 import com.yapin.shanduo.im.model.UserInfo;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -31,6 +36,8 @@ public class SetupActivity extends BaseActivity{
 
     private Context context;
     private Activity activity;
+    @BindView(R.id.bt_logout)
+    Button bt_logout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +46,11 @@ public class SetupActivity extends BaseActivity{
         context = ShanDuoPartyApplication.getContext();
         activity = this;
         ButterKnife.bind(this );
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            bt_logout.setVisibility(View.GONE);
+        }else {
+            bt_logout.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.iv_back , R.id.bt_logout})
@@ -66,6 +78,7 @@ public class SetupActivity extends BaseActivity{
                         FriendshipInfo.getInstance().clear();
                         GroupInfo.getInstance().clear();
                         ToastUtil.showShortToast(context , "退出登录成功");
+                        bt_logout.setVisibility(View.GONE);
                     }
                 });
                 break;

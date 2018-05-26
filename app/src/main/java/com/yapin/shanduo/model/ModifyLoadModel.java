@@ -7,5 +7,5 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 
 public interface ModifyLoadModel {
-    void load(OnLoadListener<String> listener, String name, String gender, String birthday, String emotion, String signature, String hometown, String occupation, String school);
+    void load(OnLoadListener<String> listener, String name, String gender, String birthday, String emotion, String signature, String hometown, String occupation, String school, String picture, String background);
 }

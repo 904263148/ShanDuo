@@ -23,6 +23,6 @@ public interface ModifyContract {
     }
 
     interface Presenter extends BasePresenter {
-        void modify(String name, String gender, String birthday, String emotion, String signature, String hometown, String occupation, String school);
+        void modify(String name, String gender, String birthday, String emotion, String signature, String hometown, String occupation, String school, String picture, String background);
     }
 }
