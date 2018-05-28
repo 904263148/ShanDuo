@@ -39,6 +39,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by dell on 2018/5/18.
  */
@@ -60,7 +62,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     private ShanDuoPartyApplication application;
     private LinearLayoutManager layoutManager;
 
-    private int position;
+    private int positiona;
 
     private int page = 1;
     private int pageSize = 10;
@@ -82,16 +84,17 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        position = getArguments().getInt("position");
+        positiona = getArguments().getInt("position");
+
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_activities, container, false);
         ButterKnife.bind(this , view);
@@ -115,16 +118,16 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyactivityinfoAdapter(context, activity , list);
+        adapter = new MyactivityinfoAdapter(context, activity , list ,positiona);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
         refreshLayout.setOnRefreshListener(this);
 
-//        if(TextUtils.isEmpty(PrefUtil.getToken(context)) && position == 2){
+//        if( position == 0 ){
 //            loadingView.noData(R.string.tips_no_token);
 //            return;
 //        }
-        presenter.getmyactivity((position+4)+"", PrefUtil.getLat(context), PrefUtil.getLon(context)  , page+"" , pageSize+"");
+        presenter.getmyactivity((positiona+4)+"", PrefUtil.getLat(context), PrefUtil.getLon(context)  , page+"" , pageSize+"");
         Log.i("loglon",PrefUtil.getLon(context)+"" + PrefUtil.getLat(context)+"");
         recyclerView.setOnLoadMoreListener(this);
     }
@@ -177,7 +180,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void onLoadMore() {
         page++;
         setRefreshLoading(false, true);
-        presenter.getmyactivity((position+4)+"",  PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
+        presenter.getmyactivity((positiona+4)+"",  PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
     }
 
     @Override
@@ -242,6 +245,6 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void onRefresh() {
         setRefreshLoading(true, false);
         page = 1;
-        presenter.getmyactivity((position+4)+"",   PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
+        presenter.getmyactivity((positiona+4)+"",   PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
     }
 }

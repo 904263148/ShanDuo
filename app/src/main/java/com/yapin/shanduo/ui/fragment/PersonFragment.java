@@ -4,49 +4,30 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tencent.TIMCallBack;
-import com.tencent.qcloud.presentation.business.LoginBusiness;
-import com.tencent.qcloud.presentation.event.FriendshipEvent;
-import com.tencent.qcloud.presentation.event.GroupEvent;
-import com.tencent.qcloud.presentation.event.MessageEvent;
-import com.tencent.qcloud.tlslibrary.service.TlsBusiness;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.im.model.FriendshipInfo;
-import com.yapin.shanduo.im.model.GroupInfo;
-import com.yapin.shanduo.im.model.UserInfo;
-import com.yapin.shanduo.ui.activity.AddactivityActivity;
+import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
-import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.ui.activity.MywalletActivity;
 import com.yapin.shanduo.ui.activity.SetupActivity;
-import com.yapin.shanduo.utils.ApiUtil;
-import com.yapin.shanduo.utils.GlideUtil;
-import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
-import com.yapin.shanduo.utils.ToastUtil;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -119,9 +100,10 @@ public class PersonFragment extends Fragment {
 
     }
 
-    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center})
+    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter})
     public void onClick(View view){
         switch (view.getId()){
+
             case R.id.tv_member_center:     //会员中心
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , MEMBER_CENTER);
@@ -166,6 +148,9 @@ public class PersonFragment extends Fragment {
                 break;
             case R.id.tv_login_reg:
                 StartActivityUtil.start(activity , LoginActivity.class);
+                break;
+            case R.id.tv_Creditcenter:    //信用中心
+                StartActivityUtil.start(activity , InitiatorevaluationActivity.class);
                 break;
         }
     }

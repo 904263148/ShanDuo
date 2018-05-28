@@ -2,9 +2,11 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,12 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.fragment.MyactivityFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -29,17 +33,21 @@ import butterknife.ButterKnife;
  * Created by dell on 2018/5/19.
  */
 
-public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context context;
     private Activity activity;
+    private int positiona;
     private OpenPopupWindow openPopupWindow;
     private List<ActivityInfo.Act> list;
 
-    public MyactivityinfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list){
+
+
+    public MyactivityinfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int positiona){
         this.context = context;
         this.activity = activity;
         this.list = list;
+        this.positiona = positiona;
 //        openPopupWindow = (MainActivity)activity;
     }
 
@@ -57,6 +65,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
     }
+
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
@@ -88,6 +97,13 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge()+"");
 
+            if (positiona == 0) {
+                holder.tvJoin.setText("已结束");
+            }else if (positiona == 2){
+                holder.tvJoin.setText("查看详情");
+            }
+
+
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,7 +114,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.tvJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onTextClick(position ,list.get(position) , Constants.ACT_JOIN);
+
+                        listener.onTextClick(position ,list.get(position) , Constants.ACT_JOIN);
                 }
             });
 
@@ -118,6 +135,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         return list.get(position).getType();
     }
+
+
 
     public interface OnItemClickListener {
         void onItemClick(int position);

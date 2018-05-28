@@ -87,6 +87,7 @@
         <activity android:name=".ui.activity.MyactivitiesActivity" />
         <activity android:name=".ui.activity.MembercenterActivity" />
         <activity android:name=".ui.activity.SetupActivity" />
+        <activity android:name=".ui.activity.InitiatorevaluationActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />

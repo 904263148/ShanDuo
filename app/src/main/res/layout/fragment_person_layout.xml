@@ -196,6 +196,7 @@
             android:text="\t我的动态"/>
 
         <TextView
+            android:id="@+id/tv_Creditcenter"
             android:textColor="@color/textview_text_color"
             android:layout_marginTop="5dp"
             android:background="@color/color_white"

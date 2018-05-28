@@ -86,6 +86,9 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.tvAge.setText(list.get(position).getAge() + "");
 
             holder.tvMile.setText(list.get(position).getLocation() + "");
+            if (holder.tvMile.equals(null)){
+                holder.tvMile.setVisibility(View.GONE);
+            }
             holder.tvContent.setText(list.get(position).getContent());
 
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");

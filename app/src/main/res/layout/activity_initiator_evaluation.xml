@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundcolor"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="11dp"
+        >
+
+        <TextView
+            android:textSize="15dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainfont"
+            android:text="活动评价" />
+
+        <ImageView
+            android:id="@+id/iv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:src="@drawable/icon_return"
+            />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        >
+
+        <LinearLayout
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="25dp"
+                android:layout_gravity="center"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@drawable/default_user"/>
+
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小猪佩奇"
+                android:textSize="12dp"
+                android:textColor="@color/mainfont"
+                />
+
+            <TextView
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主题：让我们一起摇摆"
+                android:textSize="15dp"
+                android:textColor="@color/mainfont"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已结束"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_gray"
+                />
+
+        <com.yapin.shanduo.widget.RatingBarView
+            android:layout_marginTop="18dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/custom_ratingbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:starCount="5"
+            app:starPadding="15dp"
+            app:starEmpty="@drawable/icon_greathearta"
+            app:starFill="@drawable/icon_greatheart"
+            app:starImageSize="30dp">
+
+        </com.yapin.shanduo.widget.RatingBarView>
+
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="没有星星！"
+                android:textSize="12dp"
+                android:textColor="@color/textcolor_gules"
+                />
+
+            <TextView
+                android:layout_marginTop="26dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="说说活动给你带来的感觉！"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_gray"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="28dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:background="@drawable/checkbox_shape"
+                    android:id="@+id/checkBox1"
+                    android:gravity="center"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:text="气氛很棒！"
+                    android:button = "@null"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="10dp"/>
+
+                <CheckBox
+                    android:layout_marginLeft="20dp"
+                    android:background="@drawable/checkbox_shape"
+                    android:id="@+id/checkBox2"
+                    android:gravity="center"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:text="气氛很棒！"
+                    android:button = "@null"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="10dp"/>
+
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="15dp"
+                    android:orientation="horizontal"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:background="@drawable/checkbox_shape"
+                        android:id="@+id/checkBox3"
+                        android:gravity="center"
+                        android:layout_width="75dp"
+                        android:layout_height="25dp"
+                        android:text="气氛很棒！"
+                        android:button = "@null"
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="10dp"/>
+
+                    <CheckBox
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/checkbox_shape"
+                        android:id="@+id/checkBox4"
+                        android:gravity="center"
+                        android:layout_width="75dp"
+                        android:layout_height="25dp"
+                        android:text="气氛很棒！"
+                        android:button = "@null"
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="10dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <EditText
+                android:paddingLeft="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext_shape"
+                android:layout_width="170dp"
+                android:layout_height="25dp"
+                android:hint="其他想说的..."
+                android:textSize="10dp"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_width="340dp"
+            android:layout_height="48dp"
+            android:background="@color/tab_indicator_color"
+            android:text="提交评价"
+            android:textSize="15dp"
+            android:textColor="@color/colorAccent"
+            />
+
+    </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
