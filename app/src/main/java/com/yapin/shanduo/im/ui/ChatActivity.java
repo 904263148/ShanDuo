@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
+import com.tencent.TIMFaceElem;
 import com.tencent.TIMMessage;
 import com.tencent.TIMMessageDraft;
 import com.tencent.TIMMessageStatus;
@@ -49,6 +50,7 @@ import com.yapin.shanduo.im.utils.FileUtil;
 import com.yapin.shanduo.im.utils.MediaUtil;
 import com.yapin.shanduo.im.utils.RecorderUtil;
 import com.yapin.shanduo.ui.activity.MapGaodeActivity;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.utils.ActivityTransitionUtil;
 import com.yapin.shanduo.utils.Constants;
 
@@ -154,8 +156,10 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                     title.setMoreImgAction(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
-                            intent.putExtra("identify", identify);
+//                            Intent intent = new Intent(ChatActivity.this, ProfileActivity.class);
+//                            intent.putExtra("identify", identify);
+                            Intent intent = new Intent(ChatActivity.this, UserProfActivity.class);
+                            intent.putExtra("userId", identify);
                             startActivity(intent);
                         }
                     });
@@ -168,6 +172,8 @@ public class ChatActivity extends FragmentActivity implements ChatView {
                             Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
                             person.putExtra("id",identify);
                             person.putExtra("name",identify);
+//                            Intent intent = new Intent(ChatActivity.this, UserProfActivity.class);
+//                            intent.putExtra("userId", identify);
                             startActivity(person);
                         }
                     });
@@ -190,6 +196,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
         }
         voiceSendingView = (VoiceSendingView) findViewById(R.id.voice_sending);
         presenter.start();
+
     }
 
     @Override

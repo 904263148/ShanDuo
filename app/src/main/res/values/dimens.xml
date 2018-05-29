@@ -22,6 +22,6 @@
     <dimen name="normal_font_size_big">12dp</dimen>
 
     <dimen name="egg_font_size">10sp</dimen>
-    <dimen name="egg_font_size_big">10sp</dimen>
+    <dimen name="egg_font_size_big">12sp</dimen>
 
 </resources>

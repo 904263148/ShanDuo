@@ -159,9 +159,11 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         if ("0".equals(user.getGender())) {
             drawable = activity.getResources().getDrawable(R.drawable.icon_women);
             tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+            rlBg.setBackgroundResource(R.drawable.icon_women_bg);
         } else {
             drawable = activity.getResources().getDrawable(R.drawable.icon_men);
             tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+            rlBg.setBackgroundResource(R.drawable.icon_man_bg);
         }
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvHomeAge.setCompoundDrawables(drawable, null, null, null);

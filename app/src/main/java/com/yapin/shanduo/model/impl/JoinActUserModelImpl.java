@@ -3,11 +3,14 @@ package com.yapin.shanduo.model.impl;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.JoinActLoadModel;
+import com.yapin.shanduo.model.JoinActUserLoadModel;
+import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.model.entity.JoinActUser;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
-import com.yapin.shanduo.presenter.OnLoadListener;
+import com.yapin.shanduo.presenter.OnMultiLoadListener;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
 import com.yapin.shanduo.utils.PrefUtil;
@@ -15,15 +18,17 @@ import com.yapin.shanduo.utils.PrefUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 作者：L on 2018/5/10 0010 19:31
+ * 作者：L on 2018/5/26 0026 14:41
  */
-public class JoinActModelImpl implements JoinActLoadModel{
+public class JoinActUserModelImpl implements JoinActUserLoadModel{
     @Override
-    public void load(final OnLoadListener<String> listener, String activityId , String type) {
+    public void load(final OnMultiLoadListener<List<JoinActUser.ActUser>> listener, String activityId  , String page , String pageSize) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -32,24 +37,27 @@ public class JoinActModelImpl implements JoinActLoadModel{
         Map<String, String> params = new HashMap<>();
         params.put("token", PrefUtil.getToken(context));
         params.put("activityId" , activityId);
-        params.put("type" , type);
-        OkHttp.get(context, ApiUtil.JOIN_ACT, params, new JavaOkCallback() {
+        params.put("page" , page);
+        params.put("pageSize" , pageSize);
+        OkHttp.post(context, ApiUtil.ACT_JOIN_USER, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
-                Log.d("JoinActModelImpl" ,msg);
+                Log.d("JoinActUserModelImpl" , msg);
                 listener.onError(msg);
             }
 
             @Override
             public void onResponse(String response) {
-                Log.d("JoinActModelImpl" , response);
+                Log.d("JoinActUserModelImpl" , response);
+                JoinActUser info = null;
                 try {
-                    listener.onSuccess(new JSONObject(response).getString("result"));
+                    info = new Gson().fromJson( new JSONObject(response).get("result").toString() , JoinActUser.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                List<JoinActUser.ActUser> list = info.getList();
+                listener.onSuccess(list , info.getTotalpage());
             }
         });
-
     }
 }

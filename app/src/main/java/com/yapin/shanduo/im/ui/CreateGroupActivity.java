@@ -75,16 +75,17 @@ public class CreateGroupActivity extends Activity {
                         data.getStringArrayListExtra("select"),
                         new TIMValueCallBack<String>() {
                             @Override
-                            public void onError(int i, String s) {
-                                if (i == 80001){
+                            public void onError(int code, String desc) {
+                                Log.d("TIM_create_group", "create group failed. code: " + code + " errmsg: " + desc);
+                                if (code == 80001){
                                     Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_fail_because_wording), Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_fail), Toast.LENGTH_SHORT).show();
                                 }
                             }
-
                             @Override
                             public void onSuccess(String s) {
+                                Log.d("TIM_create_group", "create group succ, groupId:" + s);
                                 Toast.makeText(CreateGroupActivity.this, getString(R.string.create_group_succeed), Toast.LENGTH_SHORT).show();
                                 finish();
                             }

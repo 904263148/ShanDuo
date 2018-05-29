@@ -39,7 +39,8 @@
         <item name="colorAccent">@color/home_title_color</item>
     </style>
 
-    <style name="NoTranslucent" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="NoTranslucent" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent"> false </item>
     </style>
 

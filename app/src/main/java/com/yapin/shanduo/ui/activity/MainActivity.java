@@ -37,6 +37,7 @@ import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
 import com.yapin.shanduo.ui.fragment.ChatFragment;
+import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
@@ -121,13 +122,13 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     private ViewPagerAdapter adapter;
 
+    private CustomBottomSheetDialogFragment fragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        setTheme(R.style.NoTranslucent);
 
         //设置PopupWindow的View
         popView = LayoutInflater.from(this).inflate(R.layout.share_popup, null);
@@ -160,6 +161,8 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
         publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
         publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
+
+        fragment = new CustomBottomSheetDialogFragment();
 
     }
 
@@ -278,34 +281,37 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     @Override
     public void openPopupWindow(Object object , int type) {
+
+        fragment.show(getSupportFragmentManager() , "share");
+
         //防止重复按按钮
-        if (popupWindow != null && popupWindow.isShowing()) {
-            return;
-        }
-
-        if(type == Constants.HOME_ACT){
-            ActivityInfo.Act act = (ActivityInfo.Act) object;
-        }else{
-            TrendInfo.Trend trend = (TrendInfo.Trend) object;
-        }
-
-        popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        //设置背景,这个没什么效果，不添加会报错
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //设置点击弹窗外隐藏自身
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        //设置动画
-        popupWindow.setAnimationStyle(R.style.PopupWindow);
-        //设置位置
-        popupWindow.showAtLocation(tag, Gravity.BOTTOM | Gravity.LEFT, 50, 70);
-        //设置消失监听
-        popupWindow.setOnDismissListener(this);
-        //设置背景色
-        setBackgroundAlpha(0.5f);
-
-        setPopupClick();
+//        if (popupWindow != null && popupWindow.isShowing()) {
+//            return;
+//        }
+//
+//        if(type == Constants.HOME_ACT){
+//            ActivityInfo.Act act = (ActivityInfo.Act) object;
+//        }else{
+//            TrendInfo.Trend trend = (TrendInfo.Trend) object;
+//        }
+//
+//        popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT);
+//        //设置背景,这个没什么效果，不添加会报错
+//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//        //设置点击弹窗外隐藏自身
+//        popupWindow.setFocusable(true);
+//        popupWindow.setOutsideTouchable(true);
+//        //设置动画
+//        popupWindow.setAnimationStyle(R.style.PopupWindow);
+//        //设置位置
+//        popupWindow.showAtLocation(tag, Gravity.BOTTOM | Gravity.LEFT, 50, 70);
+//        //设置消失监听
+//        popupWindow.setOnDismissListener(this);
+//        //设置背景色
+//        setBackgroundAlpha(0.5f);
+//
+//        setPopupClick();
     }
 
     public void openPublishPopup(){

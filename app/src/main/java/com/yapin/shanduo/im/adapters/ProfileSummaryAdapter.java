@@ -1,6 +1,7 @@
 package com.yapin.shanduo.im.adapters;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,8 +56,11 @@ public class ProfileSummaryAdapter extends ArrayAdapter<ProfileSummary> {
             view.setTag(viewHolder);
         }
         ProfileSummary data = getItem(position);
-        GlideUtil.load(context ,data.getAvatarUrl() , viewHolder.avatar );
-//        viewHolder.avatar.setBackgroundResource(R.drawable.head);
+        if(TextUtils.isEmpty(data.getAvatarUrl()) || data.getAvatarUrl() == null){
+            viewHolder.avatar.setBackgroundResource(data.getAvatarRes());
+        }else {
+            GlideUtil.load(context, data.getAvatarUrl(), viewHolder.avatar);
+        }
         viewHolder.name.setText(data.getName());
         return view;
     }

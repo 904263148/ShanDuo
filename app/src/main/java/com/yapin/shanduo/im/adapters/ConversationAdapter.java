@@ -60,8 +60,11 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
         }
         final Conversation data = getItem(position);
         viewHolder.tvName.setText(data.getName());
-        GlideUtil.load(context ,activity ,data.getAvatarUrls() , viewHolder.avatar );
-//        viewHolder.avatar.setImageResource(data.getAvatarUrls());
+        if(data.getAvatarUrls() == null || "".equals(data.getAvatarUrls())){
+            viewHolder.avatar.setImageResource(data.getAvatar());
+        }else {
+            GlideUtil.load(context ,activity ,data.getAvatarUrls() , viewHolder.avatar );
+        }
         viewHolder.lastMessage.setText(data.getLastMessageSummary());
         viewHolder.time.setText(TimeUtil.getTimeStr(data.getLastMessageTime()));
         long unRead = data.getUnreadNum();

@@ -46,7 +46,7 @@ public class Utils {
     public static void checkPermission(Activity activity){
         if (Build.VERSION.SDK_INT >= 23) {
             int REQUEST_CODE_CONTACT = 101;
-            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE , Manifest.permission.CAMERA ,Manifest.permission.ACCESS_COARSE_LOCATION , Manifest.permission.ACCESS_FINE_LOCATION};
+            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE , Manifest.permission.CAMERA ,Manifest.permission.ACCESS_COARSE_LOCATION , Manifest.permission.ACCESS_FINE_LOCATION , Manifest.permission.WRITE_SETTINGS};
             //验证是否许可权限
             for (String str : permissions) {
                 if (activity.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {

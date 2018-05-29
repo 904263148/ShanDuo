@@ -88,6 +88,14 @@
     <string name="title_add_qq_friend">添加QQ好友</string>
 
     <string name="shanduo_search_hint">搜索闪多号或手机号</string>
+    <string name="title_join">报名</string>
+
+    <string name="confirm_join">确认报名</string>
+    <string name="tips_no_user_join">暂无人加入</string>
+    <string name="cancel_join">取消报名</string>
+
+    <string name="title_confirm_join_act">您确认参加活动吗</string>
+    <string name="title_cancel_join_act">您确认取消参加活动吗</string>
 
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>

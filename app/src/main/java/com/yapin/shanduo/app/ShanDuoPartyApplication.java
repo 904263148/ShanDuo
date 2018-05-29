@@ -13,6 +13,7 @@ import com.mob.tools.MobLog;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
+import com.tencent.TIMOfflinePushSettings;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;

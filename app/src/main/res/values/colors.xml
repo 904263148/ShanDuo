@@ -33,7 +33,7 @@
     <color name="location_blue">#3782ff</color>
     <color name="home_title_select_color">#5169ff</color>
 
-    <color name="bg_color">#F7F8FF</color>
+    <color name="bg_color">#f4f4f4</color>
     <color name="replay_name_color">#4660ff</color>
     <color name="tab_indicator_color">#5e75ff</color>
     <color name="home_title_bg">#CFD7FF</color>

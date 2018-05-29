@@ -94,7 +94,7 @@ public class TextMessage extends Message {
         clearView(viewHolder);
         boolean hasText = false;
         TextView tv = new TextView(ShanDuoPartyApplication.getContext());
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         tv.setTextColor(ShanDuoPartyApplication.getContext().getResources().getColor(isSelf() ? R.color.white : R.color.black));
         List<TIMElem> elems = new ArrayList<>();
         for (int i = 0; i < message.getElementCount(); ++i){
@@ -159,7 +159,7 @@ public class TextMessage extends Message {
                     int startIndex = stringBuilder.length();
                     try{
                         AssetManager am = context.getAssets();
-                        InputStream is = am.open(String.format("emoticon/%d.gif", faceElem.getIndex()));
+                        InputStream is = am.open(String.format("emoticon/%d.png", faceElem.getIndex()));
                         if (is == null) continue;
                         Bitmap bitmap = BitmapFactory.decodeStream(is);
                         Matrix matrix = new Matrix();

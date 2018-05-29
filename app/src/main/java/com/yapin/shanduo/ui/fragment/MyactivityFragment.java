@@ -154,8 +154,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
             return;
         }
         if(type == Constants.ACT_JOIN){
-            joinActPresenter.join(act.getId());
-            dialog.show();
+//            joinActPresenter.join(act.getId());
+//            dialog.show();
         }
     }
 

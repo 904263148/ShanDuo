@@ -37,7 +37,9 @@ import com.yapin.shanduo.im.model.MessageFactory;
 import com.yapin.shanduo.im.model.NomalConversation;
 import com.yapin.shanduo.im.ui.HomeActivity;
 import com.yapin.shanduo.im.utils.PushUtil;
+import com.yapin.shanduo.ui.activity.AddHumanGroupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
@@ -105,6 +107,7 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
             view.findViewById(R.id.iv_add).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    StartActivityUtil.start(activity , ChatFragment.this , AddHumanGroupActivity.class);
                 }
             });
 

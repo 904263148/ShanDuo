@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
@@ -107,7 +108,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
             }else {
                 holder.tvVip.setVisibility(View.VISIBLE);
-                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setText("SVIP"+(level-10));
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
 
@@ -124,6 +125,14 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     listener.onTextClick(position ,list.get(position) , Constants.ACT_JOIN);
                 }
             });
+
+            holder.rlLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onTextClick(position , list.get(position) , Constants.ACT_LOCATION);
+                }
+            });
+
 
         }else{
             FooterHolder holder = (FooterHolder) viewHolder;
@@ -187,6 +196,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvJoin;
         @BindView(R.id.tv_vip)
         TextView tvVip;
+        @BindView(R.id.rl_location)
+        RelativeLayout rlLocation;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -134,6 +135,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Head_portrait);
         GlideUtil.load(activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getBackground() , iv_background);
 
+        if( !(TextUtils.isEmpty(PrefJsonUtil.getProfile(context).getBackground())) ){
             //异步处理
             new Thread(new Runnable() {
                 @Override
@@ -149,7 +151,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     });
                 }
             }).start();
-
+        }
         presenter = new ModifyPresenter();
         presenter.init(context,this);
     }

@@ -106,7 +106,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     updateView(InputMode.TEXT);
-                }
+            }
             }
         });
         isSendVisible = editText.getText().length() != 0;
@@ -268,7 +268,8 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
                 try{
                     AssetManager am = getContext().getAssets();
                     final int index = 7*i+j;
-                    InputStream is = am.open(String.format("emoticon/%d.gif", index));
+//                    InputStream is = am.open(String.format("emoticon/%d.gif", index));
+                    InputStream is = am.open(String.format("emoticon/%d.png", index));
                     Bitmap bitmap = BitmapFactory.decodeStream(is);
                     Matrix matrix = new Matrix();
                     int width = bitmap.getWidth();
@@ -349,7 +350,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             chatView.sendFile();
         }
         if(id == R.id.btn_location){
-            chatView.sendLocation();
+//            chatView.sendLocation();
         }
 
     }

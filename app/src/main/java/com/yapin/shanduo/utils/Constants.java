@@ -67,6 +67,8 @@ public class Constants {
 
     //活动item点击
     public static final int ACT_JOIN = 1;
+    //活动地图定位点击
+    public static final int ACT_LOCATION = 2;
 
     //发布动态获取定位的点击
     public static final int RELEASEDYNAMICPOSITIONING= 19;
@@ -77,5 +79,9 @@ public class Constants {
 
     //微信支付appid
     public static final String WECHAT_APPID ="wx3dd985759741b34e";
+
+    //判断是否参加活动
+    public static final int JOIN_ACT = 1;
+    public static final int UNJOIN_ACT = 0;
 
 }

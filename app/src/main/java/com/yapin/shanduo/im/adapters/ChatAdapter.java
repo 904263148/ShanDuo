@@ -79,12 +79,6 @@ public class ChatAdapter extends ArrayAdapter<Message> {
             data.showMessage(viewHolder, getContext());
         }
 
-//        String path = "";
-//        if(FriendshipInfo.getInstance().getProfile(identify).getAvatarUrl() != null){
-//            path = FriendshipInfo.getInstance().getProfile(identify).getAvatarUrl();
-//        }
-//        GlideUtil.load(context ,activity , path , viewHolder.leftHead);
-//        GlideUtil.load(context ,activity , ApiUtil.IMG_URL +PrefJsonUtil.getProfile(context).getPicture() , viewHolder.RightHead);
         return view;
     }
 

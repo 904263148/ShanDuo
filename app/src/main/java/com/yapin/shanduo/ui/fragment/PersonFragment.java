@@ -23,7 +23,7 @@ import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.utils.PrefJsonUtil;
-import com.yapin.shanduo.ui.activity.MywalletActivity;
+import com.yapin.shanduo.ui.activity.MyWalletActivity;
 import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -143,7 +143,7 @@ public class PersonFragment extends Fragment {
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , MYWALLET);
                 }else {
-                    StartActivityUtil.start(activity , MywalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity , MyWalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
             case R.id.tv_login_reg:
@@ -177,7 +177,7 @@ public class PersonFragment extends Fragment {
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
             case MYWALLET:
-                StartActivityUtil.start(activity , MywalletActivity.class);
+                StartActivityUtil.start(activity , MyWalletActivity.class);
                 break;
             case MEMBER_CENTER:
                 StartActivityUtil.start(activity , MembercenterActivity.class);

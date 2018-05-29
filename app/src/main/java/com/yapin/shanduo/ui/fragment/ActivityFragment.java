@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,7 +20,9 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.JoinActPresenter;
+import com.yapin.shanduo.ui.activity.JoinActActivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.PlaceActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeActContract;
 import com.yapin.shanduo.ui.contract.JoinActContract;
@@ -64,6 +67,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     private JoinActPresenter joinActPresenter;
 
+    private View view;
+
     public static ActivityFragment newInstance(int position , String userId) {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -84,7 +89,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_activity, container, false);
+        view = inflater.inflate(R.layout.fragment_activity, container, false);
         ButterKnife.bind(this , view);
         presenter= new HomeActPresenter();
         presenter.init(this);
@@ -139,10 +144,22 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
             StartActivityUtil.start(activity ,this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
             return;
         }
-        if(type == Constants.ACT_JOIN){
-            joinActPresenter.join(act.getId());
-            dialog.show();
+        switch (type){
+            case Constants.ACT_JOIN:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("act" , list.get(position));
+                StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
+                break;
+            case Constants.ACT_LOCATION:
+                Bundle bundle1 = new Bundle();
+                bundle1.putDouble("lat" , act.getLat());
+                bundle1.putDouble("lon" , act.getLon());
+                bundle1.putString("place" , act.getActivityAddress());
+                StartActivityUtil.start(activity , this , PlaceActivity.class , bundle1);
+                break;
+
         }
+
     }
 
     /**

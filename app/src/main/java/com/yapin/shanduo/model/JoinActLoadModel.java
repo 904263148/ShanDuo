@@ -7,6 +7,6 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 public interface JoinActLoadModel {
 
-    void load(OnLoadListener<String> listener , String activityId);
+    void load(OnLoadListener<String> listener , String activityId , String type);
 
 }

@@ -15,11 +15,10 @@ public class JoinActPresenter implements JoinActContract.Presenter{
     public void init(JoinActContract.View view){
         loadModel = new JoinActModelImpl();
         this.view = view;
-        view.initView();
     }
 
     @Override
-    public void join(String activityId) {
+    public void join(String activityId  , String type) {
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -35,7 +34,7 @@ public class JoinActPresenter implements JoinActContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , activityId);
+        } , activityId , type);
 
     }
 }

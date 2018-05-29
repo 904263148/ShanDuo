@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -21,6 +22,7 @@ import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
+import com.tencent.TIMOfflinePushSettings;
 import com.tencent.TIMOfflinePushToken;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
@@ -155,6 +157,15 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void onSuccess() {
+
+        TIMOfflinePushSettings settings = new TIMOfflinePushSettings();
+        //开启离线推送
+        settings.setEnabled(true);
+        //设置收到 C2C 离线消息时的提示声音，这里把声音文件放到了 res/raw 文件夹下
+        settings.setC2cMsgRemindSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dudulu));
+        //设置收到群离线消息时的提示声音，这里把声音文件放到了 res/raw 文件夹下
+        settings.setGroupMsgRemindSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.dudulu));
+        TIMManager.getInstance().configOfflinePushSettings(settings);
 
         //初始化程序后台后消息推送
         PushUtil.getInstance();

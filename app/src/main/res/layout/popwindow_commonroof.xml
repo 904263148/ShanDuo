@@ -9,12 +9,11 @@
     <LinearLayout
         android:background="@drawable/app_commonroof"
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingBottom="10dp">
 
-        <FrameLayout
-            android:background="@color/colorPrimary"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -22,23 +21,28 @@
             >
 
             <ImageButton
+                android:id="@+id/ib_back"
                 android:layout_marginLeft="10dp"
                 android:background="@color/colorAccent"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:src="@drawable/icon_com_delete"
                 android:layout_gravity="left|center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 />
 
             <TextView
+                android:id="@+id/tv_title"
                 android:textSize="12dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainfont"
+                android:layout_centerInParent="true"
                 android:text="普通置顶" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -51,12 +55,28 @@
             android:orientation="vertical"
             android:gravity="center">
 
+            <EditText
+                android:id="@+id/et_money"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textCursorDrawable="@null"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:text=""
+                android:hint="充值金额"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                />
+
             <LinearLayout
+                android:id="@+id/ll_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_tv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
@@ -64,6 +84,7 @@
                     android:textColor="@color/tab_indicator_color"
                     />
                 <TextView
+                    android:id="@+id/tv_tv2"
                     android:layout_marginLeft="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,6 +93,7 @@
                     android:textColor="@color/tab_indicator_color"
                     />
                 <TextView
+                    android:id="@+id/t_tv3"
                     android:layout_marginLeft="2dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,11 +113,13 @@
 
 
             <TextView
+                android:id="@+id/tv_balance_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:drawableLeft="@drawable/icon_com_balance"
-                android:text="\t余额支付"
+                android:text="余额支付"
+                android:drawablePadding="5dp"
                 android:textColor="@drawable/fontcolor_selector"
                 />
 
@@ -109,11 +133,13 @@
 
 
                 <TextView
+                    android:id="@+id/tv_wechat_pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:drawableLeft="@drawable/icon_com_wechat"
-                    android:text="\t微信支付"
+                    android:text="微信支付"
+                    android:drawablePadding="5dp"
                     android:textColor="@drawable/fontcolor_selector"
                     />
 
@@ -127,11 +153,13 @@
 
 
                 <TextView
+                    android:id="@+id/tv_alipay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="\t支付宝支付"
+                    android:text="支付宝支付"
                     android:drawableLeft="@drawable/icon_com_alipay"
+                    android:drawablePadding="5dp"
                     android:textColor="@drawable/fontcolor_selector"
                     />
 
@@ -144,6 +172,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_memo1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="8dp"
@@ -151,6 +180,7 @@
                     android:text="开通VIP置顶费用低至1.5元！"/>
 
                 <TextView
+                    android:id="@+id/tv_memo2"
                     android:textColor="@color/textcolor_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -167,6 +197,7 @@
                 >
 
                 <Button
+                    android:id="@+id/bt_cancel"
                     android:background="@drawable/popwindow_button_shape"
                     android:layout_width="100dp"
                     android:layout_height="25dp"
@@ -175,6 +206,7 @@
                     android:textColor="@color/textcolor_textview"/>
 
                 <Button
+                    android:id="@+id/bt_confirm"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/popwindow_button_back_shape"
                     android:layout_width="100dp"

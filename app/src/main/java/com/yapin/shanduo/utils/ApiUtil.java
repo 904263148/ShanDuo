@@ -30,7 +30,7 @@ public class ApiUtil {
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/dynamicList";
 
     //参加活动
-    public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/participateActivities";
+    public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/joinActivities";
 
     //首页轮播
     public final static String HOME_CAROUSEL = ConfigUtil.configUrl() +"/jcarousel/carouselList";
@@ -64,5 +64,11 @@ public class ApiUtil {
 
     //查找用户资料
     public final static String USER_PROF = ConfigUtil.configUrl() +"/jattention/userdetails";
+
+    //查找活动中报名的用户数据
+    public final static String ACT_JOIN_USER = ConfigUtil.configUrl() +"/activity/participant";
+
+    //查询token是否有效
+    public final static String JUDGE_TOKEN = ConfigUtil.configUrl() + "juser/checktoken";
 
 }

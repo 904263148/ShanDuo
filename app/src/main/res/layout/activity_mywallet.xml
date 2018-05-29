@@ -105,18 +105,19 @@
         android:layout_height="150dp">
 
         <LinearLayout
+            android:id="@+id/ll_recharge"
             android:orientation="vertical"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            >
 
             <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/icon_recharge"
-
                 />
 
             <TextView
