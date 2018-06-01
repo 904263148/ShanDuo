@@ -17,14 +17,13 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.ui.activity.CreditcenterActivity;
-import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
-import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.activity.MywalletActivity;
+import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
+import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
@@ -155,7 +154,7 @@ public class PersonFragment extends Fragment {
                 StartActivityUtil.start(activity , LoginActivity.class);
                 break;
             case R.id.tv_Creditcenter:    //信用中心
-                StartActivityUtil.start(activity , CreditcenterActivity.class);
+                StartActivityUtil.start(activity , ScrollingActivity.class);
                 break;
         }
     }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/background_color"
+    android:background="@color/white"
     android:orientation="vertical"
     >
 
@@ -35,16 +35,22 @@
 
     </FrameLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color"
+        />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <EditText
-            android:layout_marginTop="1dp"
             android:id="@+id/et_add_title"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -57,9 +63,13 @@
 
             />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
     <EditText
         android:id="@+id/et_add_title_remarks"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入活动内容（禁止发布违禁文字）"
@@ -72,9 +82,12 @@
         android:paddingTop="8dp"
         />
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -111,8 +124,12 @@
 
     </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/colorAccent"
@@ -165,8 +182,13 @@
 
     </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
+
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/colorAccent"
@@ -205,8 +227,13 @@
 
     </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
+
     <LinearLayout
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@color/colorAccent"
@@ -245,9 +272,14 @@
 
     </LinearLayout>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bg_color"
+                />
+
     <EditText
         android:id="@+id/tv_add_place_remarks"
-        android:layout_marginTop="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入详细地址"
@@ -260,11 +292,16 @@
         android:paddingTop="8dp"
         />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/bg_color"
+                />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:gravity="center|top"
+        android:gravity="center"
         android:background="@color/colorAccent"
         android:paddingTop="25dp"
         >
@@ -291,8 +328,6 @@
 
 
     </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

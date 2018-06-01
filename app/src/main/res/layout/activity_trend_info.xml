@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.TrendInfoActivity"
-    android:background="@color/white"
+    android:background="@color/bg_color"
     >
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -187,14 +187,14 @@
                                 android:id="@+id/iv_img1"
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
-                                android:scaleType="fitXY"
+                                android:scaleType="centerCrop"
                                 />
 
                             <ImageView
                                 android:id="@+id/iv_img2"
                                 android:layout_width="150dp"
                                 android:layout_height="150dp"
-                                android:scaleType="fitXY"
+                                android:scaleType="centerCrop"
                                 android:layout_marginLeft="10dp"
                                 android:layout_toRightOf="@+id/iv_img1"
                                 />
@@ -213,15 +213,32 @@
 
                         </com.yapin.shanduo.widget.MyGridView>
 
-                        <TextView
-                            android:id="@+id/tv_publish_time"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             android:paddingTop="8dp"
-                            android:text="刚刚发布"
-                            android:textSize="10dp"
-                            android:textColor="@color/font_color_gray"
-                            />
+                            >
+                            <TextView
+                                android:id="@+id/tv_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5-11"
+                                android:textSize="@dimen/normal_font_size_small"
+                                android:textColor="@color/font_color_gray"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_publish_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="刚刚"
+                                android:textSize="@dimen/normal_font_size_small"
+                                android:textColor="@color/font_color_gray"
+                                android:layout_marginLeft="17dp"
+                                />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -281,6 +298,7 @@
                         android:src="@drawable/icon_three_point"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:paddingLeft="10dp"
                         />
 
                 </RelativeLayout>
@@ -378,6 +396,7 @@
             android:layout_toRightOf="@+id/iv_expression"
             android:layout_toLeftOf="@+id/tv_publish"
             android:layout_marginLeft="5dp"
+            android:textCursorDrawable="@null"
             />
 
         <ImageView

@@ -221,6 +221,7 @@ public class ImageMessage extends Message {
         if (FileUtil.isCacheFileExist(image.getUuid())){
             Intent intent = new Intent(context, ImageViewActivity.class);
             intent.putExtra("filename", image.getUuid());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }else{
             if (!isDownloading){
@@ -240,6 +241,7 @@ public class ImageMessage extends Message {
                         isDownloading = false;
                         Intent intent = new Intent(context, ImageViewActivity.class);
                         intent.putExtra("filename", image.getUuid());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     }
                 });

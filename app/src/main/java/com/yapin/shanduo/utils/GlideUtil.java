@@ -110,7 +110,6 @@ public class GlideUtil {
     public static void load(Activity activity, String url, ImageView imageView) {
         android.util.Log.d("img_url",url);
         Glide.with(activity).load(url == null ? "" : url).error(R.color.color_white)
-//                .placeholder(R.color.bg_main_color)
                 .placeholder(R.color.color_white)
                 .into(imageView);
     }

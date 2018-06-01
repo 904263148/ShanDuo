@@ -21,10 +21,14 @@ import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.PicWatcher;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,7 +37,7 @@ import butterknife.ButterKnife;
 /**
  * 作者：L on 2018/5/9 0009 11:16
  */
-public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
 
     private Context context;
     private List<TrendInfo.Trend> list;
@@ -41,6 +45,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Activity activity;
 
     private TrendGridViewAdapter adapter;
+    private int clickPosition = 0;
 
     public TrendInfoAdapter(Context context, Activity activity, List<TrendInfo.Trend> list , int position) {
         this.context = context;
@@ -72,7 +77,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
         if (viewHolder instanceof ViewHolder) {
-            ViewHolder holder = (ViewHolder) viewHolder;
+            final ViewHolder holder = (ViewHolder) viewHolder;
             GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getName());
 
@@ -94,6 +99,15 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
             holder.tvLikeCount.setText(list.get(position).getPraise()+"");
+
+            String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(list.get(position).getCreateDate()), TimeUtil.getNowTime());
+            if(TextUtils.isEmpty(diff)){
+                holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
+                holder.tvPublishTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            }else {
+                holder.tvDate.setText(diff);
+                holder.tvPublishTime.setText("");
+            }
 
             int level = list.get(position).getVip();
             if(level == 0){
@@ -118,10 +132,25 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvLikeCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (likeClickListener != null)
-                        likeClickListener.onLikeClick(list.get(position).getId());
+                    listener.onLikeClick(list.get(position).getId() , position);
                 }
             });
+
+            holder.tvMile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onLocationClick(list.get(position));
+                }
+            });
+
+            holder.ivHead.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onHeadClick(list.get(position).getUserId());
+                }
+            });
+
+            clickPosition = position;
 
             int size = list.get(position).getPicture().size();
             switch (size){
@@ -134,12 +163,37 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     holder.rlImg1.setVisibility(View.VISIBLE);
                     GlideUtil.load(activity , ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 );
                     holder.ivImg2.setVisibility(View.GONE);
+
+                    final List<ImageView> thumUrlsImageView = new ArrayList<>();
+                    thumUrlsImageView.add(holder.ivImg1);
+                    holder.ivImg1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView , list.get(position).getPicture());
+                        }
+                    });
                     break;
                 case 2:
                     holder.gridview.setVisibility(View.GONE);
                     holder.rlImg1.setVisibility(View.VISIBLE);
                     GlideUtil.load(activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1  );
                     GlideUtil.load(activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(1) ,holder.ivImg2  );
+
+                    final List<ImageView> thumUrlsImageView2 = new ArrayList<>();
+                    thumUrlsImageView2.add(holder.ivImg1);
+                    thumUrlsImageView2.add(holder.ivImg2);
+                    holder.ivImg1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView2 , list.get(position).getPicture());
+                        }
+                    });
+                    holder.ivImg2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg2 , 1 , thumUrlsImageView2 , list.get(position).getPicture());
+                        }
+                    });
                     break;
                 default:
                     holder.gridview.setVisibility(View.VISIBLE);
@@ -156,6 +210,19 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
+    public void onClick(View v) {
+        List<ImageView> thumUrlsImageView = new ArrayList<>();
+        ImageView p = (ImageView) v;
+        if(list.get(clickPosition).getPicture().size() == 1){
+
+        }else {
+
+        }
+        int position = v.getId() == R.id.iv_img1 ? 0 : 1 ;
+//        PicWatcher.showImages(activity , p , position , thumUrlsImageView , list.get(clickPosition).getPicture());
+    }
+
+    @Override
     public int getItemCount() {
         return list.size();
     }
@@ -167,22 +234,18 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
+        void onLikeClick(String id , int position);
+
+        void onLocationClick(TrendInfo.Trend trend);
+
+        void onHeadClick(int id);
     }
 
     private OnItemClickListener listener;
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
-    }
-
-    public interface OnLikeClickListener {
-        void onLikeClick(String id);
-    }
-
-    private OnLikeClickListener likeClickListener;
-
-    public void setLikeClickListener(OnLikeClickListener likeClickListener) {
-        this.likeClickListener = likeClickListener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -221,6 +284,8 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvRelayCount;
         @BindView(R.id.tv_like_count)
         TextView tvLikeCount;
+        @BindView(R.id.tv_date)
+        TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

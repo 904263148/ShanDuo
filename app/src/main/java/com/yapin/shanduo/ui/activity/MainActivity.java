@@ -38,6 +38,7 @@ import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
 import com.yapin.shanduo.ui.fragment.ChatFragment;
 import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
+import com.yapin.shanduo.ui.fragment.HomeFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
@@ -98,9 +99,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     private Context context;
     private Activity activity;
 
-    private PopupWindow popupWindow;
-    private View popView;
-
     private PopupWindow publishPopupWindow;
     private View publishPopView;
 
@@ -124,6 +122,8 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     private CustomBottomSheetDialogFragment fragment;
 
+    private HomeFragment homeFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         ButterKnife.bind(this);
 
         //设置PopupWindow的View
-        popView = LayoutInflater.from(this).inflate(R.layout.share_popup, null);
         publishPopView = LayoutInflater.from(this).inflate(R.layout.publish_popupwindow , null);
         initView();
 
@@ -155,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         Utils.setLocation(context);
 
         viewPager.setCurrentItem(0, false);
-        viewPager.setOffscreenPageLimit(5);
+//        viewPager.setOffscreenPageLimit(5);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
@@ -163,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
 
         fragment = new CustomBottomSheetDialogFragment();
+
+        homeFragment = (HomeFragment) adapter.getItem(0);
 
     }
 
@@ -194,29 +195,13 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
                 break;
             case R.id.rl_add:
-//                viewPager.setCurrentItem(2, false);
                 tvAdd.setTextColor(getResources().getColor(R.color.home_title_select_color));
-//                ivHome.setImageResource(R.drawable.icon_home_unselect);
-//                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
-//                ivChat.setImageResource(R.drawable.icon_chat_unselect);
-//                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
-//                ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
-//                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
-//                ivMy.setImageResource(R.drawable.icon_my_unselect);
-//                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
 
-
-                Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_35);
-                rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
-                ivAdd.startAnimation(rotateAnimation);
-                isPublish = true;
+//                Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_35);
+//                rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
+//                ivAdd.startAnimation(rotateAnimation);
+//                isPublish = true;
                 openPublishPopup();
-//                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-//                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
-//                }else {
-//                    StartActivityUtil.start(activity, AddactivityActivity.class);
-//                }
-
 
                 break;
             case R.id.ll_linkman:
@@ -243,25 +228,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 ivMy.setImageResource(R.drawable.icon_my);
                 tvMy.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 break;
-            case R.id.share_friend:
-                break;
-            case R.id.share_wechat_coment:
-                showShare(WechatMoments.NAME);
-                break;
-            case R.id.share_wechat:
-                showShare(Wechat.NAME);
-                break;
-            case R.id.share_qq:
-                showShare(QQ.NAME);
-                break;
-            case R.id.share_qzone:
-                showShare(QZone.NAME);
-                break;
-            case R.id.share_sina:
-                showShare(SinaWeibo.NAME);
-                break;
-            case R.id.share_report:
-                break;
             case R.id.ll_publish_act:
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , PUBLISH_ACT_OPEN_LOGIN);
@@ -284,34 +250,11 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
         fragment.show(getSupportFragmentManager() , "share");
 
-        //防止重复按按钮
-//        if (popupWindow != null && popupWindow.isShowing()) {
-//            return;
-//        }
-//
-//        if(type == Constants.HOME_ACT){
-//            ActivityInfo.Act act = (ActivityInfo.Act) object;
-//        }else{
-//            TrendInfo.Trend trend = (TrendInfo.Trend) object;
-//        }
-//
-//        popupWindow = new PopupWindow(popView, LinearLayout.LayoutParams.MATCH_PARENT,
-//                LinearLayout.LayoutParams.WRAP_CONTENT);
-//        //设置背景,这个没什么效果，不添加会报错
-//        popupWindow.setBackgroundDrawable(new BitmapDrawable());
-//        //设置点击弹窗外隐藏自身
-//        popupWindow.setFocusable(true);
-//        popupWindow.setOutsideTouchable(true);
-//        //设置动画
-//        popupWindow.setAnimationStyle(R.style.PopupWindow);
-//        //设置位置
-//        popupWindow.showAtLocation(tag, Gravity.BOTTOM | Gravity.LEFT, 50, 70);
-//        //设置消失监听
-//        popupWindow.setOnDismissListener(this);
-//        //设置背景色
-//        setBackgroundAlpha(0.5f);
-//
-//        setPopupClick();
+    }
+
+    @Override
+    public void onTitleHidden(float alpha) {
+        homeFragment.setTitleHidden(alpha);
     }
 
     public void openPublishPopup(){
@@ -333,40 +276,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     }
 
-
-    private void setPopupClick() {
-        popView.findViewById(R.id.share_friend).setOnClickListener(this);
-        popView.findViewById(R.id.share_wechat_coment).setOnClickListener(this);
-        popView.findViewById(R.id.share_wechat).setOnClickListener(this);
-        popView.findViewById(R.id.share_qq).setOnClickListener(this);
-        popView.findViewById(R.id.share_qzone).setOnClickListener(this);
-        popView.findViewById(R.id.share_sina).setOnClickListener(this);
-        popView.findViewById(R.id.share_report).setOnClickListener(this);
-    }
-
-    private void showShare(String name) {
-        Platform.ShareParams sp = new Platform.ShareParams();
-
-        if(name.equals(Wechat.NAME)){
-            sp.setShareType(Platform.SHARE_WEBPAGE);
-            sp.setText("闪多测试。");
-        }
-
-        sp.setTitle("测试分享的标题");
-        sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
-        sp.setText("测试分享的文本");
-        sp.setImageUrl("http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg");
-        sp.setSite("闪多");
-        sp.setSiteUrl("http://www.baidu.com");
-        sp.setUrl("http://www.baidu.com");
-
-        Platform platform = ShareSDK.getPlatform(name);
-        // 设置分享事件回调（注：回调放在不能保证在主线程调用，不可以在里面直接处理UI操作）
-        platform.setPlatformActionListener(this);
-        // 执行图文分享
-        platform.share(sp);
-    }
-
     //设置屏幕背景透明效果
     public void setBackgroundAlpha(float alpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -377,12 +286,12 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
-        if(isPublish){
-            Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_45);
-            rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
-            ivAdd.startAnimation(rotateAnimation);
-            isPublish = false;
-        }
+//        if(isPublish){
+//            Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_45);
+//            rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
+//            ivAdd.startAnimation(rotateAnimation);
+//            isPublish = false;
+//        }
     }
 
     @Override
@@ -403,7 +312,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         Log.d("shareSDK" , "取消了~");
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -412,13 +320,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 publishPopupWindow.dismiss();
             }
         }
-        if(popupWindow != null){
-            if(popupWindow.isShowing()) {
-                popupWindow.dismiss();
-            }
-        }
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -429,11 +331,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         if(publishPopupWindow != null){
             if(publishPopupWindow.isShowing()) {
                 publishPopupWindow.dismiss();
-            }
-        }
-        if(popupWindow != null){
-            if(popupWindow.isShowing()) {
-                popupWindow.dismiss();
             }
         }
         switch (requestCode){

@@ -249,7 +249,7 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
 
     @Override
     public void error(String msg) {
-        loadingView.setGone();
+//        loadingView.setGone();
         ToastUtil.showShortToast(context ,msg);
     }
 

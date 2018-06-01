@@ -24,29 +24,19 @@
                 <RelativeLayout
                     android:id="@+id/rl_ban"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="168dp"
                     app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
-                    android:clipChildren="false"
-                    android:background="@color/bg_color"
                     >
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/img_view_pager"
+                    <ImageView
+                        android:id="@+id/iv_banner"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="150dp"
                         android:layout_centerInParent="true"
-                        android:clipChildren="false"
-                        android:background="@color/bg_color"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="fitXY"
                         />
-
-                    <LinearLayout
-                        android:id="@+id/indicator"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_below="@+id/img_view_pager"
-                        android:orientation="horizontal"
-                        android:padding="8dp" />
                 </RelativeLayout>
 
                 <android.support.design.widget.TabLayout

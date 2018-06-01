@@ -2,40 +2,57 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.tencent.TIMConversationType;
+import com.tencent.TIMFriendResult;
+import com.tencent.TIMFriendStatus;
+import com.tencent.TIMValueCallBack;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
+import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
+import com.tencent.qcloud.ui.NotifyDialog;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.ui.AddFriendActivity;
+import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.model.entity.ShanDuoUserProf;
 import com.yapin.shanduo.model.entity.ShanduoUser;
+import com.yapin.shanduo.presenter.AddFriendPresenter;
 import com.yapin.shanduo.presenter.UserProfPresenter;
 import com.yapin.shanduo.ui.adapter.UserProfTabAdapter;
+import com.yapin.shanduo.ui.contract.AddFriendContract;
 import com.yapin.shanduo.ui.contract.UserProfContract;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.CircleImageView;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserProfActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener , UserProfContract.View{
+public class UserProfActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener , UserProfContract.View , AddFriendContract.View , FriendshipManageView {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -69,6 +86,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     TextView tvId;
     @BindView(R.id.iv_head_bg)
     ImageView ivBg;
+    @BindView(R.id.ll_add)
+    LinearLayout llAdd;
 
     private Context context;
     private Activity activity;
@@ -79,6 +98,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
     private UserProfTabAdapter adapter;
     private UserProfPresenter profPresenter;
+    private FriendshipManagerPresenter presenter;
+    private AddFriendPresenter addFriendPresenter;
 
     private ShanDuoUserProf user = new ShanDuoUserProf();
 
@@ -89,6 +110,9 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         ButterKnife.bind(this);
         profPresenter = new UserProfPresenter();
         profPresenter.init(this);
+        addFriendPresenter = new AddFriendPresenter();
+        addFriendPresenter.init(this);
+        presenter = new FriendshipManagerPresenter(this);
     }
 
     @Override
@@ -119,11 +143,18 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         loadingView.loading();
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back , R.id.tv_add_friend})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
                 onBackPressed();
+                break;
+            case R.id.tv_add_friend:
+                if(user.isAttention()){
+                    ChatActivity.navToChat(activity , userId , TIMConversationType.C2C);
+                }else {
+                    presenter.addFriend(userId, "", "" ,"");
+                }
                 break;
         }
     }
@@ -142,6 +173,11 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
     @Override
     public void openPopupWindow(Object object, int type) {
+
+    }
+
+    @Override
+    public void onTitleHidden(float alpha) {
 
     }
 
@@ -169,7 +205,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         tvHomeAge.setCompoundDrawables(drawable, null, null, null);
         tvHomeAge.setCompoundDrawablePadding(2);
         tvHomeAge.setText(user.getAge() + "");
-        
+
         int level = user.getVip();
         if(level == 0){
             tvVip.setVisibility(View.GONE);
@@ -188,13 +224,26 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         tvTrendCount.setText(user.getDynamic()+"");
 
         tvLevel.setText("LV"+user.getLevel());
-
-        if(user.isAttention()){
-            tvAddFriend.setText("发消息");
-        }else {
-            tvAddFriend.setText("加好友");
-        }
         loadingView.setGone();
+
+        if(userId.equals(PrefJsonUtil.getProfile(context).getUserId())){
+            llAdd.setVisibility(View.GONE);
+        }else {
+            if(user.isAttention()){
+                tvAddFriend.setText("发消息");
+            }else {
+                tvAddFriend.setText("加好友");
+            }
+        }
+    }
+
+    @Override
+    public void show(String data) {
+        if("1".equals(data)){
+            ToastUtil.showShortToast(context , R.string.add_friend_succeed);
+            user.setAttention(true);
+            tvAddFriend.setText("发消息");
+        }
     }
 
     @Override
@@ -217,5 +266,77 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     public void showFailed(String msg) {
         loadingView.setGone();
         ToastUtil.showShortToast(context , msg);
+    }
+
+    /**
+     * 添加好友结果回调
+     *
+     * @param status 返回状态
+     */
+    @Override
+    public void onAddFriend(TIMFriendStatus status) {
+        switch (status){
+            case TIM_ADD_FRIEND_STATUS_PENDING:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_succeed), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_FRIEND_STATUS_SUCC:
+//                Toast.makeText(this, getResources().getString(R.string.add_friend_added), Toast.LENGTH_SHORT).show();
+//                finish();
+                addFriendPresenter.addFriend(userId);
+                break;
+            case TIM_ADD_FRIEND_STATUS_FRIEND_SIDE_FORBID_ADD:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_refuse_all), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_ADD_FRIEND_STATUS_IN_OTHER_SIDE_BLACK_LIST:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_to_blacklist), Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case TIM_ADD_FRIEND_STATUS_IN_SELF_BLACK_LIST:
+                NotifyDialog dialog = new NotifyDialog();
+                dialog.show(getString(R.string.add_friend_del_black_list), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FriendshipManagerPresenter.delBlackList(Collections.singletonList(userId), new TIMValueCallBack<List<TIMFriendResult>>() {
+                            @Override
+                            public void onError(int i, String s) {
+                                Toast.makeText(UserProfActivity.this, getResources().getString(R.string.add_friend_del_black_err), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onSuccess(List<TIMFriendResult> timFriendResults) {
+                                Toast.makeText(UserProfActivity.this, getResources().getString(R.string.add_friend_del_black_succ), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                break;
+            default:
+                Toast.makeText(this, getResources().getString(R.string.add_friend_error), Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
+    /**
+     * 删除好友结果回调
+     *
+     * @param status 返回状态
+     */
+    @Override
+    public void onDelFriend(TIMFriendStatus status) {
+
+    }
+
+    /**
+     * 修改好友分组回调
+     *
+     * @param status    返回状态
+     * @param groupName 分组名
+     */
+    @Override
+    public void onChangeGroup(TIMFriendStatus status, String groupName) {
+
     }
 }

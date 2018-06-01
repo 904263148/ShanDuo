@@ -9,4 +9,6 @@ public interface OpenPopupWindow {
 
     void openPopupWindow(Object object , int type);
 
+    void onTitleHidden(float alpha);
+
 }

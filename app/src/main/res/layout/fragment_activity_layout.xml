@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:background="@color/color_white"
         >
 
@@ -23,42 +23,33 @@
             />
 
         <LinearLayout
+            android:id="@+id/ll_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             >
             
-            <RelativeLayout
-                android:id="@+id/rl_act"
-                android:layout_width="63dp"
-                android:layout_height="28dp"
-                android:background="@drawable/rounded_home"
-                >
+            <TextView
+                android:id="@+id/tv_act"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_act"
+                android:textSize="17sp"
+                android:textColor="@color/home_title_select_color"
+                />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_home_act"
-                    android:layout_centerInParent="true"
-                    />
+            <TextView
+                android:id="@+id/tv_trend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_trend"
+                android:textSize="15sp"
+                android:textColor="@color/font_color_gray"
+                android:layout_marginLeft="22dp"
+                />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_trend"
-                android:layout_width="63dp"
-                android:layout_height="28dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/icon_home_trend"
-                    android:layout_centerInParent="true"
-                    />
-
-            </RelativeLayout>
-            
         </LinearLayout>
         
         
@@ -110,25 +101,16 @@
             android:src="@drawable/icon_search"
             android:layout_alignParentRight="true"
             android:padding="10dp"
-            android:background="?android:attr/selectableItemBackground"
             android:layout_centerVertical="true"
             />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_tag"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/home_text_bg"
-        android:layout_below="@+id/rl_title"
-        />
-
     <com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_tag"
+        android:layout_below="@+id/rl_title"
         />
 
 </RelativeLayout>

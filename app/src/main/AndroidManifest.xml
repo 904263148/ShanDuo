@@ -76,8 +76,7 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.PublishActivity" />
@@ -112,10 +111,10 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".im.ui.SearchFriendActivity"
-            android:theme="@style/MyTheme" />
+            />
         <activity
             android:name=".im.ui.AddFriendActivity"
-            android:theme="@style/MyTheme" />
+            />
         <activity
             android:name=".im.ui.ProfileActivity"
             android:launchMode="singleTask" />
@@ -272,17 +271,6 @@
             android:process=":HwPushService" />
         <!-- hwpush -->
 
-
-        <!-- firebase -->
-        <service
-            android:name=".im.utils.MyFirebaseInstanceIDService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-        <!-- firebase -->
-
         <activity android:name=".im.ui.ImageViewActivity" />
         <activity android:name=".im.ui.EditActivity" />
         <activity android:name=".im.ui.SearchGroupActivity" />
@@ -365,24 +353,26 @@
 
         <activity
             android:name=".ui.activity.ScanActivity"
-            android:theme="@style/MyTheme" />
+             />
         <activity
             android:name=".ui.activity.MyCodeActivity"
-            android:theme="@style/MyTheme" />
+            />
         <activity
             android:name=".ui.activity.TrendInfoActivity"
-            android:theme="@style/MyTheme" />
+            />
         <activity
             android:name=".ui.activity.ReplayInfoActivity"
-            android:theme="@style/MyTheme" />
-        <activity android:name=".wxapi.WXPayEntryActivity"
+             />
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
-
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="wx3dd985759741b34e"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wx3dd985759741b34e" />
             </intent-filter>
         </activity>
 
@@ -405,13 +395,19 @@
 
         <activity
             android:name=".ui.activity.AddHumanGroupActivity"
-            android:theme="@style/MyTheme" />
+             />
         <activity
             android:name=".ui.activity.SearchAllActivity"
-            android:theme="@style/MyTheme" />
+             />
         <activity android:name=".ui.activity.UserProfActivity" />
         <activity android:name=".ui.activity.JoinActActivity" />
-        <activity android:name=".ui.activity.PlaceActivity"></activity>
+        <activity android:name=".ui.activity.PlaceActivity" />
+        <activity
+            android:name=".ui.activity.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.activity.SearchActActivity"></activity>
+        <activity android:name=".ui.activity.PictureReviewActivity"></activity>
     </application>
 
 </manifest>

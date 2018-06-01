@@ -224,6 +224,7 @@
             android:layout_toRightOf="@+id/iv_expression"
             android:layout_toLeftOf="@+id/tv_publish"
             android:layout_marginLeft="5dp"
+            android:textCursorDrawable="@null"
             />
 
         <ImageView

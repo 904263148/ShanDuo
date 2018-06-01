@@ -4,11 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -107,6 +109,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void initView(){
+        tv_pd_Publish.setText(Html.fromHtml("<u>发表</u>"));
         listShow.add("");
         ScrollGridLayoutManager layoutManager1 = new ScrollGridLayoutManager(this, 4);
         layoutManager1.setScrollEnabled(false);
@@ -128,6 +131,10 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             showPopwindow();
             return;
         }
+        Bundle bundle = new Bundle();
+        bundle.putString("path", listShow.get(position));
+        bundle.putInt("position", position);
+        StartActivityUtil.start(activity, PictureReviewActivity.class, bundle, Constants.REQUEST_CODE_FOR_DELETE_PHOTO_SHOW);
     }
 
     @OnClick({R.id.tv_pd_Publish,R.id.tv_pd_cancel,R.id.ib_pd_Location ,R.id.ib_pick_photo , R.id.ib_take_photo })
@@ -158,10 +165,18 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 break;
 
             case R.id.ib_pick_photo:        //拍摄
+                if (listShow.size() == Constants.COUNT_MAX_SHOW_PICTURE) {
+                    ToastUtil.showShortToast(context, context.getString(R.string.toast_count_picture));
+                    return;
+                }
                 PublishTrendActivityPermissionsDispatcher.showAllWithCheck(PublishTrendActivity.this);
                 break;
 
             case R.id.ib_take_photo:    //相册
+                if (listShow.size() == Constants.COUNT_MAX_SHOW_PICTURE) {
+                    ToastUtil.showShortToast(context, context.getString(R.string.toast_count_picture));
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
                 bundle.putInt("source", 0);
@@ -192,7 +207,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
         final PopupWindow popWindow = new PopupWindow(popView,width,height);
         popWindow.setAnimationStyle(R.style.take_photo_anim);
         popWindow.setFocusable(true);
-//        popWindow.setBackgroundDrawable(newBitmapDrawable());// 响应返回键必须的语句。
+        //设置背景,这个没什么效果，不添加会报错
+        popWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置点击弹窗外隐藏自身
         popWindow.setFocusable(true);
         popWindow.setOutsideTouchable(true);
@@ -277,6 +293,15 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             lat=ary[1];
 //            Log.i("test","地址是：--"+tv_pd_address+"--经纬度是："+textlonlat);
             break;
+            }
+            case Constants.REQUEST_CODE_FOR_DELETE_PHOTO_SHOW: {
+                if (data == null) {
+                    return;
+                }
+                int position = data.getIntExtra("position", 1);
+                showAdapter.notifyItemRemoved(position);
+                listShow.remove(position);
+                return;
             }
         }
         show(paths);

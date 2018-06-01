@@ -84,4 +84,18 @@ public class Constants {
     public static final int JOIN_ACT = 1;
     public static final int UNJOIN_ACT = 0;
 
+    //errorCode
+    public static final int ERROR_CADE_ONE = 10001;  //10001:token为空或失效需要重新登录
+    public static final int ERROR_CADE_TWO = 10002;  //10002:需要看参数是否未传或符合格式
+    public static final int ERROR_CADE_THREE = 10003;//10003:接口调用失败，需要后台自行查看原因
+
+    //是否点赞
+    public static final String IS_LIKE = "1";
+
+    public static final int REQUEST_CODE_FOR_DELETE_PHOTO_SHOW = 25;
+
+    //信用中心
+    public static final int TYPE_TOP = 1;
+    public static final int TYPE_BOTTOM = 2;
+
 }

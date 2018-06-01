@@ -3,256 +3,268 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.activity.UserProfActivity"
     android:background="@color/bg_color"
     >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/white"
-        >
-
-        <RelativeLayout
-            android:id="@+id/rl_bg"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:background="@drawable/icon_man_bg"
-            android:paddingTop="25dp"
-            >
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_back_arrow"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="5dp"
-                />
-
-            <LinearLayout
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_below="@+id/iv_back"
-                android:layout_marginLeft="15dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 >
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:id="@+id/rl_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:background="@drawable/icon_man_bg"
+                    android:paddingTop="25dp"
+                    >
 
-                    <com.yapin.shanduo.widget.CircleImageView
-                        android:id="@+id/iv_head_bg"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"
-                        android:src="@drawable/head"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                        >
 
                     <ImageView
-                        android:id="@+id/iv_head"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:layout_centerInParent="true"
-                        android:src="@drawable/head"
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_back_arrow"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="5dp"
                         />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_below="@+id/iv_back"
+                        android:layout_marginLeft="15dp"
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.yapin.shanduo.widget.CircleImageView
+                                android:id="@+id/iv_head_bg"
+                                android:layout_width="58dp"
+                                android:layout_height="58dp"
+                                android:src="@drawable/head"
+                                />
+
+                            <ImageView
+                                android:id="@+id/iv_head"
+                                android:layout_width="55dp"
+                                android:layout_height="55dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/head"
+                                />
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:gravity="bottom"
+                            >
+
+                            <TextView
+                                android:id="@+id/tv_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="一直小可爱"
+                                android:textSize="15sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_home_age"
+                                android:layout_width="25dp"
+                                android:layout_height="10dp"
+                                android:text="23"
+                                android:textSize="7sp"
+                                android:background="@drawable/rounded_tv_sex_women"
+                                android:textColor="@color/color_white"
+                                android:gravity="center"
+                                android:drawableLeft="@drawable/icon_women"
+                                android:drawablePadding="2dp"
+                                android:layout_marginLeft="5dp"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_modify_Flicker"
+                                android:textSize="@dimen/egg_font_size"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_id"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/egg_font_size"
+                                android:textColor="@color/home_title_color"
+                                android:layout_marginLeft="3dp"
+                                android:text="10000"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="20dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/tv_vip"
+                                android:layout_width="25dp"
+                                android:layout_height="10dp"
+                                android:text="SVIP2"
+                                android:textSize="7sp"
+                                android:background="@drawable/rounded_tv_vip"
+                                android:textColor="@color/color_white"
+                                android:gravity="center"
+                                />
+
+
+                            <TextView
+                                android:id="@+id/tv_level"
+                                android:layout_width="25dp"
+                                android:layout_height="10dp"
+                                android:text="LV90"
+                                android:textSize="7sp"
+                                android:background="@drawable/rounded_tv_level"
+                                android:textColor="@color/color_white"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            >
+
+                            <TextView
+                                android:id="@+id/tv_friend_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1"
+                                android:textSize="15sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="好友"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_act_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="25"
+                                android:layout_marginLeft="25dp"
+                                android:textSize="15sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="活动"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:id="@+id/tv_trend_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="10"
+                                android:layout_marginLeft="25dp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="动态"
+                                android:layout_marginLeft="2dp"
+                                android:textSize="10sp"
+                                android:textColor="@color/home_title_color"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    android:gravity="bottom"
-                    >
 
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="一直小可爱"
-                        android:textSize="15sp"
-                        android:textColor="@color/home_title_color"
-                        />
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:background="@android:color/white"
+                    app:tabIndicatorColor="@color/tab_indicator_color"
+                    app:tabSelectedTextColor="@color/font_black_color"
+                    app:tabTextColor="@color/font_gray_color"
+                    app:tabPadding="10dp"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
+                    />
 
-                    <TextView
-                        android:id="@+id/tv_home_age"
-                        android:layout_width="25dp"
-                        android:layout_height="10dp"
-                        android:text="23"
-                        android:textSize="7sp"
-                        android:background="@drawable/rounded_tv_sex_women"
-                        android:textColor="@color/color_white"
-                        android:gravity="center"
-                        android:drawableLeft="@drawable/icon_women"
-                        android:drawablePadding="2dp"
-                        android:layout_marginLeft="5dp"
-                        />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/bg_color"
+                />
+        </android.support.design.widget.AppBarLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_modify_Flicker"
-                        android:textSize="@dimen/egg_font_size"
-                        android:textColor="@color/home_title_color"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/egg_font_size"
-                        android:textColor="@color/home_title_color"
-                        android:layout_marginLeft="3dp"
-                        android:text="10000"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_vip"
-                        android:layout_width="25dp"
-                        android:layout_height="10dp"
-                        android:text="SVIP2"
-                        android:textSize="7sp"
-                        android:background="@drawable/rounded_tv_vip"
-                        android:textColor="@color/color_white"
-                        android:gravity="center"
-                        />
-
-
-                    <TextView
-                        android:id="@+id/tv_level"
-                        android:layout_width="25dp"
-                        android:layout_height="10dp"
-                        android:text="LV90"
-                        android:textSize="7sp"
-                        android:background="@drawable/rounded_tv_level"
-                        android:textColor="@color/color_white"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_friend_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
-                        android:textSize="15sp"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="好友"
-                        android:layout_marginLeft="2dp"
-                        android:textSize="10sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_act_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="25"
-                        android:layout_marginLeft="25dp"
-                        android:textSize="15sp"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="活动"
-                        android:layout_marginLeft="2dp"
-                        android:textSize="10sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/tv_trend_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="10"
-                        android:layout_marginLeft="25dp"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="动态"
-                        android:layout_marginLeft="2dp"
-                        android:textSize="10sp"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:background="@android:color/white"
-            android:layout_below="@+id/rl_ban"
-            app:tabIndicatorColor="@color/tab_indicator_color"
-            app:tabSelectedTextColor="@color/font_black_color"
-            app:tabTextColor="@color/font_gray_color"
-            app:tabPadding="10dp"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             />
 
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="3dp" />
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-
-    </LinearLayout>
+        </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:id="@+id/ll_add"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="horizontal"
@@ -277,7 +289,9 @@
     <com.yapin.shanduo.widget.LoadingView
         android:id="@+id/loading_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
 
     </com.yapin.shanduo.widget.LoadingView>
 

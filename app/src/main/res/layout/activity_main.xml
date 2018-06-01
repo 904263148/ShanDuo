@@ -189,6 +189,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_add"
                 android:layout_centerInParent="true"
+                android:visibility="gone"
                 />
         </RelativeLayout>
         <TextView

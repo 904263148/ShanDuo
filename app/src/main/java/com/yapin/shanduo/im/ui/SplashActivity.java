@@ -17,13 +17,11 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.huawei.android.pushagent.PushManager;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMLogLevel;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushSettings;
-import com.tencent.TIMOfflinePushToken;
 import com.tencent.qcloud.presentation.business.InitBusiness;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
@@ -69,11 +67,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         final List<String> permissionsList = new ArrayList<>();
-//        if (ConnectionResult.SUCCESS != GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)){
-////            Toast.makeText(this, getString(R.string.google_service_not_available), Toast.LENGTH_SHORT).show();
-//            GoogleApiAvailability.getInstance().getErrorDialog(this, GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this),
-//                    GOOGLE_PLAY_RESULT_CODE).show();
-//        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if ((checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.READ_PHONE_STATE);
             if ((checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);

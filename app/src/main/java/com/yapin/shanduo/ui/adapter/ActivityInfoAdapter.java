@@ -42,6 +42,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Activity activity;
     private OpenPopupWindow openPopupWindow;
     private List<ActivityInfo.Act> list;
+    private int type;
 
     public ActivityInfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int position){
         this.context = context;
@@ -52,6 +53,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }else {
             openPopupWindow = (MainActivity) activity;
         }
+        this.type = position;
     }
 
     @NonNull
@@ -118,6 +120,12 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
                 }
             });
+
+            if(type == 0){
+                holder.tvJoin.setVisibility(View.GONE);
+            }else {
+                holder.tvJoin.setVisibility(View.VISIBLE);
+            }
 
             holder.tvJoin.setOnClickListener(new View.OnClickListener() {
                 @Override

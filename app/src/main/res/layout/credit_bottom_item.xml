@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rl_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/head"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_heart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/iv_head"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="胖虎"
+                android:textSize="@dimen/egg_font_size_big"
+                android:textColor="@color/home_title_color"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="5dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_head"
+            android:layout_below="@+id/ll_heart"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="@dimen/egg_font_size"
+            android:textColor="@color/home_title_color"
+            android:text="发起者评价:"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_tag"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="5dp"
+        android:text="胖虎,请你下次不要来了好吧?"
+        android:textSize="@dimen/egg_font_size"
+        android:textColor="@color/font_color_gray"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/tv_content"
+        android:background="@color/bg_color"
+        android:layout_marginTop="12dp"
+        />
+
+</RelativeLayout>

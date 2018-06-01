@@ -5,6 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.PrefUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,8 +58,10 @@ public abstract class JavaOkCallback implements okhttp3.Callback{
                     @Override
                     public void run() {
                         try {
-                            String errorCode = jsonObject.getString("errorCode");
-                            onFailure(errorCode);
+                            int errCode = jsonObject.getInt("errCode");
+                            String errCodeDes = jsonObject.getString("errCodeDes");
+                            if(errCode == Constants.ERROR_CADE_ONE) PrefUtil.setToken(context , "");
+                            onFailure(errCodeDes);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

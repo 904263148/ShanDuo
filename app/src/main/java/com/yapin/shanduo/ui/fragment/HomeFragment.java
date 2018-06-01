@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
@@ -22,6 +26,8 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.PublishActivity;
 import com.yapin.shanduo.ui.activity.ScanActivity;
+import com.yapin.shanduo.ui.activity.ScrollingActivity;
+import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
@@ -38,10 +44,12 @@ public class HomeFragment extends Fragment{
     AHBottomNavigationViewPager viewPager;
     @BindView(R.id.rg_title)
     RadioGroup radioGroup;
-    @BindView(R.id.rl_act)
-    RelativeLayout rlAct;
-    @BindView(R.id.rl_trend)
-    RelativeLayout rlTrend;
+    @BindView(R.id.tv_act)
+    TextView tvAct;
+    @BindView(R.id.tv_trend)
+    TextView tvTrend;
+    @BindView(R.id.ll_title)
+    LinearLayout llTitle;
 
     private Context context;
     private Activity activity;
@@ -73,6 +81,9 @@ public class HomeFragment extends Fragment{
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
+        tvAct.setText(Html.fromHtml("<u>活动</u>"));
+        tvTrend.setText(Html.fromHtml("<u>动态</u>"));
+
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new HomeViewPagerAdapter(getChildFragmentManager()));
 
@@ -89,24 +100,28 @@ public class HomeFragment extends Fragment{
 
     }
 
-    @OnClick({R.id.btn_scan ,R.id.rl_act , R.id.rl_trend ,R.id.iv_search})
+    @OnClick({R.id.btn_scan ,R.id.tv_act , R.id.tv_trend ,R.id.iv_search})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
                 StartActivityUtil.start(activity ,this , ScanActivity.class , OPEN_SCAN);
                 break;
-            case R.id.rl_act:
-                rlAct.setBackground(activity.getResources().getDrawable(R.drawable.rounded_home));
-                rlTrend.setBackgroundColor(activity.getResources().getColor(R.color.white));
+            case R.id.tv_act:
+                tvAct.setTextColor(getResources().getColor(R.color.home_title_select_color));
+                tvAct.setTextSize(17);
+                tvTrend.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvTrend.setTextSize(15);
                 viewPager.setCurrentItem(0,false);
                 break;
-            case R.id.rl_trend:
-                rlTrend.setBackground(activity.getResources().getDrawable(R.drawable.rounded_home));
-                rlAct.setBackgroundColor(activity.getResources().getColor(R.color.white));
+            case R.id.tv_trend:
+                tvTrend.setTextColor(getResources().getColor(R.color.home_title_select_color));
+                tvTrend.setTextSize(17);
+                tvAct.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAct.setTextSize(15);
                 viewPager.setCurrentItem(1,false);
                 break;
             case R.id.iv_search:
-                StartActivityUtil.start(activity , this , PublishActivity.class , 5);
+                StartActivityUtil.start(activity , this , SearchActActivity.class );
                 break;
         }
     }
@@ -147,6 +162,10 @@ public class HomeFragment extends Fragment{
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    public void setTitleHidden(float alpha){
+        llTitle.setAlpha(alpha);
     }
 
 }

@@ -121,6 +121,10 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         }
         presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
         recyclerView.setOnLoadMoreListener(this);
+
+        if(position == 6){
+            recyclerView.setNestedScrollingEnabled(false);
+        }
     }
 
     @Override
@@ -135,7 +139,9 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void onItemClick(int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("act" , list.get(position));
+        StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
     }
 
     @Override

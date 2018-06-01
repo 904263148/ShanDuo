@@ -65,6 +65,14 @@ public class SearchAllActivity extends BaseActivity implements SearchHumanContra
         listView.setAdapter(adapter);
         inputSearch.setOnKeyListener(this);
         listView.setOnItemClickListener(this);
+
+        TextView tvCancel = findViewById(R.id.cancel);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

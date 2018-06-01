@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +65,14 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
             TrendSecondReplayAdapter.ViewHolder holder = (TrendSecondReplayAdapter.ViewHolder) viewHolder;
             GlideUtil.load(context, activity, ApiUtil.IMG_URL + list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getUserName());
-            holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
-            holder.tvTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(list.get(position).getCreateDate()), TimeUtil.getNowTime());
+            if(TextUtils.isEmpty(diff)){
+                holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
+                holder.tvTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            }else {
+                holder.tvDate.setText(diff);
+                holder.tvTime.setText("");
+            }
             holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + list.get(position).getReplyName() +"</font><font color = '#333333'>:"+ list.get(position).getComment()+"</font>"));
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;

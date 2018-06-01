@@ -49,7 +49,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
         mSearchInput.setOnKeyListener(this);

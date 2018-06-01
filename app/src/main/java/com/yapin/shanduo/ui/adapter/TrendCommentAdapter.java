@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,8 +112,21 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 holder.tvReplayCount.setText(Html.fromHtml("<font color = '#4660ff'>回复量" + list.get(position).getCount() +"条></font>"));
             }
 
-            holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
-            holder.tvTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(list.get(position).getCreateDate()), TimeUtil.getNowTime());
+            if(TextUtils.isEmpty(diff)){
+                holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
+                holder.tvTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            }else {
+                holder.tvDate.setText(diff);
+                holder.tvTime.setText("");
+            }
+
+            holder.ivHead.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onHeadClick(list.get(position).getUserId());
+                }
+            });
 
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
@@ -133,6 +147,8 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
+        void onHeadClick(int id);
 
     }
 

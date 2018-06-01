@@ -22,7 +22,9 @@ import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.HomeTrendPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.PlaceActivity;
 import com.yapin.shanduo.ui.activity.TrendInfoActivity;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeTrendContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
@@ -44,7 +46,7 @@ import butterknife.ButterKnife;
  * Use the {@link TrendFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TrendFragment extends Fragment implements HomeTrendContract.View , LoadMoreRecyclerView.OnLoadMoreListener , TrendInfoAdapter.OnItemClickListener ,TrendInfoAdapter.OnLikeClickListener , LikeContract.View{
+public class TrendFragment extends Fragment implements HomeTrendContract.View , LoadMoreRecyclerView.OnLoadMoreListener , TrendInfoAdapter.OnItemClickListener , LikeContract.View{
 
     @BindView(R.id.recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -70,6 +72,8 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     private List<TrendInfo.Trend> list = new ArrayList<>();
     private TrendInfo.Trend footerItem = new TrendInfo.Trend();
+
+    private int LikePosition = 0;
 
     public TrendFragment() {
         // Required empty public constructor
@@ -118,9 +122,12 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         adapter = new TrendInfoAdapter(context, activity , list , position);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
-        adapter.setLikeClickListener(this);
         presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
         recyclerView.setOnLoadMoreListener(this);
+
+        if(position == 3){
+            recyclerView.setNestedScrollingEnabled(false);
+        }
     }
 
     /**
@@ -170,7 +177,14 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     @Override
     public void success(String data) {
-        ToastUtil.showShortToast(context,data);
+        if(Constants.IS_LIKE.equals(data)){
+            ToastUtil.showShortToast(context , R.string.tips_like);
+            list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() + 1 );
+        }else {
+            ToastUtil.showShortToast(context , R.string.tips_unlike);
+            list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() - 1 );
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -208,12 +222,29 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
     }
 
     @Override
-    public void onLikeClick(String id) {
+    public void onLikeClick(String id , int position) {
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
             StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
         }else {
+            LikePosition = position;
             likePresenter.onLike(id);
         }
+    }
+
+    @Override
+    public void onLocationClick(TrendInfo.Trend trend) {
+        Bundle bundle1 = new Bundle();
+        bundle1.putDouble("lat" , trend.getLat());
+        bundle1.putDouble("lon" , trend.getLon());
+        bundle1.putString("place" , trend.getLocation());
+        StartActivityUtil.start(activity , this , PlaceActivity.class , bundle1);
+    }
+
+    @Override
+    public void onHeadClick(int id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId" , id+"");
+        StartActivityUtil.start(activity , UserProfActivity.class , bundle);
     }
 
     @Override

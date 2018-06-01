@@ -79,4 +79,9 @@ public class ApiUtil {
 
     //修改登录密码
     public final static String LOGINPASSWORD = ConfigUtil.configUrl() + "/juser/updatepassword";
+    //申请添加好友
+    public final static String ADD_FRIEND = ConfigUtil.configUrl() + "/jattention/saveapply";
+
+    //信誉轨迹
+    public final static String CREDIT_DETALILS = ConfigUtil.configUrl() +"reputation/creditDetails";
 }

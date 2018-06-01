@@ -157,7 +157,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
 //        activityName ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
         switch (view.getId()) {
             case R.id.tv_add_finish:
-                finish();
+                onBackPressed();
                 break;
             case R.id.but_add_Releaseactivities:
                 String []ary = textlonlat.split("\\,");

@@ -104,14 +104,12 @@ public class TimeUtil {
             long s = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
             long ms = (diff - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000
                     - min * 60 * 1000 - s * 1000);
-            // System.out.println(day + "天" + hour + "小时" + min + "分" + s +
-            // "秒");
+            // System.out.println(day + "天" + hour + "小时" + min + "分" + s +"秒");
             long hour1 = diff / (60 * 60 * 1000);
             String hourString = hour1 + "";
             long min1 = ((diff / (60 * 1000)) - hour1 * 60);
             timeString = hour1 + "小时" + min1 + "分";
-            // System.out.println(day + "天" + hour + "小时" + min + "分" + s +
-            // "秒");
+            // System.out.println(day + "天" + hour + "小时" + min + "分" + s +"秒");
 
         } catch (ParseException e) {
             // TODO Auto-generated catch block
@@ -120,6 +118,60 @@ public class TimeUtil {
         return timeString;
 
     }
+
+    /**
+     * 计算时间差
+     *
+     * @param starTime
+     *            开始时间
+     * @param endTime
+     *            结束时间
+     * 返回类型 ==1----天，时，分。 ==2----时
+     *
+     * @return 返回时间差
+     */
+    public static String getTimeDiff(String starTime, String endTime) {
+        String timeString = "";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        try {
+            Date parse = dateFormat.parse(starTime);
+            Date parse1 = dateFormat.parse(endTime);
+
+            long diff = parse1.getTime() - parse.getTime();
+
+            long day = diff / (24 * 60 * 60 * 1000);
+            long hour = (diff / (60 * 60 * 1000) - day * 24);
+            long min = ((diff / (60 * 1000)) - day * 24 * 60 - hour * 60);
+            long s = (diff / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
+            long ms = (diff - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000
+                    - min * 60 * 1000 - s * 1000);
+            // System.out.println(day + "天" + hour + "小时" + min + "分" + s +"秒");
+
+            if(day > 30){
+                return "";
+            }
+            if(day > 0 && day < 31){
+                return day + "天前";
+            }
+            if(hour > 0 && hour < 25){
+                return hour +"小时前";
+            }
+            if(min > 0 && min < 61){
+                return min + "分钟前";
+            }
+            if(s >= 0 && s < 61){
+                return "刚刚";
+            }
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return timeString;
+
+    }
+
 
     /**
      * 计算相差的小时

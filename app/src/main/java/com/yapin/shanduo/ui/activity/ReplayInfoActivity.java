@@ -147,8 +147,14 @@ public class ReplayInfoActivity extends BaseActivity implements TrendSecondRepla
 
         tvOneComment.setText(comment.getComment());
 
-        tvDate.setText(TimeUtil.getDateToMMDD(comment.getCreateDate()));
-        tvTime.setText(TimeUtil.getDateTohhmm(comment.getCreateDate()));
+        String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(comment.getCreateDate()), TimeUtil.getNowTime());
+        if(TextUtils.isEmpty(diff)){
+            tvDate.setText(TimeUtil.getDateToMMDD(comment.getCreateDate()));
+            tvTime.setText(TimeUtil.getDateTohhmm(comment.getCreateDate()));
+        }else {
+            tvDate.setText(diff);
+            tvTime.setText("");
+        }
 
         layoutManager = new LinearLayoutManager(context);
 
@@ -161,11 +167,6 @@ public class ReplayInfoActivity extends BaseActivity implements TrendSecondRepla
         recyclerView.setOnLoadMoreListener(this);
         refreshLayout.setOnRefreshListener(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
         presenter.getData(comment.getId() , TYPE_ID , page+"" ,pageSize+"");
@@ -183,11 +184,15 @@ public class ReplayInfoActivity extends BaseActivity implements TrendSecondRepla
                     ToastUtil.showShortToast(context , "内容不能为空");
                     return;
                 }
+                String id;
                 if(replay_position == -1 ){
-                    replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,comment.getUserId()+"");
+                    id = comment.getUserId()+"";
+//                    replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,comment.getUserId()+"");
                 }else{
-                    replayPresenter.getData(list.get(replay_position).getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , list.get(replay_position).getId() ,list.get(replay_position).getUserId()+"");
+                    id = list.get(replay_position).getUserId()+"";
+//                    replayPresenter.getData(list.get(replay_position).getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,list.get(replay_position).getUserId()+"");
                 }
+                replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,id);
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 break;

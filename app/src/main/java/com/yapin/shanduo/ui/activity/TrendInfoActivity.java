@@ -19,20 +19,25 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CommentInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
+import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.presenter.TrendInfoPresenter;
 import com.yapin.shanduo.presenter.TrendReplayPresenter;
 import com.yapin.shanduo.ui.adapter.TrendCommentAdapter;
 import com.yapin.shanduo.ui.adapter.TrendGridViewAdapter;
+import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.contract.TrendInfoContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
+import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TrendInfoActivity extends BaseActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
-        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View{
+        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View{
 
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
@@ -74,6 +79,8 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
     MyGridView gridview;
     @BindView(R.id.tv_publish_time)
     TextView tvPublishTime;
+    @BindView(R.id.tv_date)
+    TextView tvDate;
     @BindView(R.id.rl_trend_info)
     RelativeLayout rlTrendInfo;
     @BindView(R.id.tv_gray)
@@ -117,8 +124,11 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
     private final static String TYPEID = "1";
 
     private TrendReplayPresenter replayPresenter;
+    private LikePresenter likePresenter;
 
     private InputMethodManager imm;
+
+    private CustomBottomSheetDialogFragment fragment;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -131,12 +141,16 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
         presenter.init(this);
         replayPresenter = new TrendReplayPresenter();
         replayPresenter.init(this);
+        likePresenter  = new LikePresenter();
+        likePresenter.init(this);
     }
 
     @Override
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = this;
+
+        fragment = new CustomBottomSheetDialogFragment();
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -165,6 +179,15 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
         tvCommentCount.setText("("+trend.getDynamicCount()+")");
         tvLikeCount.setText(trend.getPraise()+"");
 
+        String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(trend.getCreateDate()), TimeUtil.getNowTime());
+        if(TextUtils.isEmpty(diff)){
+            tvDate.setText(TimeUtil.getDateToMMDD(trend.getCreateDate()));
+            tvPublishTime.setText(TimeUtil.getDateTohhmm(trend.getCreateDate()));
+        }else {
+            tvDate.setText(diff);
+            tvPublishTime.setText("");
+        }
+
         int level = trend.getVip();
         if(level == 0){
             tvVip.setVisibility(View.GONE);
@@ -187,14 +210,41 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
             case 1:
                 gridview.setVisibility(View.GONE);
                 rlImg1.setVisibility(View.VISIBLE);
-                GlideUtil.load(context ,activity , ApiUtil.IMG_URL+trend.getPicture().get(0) ,ivImg1 ,5 );
+                GlideUtil.load(activity , ApiUtil.IMG_URL+trend.getPicture().get(0) ,ivImg1 );
                 ivImg2.setVisibility(View.GONE);
+
+                final List<ImageView> thumUrlsImageView = new ArrayList<>();
+                thumUrlsImageView.add(ivImg1);
+                ivImg1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PicWatcher.showImages(activity , ivImg1 , 0 , thumUrlsImageView , trend.getPicture());
+                    }
+                });
+                
                 break;
             case 2:
                 gridview.setVisibility(View.GONE);
                 rlImg1.setVisibility(View.VISIBLE);
-                GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+trend.getPicture().get(0) ,ivImg1 ,5 );
-                GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+trend.getPicture().get(1) ,ivImg2 ,5 );
+                GlideUtil.load(activity ,ApiUtil.IMG_URL+trend.getPicture().get(0) ,ivImg1 );
+                GlideUtil.load(activity ,ApiUtil.IMG_URL+trend.getPicture().get(1) ,ivImg2  );
+
+                final List<ImageView> thumUrlsImageView2 = new ArrayList<>();
+                thumUrlsImageView2.add(ivImg1);
+                thumUrlsImageView2.add(ivImg2);
+                ivImg1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PicWatcher.showImages(activity , ivImg1 , 0 , thumUrlsImageView2 , trend.getPicture());
+                    }
+                });
+                ivImg2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PicWatcher.showImages(activity , ivImg2 , 1 , thumUrlsImageView2 , trend.getPicture());
+                    }
+                });
+                
                 break;
             default:
                 gridview.setVisibility(View.VISIBLE);
@@ -215,20 +265,16 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
         recyclerView.setOnLoadMoreListener(this);
         refreshLayout.setOnRefreshListener(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        layoutManager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setNestedScrollingEnabled(false);
 
         presenter.getData(trend.getId() , TYPEID ,page+"" , pageSize+"");
     }
 
-    @OnClick({R.id.iv_share , R.id.rl_back , R.id.tv_publish})
+    @OnClick({R.id.iv_share , R.id.rl_back , R.id.tv_publish  ,R.id.tv_mile , R.id.tv_like_count , R.id.iv_head})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_share:
+                fragment.show(getSupportFragmentManager() , "share");
                 break;
             case R.id.rl_back:
                 onBackPressed();
@@ -241,6 +287,21 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
                 replayPresenter.getData(trend.getId() , etComment.getText().toString().trim() , TYPEID , "" ,"");
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                break;
+            case R.id.tv_mile:
+                Bundle bundle = new Bundle();
+                bundle.putDouble("lat" , trend.getLat());
+                bundle.putDouble("lon" , trend.getLon());
+                bundle.putString("place" , trend.getLocation());
+                StartActivityUtil.start(activity , PlaceActivity.class , bundle);
+                break;
+            case R.id.tv_like_count:
+                likePresenter.onLike(trend.getId());
+                break;
+            case R.id.iv_back:
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("userId" , trend.getUserId()+"");
+                StartActivityUtil.start(activity , UserProfActivity.class , bundle1);
                 break;
         }
     }
@@ -286,6 +347,17 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
     }
 
     @Override
+    public void success(String data) {
+        if(Constants.IS_LIKE.equals(data)){
+            ToastUtil.showShortToast(context , R.string.tips_like);
+            tvLikeCount.setText( (Integer.parseInt(tvLikeCount.getText().toString())+1) +"");
+        }else {
+            ToastUtil.showShortToast(context , R.string.tips_unlike);
+            tvLikeCount.setText( (Integer.parseInt(tvLikeCount.getText().toString())-1) +"");
+        }
+    }
+
+    @Override
     public void loading() {
 
     }
@@ -311,6 +383,13 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
         Bundle bundle = new Bundle();
         bundle.putParcelable("comment" , list.get(position));
         StartActivityUtil.start(activity , ReplayInfoActivity.class , bundle);
+    }
+
+    @Override
+    public void onHeadClick(int id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId" , id+"");
+        StartActivityUtil.start(activity , UserProfActivity.class , bundle);
     }
 
     @Override
