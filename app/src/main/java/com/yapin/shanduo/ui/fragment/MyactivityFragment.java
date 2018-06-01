@@ -63,6 +63,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     private LinearLayoutManager layoutManager;
 
     private int positiona;
+    private int typeId;
 
     private int page = 1;
     private int pageSize = 10;
@@ -118,7 +119,9 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new MyactivityinfoAdapter(context, activity , list ,positiona);
+        adapter = new MyactivityinfoAdapter(context, activity , list ,positiona ,typeId);
+//        Log.i("typeid", typeId+"");
+
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
         refreshLayout.setOnRefreshListener(this);
@@ -128,7 +131,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
 //            return;
 //        }
         presenter.getmyactivity((positiona+4)+"", PrefUtil.getLat(context), PrefUtil.getLon(context)  , page+"" , pageSize+"");
-        Log.i("loglon",PrefUtil.getLon(context)+"" + PrefUtil.getLat(context)+"");
+//        Log.i("loglon",PrefUtil.getLon(context)+"" + PrefUtil.getLat(context)+"");
         recyclerView.setOnLoadMoreListener(this);
     }
 

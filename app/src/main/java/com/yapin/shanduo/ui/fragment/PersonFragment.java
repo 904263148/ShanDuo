@@ -12,18 +12,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.CreditcenterActivity;
 import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
+import com.yapin.shanduo.ui.activity.MywalletActivity;
+import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
-import com.yapin.shanduo.ui.activity.MyWalletActivity;
 import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -52,9 +56,10 @@ public class PersonFragment extends Fragment {
       private TextView tv_nickname;
       private ImageView ib_Headportrait;
       private TextView tv_sex;
-      private LinearLayout ll_person_a;
+      private RelativeLayout ll_person_a;
       private LinearLayout ll_person_aa;
       private TextView tv_login_reg;
+      private TextView tv_id;
 
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
@@ -78,6 +83,7 @@ public class PersonFragment extends Fragment {
         ll_person_a = view.findViewById(R.id.ll_person_a);
         ll_person_aa = view.findViewById(R.id.ll_person_aa);
         tv_login_reg = view.findViewById(R.id.tv_login_reg);
+        tv_id = view.findViewById(R.id.tv_id);
 
 
         initView();
@@ -95,11 +101,11 @@ public class PersonFragment extends Fragment {
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
             tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
-
+            tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
+            GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
         }
 
     }
-
     @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter})
     public void onClick(View view){
         switch (view.getId()){
@@ -135,7 +141,6 @@ public class PersonFragment extends Fragment {
                 }
                 break;
             case R.id.text_setup:       //设置
-
                     StartActivityUtil.start(activity , SetupActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 break;
 
@@ -143,23 +148,17 @@ public class PersonFragment extends Fragment {
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , MYWALLET);
                 }else {
-                    StartActivityUtil.start(activity , MyWalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity , MywalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
             case R.id.tv_login_reg:
                 StartActivityUtil.start(activity , LoginActivity.class);
                 break;
             case R.id.tv_Creditcenter:    //信用中心
-                StartActivityUtil.start(activity , InitiatorevaluationActivity.class);
+                StartActivityUtil.start(activity , CreditcenterActivity.class);
                 break;
         }
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        ll_person_a.setVisibility(View.VISIBLE);
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -177,7 +176,7 @@ public class PersonFragment extends Fragment {
                 StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
             case MYWALLET:
-                StartActivityUtil.start(activity , MyWalletActivity.class);
+                StartActivityUtil.start(activity , MywalletActivity.class);
                 break;
             case MEMBER_CENTER:
                 StartActivityUtil.start(activity , MembercenterActivity.class);

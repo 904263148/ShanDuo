@@ -97,16 +97,16 @@ public class ActivityInfo implements Parcelable {
 
 		private Integer vipGrade; //会员等级
 
-		private Integer evaluationSign; // 评价标识
+		private Integer othersScore; //发起者对参与者评分
 
-		private Integer beEvaluationSign; // 发起者评论标识
+		private Integer typeId; // 0:参与者未评价 1:参与者已评价 2:发起者未评价 3:发起者已评价 4:活动报名截止 5:报名截止活动未开始
 
-		public Integer getBeEvaluationSign() {
-			return beEvaluationSign;
+		public Integer getTypeId() {
+			return typeId;
 		}
 
-		public void setBeEvaluationSign(Integer beEvaluationSign) {
-			this.beEvaluationSign = beEvaluationSign;
+		public void setTypeId(Integer typeId) {
+			this.typeId = typeId;
 		}
 
 		public Integer getVipGrade() {
@@ -117,12 +117,12 @@ public class ActivityInfo implements Parcelable {
 			this.vipGrade = vipGrade;
 		}
 
-		public Integer getEvaluationSign() {
-			return evaluationSign;
+		public Integer getOthersScore() {
+			return othersScore;
 		}
 
-		public void setEvaluationSign(Integer evaluationSign) {
-			this.evaluationSign = evaluationSign;
+		public void setSthersScore(Integer othersScore) {
+			this.othersScore = othersScore;
 		}
 
 		public String getGender() {
@@ -326,8 +326,8 @@ public class ActivityInfo implements Parcelable {
 			dest.writeDouble(this.location);
 			dest.writeString(this.gender);
 			dest.writeValue(this.vipGrade);
-			dest.writeValue(this.evaluationSign);
-			dest.writeValue(this.beEvaluationSign);
+			dest.writeValue(this.othersScore);
+			dest.writeValue(this.typeId);
 		}
 
 		protected Act(Parcel in) {
@@ -354,8 +354,8 @@ public class ActivityInfo implements Parcelable {
 			this.location = in.readDouble();
 			this.gender = in.readString();
 			this.vipGrade = (Integer) in.readValue(Integer.class.getClassLoader());
-			this.evaluationSign = (Integer) in.readValue(Integer.class.getClassLoader());
-			this.beEvaluationSign = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.othersScore = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.typeId = (Integer) in.readValue(Integer.class.getClassLoader());
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

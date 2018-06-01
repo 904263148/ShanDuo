@@ -52,6 +52,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iv_Headportrait"
                 android:layout_marginTop="25dp"
                 android:layout_gravity="center"
                 android:layout_width="75dp"
@@ -60,6 +61,7 @@
 
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -70,6 +72,7 @@
                 />
 
             <TextView
+                android:id="@+id/tv_theme"
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -105,6 +108,7 @@
         </com.yapin.shanduo.widget.RatingBarView>
 
             <TextView
+                android:id="@+id/tv_Number"
                 android:layout_marginTop="8dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -137,7 +141,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
-                    android:background="@drawable/checkbox_shape"
+                    android:background="@drawable/checkbox_selector"
                     android:id="@+id/checkBox1"
                     android:gravity="center"
                     android:layout_width="75dp"
@@ -149,12 +153,12 @@
 
                 <CheckBox
                     android:layout_marginLeft="20dp"
-                    android:background="@drawable/checkbox_shape"
+                    android:background="@drawable/checkbox_selector"
                     android:id="@+id/checkBox2"
                     android:gravity="center"
                     android:layout_width="75dp"
                     android:layout_height="25dp"
-                    android:text="气氛很棒！"
+                    android:text="环境很好！"
                     android:button = "@null"
                     android:textColor="@color/font_color_gray"
                     android:textSize="10dp"/>
@@ -168,24 +172,24 @@
                     android:layout_height="wrap_content">
 
                     <CheckBox
-                        android:background="@drawable/checkbox_shape"
+                        android:background="@drawable/checkbox_selector"
                         android:id="@+id/checkBox3"
                         android:gravity="center"
                         android:layout_width="75dp"
                         android:layout_height="25dp"
-                        android:text="气氛很棒！"
+                        android:text="气氛活跃！"
                         android:button = "@null"
                         android:textColor="@color/font_color_gray"
                         android:textSize="10dp"/>
 
                     <CheckBox
                         android:layout_marginLeft="20dp"
-                        android:background="@drawable/checkbox_shape"
+                        android:background="@drawable/checkbox_selector"
                         android:id="@+id/checkBox4"
                         android:gravity="center"
                         android:layout_width="75dp"
                         android:layout_height="25dp"
-                        android:text="气氛很棒！"
+                        android:text="环境舒适！"
                         android:button = "@null"
                         android:textColor="@color/font_color_gray"
                         android:textSize="10dp"/>
@@ -195,6 +199,7 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/et_Inputbox"
                 android:paddingLeft="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"
@@ -208,6 +213,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/but_evaluate"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_width="340dp"

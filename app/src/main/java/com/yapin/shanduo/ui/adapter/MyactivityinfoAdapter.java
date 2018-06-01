@@ -4,30 +4,39 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.ui.activity.CreditcenterActivity;
+import com.yapin.shanduo.ui.activity.DetailsActivity;
+import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.ParticipantevaluationActivity;
 import com.yapin.shanduo.ui.fragment.MyactivityFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dell on 2018/5/19.
@@ -38,18 +47,22 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context context;
     private Activity activity;
     private int positiona;
+    private int typeid;
     private OpenPopupWindow openPopupWindow;
     private List<ActivityInfo.Act> list;
 
 
 
-    public MyactivityinfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int positiona){
+    public MyactivityinfoAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int positiona ,int typeId){
         this.context = context;
         this.activity = activity;
         this.list = list;
         this.positiona = positiona;
+//        this.typeId = typeId;
+//        Log.i("typeidaa", typeId+"");
 //        openPopupWindow = (MainActivity)activity;
     }
+
 
     @NonNull
     @Override
@@ -97,12 +110,88 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge()+"");
 
-            if (positiona == 0) {
-                holder.tvJoin.setText("已结束");
-            }else if (positiona == 2){
-                holder.tvJoin.setText("查看详情");
+            int level = list.get(position).getVipGrade();
+            if(level == 0){
+                holder.tvVip.setVisibility(View.GONE);
+            }else if(level < 9){
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("VIP"+level);
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                holder.tvVip.setVisibility(View.VISIBLE);
+                holder.tvVip.setText("SVIP"+(level-10));
+                holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
 
+            typeid = list.get(position).getTypeId();
+
+            if (positiona == 0) {
+                holder.tvevaluation.setText("信用轨迹");
+                holder.tvevaluation.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                            StartActivityUtil.start(activity, CreditcenterActivity.class);
+                    }
+                });
+
+
+                    if (typeid == 0){
+                    holder.tvJoin.setText("去评价");
+                    holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.rounded_textview_home));
+                    holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id",list.get(position).getId()+"");
+                            bundle.putString("userName" ,list.get(position).getUserName()+"");
+                            bundle.putString("activityName" ,list.get(position).getActivityName()+"");
+                            bundle.putString("headPortraitId" ,list.get(position).getHeadPortraitId()+"");
+                            StartActivityUtil.start(activity , InitiatorevaluationActivity.class, bundle);
+                        }
+                    });
+
+                    }else if (typeid == 1){
+                        holder.tvJoin.setText("已评价");
+                        holder.tvJoin.setClickable(false);
+                        holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.myactivity_shape));
+                    }
+
+            }else if (positiona == 1){
+                holder.tvevaluation.setVisibility(View.GONE);
+                holder.tvJoin.setText("取消报名");
+            }else if (positiona == 2){
+                if (typeid == 4) {
+                    holder.tvevaluation.setText("刷新");
+                    holder.tvJoin.setText("置顶");
+                }else if (typeid == 5){
+                    holder.tvevaluation.setVisibility(View.GONE);
+                    holder.tvJoin.setText("查看详情");
+                }else {
+                    if (typeid == 2) {
+                        holder.tvevaluation.setVisibility(View.GONE);
+                        holder.tvJoin.setText("去评价");
+                        holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.rounded_textview_home));
+                        holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("id",list.get(position).getId()+"");
+                                bundle.putString("userName" ,list.get(position).getUserName()+"");
+                                bundle.putString("activityName" ,list.get(position).getActivityName()+"");
+                                bundle.putString("headPortraitId" ,list.get(position).getHeadPortraitId()+"");
+                                bundle.putString("Numberofpeople" ,list.get(position).getManNumber()+""+list.get(position).getWomanNumber()+"");
+                                bundle.putString("mode" ,list.get(position).getMode()+"");
+                                StartActivityUtil.start(activity , ParticipantevaluationActivity.class, bundle);
+                            }
+                        });
+                    }else if (typeid == 3){
+                        holder.tvevaluation.setVisibility(View.GONE);
+                        holder.tvJoin.setText("已评价");
+                        holder.tvJoin.setClickable(false);
+                        holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.myactivity_shape));
+                    }
+                }
+            }
 
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -111,11 +200,12 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
 
-            holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+            holder.ll_details.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
-                        listener.onTextClick(position ,list.get(position) , Constants.ACT_JOIN);
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("act" , list.get(position));
+                    StartActivityUtil.start(activity , DetailsActivity.class, bundle);
                 }
             });
 
@@ -181,6 +271,12 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView tvAge;
         @BindView(R.id.tv_join)
         TextView tvJoin;
+        @BindView(R.id.tv_vip)
+        TextView tvVip;
+        @BindView(R.id.tv_evaluation)
+        TextView tvevaluation;
+        @BindView(R.id.ll_details)
+        LinearLayout ll_details;
 
         public ViewHolder(View itemView) {
             super(itemView);

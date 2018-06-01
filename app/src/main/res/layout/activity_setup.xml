@@ -33,6 +33,7 @@
     </FrameLayout>
 
     <TextView
+        android:id="@+id/tv_account"
         android:layout_marginTop="1dp"
         android:background="@color/colorAccent"
         android:paddingLeft="15dp"

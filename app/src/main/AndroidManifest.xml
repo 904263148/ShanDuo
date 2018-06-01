@@ -90,6 +90,11 @@
         <activity android:name=".ui.activity.MembercenterActivity" />
         <activity android:name=".ui.activity.SetupActivity" />
         <activity android:name=".ui.activity.InitiatorevaluationActivity" />
+        <activity android:name=".ui.activity.ParticipantevaluationActivity" />
+        <activity android:name=".ui.activity.CreditcenterActivity" />
+        <activity android:name=".ui.activity.DetailsActivity" />
+        <activity android:name=".ui.activity.AccountandsecurityActivity" />
+        <activity android:name=".ui.activity.LoginPasswordActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />
@@ -299,7 +304,7 @@
         <activity
             android:name=".ui.activity.AddactivityActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.MyWalletActivity" />
+        <activity android:name=".ui.activity.MywalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity
             android:name=".ui.activity.PublishTrendActivity"

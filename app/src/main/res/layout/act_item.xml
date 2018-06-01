@@ -53,15 +53,13 @@
                 android:id="@+id/tv_vip"
                 android:layout_width="25dp"
                 android:layout_height="10dp"
-                android:text="SVIP2"
-                android:textSize="7sp"
                 android:layout_below="@+id/tv_host"
+                android:layout_toEndOf="@+id/tv_home_age"
                 android:background="@drawable/rounded_tv_vip"
-                android:textColor="@color/color_white"
-                android:layout_toRightOf="@+id/tv_home_age"
-                android:layout_marginLeft="2dp"
                 android:gravity="center"
-                />
+                android:text="SVIP2"
+                android:textColor="@color/color_white"
+                android:textSize="7sp" />
 
             <TextView
                 android:id="@+id/tv_home_age"

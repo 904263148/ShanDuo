@@ -53,9 +53,12 @@ public class SetupActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.iv_back , R.id.bt_logout})
+    @OnClick({R.id.iv_back , R.id.bt_logout,R.id.tv_account})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.tv_account:
+                StartActivityUtil.start(activity , AccountandsecurityActivity.class);
+                break;
             case R.id.iv_back:
                 finish();
                 break;
@@ -66,12 +69,12 @@ public class SetupActivity extends BaseActivity{
                 LoginBusiness.logout(new TIMCallBack() {
                     @Override
                     public void onError(int i, String s) {
-                        Log.d("TIM_logout",s);
+//                        Log.d("TIM_logout",s);
                     }
 
                     @Override
                     public void onSuccess() {
-                        Log.d("TIM_logout","退出登录成功");
+//                        Log.d("TIM_logout","退出登录成功");
                         TlsBusiness.logout(UserInfo.getInstance().getId());
                         UserInfo.getInstance().setId(null);
                         MessageEvent.getInstance().clear();

@@ -17,7 +17,7 @@ public class ApiUtil {
     //登录
     public final static String LOGIN_IN = ConfigUtil.configUrl() + "/juser/loginuser";
 
-    //修改
+    //修改个人信息
     public final static String MODIFY_IN = ConfigUtil.configUrl() + "/juser/updateuser";
 
     //首页活动
@@ -71,4 +71,12 @@ public class ApiUtil {
     //查询token是否有效
     public final static String JUDGE_TOKEN = ConfigUtil.configUrl() + "juser/checktoken";
 
+    //参与者对活动评价
+    public final static String INITIATOREVALU = ConfigUtil.configUrl() + "/score/updateScore";
+
+    //发起者对参与者评价
+    public final static String PARTICIPANTEVALUATION = ConfigUtil.configUrl() + "/score/updateOthersScore";
+
+    //修改登录密码
+    public final static String LOGINPASSWORD = ConfigUtil.configUrl() + "/juser/updatepassword";
 }
