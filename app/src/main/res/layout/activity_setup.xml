@@ -58,6 +58,7 @@
         />
 
     <TextView
+        android:id="@+id/tv_about"
         android:layout_marginTop="1dp"
         android:background="@color/colorAccent"
         android:paddingLeft="15dp"
@@ -65,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:textColor="@color/mainfont"
-        android:text="通用"
+        android:text="关于闪多"
 
         />
 

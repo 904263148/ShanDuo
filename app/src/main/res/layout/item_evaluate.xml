@@ -1,66 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="98dp"
-        android:orientation="vertical">
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:orientation="horizontal"
-        android:gravity="left|center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:gravity="left|center"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_Headportrait"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/icon_eadportrait"
-            />
+            <ImageView
+                android:id="@+id/iv_Headportrait"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/icon_eadportrait" />
 
-        <TextView
-            android:id="@+id/tv_nickname"
-            android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="胖虎"
-            android:textSize="15dp"
-            />
-        <com.yapin.shanduo.widget.RatingBarView
-            android:layout_marginLeft="5dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/custom_ratingbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:starCount="5"
-            app:starPadding="3dp"
-            app:starEmpty="@drawable/icon_lookouta"
-            app:starFill="@drawable/icon_lookout"
-            app:starImageSize="15dp">
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="胖虎"
+                android:textSize="15dp" />
 
-        </com.yapin.shanduo.widget.RatingBarView>
+            <com.yapin.shanduo.widget.RatingBarView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/custom_ratingbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                app:starCount="5"
+                app:starEmpty="@drawable/icon_lookouta"
+                app:starFill="@drawable/icon_lookout"
+                app:starImageSize="15dp"
+                app:starPadding="3dp">
 
-    </LinearLayout>
+            </com.yapin.shanduo.widget.RatingBarView>
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/et_evaluate"
-            android:layout_marginLeft="45dp"
-            android:paddingLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="45dp"
             android:background="@drawable/edittext_shape"
             android:hint="对参与者点评价呗！..."
-            android:textSize="10dp"
-            android:layout_marginBottom="15dp"
-            />
+            android:paddingLeft="8dp"
+            android:textSize="10dp" />
 
     </LinearLayout>
 

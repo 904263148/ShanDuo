@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -31,6 +32,9 @@ public class AccountandsecurityActivity extends BaseActivity{
     private Context context;
     private Activity activity;
 
+    private static final int REGISTER = 1;
+    private static final int PAYMENT_PASSWORD = 2;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,25 +45,47 @@ public class AccountandsecurityActivity extends BaseActivity{
         ButterKnife.bind(this);
 
 
-        tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
-        tv_phone_number.setText(PrefJsonUtil.getProfile(context).getPhone());
+        init();
 
 
     }
 
+    public void init(){
+        tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
+        tv_phone_number.setText(PrefJsonUtil.getProfile(context).getPhone());
+    }
 
-    @OnClick({R.id.iv_back , R.id.tv_login_password})
+
+    @OnClick({R.id.iv_back , R.id.tv_login_password ,R.id.tv_Payment_password})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
                 finish();
                 break;
             case R.id.tv_login_password:
-                StartActivityUtil.start(activity , LoginPasswordActivity.class);
+                StartActivityUtil.start(activity , LoginPasswordActivity.class ,REGISTER);
+                break;
+            case R.id.tv_Payment_password:
+                StartActivityUtil.start(activity , PaymentPasswordActivity.class ,PAYMENT_PASSWORD);
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK){
+            return;
+        }
+        switch (requestCode){
+            case REGISTER :
+                StartActivityUtil.start(activity , LoginPasswordActivity.class);
+                break;
+            case PAYMENT_PASSWORD:
+                setResult(RESULT_OK);
+                finish();
+                break;
+        }
 
-
+    }
 }

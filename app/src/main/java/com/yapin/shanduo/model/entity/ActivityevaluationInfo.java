@@ -14,49 +14,41 @@ public class ActivityevaluationInfo implements Parcelable {
 //    beEvaluated  评价
 //    beEvaluationSign  评价标识
 
-    private String activityId;
-    private String othersScore;
-    private String beEvaluated;
-    private String beEvaluationSign;
+    private String userId;
+    private String score;
+    private String evaluated;
 
-    public String getActivityId() {
-        return activityId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setActivityId(String activityId) {
-        this.activityId = activityId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getOthersScore() {
-        return othersScore;
+    public String getScore() {
+        return score;
     }
 
-    public void setOthersScore(String othersScore) {
-        this.othersScore = othersScore;
+    public void setScore(String score) {
+        this.score = score;
     }
 
-    public String getBeEvaluated() {
-        return beEvaluated;
+    public String getEvaluated() {
+        return evaluated;
     }
 
-    public void setBeEvaluated(String beEvaluated) {
-        this.beEvaluated = beEvaluated;
+    public void setEvaluated(String evaluated) {
+        this.evaluated = evaluated;
     }
 
-    public String getBeEvaluationSign() {
-        return beEvaluationSign;
-    }
 
-    public void setBeEvaluationSign(String beEvaluationSign) {
-        this.beEvaluationSign = beEvaluationSign;
-    }
+    public ActivityevaluationInfo(){}
+    public ActivityevaluationInfo(String userId, String score, String evaluated) {
 
-    public ActivityevaluationInfo(String activityId, String othersScore, String beEvaluated, String beEvaluationSign) {
-
-        this.activityId = activityId;
-        this.othersScore = othersScore;
-        this.beEvaluated = beEvaluated;
-        this.beEvaluationSign = beEvaluationSign;
+        this.userId = userId;
+        this.score = score;
+        this.evaluated = evaluated;
     }
 
     @Override
@@ -66,17 +58,15 @@ public class ActivityevaluationInfo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.activityId);
-        dest.writeString(this.othersScore);
-        dest.writeString(this.beEvaluated);
-        dest.writeString(this.beEvaluationSign);
+        dest.writeString(this.userId);
+        dest.writeString(this.score);
+        dest.writeString(this.evaluated);
     }
 
     protected ActivityevaluationInfo(Parcel in) {
-        this.activityId = in.readString();
-        this.othersScore = in.readString();
-        this.beEvaluated = in.readString();
-        this.beEvaluationSign = in.readString();
+        this.userId = in.readString();
+        this.score = in.readString();
+        this.evaluated = in.readString();
     }
 
     public static final Parcelable.Creator<ActivityevaluationInfo> CREATOR = new Parcelable.Creator<ActivityevaluationInfo>() {

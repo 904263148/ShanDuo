@@ -2,23 +2,30 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.model.entity.ActivityevaluationInfo;
+import com.yapin.shanduo.model.entity.JoinActUser;
 import com.yapin.shanduo.model.entity.ParticipantevaluationInfo;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.widget.RatingBarView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,88 +35,121 @@ import butterknife.ButterKnife;
  * Created by dell on 2018/5/30.
  */
 
-public class ParticipantevaluationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ParticipantevaluationAdapter extends BaseAdapter {
 
+    private LayoutInflater mLayoutInflater;
     private Context context;
     private Activity activity;
-    private List<ActivityInfo.Act> list;
-    private int positiona;
+    private List<JoinActUser.ActUser> list;
+    List<ActivityevaluationInfo> infos = new ArrayList<>();
+    int level = 0;
+    String activityId;
+    String score;
+    String evaluated;
+    String userId;
 
-    public ParticipantevaluationAdapter (Context context , Activity activity , List<ActivityInfo.Act> list , int positiona ,int typeId){
+    private int clickPosition;
+
+    public ParticipantevaluationAdapter(Context context, Activity activity, List<JoinActUser.ActUser> list) {
+        mLayoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.activity = activity;
         this.list = list;
-        this.positiona = positiona;
-//        this.typeId = typeId;
-//        Log.i("typeidaa", typeId+"");
-//        openPopupWindow = (MainActivity)activity;
-    }
 
-
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        view = LayoutInflater.from(context).inflate(R.layout.item_evaluate,parent,false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-        if(viewHolder instanceof ViewHolder){
-            ViewHolder holder = (ViewHolder) viewHolder;
-            holder.tv_nickname.setText(list.get(position).getUserName());
-            GlideUtil.load(context , activity , ApiUtil.IMG_URL+ list.get(position).getHeadPortraitId() ,holder.iv_Headportrait);
-
+        if (list != null) {
+            for (JoinActUser.ActUser actUser : list) {
+                ActivityevaluationInfo info = new ActivityevaluationInfo();
+                info.setUserId(actUser.getId().toString());
+                infos.add(info);
+            }
         }
     }
 
     @Override
-    public int getItemCount() {
-        return list.size();
+    public int getCount() {
+        return list == null ? 0 : list.size();
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return list.get(position).getType();
+    public Object getItem(int position) {
+        return list.get(position);
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-
-        void onTextClick(int position, ActivityInfo.Act act, int type);
-
+    @Override
+    public long getItemId(int position) {
+        return 0;
     }
 
-    private OnItemClickListener listener;
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = mLayoutInflater.inflate(R.layout.item_evaluate, parent, false);
+            holder.iv_Headportrait = (ImageView) convertView.findViewById(R.id.iv_Headportrait);
+            holder.tv_nickname = (TextView) convertView.findViewById(R.id.tv_nickname);
+            holder.custom_ratingbar = (RatingBarView) convertView.findViewById(R.id.custom_ratingbar);
+            holder.et_evaluate = (EditText) convertView.findViewById(R.id.et_evaluate);
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.tv_nickname.setText(list.get(position).getUser_name());
+        GlideUtil.load(context, activity, ApiUtil.IMG_URL + list.get(position).getHead_portrait_id(), holder.iv_Headportrait);
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+        holder.custom_ratingbar.setOnRatingListener(new RatingBarView.OnRatingListener() {
+            @Override
+            public void onRating(Object bindObject, int RatingScore) {
+                level = RatingScore;
+                infos.get(position).setScore(String.valueOf(RatingScore));
+            }
+        });
 
-        @BindView(R.id.iv_Headportrait)
-        ImageView iv_Headportrait;
-        @BindView(R.id.tv_nickname)
-        TextView tv_nickname;
-        @BindView(R.id.custom_ratingbar)
-        RatingBarView custom_ratingbar;
-        @BindView(R.id.et_evaluate)
-        EditText et_evaluate;
+//        Log.e(this.getClass().getName(), "getView: " + infos);
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null)
-                        listener.onItemClick(getLayoutPosition());
+        String id = list.get(position).getId().toString();
+
+//        Log.e(this.getClass().getName(), "list.get(position).getId(): " + id);
+
+        infos.get(position).setUserId(id);
+
+        holder.et_evaluate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickPosition = position;
+            }
+        });
+
+        holder.et_evaluate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    String Evaluated = "";
+
+                }else {
+                    if (position == clickPosition){
+                            infos.get(position).setEvaluated(holder.et_evaluate.getText().toString().trim());
+                        }
+                    }
+                    Log.e(this.getClass().getName(), "ontext " + holder.et_evaluate.getText().toString().trim());
                 }
-            });
-
-            ButterKnife.bind(this , itemView);
-        }
-        }
+        });
+        return convertView;
     }
+
+
+    public List<ActivityevaluationInfo> getData() {
+        return infos;
+    }
+
+    class ViewHolder {
+        private TextView tv_nickname;
+        private ImageView iv_Headportrait;
+        private RatingBarView custom_ratingbar;
+        private EditText et_evaluate;
+
+    }
+
+}
 

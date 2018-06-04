@@ -45,10 +45,10 @@ public class ApiUtil {
     public final static String ADD_Publishingdynamics = ConfigUtil.configUrl() +"/jdynamic/savedynamic";
 
     //我的动态
-    public final static String MY_DYNAMICS = ConfigUtil.configUrl() +"/jdynamic/dynamicList";
+    public final static String MY_DYNAMICS = ConfigUtil.configUrl() +  "/jdynamic/dynamicList";
 
     //我的活动
-    public final static String MY_ACTIVITY = ConfigUtil.configUrl() +"/activity/showHotActivity";
+    public final static String MY_ACTIVITY = ConfigUtil.configUrl() +  "/activity/showHotActivity";
 
     //动态回复
     public final static String TREND_FIRST_REPLAY = ConfigUtil.configUrl() +"/jdynamic/commentList";
@@ -75,13 +75,25 @@ public class ApiUtil {
     public final static String INITIATOREVALU = ConfigUtil.configUrl() + "/score/updateScore";
 
     //发起者对参与者评价
-    public final static String PARTICIPANTEVALUATION = ConfigUtil.configUrl() + "/score/updateOthersScore";
+    public final static String PARTICIPANTEVALUATION =  "http://192.168.1.123:8080/shanduoparty/score/updateOthersScore";
 
     //修改登录密码
     public final static String LOGINPASSWORD = ConfigUtil.configUrl() + "/juser/updatepassword";
+
+    //验证支付密码
+    public final static String VERIFYINGPAYMENT = ConfigUtil.configUrl() + "/jmoney/checkpassword";
+
+    //修改支付密码
+    public final static String REVISEPAYMENT = ConfigUtil.configUrl() + "/jmoney/updatepassword";
     //申请添加好友
     public final static String ADD_FRIEND = ConfigUtil.configUrl() + "/jattention/saveapply";
 
     //信誉轨迹
     public final static String CREDIT_DETALILS = ConfigUtil.configUrl() +"reputation/creditDetails";
+
+    //闪多钱包
+    public final static String FLICKER_PURSE = ConfigUtil.configUrl() +"/jmoney/getmoney";
+
+    //交易记录
+    public final static String TRANSACTION_RECORD = ConfigUtil.configUrl() +"/jmoney/moneyList";
 }

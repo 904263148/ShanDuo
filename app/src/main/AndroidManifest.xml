@@ -94,6 +94,10 @@
         <activity android:name=".ui.activity.DetailsActivity" />
         <activity android:name=".ui.activity.AccountandsecurityActivity" />
         <activity android:name=".ui.activity.LoginPasswordActivity" />
+        <activity android:name=".ui.activity.PaymentPasswordActivity" />
+        <activity android:name=".ui.activity.NewPaymentPasswordActivity"/>
+        <activity android:name=".ui.activity.AboutflickerActivity" />
+        <activity android:name=".ui.activity.TransactionrecordActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />

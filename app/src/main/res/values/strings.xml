@@ -94,6 +94,7 @@
 
     <string name="shanduo_search_hint">搜索闪多号或手机号</string>
     <string name="title_join">报名</string>
+    <string name="title_details">活动详情</string>
 
     <string name="confirm_join">确认报名</string>
     <string name="tips_no_user_join">暂无人加入</string>

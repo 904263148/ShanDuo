@@ -57,6 +57,7 @@ public class MyactivityModelImpl implements MyactivityModel{
                 ActivityInfo info = null;
                 try {
                     info = new Gson().fromJson(new JSONObject(response).get("result").toString(),ActivityInfo.class);
+//                    Log.i("resultaaaaa", info.toString()+"");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

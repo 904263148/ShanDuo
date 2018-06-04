@@ -532,7 +532,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
 
     @Override
     public void showFailed(String msg) {
-
+        ToastUtil.showShortToast(context,msg);
     }
 
     @Override

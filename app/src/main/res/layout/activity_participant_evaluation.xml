@@ -98,15 +98,15 @@
                         android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="参与者10人"
+                        android:text="还没有人参加哦！"
                         android:textColor="@color/font_color_gray"
                         android:textSize="15dp"
                         />
 
                 </LinearLayout>
 
-                        <com.yapin.shanduo.widget.LoadMoreRecyclerView
-                            android:id="@+id/recycler_my_view"
+                        <ListView
+                            android:id="@+id/list_my_view"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             />
@@ -118,6 +118,7 @@
         </LinearLayout>
 
             <Button
+                android:id="@+id/bt_Submission"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:layout_width="340dp"

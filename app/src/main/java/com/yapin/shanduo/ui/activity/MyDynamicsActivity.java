@@ -146,7 +146,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     public void show(List<TrendInfo.Trend> data, int totalPage) {
         if (!isLoading) {
             if (totalPage == 0) {
-                loadingView.noData(R.string.tips_no_act);
+                loadingView.noData(R.string.tips_no_trend);
             } else {
                 loadingView.setGone();
             }

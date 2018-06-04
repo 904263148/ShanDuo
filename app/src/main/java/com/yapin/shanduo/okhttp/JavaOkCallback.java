@@ -34,7 +34,7 @@ public abstract class JavaOkCallback implements okhttp3.Callback{
 
     @Override
     public void onFailure(Call call, IOException e) {
-        Log.e("java_error_msg",e.getMessage());
+//        Log.e("java_error_msg",e.getMessage());
         onFailure(e.getMessage());
     }
 

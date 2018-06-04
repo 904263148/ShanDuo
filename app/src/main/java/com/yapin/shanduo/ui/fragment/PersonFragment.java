@@ -4,6 +4,7 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -51,6 +52,7 @@ public class PersonFragment extends Fragment {
     private final int MYWALLET=6;
     private final int SETUP=7;
     private final int MEMBER_CENTER = 8;
+    private final int SCROLLING = 9;
 
       private TextView tv_nickname;
       private ImageView ib_Headportrait;
@@ -59,6 +61,8 @@ public class PersonFragment extends Fragment {
       private LinearLayout ll_person_aa;
       private TextView tv_login_reg;
       private TextView tv_id;
+      private TextView tv_svip;
+      private TextView tv_level;
 
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
@@ -83,6 +87,8 @@ public class PersonFragment extends Fragment {
         ll_person_aa = view.findViewById(R.id.ll_person_aa);
         tv_login_reg = view.findViewById(R.id.tv_login_reg);
         tv_id = view.findViewById(R.id.tv_id);
+        tv_svip = view.findViewById(R.id.tv_svip);
+        tv_level = view.findViewById(R.id.tv_level);
 
 
         initView();
@@ -102,6 +108,32 @@ public class PersonFragment extends Fragment {
             tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
             tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
+
+            Drawable drawable = null;
+            if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_women);
+                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+            } else {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_men);
+                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+            }
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tv_sex.setCompoundDrawables(drawable, null, null, null);
+            tv_sex.setCompoundDrawablePadding(2);
+            tv_sex.setText(PrefJsonUtil.getProfile(context).getAge()+"");
+
+            int level = PrefJsonUtil.getProfile(context).getVip();
+            if(level == 0){
+                tv_svip.setVisibility(View.GONE);
+            }else if(level < 9){
+                tv_svip.setVisibility(View.VISIBLE);
+                tv_svip.setText("VIP"+level);
+                tv_svip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                tv_svip.setVisibility(View.VISIBLE);
+                tv_svip.setText("SVIP"+(level-10));
+                tv_svip.setBackgroundResource(R.drawable.rounded_tv_svip);
+            }
         }
 
     }
@@ -140,7 +172,7 @@ public class PersonFragment extends Fragment {
                 }
                 break;
             case R.id.text_setup:       //设置
-                    StartActivityUtil.start(activity , SetupActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity , SetupActivity.class , SETUP);
                 break;
 
             case R.id.text_mywallet:        //我的钱包
@@ -154,7 +186,11 @@ public class PersonFragment extends Fragment {
                 StartActivityUtil.start(activity , LoginActivity.class);
                 break;
             case R.id.tv_Creditcenter:    //信用中心
-                StartActivityUtil.start(activity , ScrollingActivity.class);
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , SCROLLING);
+                }else {
+                    StartActivityUtil.start(activity, ScrollingActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                }
                 break;
         }
     }
@@ -165,21 +201,20 @@ public class PersonFragment extends Fragment {
 
         switch (requestCode){
             case PUBLISH_ACT_OPEN_LOGIN:
-                StartActivityUtil.start(activity , MyDynamicsActivity.class);
                 break;
-
             case MYACTIVITIESACTIVITY:
-                StartActivityUtil.start(activity , MyactivitiesActivity.class);
                 break;
             case EDITING:
-                StartActivityUtil.start(activity , EditingformationAcivity.class);
                 break;
             case MYWALLET:
-                StartActivityUtil.start(activity , MywalletActivity.class);
                 break;
             case MEMBER_CENTER:
-                StartActivityUtil.start(activity , MembercenterActivity.class);
                 break;
+            case SCROLLING:
+                break;
+            case SETUP:
+                break;
+
         }
     }
 }

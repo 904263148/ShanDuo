@@ -2,10 +2,12 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -23,6 +25,7 @@ import com.yapin.shanduo.ui.activity.DetailsActivity;
 import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.ui.activity.ParticipantevaluationActivity;
+import com.yapin.shanduo.ui.contract.JoinActContract;
 import com.yapin.shanduo.ui.fragment.MyactivityFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
@@ -42,7 +45,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/19.
  */
 
-public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private Activity activity;
@@ -124,6 +127,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
 
             typeid = list.get(position).getTypeId();
+//            Log.i("typeidaaa", typeid+"");
 
             if (positiona == 0) {
                 holder.tvevaluation.setText("信用轨迹");
@@ -133,8 +137,6 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             StartActivityUtil.start(activity, CreditcenterActivity.class);
                     }
                 });
-
-
                     if (typeid == 0){
                     holder.tvJoin.setText("去评价");
                     holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.rounded_textview_home));
@@ -157,8 +159,10 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     }
 
             }else if (positiona == 1){
-                holder.tvevaluation.setVisibility(View.GONE);
-                holder.tvJoin.setText("取消报名");
+                    holder.tvevaluation.setVisibility(View.GONE);
+                    holder.tvJoin.setText("取消报名");
+//                    holder.tvJoin.setOnClickListener();
+
             }else if (positiona == 2){
                 if (typeid == 4) {
                     holder.tvevaluation.setText("刷新");

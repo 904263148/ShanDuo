@@ -23,7 +23,9 @@ import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.PicWatcher;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,7 +70,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
 
         if (viewHolder instanceof ViewHolder) {
-            ViewHolder holder = (ViewHolder) viewHolder;
+            final ViewHolder holder = (ViewHolder) viewHolder;
             GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getName());
 
@@ -133,12 +135,37 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.rlImg1.setVisibility(View.VISIBLE);
                     GlideUtil.load(context ,activity , ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
                     holder.ivImg2.setVisibility(View.GONE);
+
+                    final List<ImageView> thumUrlsImageView = new ArrayList<>();
+                    thumUrlsImageView.add(holder.ivImg1);
+                    holder.ivImg1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView , list.get(position).getPicture());
+                        }
+                    });
                     break;
                 case 2:
                     holder.gridview.setVisibility(View.GONE);
                     holder.rlImg1.setVisibility(View.VISIBLE);
                     GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(0) ,holder.ivImg1 ,5 );
                     GlideUtil.load(context ,activity ,ApiUtil.IMG_URL+list.get(position).getPicture().get(1) ,holder.ivImg2 ,5 );
+
+                    final List<ImageView> thumUrlsImageView2 = new ArrayList<>();
+                    thumUrlsImageView2.add(holder.ivImg1);
+                    thumUrlsImageView2.add(holder.ivImg2);
+                    holder.ivImg1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView2 , list.get(position).getPicture());
+                        }
+                    });
+                    holder.ivImg2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PicWatcher.showImages(activity , holder.ivImg2 , 1 , thumUrlsImageView2 , list.get(position).getPicture());
+                        }
+                    });
                     break;
                 default:
                     holder.gridview.setVisibility(View.VISIBLE);
