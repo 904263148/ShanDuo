@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<CreditItem> list;
     private int type;
 
-    public CreditDetailAdapter(Context context, Activity activity, List<CreditItem> list , int type) {
+    public CreditDetailAdapter(Context context, Activity activity, List<CreditItem> list, int type) {
         this.context = context;
         this.activity = activity;
         this.list = list;
@@ -46,12 +47,9 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         switch (viewType) {
-            case Constants.TYPE_TOP:
-                view = LayoutInflater.from(context).inflate(R.layout.credit_top_item, parent, false);
-                return new ViewHolder(view);
             case Constants.TYPE_BOTTOM:
                 view = LayoutInflater.from(context).inflate(R.layout.credit_bottom_item, parent, false);
-                return new PresenterHolder(view);
+                return new ViewHolder(view);
             default:
                 view = LayoutInflater.from(context).inflate(R.layout.item_footer_loading, parent, false);
                 return new FooterHolder(view);
@@ -61,81 +59,154 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CreditItem item = list.get(position);
-        if(holder instanceof ViewHolder){
+        if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.tvName.setText(item.getUser_name());
-            GlideUtil.load(context , activity , ApiUtil.IMG_URL+item.getHead_portrait_id() , viewHolder.ivHead);
-            if(type == 0){
-                viewHolder.tvHidden.setVisibility(View.GONE);
-                viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.home_title_color));
-            }else {
-                viewHolder.tvHidden.setVisibility(View.VISIBLE);
-                viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.font_color_gray));
-            }
-            viewHolder.tvContent.setText(item.getEvaluation_content());
-            switch (item.getScore()){
-                case 1:
-                    viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
-                    break;
-                case 2:
-                    viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
-                    break;
-                case 3:
-                    viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
-                    viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
-                    break;
-                case 4:
-                    viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
-                    break;
-                case 5:viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_red);
-                    viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_red);
-                    break;
+
+            if (item.isTitle()) {
+                viewHolder.rlInfo.setVisibility(View.GONE);
+                viewHolder.llTitle.setVisibility(View.VISIBLE);
+
+                viewHolder.tvPresenterName.setText(item.getPresenter_name());
+                GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getPresenter_head(), viewHolder.ivPresenterHead);
+                viewHolder.tvMode.setText(item.getMode());
+                viewHolder.tvActName.setText(item.getActivity_name());
+                int level = item.getVipGrade();
+                if (level == 0) {
+                    viewHolder.tvVip.setVisibility(View.GONE);
+                } else if (level > 0 && level < 9) {
+                    viewHolder.tvVip.setVisibility(View.VISIBLE);
+                    viewHolder.tvVip.setText("VIP" + level);
+                    viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+                } else {
+                    viewHolder.tvVip.setVisibility(View.VISIBLE);
+                    viewHolder.tvVip.setText("SVIP" + (level - 10));
+                    viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
+                }
+                Drawable drawable = null;
+                if ("0".equals(item.getGender())) {
+                    drawable = activity.getResources().getDrawable(R.drawable.icon_women);
+                    viewHolder.tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+                } else {
+                    drawable = activity.getResources().getDrawable(R.drawable.icon_men);
+                    viewHolder.tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+                }
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                viewHolder.tvHomeAge.setCompoundDrawables(drawable, null, null, null);
+                viewHolder.tvHomeAge.setCompoundDrawablePadding(2);
+                viewHolder.tvHomeAge.setText(item.getBirthday() + "");
+
+            } else {
+                viewHolder.rlInfo.setVisibility(View.VISIBLE);
+                viewHolder.llTitle.setVisibility(View.GONE);
+
+                viewHolder.tvName.setText(item.getUser_name());
+                GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getHead_portrait_id(), viewHolder.ivHead);
+                if (type == 0) {
+                    viewHolder.tvHidden.setVisibility(View.GONE);
+                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.home_title_color));
+                } else {
+                    viewHolder.tvHidden.setVisibility(View.VISIBLE);
+                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.font_color_gray));
+                }
+
+                if(item.getScore() == null ){
+                    viewHolder.llHeart.setVisibility(View.GONE);
+                }else {
+                    viewHolder.llHeart.setVisibility(View.VISIBLE);
+                    viewHolder.tvContent.setText(item.getEvaluation_content());
+                    switch (item.getScore()) {
+                        case 1:
+                            viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
+                            break;
+                        case 2:
+                            viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
+                            break;
+                        case 3:
+                            viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_gray);
+                            viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
+                            break;
+                        case 4:
+                            viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_gray);
+                            break;
+                        case 5:
+                            viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart2.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart3.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart4.setBackgroundResource(R.drawable.icon_heart_red);
+                            viewHolder.ivHeart5.setBackgroundResource(R.drawable.icon_heart_red);
+                            break;
+                    }
+                }
+
+                if(item.getOthers_score() == null){
+                    viewHolder.llHeart2.setVisibility(View.GONE);
+                    return;
+                }else {
+                    viewHolder.llHeart2.setVisibility(View.VISIBLE);
+                }
+
+                if(item.getBe_evaluated() == null || TextUtils.isEmpty(item.getBe_evaluated())){
+                    viewHolder.tvPresenterContent.setVisibility(View.GONE);
+                }else {
+                    viewHolder.tvPresenterContent.setVisibility(View.VISIBLE);
+                    viewHolder.tvPresenterContent.setText("发起者评价:"+item.getBe_evaluated());
+                }
+
+                switch (item.getOthers_score()) {
+                    case 1:
+                        viewHolder.ivHeart6.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart7.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart8.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart9.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart10.setBackgroundResource(R.drawable.icon_heart_gray);
+                        break;
+                    case 2:
+                        viewHolder.ivHeart6.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart7.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart8.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart9.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart10.setBackgroundResource(R.drawable.icon_heart_gray);
+                        break;
+                    case 3:
+                        viewHolder.ivHeart6.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart7.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart8.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart9.setBackgroundResource(R.drawable.icon_heart_gray);
+                        viewHolder.ivHeart10.setBackgroundResource(R.drawable.icon_heart_gray);
+                        break;
+                    case 4:
+                        viewHolder.ivHeart6.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart7.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart8.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart9.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart10.setBackgroundResource(R.drawable.icon_heart_gray);
+                        break;
+                    case 5:
+                        viewHolder.ivHeart6.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart7.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart8.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart9.setBackgroundResource(R.drawable.icon_heart_red);
+                        viewHolder.ivHeart10.setBackgroundResource(R.drawable.icon_heart_red);
+                        break;
+                }
             }
 
-        }else if (holder instanceof PresenterHolder){
-            PresenterHolder presenterHolder = (PresenterHolder) holder;
-            presenterHolder.tvName.setText(item.getPresenter_name());
-            GlideUtil.load(context , activity , ApiUtil.IMG_URL+item.getHead_portrait_id() , presenterHolder.ivHead);
-            presenterHolder.tvMode.setText(item.getMode());
-            presenterHolder.tvActName.setText(item.getActivity_name());
-            int level = item.getVipGrade();
-            if(level == 0){
-                presenterHolder.tvVip.setVisibility(View.GONE);
-            }else if(level > 0 && level < 9){
-                presenterHolder.tvVip.setVisibility(View.VISIBLE);
-                presenterHolder.tvVip.setText("VIP"+level);
-                presenterHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
-            }else {
-                presenterHolder.tvVip.setVisibility(View.VISIBLE);
-                presenterHolder.tvVip.setText("SVIP"+(level-10));
-                presenterHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
-            }
-            Drawable drawable = null;
-            if ("0".equals(item.getGender())) {
-                drawable = activity.getResources().getDrawable(R.drawable.icon_women);
-                presenterHolder.tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
-            } else {
-                drawable = activity.getResources().getDrawable(R.drawable.icon_men);
-                presenterHolder.tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_men);
-            }
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            presenterHolder.tvHomeAge.setCompoundDrawables(drawable, null, null, null);
-            presenterHolder.tvHomeAge.setCompoundDrawablePadding(2);
-            presenterHolder.tvHomeAge.setText(item.getBirthday() + "");
-        }else if (holder instanceof FooterHolder) {
+        } else {
             FooterHolder footerHolder = (FooterHolder) holder;
             footerHolder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
         }
@@ -181,31 +252,32 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivHeart5;
         @BindView(R.id.ll_heart)
         LinearLayout llHeart;
-        @BindView(R.id.tv_hidden)
-        TextView tvHidden;
-        @BindView(R.id.rl_tag)
-        RelativeLayout rlTag;
         @BindView(R.id.tv_content)
         TextView tvContent;
-        
-        ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onItemClick(getLayoutPosition());
-                }
-            });
-        }
-    }
-
-    class PresenterHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.iv_head)
-        ImageView ivHead;
-        @BindView(R.id.tv_name)
-        TextView tvName;
+        @BindView(R.id.rl_tag)
+        RelativeLayout rlTag;
+        @BindView(R.id.tv_hidden)
+        TextView tvHidden;
+        @BindView(R.id.iv_heart6)
+        ImageView ivHeart6;
+        @BindView(R.id.iv_heart7)
+        ImageView ivHeart7;
+        @BindView(R.id.iv_heart8)
+        ImageView ivHeart8;
+        @BindView(R.id.iv_heart9)
+        ImageView ivHeart9;
+        @BindView(R.id.iv_heart10)
+        ImageView ivHeart10;
+        @BindView(R.id.tv_presenter_content)
+        TextView tvPresenterContent;
+        @BindView(R.id.ll_heart2)
+        LinearLayout llHeart2;
+        @BindView(R.id.rl_info)
+        RelativeLayout rlInfo;
+        @BindView(R.id.iv_presenter_head)
+        ImageView ivPresenterHead;
+        @BindView(R.id.tv_presenter_name)
+        TextView tvPresenterName;
         @BindView(R.id.tv_vip)
         TextView tvVip;
         @BindView(R.id.tv_home_age)
@@ -216,8 +288,10 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvMode;
         @BindView(R.id.rl_user_info)
         RelativeLayout rlUserInfo;
+        @BindView(R.id.ll_title)
+        LinearLayout llTitle;
 
-        PresenterHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchAllActivity extends BaseActivity implements SearchHumanContract.View , View.OnKeyListener , AdapterView.OnItemClickListener{
+public class SearchAllActivity extends RightSlidingActivity implements SearchHumanContract.View , View.OnKeyListener , AdapterView.OnItemClickListener{
 
     @BindView(R.id.inputSearch)
     EditText inputSearch;

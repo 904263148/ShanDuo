@@ -69,6 +69,8 @@ public class Constants {
     public static final int ACT_JOIN = 1;
     //活动地图定位点击
     public static final int ACT_LOCATION = 2;
+    //活动信誉轨迹点击
+    public static final int ACT_CREDIT = 3;
 
     //发布动态获取定位的点击
     public static final int RELEASEDYNAMICPOSITIONING= 19;
@@ -95,7 +97,23 @@ public class Constants {
     public static final int REQUEST_CODE_FOR_DELETE_PHOTO_SHOW = 25;
 
     //信用中心
-    public static final int TYPE_TOP = 1;
-    public static final int TYPE_BOTTOM = 2;
+    public static final int TYPE_TOP = 105;
+    public static final int TYPE_BOTTOM = 205;
+
+    //群  创建，删除
+    public static final String TYPE_CREATE = "1";
+    public static final String TYPE_DELETE = "2";
+
+    //好友添加方式 0 直接添加 1 申请 2 拒绝
+    public static final String ADD_DIRECTLY = "0";
+    public static final String ADD_APPLY = "1";
+    public static final String ADD_REFUSE = "2";
+
+    //用户首次下载打开APP
+    public static final int ISFIRSTUSE = 0;
+    public static final int NOTFIRSTUSE = 1;
+
+    //打开登录页面
+    public static final int OPEN_LOGIN = 0;
 
 }

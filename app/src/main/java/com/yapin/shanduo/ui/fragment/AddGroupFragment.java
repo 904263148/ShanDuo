@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.ui.CreateGroupActivity;
+import com.yapin.shanduo.im.ui.SearchGroupActivity;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
 import butterknife.ButterKnife;
@@ -54,13 +55,16 @@ public class AddGroupFragment extends Fragment {
         activity = getActivity();
     }
 
-    @OnClick({R.id.ll_create_group})
+    @OnClick({R.id.ll_create_group , R.id.ll_search})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.ll_create_group:
                 Bundle bundle = new Bundle();
                 bundle.putString("type","Public");
                 StartActivityUtil.start(activity , this , CreateGroupActivity.class , bundle);
+                break;
+            case R.id.ll_search:
+                StartActivityUtil.start(activity ,this , SearchGroupActivity.class);
                 break;
         }
     }

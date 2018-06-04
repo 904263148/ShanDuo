@@ -36,6 +36,7 @@ import com.yapin.shanduo.ui.contract.AddFriendContract;
 import com.yapin.shanduo.ui.contract.UserProfContract;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
@@ -239,10 +240,12 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
     @Override
     public void show(String data) {
-        if("1".equals(data)){
-            ToastUtil.showShortToast(context , R.string.add_friend_succeed);
+        if(Constants.ADD_DIRECTLY.equals(data)){
+            ToastUtil.showShortToast(context , R.string.add_friend_added);
             user.setAttention(true);
             tvAddFriend.setText("发消息");
+        }else if (Constants.ADD_APPLY.equals(data)) {
+            ToastUtil.showShortToast(context , R.string.add_friend_succeed);
         }
     }
 

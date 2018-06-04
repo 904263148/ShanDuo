@@ -37,8 +37,8 @@ public class CreditActFragment extends Fragment implements CreditDetailContract.
     @BindView(R.id.loading_view)
     LoadingView loadingView;
 
-    private int position;
-    private String userId;
+    private int position = 0;
+    private String userId = "";
     private Context context;
     private Activity activity;
 
@@ -97,7 +97,7 @@ public class CreditActFragment extends Fragment implements CreditDetailContract.
         adapter = new CreditDetailAdapter(context, activity , list , position);
         recyclerView.setAdapter(adapter);
         recyclerView.setOnLoadMoreListener(this);
-        recyclerView.setNestedScrollingEnabled(false);
+//        recyclerView.setNestedScrollingEnabled(false);
 
         presenter.getData(userId , page+"" , pageSize+""  , (position+1)+"");
     }

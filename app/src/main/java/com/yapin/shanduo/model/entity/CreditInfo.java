@@ -9,7 +9,7 @@ public class CreditInfo {
 
     private int totalpage;
     private int page;
-    private Head maps;
+    private Head map;
 
     private List<Credit> list;
 
@@ -29,12 +29,12 @@ public class CreditInfo {
         this.page = page;
     }
 
-    public Head getMaps() {
-        return maps;
+    public Head getMap() {
+        return map;
     }
 
-    public void setMaps(Head maps) {
-        this.maps = maps;
+    public void setMap(Head map) {
+        this.map = map;
     }
 
     public List<Credit> getList() {
@@ -75,8 +75,25 @@ public class CreditInfo {
     }
 
     public static class Credit{
-        private String mode , activity_name , gender , user_name ,head_portrait_id , id;
-        private int birthday , vipGrade;
+        private String mode , activity_name , gender , user_name ,head_portrait_id , id , be_evaluated;
+        private int birthday , vipGrade ;
+        private Integer others_score;
+
+        public String getBe_evaluated() {
+            return be_evaluated;
+        }
+
+        public void setBe_evaluated(String be_evaluated) {
+            this.be_evaluated = be_evaluated;
+        }
+
+        public Integer getOthers_score() {
+            return others_score;
+        }
+
+        public void setOthers_score(Integer others_score) {
+            this.others_score = others_score;
+        }
 
         public String getGender() {
             return gender;

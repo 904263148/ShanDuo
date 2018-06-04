@@ -88,7 +88,11 @@ public class LinkGroupFragment extends Fragment implements Observer {
             }
         });
         GroupEvent.getInstance().addObserver(this);
-        loadingView.setGone();
+        if(list.size() == 0){
+            loadingView.noData(R.string.tips_no_group);
+        }else {
+            loadingView.setGone();
+        }
     }
 
     @Override
@@ -161,9 +165,13 @@ public class LinkGroupFragment extends Fragment implements Observer {
             loadingView.setVisibility(View.VISIBLE);
             loadingView.noData(R.string.tips_no_login);
         }else {
-            loadingView.setGone();
             list = GroupInfo.getInstance().getGroupListByType(type);
-            adapter.notifyDataSetChanged();
+            if(list.size() == 0){
+                loadingView.noData(R.string.tips_no_group);
+            }else {
+                loadingView.setGone();
+                adapter.notifyDataSetChanged();
+            }
         }
     }
 }

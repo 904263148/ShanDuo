@@ -9,8 +9,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ScrollingActivity extends AppCompatActivity implements CreditDetailContract.View {
 
@@ -68,14 +71,22 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
 
     @Override
     public void initView() {
-        userId = getIntent().getStringExtra("userId");
+//        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra("userId") == null ? "" : getIntent().getStringExtra("userId");
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 
         List<String> tabList = new ArrayList<>();
-        tabList.add("TA的活动");
-        tabList.add("TA的动态");
+        tabList.add("发布");
+        tabList.add("参加");
 
         adapter = new CreditTabAdapter(getSupportFragmentManager(), tabList , userId);
         viewPager.setAdapter(adapter);
@@ -83,7 +94,7 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
         tabLayout.post(new Runnable() {
             @Override
             public void run() {
-                Utils.setIndicator(tabLayout, 45, 45);
+                Utils.setIndicator(tabLayout, 60, 60);
             }
         });
 
@@ -102,6 +113,11 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
         list.clear();
         list = data;
         setData();
+    }
+
+    @OnClick()
+    public void onClick(View view){
+
     }
 
     @Override

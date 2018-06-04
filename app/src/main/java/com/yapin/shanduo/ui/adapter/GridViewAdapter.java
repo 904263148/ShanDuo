@@ -43,6 +43,16 @@ public class GridViewAdapter extends BaseAdapter {
         return position;
     }
 
+    public interface OnItemClickListener{
+        void onItemClick(int id);
+    }
+
+    public OnItemClickListener listener;
+
+    public void setClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
     public View getView(final int position, View view, ViewGroup arg2) {
         GridViewAdapter.ViewHolder viewHolder;
         if (view == null) {
@@ -56,6 +66,13 @@ public class GridViewAdapter extends BaseAdapter {
         }
         viewHolder.textView.setText(list.get(position).getUser_name());
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL + list.get(position).getHead_portrait_id() , viewHolder.imageView);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(list.get(position).getId());
+            }
+        });
         return view;
     }
 

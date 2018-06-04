@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -44,6 +45,7 @@ import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
 import java.io.File;
@@ -154,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         Utils.setLocation(context);
 
         viewPager.setCurrentItem(0, false);
-//        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(5);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
@@ -320,6 +322,14 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 publishPopupWindow.dismiss();
             }
         }
+        setBackgroundAlpha(1);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //设置背景色
+        setBackgroundAlpha(0.5f);
     }
 
     @Override
@@ -347,5 +357,41 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     public void refresh() {
         adapter.notifyDataSetChanged();
     }
+
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            if (publishPopupWindow != null && publishPopupWindow.isShowing()) {
+                publishPopupWindow.dismiss();
+            } else {
+
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    ToastUtil.showShortToast(context, R.string.click_back);
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    finish();
+                    System.exit(0);
+                }
+                return true;
+            }
+        }
+
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                ToastUtil.showShortToast(context , R.string.click_back);
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
 
 }

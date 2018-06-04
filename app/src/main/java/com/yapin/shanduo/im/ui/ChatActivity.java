@@ -50,6 +50,7 @@ import com.yapin.shanduo.im.utils.FileUtil;
 import com.yapin.shanduo.im.utils.MediaUtil;
 import com.yapin.shanduo.im.utils.RecorderUtil;
 import com.yapin.shanduo.ui.activity.MapGaodeActivity;
+import com.yapin.shanduo.ui.activity.RightSlidingFragmentActivity;
 import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.utils.ActivityTransitionUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -58,7 +59,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends FragmentActivity implements ChatView {
+public class ChatActivity extends RightSlidingFragmentActivity implements ChatView {
 
     private Context context;
     private Activity activity;
@@ -101,7 +102,7 @@ public class ChatActivity extends FragmentActivity implements ChatView {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);

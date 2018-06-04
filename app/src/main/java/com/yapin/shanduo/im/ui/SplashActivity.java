@@ -38,8 +38,10 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.im.utils.PushUtil;
+import com.yapin.shanduo.ui.activity.FirstUseActivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -87,14 +89,21 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
      */
     @Override
     public void navToHome() {
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(this , MainActivity.class);
+        if(Constants.ISFIRSTUSE == PrefUtil.getFirstUse(context)){
+            Log.d("FirstUse" , "第一次启动");
+            PrefUtil.setFirstUse(context ,Constants.NOTFIRSTUSE);
+            StartActivityUtil.start(this , FirstUseActivity.class);
             finish();
         }else {
-            //登录之前要初始化群和好友关系链缓存
-            FriendshipEvent.getInstance().init();
-            GroupEvent.getInstance().init();
-            LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
+            if (TextUtils.isEmpty(PrefUtil.getToken(context))) {
+                StartActivityUtil.start(this, MainActivity.class);
+                finish();
+            } else {
+                //登录之前要初始化群和好友关系链缓存
+                FriendshipEvent.getInstance().init();
+                GroupEvent.getInstance().init();
+                LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
+            }
         }
     }
 

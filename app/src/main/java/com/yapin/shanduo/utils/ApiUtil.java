@@ -75,7 +75,7 @@ public class ApiUtil {
     public final static String INITIATOREVALU = ConfigUtil.configUrl() + "/score/updateScore";
 
     //发起者对参与者评价
-    public final static String PARTICIPANTEVALUATION =  "http://192.168.1.123:8080/shanduoparty/score/updateOthersScore";
+    public final static String PARTICIPANTEVALUATION = ConfigUtil.configUrl() + "/score/updateOthersScore";
 
     //修改登录密码
     public final static String LOGINPASSWORD = ConfigUtil.configUrl() + "/juser/updatepassword";
@@ -85,11 +85,21 @@ public class ApiUtil {
 
     //修改支付密码
     public final static String REVISEPAYMENT = ConfigUtil.configUrl() + "/jmoney/updatepassword";
+
     //申请添加好友
     public final static String ADD_FRIEND = ConfigUtil.configUrl() + "/jattention/saveapply";
 
     //信誉轨迹
     public final static String CREDIT_DETALILS = ConfigUtil.configUrl() +"reputation/creditDetails";
+
+    //检查是否可以创建群组
+    public final static String CHECK_GROUP = ConfigUtil.configUrl() + "jgroup/checkgroup" ;
+
+    //创建或删除群组
+    public final static String CREATE_GROUP = ConfigUtil.configUrl() + "jgroup/isgroup" ;
+
+    //根据关键字查询相应活动
+    public final static String QUERY_ACT = ConfigUtil.configUrl() + "activity/selectQuery";
 
     //闪多钱包
     public final static String FLICKER_PURSE = ConfigUtil.configUrl() +"/jmoney/getmoney";

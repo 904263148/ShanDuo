@@ -39,8 +39,6 @@ public class JoinActUserModelImpl implements JoinActUserLoadModel{
         params.put("activityId" , activityId);
         params.put("page" , page);
         params.put("pageSize" , pageSize);
-        params.put("lat" , PrefUtil.getLat(context));
-        params.put("lon" , PrefUtil.getLon(context));
         OkHttp.post(context, ApiUtil.ACT_JOIN_USER, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

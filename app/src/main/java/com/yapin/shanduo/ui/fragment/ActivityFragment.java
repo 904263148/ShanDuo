@@ -23,6 +23,7 @@ import com.yapin.shanduo.presenter.JoinActPresenter;
 import com.yapin.shanduo.ui.activity.JoinActActivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.PlaceActivity;
+import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeActContract;
 import com.yapin.shanduo.ui.contract.JoinActContract;
@@ -139,6 +140,10 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void onItemClick(int position) {
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            StartActivityUtil.start(activity , LoginActivity.class );
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putParcelable("act" , list.get(position));
         StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
@@ -154,6 +159,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
             case Constants.ACT_JOIN:
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("act" , list.get(position));
+                bundle.putInt("type" , position);
                 StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
                 break;
             case Constants.ACT_LOCATION:
@@ -163,7 +169,11 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
                 bundle1.putString("place" , act.getActivityAddress());
                 StartActivityUtil.start(activity , this , PlaceActivity.class , bundle1);
                 break;
-
+            case Constants.ACT_CREDIT:
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("userId" , act.getUserId()+"");
+                StartActivityUtil.start(activity , this , ScrollingActivity.class , bundle2);
+                break;
         }
 
     }

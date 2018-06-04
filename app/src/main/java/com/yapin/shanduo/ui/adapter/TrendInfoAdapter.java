@@ -21,7 +21,9 @@ import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.TimeUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
@@ -125,6 +127,10 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                        ToastUtil.showShortToast(context , "登录后方能分享哦~");
+                        return;
+                    }
                     openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_TREND);
                 }
             });

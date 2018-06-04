@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_gray4"
+    android:background="@color/bg_color"
     tools:context=".im.ui.ChatActivity">
 
     <LinearLayout
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:textCursorDrawable="@color/black"
+                android:textCursorDrawable="@null"
                 android:hint="@string/search_hint"
                 android:textColorHint="@color/text_gray1"
                 android:textColor="@color/black"

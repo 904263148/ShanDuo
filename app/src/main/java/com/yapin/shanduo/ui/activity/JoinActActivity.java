@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.yapin.shanduo.ui.contract.JoinActUserContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadingView;
 
@@ -34,7 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class JoinActActivity extends BaseActivity implements JoinActUserContract.View , JoinActContract.View{
+public class JoinActActivity extends RightSlidingActivity implements JoinActUserContract.View , JoinActContract.View , GridViewAdapter.OnItemClickListener{
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -76,6 +78,8 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
     TextView tvConfirm;
     @BindView(R.id.gridview)
     GridView gridView;
+    @BindView(R.id.ll_join)
+    LinearLayout llJoin;
     
     private Context context;
     private Activity activity;
@@ -91,6 +95,7 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
 
     private int isJoin = 0 ; // 0 未参加  1 已参加
 
+    private int type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,7 +113,7 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
         context = ShanDuoPartyApplication.getContext();
         activity = this;
         act = getIntent().getParcelableExtra("act");
-
+        type = getIntent().getIntExtra("type" , 0);
         tvKind.setText(act.getActivityName());
         tvTime.setText(act.getActivityStartTime());
         tvType.setText(act.getMode());
@@ -147,8 +152,13 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
             tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
 
+        if(type == 0){
+            llJoin.setVisibility(View.GONE);
+        }
+
         adapter = new GridViewAdapter(context , activity , list);
         gridView.setAdapter(adapter);
+        adapter.setClickListener(this);
         presenter.getData(act.getId() , "1" , "10");
         loadingView.loading();
     }
@@ -195,7 +205,18 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
                     }).create().show();
                 }
                 break;
-
+            case R.id.rl_mile:
+                Bundle bundle1 = new Bundle();
+                bundle1.putDouble("lat" , act.getLat());
+                bundle1.putDouble("lon" , act.getLon());
+                bundle1.putString("place" , act.getActivityAddress());
+                StartActivityUtil.start(activity  , PlaceActivity.class , bundle1);
+                break;
+            case R.id.iv_head:
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("userId" , act.getUserId()+"");
+                StartActivityUtil.start(activity , ScrollingActivity.class , bundle2);
+                break;
         }
     }
 
@@ -256,5 +277,12 @@ public class JoinActActivity extends BaseActivity implements JoinActUserContract
     @Override
     public void showFailed(String msg) {
         loadingView.setGone();
+    }
+
+    @Override
+    public void onItemClick(int id) {
+        Bundle bundle2 = new Bundle();
+        bundle2.putString("userId" , id+"");
+        StartActivityUtil.start(activity , ScrollingActivity.class , bundle2);
     }
 }

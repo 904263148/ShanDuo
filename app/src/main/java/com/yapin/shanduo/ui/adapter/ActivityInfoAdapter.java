@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,16 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -50,6 +55,8 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.list = list;
         if(position == 6){
             openPopupWindow = (UserProfActivity) activity;
+        }else if(position == 10){
+            openPopupWindow = (SearchActActivity) activity;
         }else {
             openPopupWindow = (MainActivity) activity;
         }
@@ -117,7 +124,11 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
+                    if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                        StartActivityUtil.start(activity , LoginActivity.class);
+                    }else {
+                        openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_ACT);
+                    }
                 }
             });
 
@@ -141,6 +152,12 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
 
+            holder.tvCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onTextClick(position , list.get(position) , Constants.ACT_CREDIT);
+                }
+            });
 
         }else{
             FooterHolder holder = (FooterHolder) viewHolder;
@@ -206,18 +223,19 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvVip;
         @BindView(R.id.rl_location)
         RelativeLayout rlLocation;
+        @BindView(R.id.tv_evaluation)
+        TextView tvCredit;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this , itemView);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null)
-                        listener.onItemClick(getLayoutPosition());
+                    listener.onItemClick(getLayoutPosition());
                 }
             });
-
-            ButterKnife.bind(this , itemView);
         }
     }
 

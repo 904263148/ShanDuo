@@ -85,6 +85,9 @@
     <string name="tips_no_login">请先登录</string>
     <string name="tips_like">点赞成功</string>
     <string name="tips_unlike">已取消点赞</string>
+    <string name="tips_no_group">暂无群组</string>
+
+    <string name="click_back">再按一次退出程序</string>
 
     <string name="title_add">添加</string>
 

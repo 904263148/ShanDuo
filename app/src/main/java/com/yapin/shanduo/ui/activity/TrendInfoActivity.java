@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,10 +32,10 @@ import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.ToastUtil;
-import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.MyGridView;
 import com.yich.layout.picwatcherlib.PicWatcher;
@@ -46,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TrendInfoActivity extends BaseActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
+public class TrendInfoActivity extends RightSlidingActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
         , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View{
 
     @BindView(R.id.rl_back)
@@ -153,8 +154,6 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
         fragment = new CustomBottomSheetDialogFragment();
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        setIsEvent(Constants.IS_EVENT);
 
         GlideUtil.load(context, activity,ApiUtil.IMG_URL+ trend.getPortraitId(), ivHead);
         tvName.setText(trend.getName());
@@ -274,12 +273,20 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_share:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
+                    return;
+                }
                 fragment.show(getSupportFragmentManager() , "share");
                 break;
             case R.id.rl_back:
                 onBackPressed();
                 break;
             case R.id.tv_publish:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
+                    return;
+                }
                 if(TextUtils.isEmpty(etComment.getText())){
                     ToastUtil.showShortToast(context , "内容不能为空");
                     return;
@@ -296,6 +303,10 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
                 StartActivityUtil.start(activity , PlaceActivity.class , bundle);
                 break;
             case R.id.tv_like_count:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
+                    return;
+                }
                 likePresenter.onLike(trend.getId());
                 break;
             case R.id.iv_back:
@@ -360,6 +371,11 @@ public class TrendInfoActivity extends BaseActivity implements TrendInfoContract
     @Override
     public void loading() {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

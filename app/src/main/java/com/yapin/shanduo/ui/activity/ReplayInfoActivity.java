@@ -44,7 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ReplayInfoActivity extends BaseActivity implements TrendSecondReplayContract.View , LoadMoreRecyclerView.OnLoadMoreListener
+public class ReplayInfoActivity extends RightSlidingActivity implements TrendSecondReplayContract.View , LoadMoreRecyclerView.OnLoadMoreListener
         ,SwipeRefreshLayout.OnRefreshListener , TrendSecondReplayAdapter.OnItemClickListener , TrendReplayContract.View{
 
     @BindView(R.id.rl_back)
@@ -124,8 +124,6 @@ public class ReplayInfoActivity extends BaseActivity implements TrendSecondRepla
     public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = this;
-
-        setIsEvent(Constants.IS_EVENT);
 
         tvTitle.setText(comment.getCount()+"条回复");
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

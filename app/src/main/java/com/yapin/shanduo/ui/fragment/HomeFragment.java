@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -50,6 +51,10 @@ public class HomeFragment extends Fragment{
     TextView tvTrend;
     @BindView(R.id.ll_title)
     LinearLayout llTitle;
+    @BindView(R.id.rl_title)
+    RelativeLayout rlTitle;
+    @BindView(R.id.iv_shanduo)
+    ImageView ivShanduo;
 
     private Context context;
     private Activity activity;
@@ -81,8 +86,8 @@ public class HomeFragment extends Fragment{
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
-        tvAct.setText(Html.fromHtml("<u>活动</u>"));
-        tvTrend.setText(Html.fromHtml("<u>动态</u>"));
+//        tvAct.setText(Html.fromHtml("<u>活动</u>"));
+//        tvTrend.setText(Html.fromHtml("<u>动态</u>"));
 
         viewPager.setOffscreenPageLimit(2);
         viewPager.setAdapter(new HomeViewPagerAdapter(getChildFragmentManager()));
@@ -165,7 +170,14 @@ public class HomeFragment extends Fragment{
     }
 
     public void setTitleHidden(float alpha){
-        llTitle.setAlpha(alpha);
+        if(alpha == 1){
+            ivShanduo.setVisibility(View.GONE);
+            llTitle.setVisibility(View.VISIBLE);
+        }else {
+            ivShanduo.setVisibility(View.VISIBLE);
+            llTitle.setVisibility(View.GONE);
+        }
+//        llTitle.setAlpha(alpha);
     }
 
 }

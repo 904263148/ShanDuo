@@ -42,7 +42,7 @@ public class ShowPictureAdapter extends RecyclerView.Adapter<ShowPictureAdapter.
     @Override
     public void onBindViewHolder(ShowPictureAdapter.ViewHolder holder, int position) {
         if (source != -1 && position == 0) {
-            Glide.with(activity).load(R.drawable.add_picture).into(holder.ivPicture);
+            Glide.with(activity).load(R.drawable.icon_trend_photo).into(holder.ivPicture);
             return;
         }
         Glide.with(activity).load(list.get(position)).into(holder.ivPicture);

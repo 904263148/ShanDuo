@@ -63,5 +63,17 @@ public class PrefUtil {
 //        return sp.getString(Accuracy, "");
 //    }
 
+    private static final String FIRSTUSE = "isFirstUse";
+
+    public static void setFirstUse(Context context, int type) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putInt(FIRSTUSE, type).commit();
+    }
+
+    public static int getFirstUse(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getInt(FIRSTUSE, Constants.ISFIRSTUSE);
+    }
+
 
 }

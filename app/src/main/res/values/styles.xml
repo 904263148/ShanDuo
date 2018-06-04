@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
+        <!--<item name="android:windowLightStatusBar">true</item>-->
         <item name="android:windowIsTranslucent">false</item>
     </style>
 

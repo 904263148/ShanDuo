@@ -16,11 +16,13 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.im.adapters.ProfileSummaryAdapter;
 import com.yapin.shanduo.im.model.GroupProfile;
 import com.yapin.shanduo.im.model.ProfileSummary;
+import com.yapin.shanduo.ui.activity.BaseActivity;
+import com.yapin.shanduo.ui.activity.RightSlidingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchGroupActivity extends Activity implements GroupInfoView, View.OnKeyListener{
+public class SearchGroupActivity extends RightSlidingActivity implements GroupInfoView, View.OnKeyListener{
 
     private final String TAG = "SearchGroupActivity";
 
@@ -31,7 +33,7 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
     private ListView listView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
         searchInput = (EditText) findViewById(R.id.inputSearch);
@@ -49,7 +51,7 @@ public class SearchGroupActivity extends Activity implements GroupInfoView, View
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
 

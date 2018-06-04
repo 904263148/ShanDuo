@@ -91,6 +91,7 @@
         android:layout_alignBottom="@+id/rv_show"
         android:paddingLeft="10dp"
         android:background="@color/colorAccent"
+        android:visibility="gone"
         >
 
         <ImageButton

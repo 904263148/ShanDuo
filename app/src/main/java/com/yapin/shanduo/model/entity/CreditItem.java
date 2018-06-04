@@ -10,10 +10,45 @@ import com.yapin.shanduo.utils.Constants;
  */
 public class CreditItem implements Parcelable {
 
-    private int type = Constants.TYPE_TOP;
+    private int type = Constants.TYPE_BOTTOM;
 
-    private String mode , activity_name , evaluation_content , user_name , head_portrait_id , father_head , presenter_head , presenter_name , gender ,id;
-    private int birthday ,score , father_id , father_reputation , vipGrade;
+    private boolean isTitle;
+
+    public boolean isTitle() {
+        return isTitle;
+    }
+
+    public void setTitle(boolean title) {
+        isTitle = title;
+    }
+
+    private String mode , activity_name , evaluation_content , user_name , head_portrait_id , father_head , presenter_head , presenter_name , gender ,id , be_evaluated;
+    private int birthday  , father_id , father_reputation , vipGrade ;
+    private Integer others_score ,score;
+
+    public Integer getOthers_score() {
+        return others_score;
+    }
+
+    public void setOthers_score(Integer others_score) {
+        this.others_score = others_score;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public String getBe_evaluated() {
+        return be_evaluated;
+    }
+
+    public void setBe_evaluated(String be_evaluated) {
+        this.be_evaluated = be_evaluated;
+    }
 
     public String getPresenter_head() {
         return presenter_head;
@@ -135,14 +170,6 @@ public class CreditItem implements Parcelable {
         this.birthday = birthday;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public CreditItem() {
     }
 
@@ -154,6 +181,7 @@ public class CreditItem implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.type);
+        dest.writeByte(this.isTitle ? (byte) 1 : (byte) 0);
         dest.writeString(this.mode);
         dest.writeString(this.activity_name);
         dest.writeString(this.evaluation_content);
@@ -164,15 +192,18 @@ public class CreditItem implements Parcelable {
         dest.writeString(this.presenter_name);
         dest.writeString(this.gender);
         dest.writeString(this.id);
+        dest.writeString(this.be_evaluated);
         dest.writeInt(this.birthday);
-        dest.writeInt(this.score);
         dest.writeInt(this.father_id);
         dest.writeInt(this.father_reputation);
         dest.writeInt(this.vipGrade);
+        dest.writeValue(this.others_score);
+        dest.writeValue(this.score);
     }
 
     protected CreditItem(Parcel in) {
         this.type = in.readInt();
+        this.isTitle = in.readByte() != 0;
         this.mode = in.readString();
         this.activity_name = in.readString();
         this.evaluation_content = in.readString();
@@ -183,11 +214,13 @@ public class CreditItem implements Parcelable {
         this.presenter_name = in.readString();
         this.gender = in.readString();
         this.id = in.readString();
+        this.be_evaluated = in.readString();
         this.birthday = in.readInt();
-        this.score = in.readInt();
         this.father_id = in.readInt();
         this.father_reputation = in.readInt();
         this.vipGrade = in.readInt();
+        this.others_score = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.score = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Creator<CreditItem> CREATOR = new Creator<CreditItem>() {

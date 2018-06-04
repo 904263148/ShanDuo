@@ -62,10 +62,14 @@ public class CreditModelImpl implements CreditLoadModel{
                 }
 
                 for (CreditInfo.Credit credit: info.getList()){
+
                     CreditItem creditTop = new CreditItem();
-                    creditTop.setFather_head(info.getMaps().getHead_portrait_id());
-                    creditTop.setFather_id(info.getMaps().getId());
-                    creditTop.setFather_reputation(info.getMaps().getReputation());
+                    creditTop.setType(Constants.TYPE_BOTTOM);
+                    if(info.getMap() != null){
+                        creditTop.setFather_head(info.getMap().getHead_portrait_id());
+                        creditTop.setFather_id(info.getMap().getId());
+                        creditTop.setFather_reputation(info.getMap().getReputation());
+                    }
                     creditTop.setMode(credit.getMode());
                     creditTop.setActivity_name(credit.getActivity_name());
                     creditTop.setBirthday(credit.getBirthday());
@@ -74,17 +78,26 @@ public class CreditModelImpl implements CreditLoadModel{
                     creditTop.setGender(credit.getGender());
                     creditTop.setVipGrade(credit.getVipGrade());
                     creditTop.setId(credit.getId());
-                    creditTop.setType(Constants.TYPE_TOP);
+                    creditTop.setTitle(true);
                     list.add(creditTop);
 
                     for (CreditItem item : credit.getScoreList()){
-                        CreditItem creditBottom = new CreditItem();
-                        creditBottom.setType(Constants.TYPE_BOTTOM);
-                        creditBottom.setEvaluation_content(item.getEvaluation_content());
-                        creditBottom.setUser_name(item.getUser_name());
-                        creditBottom.setHead_portrait_id(item.getHead_portrait_id());
-                        creditBottom.setBirthday(item.getBirthday());
-                        list.add(creditBottom);
+                        item.setType(Constants.TYPE_BOTTOM);
+                        item.setTitle(false);
+                        item.setFather_head(info.getMap().getHead_portrait_id());
+                        item.setFather_id(info.getMap().getId());
+                        item.setFather_reputation(info.getMap().getReputation());
+                        item.setMode(credit.getMode());
+                        item.setActivity_name(credit.getActivity_name());
+                        item.setBirthday(credit.getBirthday());
+                        item.setPresenter_head(credit.getHead_portrait_id());
+                        item.setPresenter_name(credit.getUser_name());
+                        item.setGender(credit.getGender());
+                        item.setVipGrade(credit.getVipGrade());
+                        item.setId(credit.getId());
+                        item.setBe_evaluated(credit.getBe_evaluated());
+                        item.setOthers_score(credit.getOthers_score());
+                        list.add(item);
                     }
 
                 }

@@ -16,6 +16,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.im.adapters.ProfileSummaryAdapter;
 import com.yapin.shanduo.im.model.FriendProfile;
 import com.yapin.shanduo.im.model.ProfileSummary;
+import com.yapin.shanduo.ui.activity.RightSlidingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * 查找添加新朋友
  */
-public class SearchFriendActivity extends Activity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener {
+public class SearchFriendActivity extends RightSlidingActivity implements FriendInfoView, AdapterView.OnItemClickListener, View.OnKeyListener {
 
     private final static String TAG = "SearchFriendActivity";
 
@@ -35,7 +36,7 @@ public class SearchFriendActivity extends Activity implements FriendInfoView, Ad
     List<ProfileSummary> list = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addnew);
         mSearchInput = (EditText) findViewById(R.id.inputSearch);

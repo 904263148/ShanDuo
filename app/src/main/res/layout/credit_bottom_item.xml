@@ -2,11 +2,17 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:paddingTop="10dp"
-    android:paddingRight="10dp"
-    android:paddingLeft="10dp"
     >
+
+    <RelativeLayout
+        android:id="@+id/rl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        >
 
     <RelativeLayout
         android:id="@+id/rl_tag"
@@ -83,7 +89,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_hidden"
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_head"
@@ -91,31 +97,217 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:textSize="@dimen/egg_font_size"
-            android:textColor="@color/home_title_color"
-            android:text="发起者评价:"
+            android:textColor="@color/font_color_gray"
+            android:text="胖虎,请你下次不要来了好吧?"
             />
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_tag"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="5dp"
-        android:text="胖虎,请你下次不要来了好吧?"
-        android:textSize="@dimen/egg_font_size"
-        android:textColor="@color/font_color_gray"
-        />
+        <LinearLayout
+            android:id="@+id/ll_heart2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/rl_tag"
+            >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_hidden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_tag"
+                android:text="发起者评价:"
+                android:textSize="@dimen/egg_font_size"
+                android:textColor="@color/home_title_color"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_heart6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="5dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_heart10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_heart_red"
+                android:layout_marginLeft="2dp"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_presenter_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/ll_heart2"
+            android:textSize="@dimen/egg_font_size"
+            android:textColor="@color/font_color_gray"
+            android:text="胖虎,请你下次不要来了好吧?"
+            />
+
+        </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginLeft="40dp"
-        android:layout_below="@+id/tv_content"
+        android:layout_below="@+id/ll_heart2"
         android:background="@color/bg_color"
         android:layout_marginTop="12dp"
         />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rl_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/iv_presenter_head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/head"
+                android:layout_centerVertical="true"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_presenter_head"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_presenter_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小猪佩奇"
+                    android:textColor="@color/home_title_color"
+                    android:textSize="12sp"
+                    android:paddingBottom="2dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_vip"
+                    android:layout_width="25dp"
+                    android:layout_height="10dp"
+                    android:text="SVIP2"
+                    android:textSize="7sp"
+                    android:layout_below="@+id/tv_presenter_name"
+                    android:background="@drawable/rounded_tv_vip"
+                    android:textColor="@color/color_white"
+                    android:layout_toRightOf="@+id/tv_home_age"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_home_age"
+                    android:layout_width="25dp"
+                    android:layout_height="10dp"
+                    android:text="23"
+                    android:textSize="7sp"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/rounded_tv_sex_women"
+                    android:textColor="@color/color_white"
+                    android:gravity="center"
+                    android:drawableLeft="@drawable/icon_women"
+                    android:drawablePadding="2dp"
+                    android:layout_below="@+id/tv_presenter_name"
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center|right"
+                android:layout_alignParentRight="true"
+                >
+
+                <TextView
+                    android:id="@+id/tv_act_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主题:一起吃火锅"
+                    android:textSize="@dimen/egg_font_size_big"
+                    android:textColor="@color/home_title_color"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AA制"
+                    android:textSize="@dimen/egg_font_size_big"
+                    android:textColor="@color/home_title_color"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_color"
+            />
+    </LinearLayout>
+
 
 </RelativeLayout>
