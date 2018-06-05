@@ -48,6 +48,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0.00"
@@ -77,6 +78,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_beans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="50"
@@ -132,6 +134,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_Transactionrecord"
             android:layout_marginLeft="1dp"
             android:orientation="vertical"
             android:background="@color/colorAccent"

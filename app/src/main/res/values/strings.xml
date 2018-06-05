@@ -58,6 +58,7 @@
 
     <string name="tips_no_act">暂无活动</string>
     <string name="tips_no_trend">暂无动态</string>
+    <string name="tips_no_Record">暂无记录</string>
     <string name="tips_no_credit">没什么好看的</string>
     <string name="tips_no_token">必须登录才能查看好友活动哟~</string>
     <string name="tips_my_no_token">请先登录哦</string>

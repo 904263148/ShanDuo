@@ -3,6 +3,7 @@ package com.yapin.shanduo.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,9 +28,17 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.FlickerPurseInfo;
 import com.yapin.shanduo.model.entity.PayResult;
+import com.yapin.shanduo.model.entity.TransactionrecordInfo;
+import com.yapin.shanduo.presenter.MywalletPresenter;
+import com.yapin.shanduo.ui.contract.MywalletContract;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -40,8 +49,9 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/3.
  */
 
-public class MywalletActivity extends BaseActivity implements PopupWindow.OnDismissListener, View.OnClickListener {
+public class MywalletActivity extends BaseActivity implements MywalletContract.View , PopupWindow.OnDismissListener, View.OnClickListener {
 
+    private MywalletPresenter presenter;
     private Context context;
     private Activity activity;
 
@@ -49,25 +59,40 @@ public class MywalletActivity extends BaseActivity implements PopupWindow.OnDism
     private View popView;
     private PopupView popupView;
 
+    private static final int TRANSACTIONRECORD=1;
+
     private static final int SDK_PAY_FLAG = 1;
 
+    @BindView(R.id.tv_money)
+    TextView tv_money;
+    @BindView(R.id.tv_beans)
+    TextView tv_beans;
+
+
+    private FlickerPurseInfo flickerPurseInfo = new FlickerPurseInfo();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mywallet);
         ButterKnife.bind(this);
+
+        presenter = new MywalletPresenter();
+        presenter.init(context,this);
         //设置PopupWindow的View
         popView = LayoutInflater.from(this).inflate(R.layout.popwindow_commonroof, null);
         initView();
+        presenter.mywallet();
+
+
     }
 
-    private void initView() {
+    public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = this;
     }
 
     @Override
-    @OnClick({R.id.iv_back, R.id.ll_recharge})
+    @OnClick({R.id.iv_back, R.id.ll_recharge ,R.id.ll_Transactionrecord})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -75,6 +100,9 @@ public class MywalletActivity extends BaseActivity implements PopupWindow.OnDism
                 break;
             case R.id.ll_recharge:
                 openPopupWindow();
+                break;
+            case R.id.ll_Transactionrecord:
+                StartActivityUtil.start(activity , TransactionrecordActivity.class , TRANSACTIONRECORD);
                 break;
         }
     }
@@ -99,6 +127,34 @@ public class MywalletActivity extends BaseActivity implements PopupWindow.OnDism
         Thread payThread1 = new Thread(payRunnable1);
         payThread1.start();
         Log.d("wechat","点击了");
+    }
+
+    @Override
+    public void success(FlickerPurseInfo data) {
+        ToastUtil.showShortToast(context , data);
+        flickerPurseInfo = data;
+        tv_money.setText(flickerPurseInfo.getMoney()+"");
+        tv_beans.setText(flickerPurseInfo.getBeans()+"");
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(context,"网络连接异常");
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context,msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
     }
 
     class PopupView {
@@ -255,4 +311,12 @@ public class MywalletActivity extends BaseActivity implements PopupWindow.OnDism
         };
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case TRANSACTIONRECORD:
+                break;
+        }
+    }
 }

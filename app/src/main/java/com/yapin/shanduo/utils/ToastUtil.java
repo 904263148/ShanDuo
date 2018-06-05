@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.amap.api.services.core.AMapException;
+import com.yapin.shanduo.model.entity.FlickerPurseInfo;
 
 /**
  * Toast工具类
@@ -152,4 +153,6 @@ public class ToastUtil {
         }
     }
 
+    public static void showShortToast(Context context, FlickerPurseInfo data) {
+    }
 }

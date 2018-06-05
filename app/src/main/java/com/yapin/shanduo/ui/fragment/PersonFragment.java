@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.NumberInfo;
+import com.yapin.shanduo.presenter.NumberPresenter;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
@@ -25,12 +27,14 @@ import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MywalletActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
+import com.yapin.shanduo.ui.contract.NumberContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,11 +42,11 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PersonFragment extends Fragment {
+public class PersonFragment extends Fragment implements NumberContract.View{
 
     private Activity activity;
     private Context context;
-    private ShanDuoPartyApplication application;
+    private NumberPresenter presenter;
 
     private final int PUBLISH_ACT_OPEN_LOGIN = 1;
     private final int PUBLISH_MYDYNAMICS_LOGIN = 2;
@@ -63,6 +67,11 @@ public class PersonFragment extends Fragment {
       private TextView tv_id;
       private TextView tv_svip;
       private TextView tv_level;
+      private TextView tv_friend_count;
+      private TextView tv_act_count;
+      private TextView tv_trend_count;
+
+    private NumberInfo numberInfo = new NumberInfo();
 
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
@@ -80,6 +89,8 @@ public class PersonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person_layout,container,false);
         ButterKnife.bind(this,view);
+        presenter = new NumberPresenter();
+        presenter.init(context,this);
         tv_nickname = view.findViewById(R.id.tv_nickname);
         ib_Headportrait = view.findViewById(R.id.ib_Headportrait);
         tv_sex = view.findViewById(R.id.tv_sex);
@@ -89,13 +100,17 @@ public class PersonFragment extends Fragment {
         tv_id = view.findViewById(R.id.tv_id);
         tv_svip = view.findViewById(R.id.tv_svip);
         tv_level = view.findViewById(R.id.tv_level);
-
-
-        initView();
+        tv_friend_count = view.findViewById(R.id.tv_friend_count);
+        tv_act_count = view.findViewById(R.id.tv_act_count);
+        tv_trend_count = view.findViewById(R.id.tv_trend_count);
+        initViewinfo();
         return view;
     }
 
-    private void initView(){
+
+
+
+    private void initViewinfo() {
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
@@ -105,6 +120,10 @@ public class PersonFragment extends Fragment {
         }else {
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
+
+            presenter.getnumber();
+
+
             tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
             tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
@@ -216,5 +235,39 @@ public class PersonFragment extends Fragment {
                 break;
 
         }
+    }
+
+    @Override
+    public void success(NumberInfo data) {
+//        ToastUtil.showShortToast(context , data);
+        numberInfo = data;
+            tv_friend_count.setText(numberInfo.getAttention());
+            tv_act_count.setText(numberInfo.getActivity());
+            tv_trend_count.setText(numberInfo.getDynamic());
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(context,"网络连接异常");
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context,msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
+    }
+
+    @Override
+    public void initView() {
+
     }
 }
