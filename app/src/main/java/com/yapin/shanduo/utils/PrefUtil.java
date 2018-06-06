@@ -75,5 +75,15 @@ public class PrefUtil {
         return sp.getInt(FIRSTUSE, Constants.ISFIRSTUSE);
     }
 
+    private static final String CITY = "city";
+    public static void setCity(Context context, String place) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(CITY, place).commit();
+    }
+
+    public static String getCity(Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(CITY , "长沙市");
+    }
 
 }

@@ -322,14 +322,14 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 publishPopupWindow.dismiss();
             }
         }
-        setBackgroundAlpha(1);
+//        setBackgroundAlpha(1);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //设置背景色
-        setBackgroundAlpha(0.5f);
+//        setBackgroundAlpha(0.5f);
     }
 
     @Override

@@ -154,6 +154,8 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
 
         if(type == 0){
             llJoin.setVisibility(View.GONE);
+        }else {
+            llJoin.setVisibility(View.VISIBLE);
         }
 
         adapter = new GridViewAdapter(context , activity , list);

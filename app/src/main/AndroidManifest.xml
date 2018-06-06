@@ -300,8 +300,9 @@
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
         <activity
             android:name=".ui.activity.AddactivityActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            />
         <activity android:name=".ui.activity.MywalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity

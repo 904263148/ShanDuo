@@ -56,6 +56,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     private int position;
     private String userId;
 
+    private int joinPosition;
+
     private int page = 1;
     private int pageSize = 10;
     private boolean isRefresh = false;
@@ -107,6 +109,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         dialog.setMessage("加载中...");
         dialog.setCancelable(false);
 
+        joinPosition = position;
+
         layoutManager = new LinearLayoutManager(context);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
@@ -146,6 +150,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         }
         Bundle bundle = new Bundle();
         bundle.putParcelable("act" , list.get(position));
+        bundle.putInt("type" , joinPosition);
         StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
     }
 
@@ -159,7 +164,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
             case Constants.ACT_JOIN:
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("act" , list.get(position));
-                bundle.putInt("type" , position);
+                bundle.putInt("type" , joinPosition);
                 StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
                 break;
             case Constants.ACT_LOCATION:

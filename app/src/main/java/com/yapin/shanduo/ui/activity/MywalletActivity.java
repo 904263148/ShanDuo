@@ -187,6 +187,25 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
             ButterKnife.bind(this, view);
         }
 
+        @OnClick({R.id.ib_back , R.id.tv_balance_pay , R.id.tv_wechat_pay , R.id.tv_alipay , R.id.bt_cancel , R.id.bt_confirm})
+        public void onClick(View view){
+            switch (view.getId()){
+                case R.id.ib_back:
+                    popupWindow.dismiss();
+                    break;
+                case R.id.tv_balance_pay:
+                    break;
+                case R.id.tv_wechat_pay:
+                    break;
+                case R.id.tv_alipay:
+                    break;
+                case R.id.bt_cancel:
+                    break;
+                case R.id.bt_confirm:
+                    break;
+            }
+        }
+
     }
 
     public void openPopupWindow() {

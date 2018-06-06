@@ -170,6 +170,7 @@ public class HomeFragment extends Fragment{
     }
 
     public void setTitleHidden(float alpha){
+        if(ivShanduo == null || llTitle == null) return;
         if(alpha == 1){
             ivShanduo.setVisibility(View.GONE);
             llTitle.setVisibility(View.VISIBLE);

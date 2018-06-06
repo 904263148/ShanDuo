@@ -116,4 +116,16 @@ public class Constants {
     //打开登录页面
     public static final int OPEN_LOGIN = 0;
 
+    //支付参数
+    public static final String PAY_BALANCE = "1";
+    public static final String PAY_ALIPAY = "2";
+    public static final String PAY_WECHAT = "3";
+
+    //支付订单类型
+    public static final String TYPE_CHARGE = "1";
+    public static final String TYPE_VIP = "2";
+    public static final String TYPE_SVIP = "3";
+    public static final String TYPE_ACT_REFRESH = "4";
+    public static final String TYPE_ACT_TOP = "5";
+
 }
