@@ -114,7 +114,7 @@ public class ApiUtil {
     public final static String USERCOUNT = ConfigUtil.configUrl() +"/juser/usercount";
 
     //取消活动
-    public final static String DELETEACTIVITY = "http://192.168.1.123:8080/shanduoparty/activity/deleteActivity";
+    public final static String DELETEACTIVITY = ConfigUtil.configUrl() + "/activity/deleteActivity";
 
     //刷新
     public final static String REFRESHACTIVITY = ConfigUtil.configUrl() +"/jmoney/refreshactivity";

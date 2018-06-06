@@ -160,12 +160,13 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
             tvVip.setText("SVIP"+(level-10));
             tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
-        if (positiona == 0){
-            tv_confirm.setVisibility(View.GONE);
-        }else if (positiona == 1){
-            tv_confirm.setVisibility(View.GONE);
-        }else if (positiona == 2){
-//            if (typeid == 4) {
+//        if (positiona == 0){
+//            tv_confirm.setVisibility(View.GONE);
+//        }else if (positiona == 1){
+//            tv_confirm.setVisibility(View.GONE);
+//        }else
+            if (positiona == 2 ){
+                tv_confirm.setText("取消活动");
                 tv_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -186,8 +187,10 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
                         }).create().show();
                     }
                 });
-//            }
-        }
+            }else {
+                tv_confirm.setVisibility(View.GONE);
+            }
+
         Log.i("typeidinit", "initView: "+positiona);
         adapter = new GridViewAdapter(context , activity , list);
         gridView.setAdapter(adapter);

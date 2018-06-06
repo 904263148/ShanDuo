@@ -108,7 +108,7 @@
     <string name="title_confirm_join_act">您确认参加活动吗</string>
     <string name="title_cancel_join_act">您确认取消参加活动吗</string>
     <string name="title_cancel_activity">您确定要取消活动吗</string>
-
+    <string name="title_detele_activity">您确定要删除活动吗</string>
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
