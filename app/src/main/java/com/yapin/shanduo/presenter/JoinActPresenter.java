@@ -18,7 +18,7 @@ public class JoinActPresenter implements JoinActContract.Presenter{
     }
 
     @Override
-    public void join(String activityId  , String type) {
+    public void join(String activityId  , String type , String userIds) {
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -34,7 +34,7 @@ public class JoinActPresenter implements JoinActContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , activityId , type);
+        } , activityId , type , userIds);
 
     }
 }

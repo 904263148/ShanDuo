@@ -24,12 +24,12 @@ public class ApiUtil {
     public final static String HOME_ACT = ConfigUtil.configUrl() + "/activity/showHotActivity";
 
     //添加活动
-    public final static String ADD_ACTIVITY =  ConfigUtil.configUrl() +"/activity/saveactivity";
+    public final static String ADD_ACTIVITY = ConfigUtil.configUrl() + "/activity/saveactivity";
 
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/dynamicList";
 
-    //参加活动
+    //参加活动 ， 取消活动 ，踢人
     public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/joinActivities";
 
     //首页轮播
@@ -112,4 +112,10 @@ public class ApiUtil {
 
     //查询好友动态活动数量
     public final static String USERCOUNT = ConfigUtil.configUrl() +"/juser/usercount";
+
+    //取消活动
+    public final static String DELETEACTIVITY = "http://192.168.1.123:8080/shanduoparty/activity/deleteActivity";
+
+    //刷新
+    public final static String REFRESHACTIVITY = ConfigUtil.configUrl() +"/jmoney/refreshactivity";
 }

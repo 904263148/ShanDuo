@@ -3,11 +3,13 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
@@ -45,7 +48,9 @@ import static android.app.Activity.RESULT_OK;
  * Created by dell on 2018/5/18.
  */
 
-public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View  , SwipeRefreshLayout.OnRefreshListener{
+public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,
+        LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View  ,
+        SwipeRefreshLayout.OnRefreshListener ,MyactivityinfoAdapter.ClickListener{
 
     @BindView(R.id.my_recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -64,6 +69,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
 
     private int positiona;
     private int typeId;
+
+    private int jocn = 2;
 
     private int page = 1;
     private int pageSize = 10;
@@ -121,7 +128,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new MyactivityinfoAdapter(context, activity , list ,positiona ,typeId);
 //        Log.i("typeid", typeId+"");
-
+        adapter.setmClickListener(this);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
         refreshLayout.setOnRefreshListener(this);
@@ -134,6 +141,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
 //        Log.i("loglon",PrefUtil.getLon(context)+"" + PrefUtil.getLat(context)+"");
         recyclerView.setOnLoadMoreListener(this);
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -249,5 +258,25 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         setRefreshLoading(true, false);
         page = 1;
         presenter.getmyactivity((positiona+4)+"",   PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
+    }
+
+    @Override
+    public void onClick(int position, final String activityId, int userId) {
+//        Toast.makeText(context, "点击了", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.title_cancel_join_act)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        return;
+                    }
+                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                joinActPresenter.join(activityId , jocn+"" ,"");
+            }
+        }).create().show();
     }
 }

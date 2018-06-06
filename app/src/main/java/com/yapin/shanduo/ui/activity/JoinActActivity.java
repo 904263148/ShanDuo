@@ -186,7 +186,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            joinActPresenter.join(act.getId() , (isJoin+1)+"");
+                            joinActPresenter.join(act.getId() , (isJoin+1)+"" ,"");
                         }
                     }).create().show();
                 }else {
@@ -202,7 +202,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            joinActPresenter.join(act.getId() , (isJoin+1)+"");
+                            joinActPresenter.join(act.getId() , (isJoin+1)+"" ,"");
                         }
                     }).create().show();
                 }

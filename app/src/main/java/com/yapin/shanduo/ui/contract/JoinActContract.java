@@ -20,7 +20,7 @@ public interface JoinActContract {
     }
 
     interface Presenter{
-        void join(String activityId , String type);
+        void join(String activityId , String type , String userIds);
     }
 
 }

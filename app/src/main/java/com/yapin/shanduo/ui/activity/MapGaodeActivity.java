@@ -52,10 +52,12 @@ import com.amap.api.services.help.Tip;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.SearchResultAdapter;
 import com.yapin.shanduo.utils.BitmapUtils;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.FileUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.glide.SegmentedGroup;
 
@@ -87,8 +89,10 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private AMapLocationClient mlocationClient;
     private AMapLocationClientOption mLocationOption;
 
-    private String[] items = {"KTV", "酒店", "风景名胜", "体育休闲"};
+    private String textlonlat;
 
+//    private String[] items = {"KTV", "酒店", "风景名胜", "体育休闲"};
+    private String items = "生活服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|地名地址信息";
     private Marker locationMarker;
 
     private ProgressDialog progDialog = null;
@@ -99,7 +103,8 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private PoiSearch poiSearch;
     private List<PoiItem> poiItems;// poi数据
 
-    private String searchType = items[0];
+//    private String searchType = items[0];
+    private String searchType = items;
     private String searchKey = "";
     private LatLonPoint searchLatlonPoint;
 
@@ -118,18 +123,23 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
 
     private String s1="nullnull";
 
+    private Context context;
+    private Activity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.map_gaode);
         ButterKnife.bind(this);
+        context = ShanDuoPartyApplication.getContext();
+        activity = this;
         chat_map = getIntent().getBooleanExtra("chat_map" , false);
 
         mapView = (MapView) findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         init();
-
+        textlonlat = PrefUtil.getcity(context);
         initView();
 
         resultData = new ArrayList<>();
@@ -153,20 +163,20 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         mSegmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                searchType = items[0];
+                searchType = items;
                 switch (checkedId) {
                     case R.id.radio0 :
-                        searchType = items[0];
+                        searchType = items;
                         break;
-                    case R.id.radio1 :
-                        searchType = items[1];
-                        break;
-                    case R.id.radio2 :
-                        searchType = items[2];
-                        break;
-                    case R.id.radio3 :
-                        searchType = items[3];
-                        break;
+//                    case R.id.radio1 :
+//                        searchType = items[1];
+//                        break;
+//                    case R.id.radio2 :
+//                        searchType = items[2];
+//                        break;
+//                    case R.id.radio3 :
+//                        searchType = items[3];
+//                        break;
                 }
                 geoAddress();
             }
@@ -183,7 +193,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String newText = s.toString().trim();
                 if (newText.length() > 0) {
-                    InputtipsQuery inputquery = new InputtipsQuery(newText, "");
+                    InputtipsQuery inputquery = new InputtipsQuery(newText, textlonlat);
                     Inputtips inputTips = new Inputtips(MapGaodeActivity.this, inputquery);
                     inputquery.setCityLimit(true);
                     inputTips.setInputtipsListener(inputtipsListener);
@@ -423,7 +433,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         showDialog();
         searchText.setText("");
         if (searchLatlonPoint != null){
-            RegeocodeQuery query = new RegeocodeQuery(searchLatlonPoint, 200, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+            RegeocodeQuery query = new RegeocodeQuery(searchLatlonPoint, 3000, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
             geocoderSearch.getFromLocationAsyn(query);
         }
     }
@@ -437,7 +447,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     protected void doSearchQuery() {
 //        Log.i("MY", "doSearchQuery");
         currentPage = 0;
-        query = new PoiSearch.Query(searchKey, searchType, "");// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query = new PoiSearch.Query(searchKey, searchType, textlonlat );// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
         query.setCityLimit(true);
         query.setPageSize(20);
         query.setPageNum(currentPage);
@@ -445,7 +455,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         if (searchLatlonPoint != null) {
             poiSearch = new PoiSearch(this, query);
             poiSearch.setOnPoiSearchListener(this);
-            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 2000, true));//
+            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 3000, true));//
             poiSearch.searchPOIAsyn();
 
 
@@ -533,7 +543,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                     return;
 
                 String textTitle = resultData.get(position).getTitle().toString().trim();
-                String textlonlat = resultData.get(position).getLatLonPoint().toString().trim();
+                textlonlat = resultData.get(position).getLatLonPoint().toString().trim();
                 String textSubTitle = resultData.get(position).getCityName()+poiItem.getAdName() + poiItem.getSnippet().toString().trim();
             /**
              * 删除textSubTitle里面包含string = s1 的值

@@ -103,9 +103,11 @@
     <string name="confirm_join">确认报名</string>
     <string name="tips_no_user_join">暂无人加入</string>
     <string name="cancel_join">取消报名</string>
+    <string name="cancel_activity">取消活动</string>
 
     <string name="title_confirm_join_act">您确认参加活动吗</string>
     <string name="title_cancel_join_act">您确认取消参加活动吗</string>
+    <string name="title_cancel_activity">您确定要取消活动吗</string>
 
     <string name="action_bar_back">返回</string>
     <string name="confirm">确定</string>
@@ -505,5 +507,13 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="brief_introduction">
+        \t\t\t\t闪多是国内首款社交类综合服务型的APP，以发布活动建立自己的兴趣圈子、参加活动寻找符合自己的圈子，
+        同时发布需求活动便捷生活。衣食住行不管是需求发布活动还是兴趣发布活动，
+        都能在恰当的时间找到有需求感兴趣的一群朋友，拓展自己的社交圈子，
+        丰富自己的生活，让生活更便捷
+
+
+    </string>
 
 </resources>

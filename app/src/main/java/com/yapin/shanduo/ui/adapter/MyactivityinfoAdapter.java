@@ -161,7 +161,15 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }else if (positiona == 1){
                     holder.tvevaluation.setVisibility(View.GONE);
                     holder.tvJoin.setText("取消报名");
-//                    holder.tvJoin.setOnClickListener();
+                    holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String activityId = list.get(position).getId();
+                            int userId = list.get(position).getUserId();
+                            //v表示点击动作，1表示根据该值来判断是哪个控件的点击事件，position表示点击哪个
+                            mClickListener.onClick( position ,activityId ,userId);
+                        }
+                    });
 
             }else if (positiona == 2){
                 if (typeid == 4) {
@@ -207,8 +215,12 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             holder.ll_details.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String activityId = list.get(position).getId();
                     Bundle bundle = new Bundle();
                     bundle.putParcelable("act" , list.get(position));
+                    bundle.putInt("positiona",positiona);
+                    bundle.putString("activityId" ,activityId);
+                    bundle.putInt("typeid" ,typeid);
                     StartActivityUtil.start(activity , DetailsActivity.class, bundle);
                 }
             });
@@ -229,7 +241,15 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         return list.get(position).getType();
     }
+    public interface ClickListener {
+        void onClick( int position ,String activityId ,int userId);
+    }
 
+    public void setmClickListener(ClickListener mClickListener){
+        this.mClickListener = mClickListener;
+    }
+
+    private ClickListener mClickListener;
 
 
     public interface OnItemClickListener {

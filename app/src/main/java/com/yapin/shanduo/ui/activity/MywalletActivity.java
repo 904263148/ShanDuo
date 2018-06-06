@@ -182,6 +182,10 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
         Button btCancel;
         @BindView(R.id.bt_confirm)
         Button btConfirm;
+        @BindView(R.id.ll_tag)
+        LinearLayout ll_tag;
+        @BindView(R.id.ll_balance)
+        LinearLayout ll_balance;
 
         public PopupView(View view) {
             ButterKnife.bind(this, view);
@@ -238,7 +242,8 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
 
     private void initPopView(PopupView popupView){
         popupView.tvTitle.setText("充值");
-        popupView.tvBalancePay.setVisibility(View.GONE);
+        popupView.ll_tag.setVisibility(View.GONE);
+        popupView.ll_balance.setVisibility(View.GONE);
         popupView.tvMemo1.setVisibility(View.GONE);
         popupView.tvMemo2.setVisibility(View.GONE);
     }

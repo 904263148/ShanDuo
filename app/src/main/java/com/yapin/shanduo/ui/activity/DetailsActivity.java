@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -16,9 +17,11 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.JoinActUser;
+import com.yapin.shanduo.presenter.ConfirmPresenter;
 import com.yapin.shanduo.presenter.JoinActPresenter;
 import com.yapin.shanduo.presenter.JoinActUserPresenter;
 import com.yapin.shanduo.ui.adapter.GridViewAdapter;
+import com.yapin.shanduo.ui.contract.ConfirmContract;
 import com.yapin.shanduo.ui.contract.JoinActUserContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/31.
  */
 
-public class DetailsActivity extends BaseActivity implements JoinActUserContract.View {
+public class DetailsActivity extends BaseActivity implements JoinActUserContract.View ,ConfirmContract.View {
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -77,13 +80,18 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
     LoadingView loadingView;
     @BindView(R.id.gridview)
     GridView gridView;
+    @BindView(R.id.tv_confirm)
+    TextView tv_confirm;
 
     private Context context;
     private Activity activity;
 
     private ActivityInfo.Act act = new ActivityInfo.Act();
-
+    private int positiona;
+    private int typeid;
+    private String activityId;
     private JoinActUserPresenter presenter;
+    private ConfirmPresenter confirmPresenter;
 
     private GridViewAdapter adapter;
 
@@ -101,14 +109,20 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
         ButterKnife.bind(this);
         presenter = new JoinActUserPresenter();
         presenter.init(this);
+        confirmPresenter = new ConfirmPresenter();
+        confirmPresenter.init(context ,this);
 
     }
 
     @Override
     public void initView() {
 
+        Bundle bundle = this.getIntent().getExtras();
+        positiona = bundle.getInt("positiona");
+        activityId = bundle.getString( "activityId");
+        typeid = bundle.getInt("typeid");
         act = getIntent().getParcelableExtra("act");
-
+//        positiona = getIntent().getParcelableExtra("positiona");
         tvKind.setText(act.getActivityName());
         tvTime.setText(act.getActivityStartTime());
         tvType.setText(act.getMode());
@@ -146,7 +160,35 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
             tvVip.setText("SVIP"+(level-10));
             tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
-
+        if (positiona == 0){
+            tv_confirm.setVisibility(View.GONE);
+        }else if (positiona == 1){
+            tv_confirm.setVisibility(View.GONE);
+        }else if (positiona == 2){
+//            if (typeid == 4) {
+                tv_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setMessage(R.string.title_cancel_activity)
+                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        return;
+                                    }
+                                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                confirmPresenter.deleteconfirm(activityId);
+                            }
+                        }).create().show();
+                    }
+                });
+//            }
+        }
+        Log.i("typeidinit", "initView: "+positiona);
         adapter = new GridViewAdapter(context , activity , list);
         gridView.setAdapter(adapter);
         presenter.getData(act.getId() , "1" , "10");
@@ -187,6 +229,11 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
 //        }
 //        ToastUtil.showShortToast(context , data);
 //    }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context,"取消成功");
+    }
 
     @Override
     public void loading() {

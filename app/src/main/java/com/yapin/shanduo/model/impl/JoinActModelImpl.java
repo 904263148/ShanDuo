@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class JoinActModelImpl implements JoinActLoadModel{
     @Override
-    public void load(final OnLoadListener<String> listener, String activityId , String type) {
+    public void load(final OnLoadListener<String> listener, String activityId , String type, String userIds) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -33,6 +33,7 @@ public class JoinActModelImpl implements JoinActLoadModel{
         params.put("token", PrefUtil.getToken(context));
         params.put("activityId" , activityId);
         params.put("type" , type);
+        params.put("userIds", userIds);
         OkHttp.get(context, ApiUtil.JOIN_ACT, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

@@ -327,7 +327,7 @@ public class PublishTrendActivity extends RightSlidingActivity implements ShowPi
 
     public void publishTrend(String imgIds){
         content=tv_pd_text.getText().toString().trim();
-        presenter.publish(content , imgIds, lon, lat, location);
+        presenter.publish(content , imgIds, lat, lon, location);
     }
 
     @Override

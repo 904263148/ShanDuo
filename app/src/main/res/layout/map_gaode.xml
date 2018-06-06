@@ -80,8 +80,9 @@
             android:layout_height="wrap_content"
             android:layout_weight=".5"
             android:checked="true"
-            android:text="KTV" />
+            android:text="附近所有" />
 
+<!--
         <RadioButton
             android:id="@+id/radio1"
             style="@style/RadioButton"
@@ -105,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".33"
             android:text="体育休闲" />
-
+-->
     </com.yapin.shanduo.widget.glide.SegmentedGroup>
 
 
