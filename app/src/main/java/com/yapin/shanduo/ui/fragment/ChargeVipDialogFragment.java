@@ -35,6 +35,8 @@ public class ChargeVipDialogFragment extends DialogFragment {
 
     private ChargeTabAdapter adapter;
 
+    private DialogDismiss dialogDismiss;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,10 +50,50 @@ public class ChargeVipDialogFragment extends DialogFragment {
     private void initView() {
         adapter = new ChargeTabAdapter(getChildFragmentManager());
         viewPager.setAdapter(adapter);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0 ){
+                    ivVip.setBackgroundResource(R.drawable.icon_charge_vip);
+                    ivSvip.setBackgroundResource(R.drawable.icon_charge_svip_uncheck);
+                }else {
+                    ivVip.setBackgroundResource(R.drawable.icon_vip_checked);
+                    ivSvip.setBackgroundResource(R.drawable.icon_svip_checked);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogDismiss.dismiss();
+            }
+        });
+
+    }
+
+    public void setDismissListener(DialogDismiss dismissListener){
+        this.dialogDismiss = dismissListener;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+    public interface DialogDismiss{
+        void dismiss();
+    }
+
 }

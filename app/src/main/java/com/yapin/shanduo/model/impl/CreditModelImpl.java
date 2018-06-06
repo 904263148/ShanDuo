@@ -95,8 +95,6 @@ public class CreditModelImpl implements CreditLoadModel{
                         item.setGender(credit.getGender());
                         item.setVipGrade(credit.getVipGrade());
                         item.setId(credit.getId());
-                        item.setBe_evaluated(credit.getBe_evaluated());
-                        item.setOthers_score(credit.getOthers_score());
                         list.add(item);
                     }
 

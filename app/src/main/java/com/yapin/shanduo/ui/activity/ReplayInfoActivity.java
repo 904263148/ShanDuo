@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -35,6 +37,7 @@ import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 
 import java.util.ArrayList;
@@ -168,8 +171,30 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
         recyclerView.setNestedScrollingEnabled(false);
 
         presenter.getData(comment.getId() , TYPE_ID , page+"" ,pageSize+"");
-    }
 
+        etComment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int index = etComment.getSelectionStart() - 1;
+                if (index > 0) {
+                    if (Utils.isemojicharacter(s.charAt(index))) {
+                        Editable edit = etComment.getText();
+                        edit.delete(index, index + 1);
+                    }
+                }
+            }
+        });
+    }
 
     @OnClick({R.id.iv_back , R.id.tv_publish , R.id.rl_tag})
     public void onClick(View view){

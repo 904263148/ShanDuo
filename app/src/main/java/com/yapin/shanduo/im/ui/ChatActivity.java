@@ -170,11 +170,11 @@ public class ChatActivity extends RightSlidingFragmentActivity implements ChatVi
                     title.setMoreImgAction(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
-                            person.putExtra("id",identify);
-                            person.putExtra("name",identify);
-//                            Intent intent = new Intent(ChatActivity.this, UserProfActivity.class);
-//                            intent.putExtra("userId", identify);
+//                            Intent person = new Intent(ChatActivity.this,AddFriendActivity.class);
+//                            person.putExtra("id",identify);
+//                            person.putExtra("name",identify);
+                            Intent person = new Intent(ChatActivity.this, UserProfActivity.class);
+                            person.putExtra("userId", identify);
                             startActivity(person);
                         }
                     });

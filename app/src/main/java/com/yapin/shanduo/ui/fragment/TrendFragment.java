@@ -182,6 +182,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
             list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() + 1 );
         }else {
             ToastUtil.showShortToast(context , R.string.tips_unlike);
+            if(list.get(LikePosition).getPraise() == 0) return;
             list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() - 1 );
         }
         adapter.notifyDataSetChanged();

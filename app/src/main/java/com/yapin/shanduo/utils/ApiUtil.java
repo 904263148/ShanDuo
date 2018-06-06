@@ -29,7 +29,7 @@ public class ApiUtil {
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/dynamicList";
 
-    //参加活动 ， 取消活动 ，踢人
+    //参加活动
     public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/joinActivities";
 
     //首页轮播
@@ -112,6 +112,9 @@ public class ApiUtil {
 
     //查询好友动态活动数量
     public final static String USERCOUNT = ConfigUtil.configUrl() +"/juser/usercount";
+
+    //删除好友
+    public final static String DELETE_FRIEND = ConfigUtil.configUrl() + "jattention/delattention" ;
 
     //取消活动
     public final static String DELETEACTIVITY = ConfigUtil.configUrl() + "/activity/deleteActivity";

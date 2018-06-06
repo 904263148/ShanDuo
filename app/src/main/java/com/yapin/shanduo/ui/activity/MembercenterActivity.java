@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/25.
  */
 
-public class MembercenterActivity extends BaseActivity implements PopupWindow.OnDismissListener{
+public class MembercenterActivity extends BaseActivity implements PopupWindow.OnDismissListener ,ChargeVipDialogFragment.DialogDismiss{
 
     private Context context;
     private Activity activity;
@@ -49,6 +49,8 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
 
     private PopupWindow popupWindow;
     private ChargeTabAdapter adapter;
+
+    private ChargeVipDialogFragment dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,7 +85,8 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
 
     public void openPublishPopup(){
 
-        ChargeVipDialogFragment dialog = new ChargeVipDialogFragment();
+        dialog = new ChargeVipDialogFragment();
+        dialog.setDismissListener(this);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         dialog.show(ft, "tag");
@@ -102,4 +105,8 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
         setBackgroundAlpha(1);
     }
 
+    @Override
+    public void dismiss() {
+        dialog.dismiss();
+    }
 }

@@ -4,21 +4,25 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.AddactivityActivity;
+import com.yapin.shanduo.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChargeFragment extends Fragment {
+public class ChargeFragment extends Fragment implements PayDialogFragment.DialogDismiss{
 
     @BindView(R.id.iv_time)
     ImageView ivTime;
@@ -41,6 +45,10 @@ public class ChargeFragment extends Fragment {
 
     private Context context;
     private Activity activity;
+
+    private PayDialogFragment payDialogFragment;
+
+    private String month = "3";
 
     public ChargeFragment() {
         // Required empty public constructor
@@ -81,16 +89,79 @@ public class ChargeFragment extends Fragment {
             rbThree.setBackgroundResource(R.drawable.charge_selector);
             rbSix.setBackgroundResource(R.drawable.charge_selector);
             rbTwelve.setBackgroundResource(R.drawable.charge_selector);
+            rbOne.setTextColor(R.drawable.charge_text_color_selector);
+            rbThree.setTextColor(R.drawable.charge_text_color_selector);
+            rbSix.setTextColor(R.drawable.charge_text_color_selector);
+            rbTwelve.setTextColor(R.drawable.charge_text_color_selector);
+            tvGo.setBackgroundResource(R.drawable.rounded_tv_vip);
+            tvMoney.setTextColor(getResources().getColor(R.color.home_vip_color));
+            tvMoney.setText("26.4");
         }else {
-
+            rbOne.setBackgroundResource(R.drawable.charge_svip_selector);
+            rbThree.setBackgroundResource(R.drawable.charge_svip_selector);
+            rbSix.setBackgroundResource(R.drawable.charge_svip_selector);
+            rbTwelve.setBackgroundResource(R.drawable.charge_svip_selector);
+            rbOne.setTextColor(R.drawable.charge_svip_text_color_selector);
+            rbThree.setTextColor(R.drawable.charge_svip_text_color_selector);
+            rbSix.setTextColor(R.drawable.charge_svip_text_color_selector);
+            rbTwelve.setTextColor(R.drawable.charge_svip_text_color_selector);
+            tvGo.setBackgroundResource(R.drawable.rounded_tv_svip);
+            tvMoney.setTextColor(getResources().getColor(R.color.home_svip_color));
+            tvMoney.setText("38.4");
         }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
+                switch (checkedId){
+                    case R.id.rb_one:
+                        month = "1";
+                        if(position == 0){
+                            tvMoney.setText("8.8");
+                        }else {
+                            tvMoney.setText("12.8");
+                        }
+                        break;
+                    case R.id.rb_three:
+                        month = "3";
+                        if(position == 0){
+                            tvMoney.setText("26.4");
+                        }else {
+                            tvMoney.setText("38.4");
+                        }
+                        break;
+                    case R.id.rb_six:
+                        month = "6";
+                        if(position == 0){
+                            tvMoney.setText("52.8");
+                        }else {
+                            tvMoney.setText("76.8");
+                        }
+                        break;
+                    case R.id.rb_twelve:
+                        month = "12";
+                        if(position == 0){
+                            tvMoney.setText("105.6");
+                        }else {
+                            tvMoney.setText("153.6");
+                        }
+                        break;
+                }
             }
         });
+
+
+        tvGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                payDialogFragment = PayDialogFragment.newInstance(Constants.OPEN_BY_VIP , position , month , "" ,tvMoney.getText().toString());
+                payDialogFragment.setDismissListener(ChargeFragment.this);
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                payDialogFragment.show(ft, "tag");
+            }
+        });
+
     }
 
     @Override
@@ -101,5 +172,10 @@ public class ChargeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void dismiss() {
+        payDialogFragment.dismiss();
     }
 }

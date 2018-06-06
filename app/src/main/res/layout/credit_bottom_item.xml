@@ -27,7 +27,7 @@
             />
 
         <LinearLayout
-            android:id="@+id/ll_heart"
+            android:id="@+id/ll_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -46,45 +46,49 @@
                 android:textColor="@color/home_title_color"
                 />
 
-            <ImageView
-                android:id="@+id/iv_heart1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_heart"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
-                android:layout_marginLeft="5dp"
-                />
+                android:orientation="horizontal"
+                >
 
-            <ImageView
-                android:id="@+id/iv_heart2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
-                android:layout_marginLeft="2dp"
-                />
+                <ImageView
+                    android:id="@+id/iv_heart1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    />
 
-            <ImageView
-                android:id="@+id/iv_heart3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
-                android:layout_marginLeft="2dp"
-                />
+                <ImageView
+                    android:id="@+id/iv_heart2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    />
 
-            <ImageView
-                android:id="@+id/iv_heart4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
-                android:layout_marginLeft="2dp"
-                />
+                <ImageView
+                    android:id="@+id/iv_heart3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    />
 
-            <ImageView
-                android:id="@+id/iv_heart5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
-                android:layout_marginLeft="2dp"
-                />
+                <ImageView
+                    android:id="@+id/iv_heart4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_heart5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -93,12 +97,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_head"
-            android:layout_below="@+id/ll_heart"
+            android:layout_below="@+id/ll_tag"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             android:textSize="@dimen/egg_font_size"
             android:textColor="@color/font_color_gray"
-            android:text="胖虎,请你下次不要来了好吧?"
             />
 
     </RelativeLayout>
@@ -136,7 +139,6 @@
                 android:id="@+id/iv_heart6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
                 android:layout_marginLeft="5dp"
                 />
 
@@ -144,7 +146,6 @@
                 android:id="@+id/iv_heart7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
                 android:layout_marginLeft="2dp"
                 />
 
@@ -152,7 +153,6 @@
                 android:id="@+id/iv_heart8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
                 android:layout_marginLeft="2dp"
                 />
 
@@ -160,7 +160,6 @@
                 android:id="@+id/iv_heart9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
                 android:layout_marginLeft="2dp"
                 />
 
@@ -168,7 +167,6 @@
                 android:id="@+id/iv_heart10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_heart_red"
                 android:layout_marginLeft="2dp"
                 />
 
@@ -183,7 +181,6 @@
             android:layout_below="@+id/ll_heart2"
             android:textSize="@dimen/egg_font_size"
             android:textColor="@color/font_color_gray"
-            android:text="胖虎,请你下次不要来了好吧?"
             />
 
         </LinearLayout>

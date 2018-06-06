@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,9 +31,11 @@ import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.model.entity.ShanDuoUserProf;
 import com.yapin.shanduo.model.entity.ShanduoUser;
 import com.yapin.shanduo.presenter.AddFriendPresenter;
+import com.yapin.shanduo.presenter.DeleteFriendPresenter;
 import com.yapin.shanduo.presenter.UserProfPresenter;
 import com.yapin.shanduo.ui.adapter.UserProfTabAdapter;
 import com.yapin.shanduo.ui.contract.AddFriendContract;
+import com.yapin.shanduo.ui.contract.DeleteFriendContract;
 import com.yapin.shanduo.ui.contract.UserProfContract;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
@@ -40,6 +43,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.CircleImageView;
@@ -53,7 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class UserProfActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener , UserProfContract.View , AddFriendContract.View , FriendshipManageView {
+public class UserProfActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener , UserProfContract.View , AddFriendContract.View , FriendshipManageView , DeleteFriendContract.View{
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -89,6 +93,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     ImageView ivBg;
     @BindView(R.id.ll_add)
     LinearLayout llAdd;
+    @BindView(R.id.tv_delete_friend)
+    TextView tvDelete;
 
     private Context context;
     private Activity activity;
@@ -101,6 +107,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     private UserProfPresenter profPresenter;
     private FriendshipManagerPresenter presenter;
     private AddFriendPresenter addFriendPresenter;
+    private DeleteFriendPresenter deleteFriendPresenter;
 
     private ShanDuoUserProf user = new ShanDuoUserProf();
 
@@ -114,6 +121,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         addFriendPresenter = new AddFriendPresenter();
         addFriendPresenter.init(this);
         presenter = new FriendshipManagerPresenter(this);
+        deleteFriendPresenter = new DeleteFriendPresenter();
+        deleteFriendPresenter.init(this);
     }
 
     @Override
@@ -144,7 +153,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         loadingView.loading();
     }
 
-    @OnClick({R.id.iv_back , R.id.tv_add_friend})
+    @OnClick({R.id.iv_back , R.id.tv_add_friend , R.id.tv_delete_friend})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -156,6 +165,23 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
                 }else {
                     presenter.addFriend(userId, "", "" ,"");
                 }
+                break;
+            case R.id.tv_delete_friend:
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(R.string.title_delete_friend)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                return;
+                            }
+                        }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        deleteFriendPresenter.delete(userId , Constants.DELETE_FRIEND);
+                    }
+                }).create().show();
                 break;
         }
     }
@@ -232,8 +258,10 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         }else {
             if(user.isAttention()){
                 tvAddFriend.setText("发消息");
+                tvDelete.setVisibility(View.VISIBLE);
             }else {
                 tvAddFriend.setText("加好友");
+                tvDelete.setVisibility(View.GONE);
             }
         }
     }
@@ -247,6 +275,11 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
         }else if (Constants.ADD_APPLY.equals(data)) {
             ToastUtil.showShortToast(context , R.string.add_friend_succeed);
         }
+    }
+
+    @Override
+    public void deleteSuccess(String data) {
+        presenter.delFriend(userId);
     }
 
     @Override
@@ -329,7 +362,16 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
      */
     @Override
     public void onDelFriend(TIMFriendStatus status) {
-
+        switch (status){
+            case TIM_FRIEND_STATUS_SUCC:
+                Toast.makeText(this, getResources().getString(R.string.profile_del_succeed), Toast.LENGTH_SHORT).show();
+                StartActivityUtil.start(activity , MainActivity.class);
+                onBackPressed();
+                break;
+            case TIM_FRIEND_STATUS_UNKNOWN:
+                Toast.makeText(this, getResources().getString(R.string.profile_del_fail), Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     /**

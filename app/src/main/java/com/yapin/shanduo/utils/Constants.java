@@ -128,4 +128,15 @@ public class Constants {
     public static final String TYPE_ACT_REFRESH = "4";
     public static final String TYPE_ACT_TOP = "5";
 
+    //从哪个页面打开支付页
+    public static final int OPEN_BY_VIP = 0;
+
+    //删除好友类型
+    public static final String DELETE_FRIEND = "1";
+    public static final String DELETE_BLACK = "2";
+
+    //分享地址
+    public static final String ACT_SHARE_URL = "https://yapinkeji.com/yapingzh/global/activity.html?activityId=";
+    public static final String TREND_SHARE_URL = "https://yapinkeji.com/yapingzh/global/dynamic.html?dynamicId=";
+
 }

@@ -22,9 +22,10 @@ public class CreditItem implements Parcelable {
         isTitle = title;
     }
 
-    private String mode , activity_name , evaluation_content , user_name , head_portrait_id , father_head , presenter_head , presenter_name , gender ,id , be_evaluated;
+    private String mode , activity_name , evaluation_content , user_name , head_portrait_id , father_head , presenter_head , presenter_name , gender ,id ;
     private int birthday  , father_id , father_reputation , vipGrade ;
     private Integer others_score ,score;
+    private String be_evaluated;
 
     public Integer getOthers_score() {
         return others_score;

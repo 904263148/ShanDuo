@@ -10,9 +10,11 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -51,7 +53,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
         Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-
+            ToastUtil.showShortToast(ShanDuoPartyApplication.getContext() , "支付成功");
             StartActivityUtil.start(this , MainActivity.class);
             onBackPressed();
 

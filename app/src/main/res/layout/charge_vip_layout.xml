@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/app_commonroof"
@@ -59,14 +59,12 @@
                         android:id="@+id/iv_vip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_charge_vip"
                         />
 
                     <ImageView
                         android:id="@+id/iv_svip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_charge_svip_uncheck"
                         android:layout_marginLeft="5dp"
                         />
 

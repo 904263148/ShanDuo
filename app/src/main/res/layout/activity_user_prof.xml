@@ -43,6 +43,19 @@
                         android:paddingLeft="5dp"
                         />
 
+                        <TextView
+                            android:id="@+id/tv_delete_friend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="删除好友"
+                            android:layout_alignParentRight="true"
+                            android:textSize="@dimen/egg_font_size_big"
+                            android:textColor="@color/home_title_color"
+                            android:padding="10dp"
+                            android:layout_marginTop="5dp"
+                            android:visibility="gone"
+                            />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

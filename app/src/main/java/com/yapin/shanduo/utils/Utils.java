@@ -440,6 +440,10 @@ public class Utils {
         return level;
     }
 
+    //是否有表情
+    public static boolean isemojicharacter(char codepoint) {
+        return !((codepoint == 0x0) || (codepoint == 0x9) || (codepoint == 0xa) || (codepoint == 0xd) || ((codepoint >= 0x20) && codepoint <= 0xd7ff))|| ((codepoint >= 0xe000) && (codepoint <= 0xfffd)) || ((codepoint >= 0x10000) && (codepoint <= 0x10ffff));
+    }
 
 
 

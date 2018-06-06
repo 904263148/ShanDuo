@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.utils.Constants;
 
 import java.util.HashMap;
 
@@ -30,6 +31,14 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
 
     private View view;
 
+    private String id;
+    private int type;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,6 +46,12 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
         ButterKnife.bind(this,view);
         return view;
     }
+
+    public void setType(int type , String id){
+        this.type = type;
+        this.id = id;
+    }
+
 
     @OnClick({R.id.share_wechat_coment , R.id.share_wechat ,R.id.share_qq , R.id.share_friend ,R.id.share_qzone , R.id.share_sina ,R.id.share_report })
     public void onClick(View view){
@@ -68,16 +83,24 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
 
         if(name.equals(Wechat.NAME)){
             sp.setShareType(Platform.SHARE_WEBPAGE);
-            sp.setText("闪多测试。");
+            sp.setText("闪多");
         }
 
-        sp.setTitle("测试分享的标题");
-        sp.setTitleUrl("http://www.baidu.com"); // 标题的超链接
-        sp.setText("测试分享的文本");
-        sp.setImageUrl("http://imgtu.5011.net/uploads/content/20170209/4934501486627131.jpg");
+        String url ;
+
+        if(type == 0){
+            url = Constants.ACT_SHARE_URL + id;
+        }else {
+            url = Constants.TREND_SHARE_URL + id;
+        }
+
+        sp.setTitle("闪多");
+        sp.setTitleUrl(url); // 标题的超链接
+        sp.setText("闪多");
+        sp.setImageUrl(url);
         sp.setSite("闪多");
-        sp.setSiteUrl("http://www.baidu.com");
-        sp.setUrl("http://www.baidu.com");
+        sp.setSiteUrl(url);
+        sp.setUrl(url);
 
         Platform platform = ShareSDK.getPlatform(name);
         // 设置分享事件回调（注：回调放在不能保证在主线程调用，不可以在里面直接处理UI操作）

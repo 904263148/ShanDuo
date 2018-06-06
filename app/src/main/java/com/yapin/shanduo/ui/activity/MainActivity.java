@@ -250,7 +250,14 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     @Override
     public void openPopupWindow(Object object , int type) {
 
-        fragment.show(getSupportFragmentManager() , "share");
+        switch (type){
+            case Constants.HOME_ACT:
+                ActivityInfo.Act act= (ActivityInfo.Act) object;
+                fragment.show(getSupportFragmentManager() , act.getId());
+                fragment.setType(0 , act.getId());
+                break;
+        }
+
 
     }
 

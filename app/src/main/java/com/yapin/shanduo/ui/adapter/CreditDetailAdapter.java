@@ -101,18 +101,20 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 viewHolder.tvName.setText(item.getUser_name());
                 GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getHead_portrait_id(), viewHolder.ivHead);
-                if (type == 0) {
-                    viewHolder.tvHidden.setVisibility(View.GONE);
-                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.home_title_color));
-                } else {
-                    viewHolder.tvHidden.setVisibility(View.VISIBLE);
-                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.font_color_gray));
-                }
+//                if (type == 0) {
+////                    viewHolder.tvHidden.setVisibility(View.GONE);
+////                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.home_title_color));
+////                } else {
+////                    viewHolder.tvHidden.setVisibility(View.VISIBLE);
+////                    viewHolder.tvContent.setTextColor(activity.getResources().getColor(R.color.font_color_gray));
+////                }
 
                 if(item.getScore() == null ){
                     viewHolder.llHeart.setVisibility(View.GONE);
+                    viewHolder.tvContent.setVisibility(View.GONE);
                 }else {
                     viewHolder.llHeart.setVisibility(View.VISIBLE);
+                    viewHolder.tvContent.setVisibility(View.VISIBLE);
                     viewHolder.tvContent.setText(item.getEvaluation_content());
                     switch (item.getScore()) {
                         case 1:
@@ -164,7 +166,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.tvPresenterContent.setVisibility(View.GONE);
                 }else {
                     viewHolder.tvPresenterContent.setVisibility(View.VISIBLE);
-                    viewHolder.tvPresenterContent.setText("发起者评价:"+item.getBe_evaluated());
+                    viewHolder.tvPresenterContent.setText(item.getBe_evaluated());
                 }
 
                 switch (item.getOthers_score()) {

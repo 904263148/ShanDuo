@@ -25,13 +25,17 @@ import com.tencent.qcloud.ui.ListPickerDialog;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.im.model.GroupInfo;
 import com.yapin.shanduo.im.model.UserInfo;
+import com.yapin.shanduo.presenter.CreateGroupPresenter;
+import com.yapin.shanduo.ui.contract.CreateGroupContract;
+import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GroupProfileActivity extends FragmentActivity implements GroupInfoView, View.OnClickListener {
+public class GroupProfileActivity extends FragmentActivity implements GroupInfoView, View.OnClickListener ,CreateGroupContract.View{
 
     private final String TAG = "GroupProfileActivity";
 
@@ -45,12 +49,16 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
     private Map<String, TIMGroupAddOpt> allowTypeContent;
     private Map<String, TIMGroupReceiveMessageOpt> messageOptContent;
     private LineControllerView name,intro;
-
+    private CreateGroupPresenter createGroupPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_setting);
+
+        createGroupPresenter = new CreateGroupPresenter();
+        createGroupPresenter.init(this);
+
         identify = getIntent().getStringExtra("identify");
         isInGroup = GroupInfo.getInstance().isInGroup(identify);
         groupInfoPresenter = new GroupInfoPresenter(this, Collections.singletonList(identify), isInGroup);
@@ -160,8 +168,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
                         @Override
                         public void onSuccess() {
-                            Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_dismiss_succ),Toast.LENGTH_SHORT).show();
-                            finish();
+                            createGroupPresenter.createGroup(Constants.TYPE_DELETE , identify  , "");
                         }
                     });
                 }else{
@@ -277,5 +284,36 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
     private boolean isManager(){
         return roleType == TIMGroupMemberRoleType.Owner || roleType == TIMGroupMemberRoleType.Admin;
+    }
+
+    @Override
+    public void success(String data) {
+        Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_dismiss_succ),Toast.LENGTH_SHORT).show();
+        onBackPressed();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(this,"网络异常");
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(this,msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(this,msg);
+    }
+
+    @Override
+    public void initView() {
+
     }
 }

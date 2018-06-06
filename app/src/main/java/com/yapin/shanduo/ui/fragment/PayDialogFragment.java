@@ -1,0 +1,302 @@
+package com.yapin.shanduo.ui.fragment;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alipay.sdk.app.PayTask;
+import com.tencent.mm.sdk.modelpay.PayReq;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.qcloud.sdk.Constant;
+import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.PayOrder;
+import com.yapin.shanduo.model.entity.PayResult;
+import com.yapin.shanduo.presenter.PayOrderPresenter;
+import com.yapin.shanduo.ui.contract.PayOrderContract;
+import com.yapin.shanduo.utils.Constants;
+
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * 作者：L on 2018/6/6 0006 09:07
+ */
+public class PayDialogFragment extends DialogFragment implements PayOrderContract.View{
+
+    @BindView(R.id.ib_back)
+    ImageButton ibBack;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_tv1)
+    TextView tvTv1;
+    @BindView(R.id.tv_tv2)
+    TextView tvTv2;
+    @BindView(R.id.t_tv3)
+    TextView tTv3;
+    @BindView(R.id.tv_balance_pay)
+    TextView tvBalancePay;
+    @BindView(R.id.tv_wechat_pay)
+    TextView tvWechatPay;
+    @BindView(R.id.tv_alipay)
+    TextView tvAlipay;
+    @BindView(R.id.tv_memo1)
+    TextView tvMemo1;
+    @BindView(R.id.tv_memo2)
+    TextView tvMemo2;
+    @BindView(R.id.bt_cancel)
+    Button btCancel;
+    @BindView(R.id.bt_confirm)
+    Button btConfirm;
+    @BindView(R.id.ll_tag)
+    LinearLayout llTag;
+
+    private Context context;
+    private Activity activity;
+
+    private String payId = Constants.PAY_BALANCE;
+
+    private PayOrderPresenter payOrderPresenter;
+
+    private DialogDismiss dialogDismiss;
+
+    private int type;
+    private String typeId;
+    private int position;
+    private String month , activityId , money;
+
+    private static final int SDK_PAY_FLAG = 1;
+
+    public static PayDialogFragment newInstance(int type, int position ,String month , String activityId , String money) {
+        Bundle args = new Bundle();
+        args.putInt("type" , type);
+        args.putInt("position" , position);
+        args.putString("month" , month);
+        args.putString("activityId" , activityId);
+        args.putString("money" , money);
+        PayDialogFragment fragment = new PayDialogFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        type = getArguments().getInt("type");
+        position = getArguments().getInt("position");
+        month = getArguments().getString("month");
+        activityId = getArguments().getString("activityId");
+        money = getArguments().getString("money");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);//无标题栏
+        View view = inflater.inflate(R.layout.popwindow_commonroof, container, false);
+        ButterKnife.bind(this, view);
+        payOrderPresenter = new PayOrderPresenter();
+        payOrderPresenter.init(this);
+        initView();
+        return view;
+    }
+
+    public void setData(String month , String activityId , String money){
+        this.month = month;
+        this.activityId = activityId;
+        this.money = money;
+    }
+
+    public void initView() {
+        context = ShanDuoPartyApplication.getContext();
+        activity = getActivity();
+
+        switch (type){
+            case Constants.OPEN_BY_VIP:
+                tvTitle.setText("开通会员");
+                llTag.setVisibility(View.GONE);
+                tvMemo1.setVisibility(View.GONE);
+                tvMemo2.setVisibility(View.GONE);
+
+                if(position == 0){
+                    typeId = Constants.TYPE_VIP;
+                }else {
+                    typeId = Constants.TYPE_SVIP;
+                }
+
+                break;
+        }
+
+    }
+
+    @OnClick({R.id.ib_back , R.id.ll_alipay , R.id.ll_balance  , R.id.ll_wechat , R.id.bt_cancel , R.id.bt_confirm})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.ib_back:
+            case R.id.bt_cancel:
+                dialogDismiss.dismiss();
+                break;
+            case R.id.ll_balance:
+                payId = Constants.PAY_BALANCE;
+                tvBalancePay.setTextColor(getResources().getColor(R.color.home_title_color));
+                tvBalancePay.setTextSize(12);
+                tvWechatPay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvWechatPay.setTextSize(10);
+                tvAlipay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAlipay.setTextSize(10);
+                break;
+            case R.id.ll_wechat:
+                payId = Constants.PAY_WECHAT;
+                tvWechatPay.setTextColor(getResources().getColor(R.color.home_title_color));
+                tvWechatPay.setTextSize(12);
+                tvBalancePay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvBalancePay.setTextSize(10);
+                tvAlipay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAlipay.setTextSize(10);
+                break;
+            case R.id.ll_alipay:
+                payId = Constants.PAY_ALIPAY;
+                tvAlipay.setTextColor(getResources().getColor(R.color.home_title_color));
+                tvAlipay.setTextSize(12);
+                tvBalancePay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvBalancePay.setTextSize(10);
+                tvWechatPay.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvWechatPay.setTextSize(10);
+                break;
+            case R.id.bt_confirm:
+                payOrderPresenter.payOrder(payId , "" , typeId , money ,month , activityId);
+                break;
+        }
+    }
+
+    @Override
+    public void success(PayOrder data) {
+        if(Constants.PAY_BALANCE.equals(payId)){
+
+        }else if(Constants.PAY_WECHAT.equals(payId)){
+            payWechat(data);
+        }else {
+            payAlibaba(data.getOrder());
+        }
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
+    }
+
+    public interface DialogDismiss{
+        void dismiss();
+    }
+
+    public void setDismissListener(DialogDismiss dismissListener){
+        this.dialogDismiss = dismissListener;
+    }
+
+    public void payAlibaba(final String orderParam){
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(activity);
+                Map<String, String> result = alipay.payV2(orderParam,true);
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    Log.d("alipay_result",msg.obj+"");
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(context, "支付成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(context, "支付失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        };
+    };
+
+    public void payWechat(final PayOrder order){
+        final IWXAPI api = WXAPIFactory.createWXAPI(activity, null);
+        api.registerApp(Constants.WECHAT_APPID);
+        Runnable payRunnable1 = new Runnable() {  //这里注意要放在子线程
+            @Override
+            public void run() {
+                PayReq req = new PayReq();
+                req.appId = order.getAppid();
+                req.nonceStr= order.getNoncestr();
+                req.packageValue = "Sign=WXPay";
+                req.partnerId = order.getPartnerid();
+                req.prepayId= order.getPrepayid();
+                req.timeStamp= order.getTimestamp();
+                req.sign= order.getSign();
+                api.sendReq(req);//发送调起微信的请求
+            }
+        };
+        Thread payThread1 = new Thread(payRunnable1);
+        payThread1.start();
+        Log.d("wechat","点击了");
+    }
+
+}

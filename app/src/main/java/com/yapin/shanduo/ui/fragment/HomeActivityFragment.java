@@ -127,7 +127,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
         adapter = new ActivityTabAdapter(getChildFragmentManager() , tabList , "");
         viewPager.setAdapter(adapter);
-//        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(this);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -154,6 +154,22 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        refreshLayout.setEnabled(false);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        refreshLayout.setEnabled(true);
+                        break;
+                }
+                return false;
             }
         });
 
