@@ -7,10 +7,11 @@
 
     <LinearLayout
         android:layout_width="260dp"
-        android:layout_height="250dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
         android:background="@drawable/app_commonroof"
+        android:paddingBottom="10dp"
         >
 
         <RelativeLayout
@@ -108,11 +109,38 @@
             android:gravity="center"
             >
 
+            <TextView
+                android:id="@+id/tv_frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/egg_font_size"
+                android:textColor="@drawable/fontcolor_selector"
+                android:text="刷新次数"
+                android:layout_toRightOf="@+id/iv_balance"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_balance_bean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/egg_font_size"
+                android:textColor="@drawable/fontcolor_selector"
+                android:text="闪多豆支付"
+                android:layout_toRightOf="@+id/iv_balance"
+                android:layout_below="@+id/tv_frequency"
+                android:layout_marginBottom="10dp"
+                />
+
+
             <ImageView
                 android:id="@+id/iv_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_com_balance"
+                android:layout_below="@+id/tv_balance_bean"
                 />
 
             <TextView
@@ -124,6 +152,7 @@
                 android:textSize="@dimen/egg_font_size_big"
                 android:textColor="@color/home_title_color"
                 android:layout_toRightOf="@+id/iv_balance"
+                android:layout_below="@+id/tv_balance_bean"
                 />
 
             <ImageView

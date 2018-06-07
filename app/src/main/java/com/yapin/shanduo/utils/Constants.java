@@ -120,7 +120,8 @@ public class Constants {
     public static final String PAY_BALANCE = "1";
     public static final String PAY_ALIPAY = "2";
     public static final String PAY_WECHAT = "3";
-
+    public static final String PAY_PEABEAN = "4";
+    public static final String PEA_FREQUENCY = "5";
     //支付订单类型
     public static final String TYPE_CHARGE = "1";
     public static final String TYPE_VIP = "2";
@@ -130,6 +131,15 @@ public class Constants {
 
     //从哪个页面打开支付页
     public static final int OPEN_BY_VIP = 0;
+
+    //刷新
+    public static final int REFRESH = 1;
+
+    //置顶
+    public static final int SET_TOP = 2;
+
+    //充值
+    public static final int RECHARGE = 3;
 
     //删除好友类型
     public static final String DELETE_FRIEND = "1";

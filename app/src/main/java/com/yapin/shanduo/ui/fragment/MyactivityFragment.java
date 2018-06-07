@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -14,9 +16,16 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yapin.shanduo.R;
@@ -25,6 +34,7 @@ import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.presenter.JoinActPresenter;
 import com.yapin.shanduo.presenter.MyactivityPresenter;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.MywalletActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
 import com.yapin.shanduo.ui.adapter.MyactivityinfoAdapter;
 import com.yapin.shanduo.ui.contract.JoinActContract;
@@ -41,6 +51,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -50,7 +61,8 @@ import static android.app.Activity.RESULT_OK;
 
 public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,
         LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View  ,
-        SwipeRefreshLayout.OnRefreshListener ,MyactivityinfoAdapter.ClickListener{
+        SwipeRefreshLayout.OnRefreshListener ,MyactivityinfoAdapter.ClickListener ,
+        MyactivityinfoAdapter.OnClickListener ,PayDialogFragment.DialogDismiss ,MyactivityinfoAdapter.settopClickListener{
 
     @BindView(R.id.my_recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -60,12 +72,13 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     @BindView(R.id.sr_refresh)
     SwipeRefreshLayout refreshLayout;
 
-
     private Context context;
     private Activity activity;
     private MyactivityinfoAdapter adapter;
     private ShanDuoPartyApplication application;
     private LinearLayoutManager layoutManager;
+
+    private PayDialogFragment payDialogFragment;
 
     private int positiona;
     private int typeId;
@@ -97,8 +110,6 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         positiona = getArguments().getInt("position");
-
-
     }
 
     @Override
@@ -129,6 +140,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         adapter = new MyactivityinfoAdapter(context, activity , list ,positiona ,typeId);
 //        Log.i("typeid", typeId+"");
         adapter.setmClickListener(this);
+        adapter.setOnRefresh(this);
+        adapter.setOnSettop(this);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
         refreshLayout.setOnRefreshListener(this);
@@ -278,5 +291,28 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
                 joinActPresenter.join(activityId , jocn+"" ,"");
             }
         }).create().show();
+    }
+
+    @Override
+    public void onOnRefresh(int position, String activityId) {
+        payDialogFragment = PayDialogFragment.newInstance(Constants.REFRESH , 2 , "" , activityId ,"");
+        payDialogFragment.setDismissListener(MyactivityFragment.this);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        payDialogFragment.show(ft, "tag");
+    }
+
+    @Override
+    public void dismiss() {
+        payDialogFragment.dismiss();
+    }
+
+    @Override
+    public void onSettop(int position, String activityId) {
+        payDialogFragment = PayDialogFragment.newInstance(Constants.SET_TOP , 3 , "" , activityId ,"");
+        payDialogFragment.setDismissListener(MyactivityFragment.this);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        payDialogFragment.show(ft, "tag");
     }
 }

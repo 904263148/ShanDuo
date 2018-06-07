@@ -50,6 +50,7 @@
             android:background="@color/imagebutton"/>
 
         <LinearLayout
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -107,8 +108,174 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_balance"
+                android:id="@+id/ll_bean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|bottom"
+                >
+                <TextView
+                    android:id="@+id/tv_bean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"
+                    android:textSize="25dp"
+                    android:textColor="@color/tab_indicator_color"
+                    />
+
+                <TextView
+                    android:id="@+id/t_bean"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="闪多豆"
+                    android:textSize="12dp"
+                    android:textColor="@color/mainfont"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_frequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|bottom"
+                >
+
+                <TextView
+                    android:id="@+id/text_frequency"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余"
+                    android:textSize="12dp"
+                    android:textColor="@color/mainfont"
+                    />
+                <TextView
+                    android:id="@+id/tv_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"
+                    android:textSize="25dp"
+                    android:textColor="@color/tab_indicator_color"
+                    />
+
+                <TextView
+                    android:id="@+id/t_frequency"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="次"
+                    android:textSize="12dp"
+                    android:textColor="@color/mainfont"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_a_Recharge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center|bottom"
+                >
+
+                <TextView
+                    android:id="@+id/text_a_Recharge"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="充值"
+                    android:textSize="15dp"
+                    android:textColor="@color/mainfont"
+                    />
+                <EditText
+                    android:inputType="number"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="3dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/checkbox_a_shape"
+                    android:id="@+id/et_a_Recharge"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:hint="金额"
+                    android:textSize="15dp"
+                    android:textColor="@color/tab_indicator_color"
+                    />
+
+                <TextView
+                    android:id="@+id/t_a_Recharge"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textSize="15dp"
+                    android:textColor="@color/mainfont"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_Pea_frequency"
                 android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_Pea_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_com_balance"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_Pea_frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="刷新次数"
+                    android:textSize="@dimen/egg_font_size"
+                    android:textColor="@color/home_title_color"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_Pea_bean"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_Pea_bean"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_com_balance"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_Pea_bean_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="闪多豆支付"
+                    android:textSize="@dimen/egg_font_size"
+                    android:textColor="@color/home_title_color"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_balance"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -128,7 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="余额支付"
-                android:textSize="@dimen/egg_font_size_big"
+                android:textSize="@dimen/egg_font_size"
                 android:textColor="@color/home_title_color"
                 />
 
@@ -231,7 +398,37 @@
                     android:textColor="@color/textcolor_textview"/>
 
                 <Button
-                    android:id="@+id/bt_confirm"
+                    android:id="@+id/bt_Refresh"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/popwindow_button_back_shape"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:textSize="12dp"
+                    android:text="确认支付"
+                    android:textColor="@color/colorAccent"
+                    />
+                <Button
+                    android:id="@+id/bt_Recharge"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/popwindow_button_back_shape"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:textSize="12dp"
+                    android:text="确认支付"
+                    android:textColor="@color/colorAccent"
+                    />
+                <Button
+                    android:id="@+id/bt_vip"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/popwindow_button_back_shape"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:textSize="12dp"
+                    android:text="确认支付"
+                    android:textColor="@color/colorAccent"
+                    />
+                <Button
+                    android:id="@+id/bt_Settop"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/popwindow_button_back_shape"
                     android:layout_width="100dp"

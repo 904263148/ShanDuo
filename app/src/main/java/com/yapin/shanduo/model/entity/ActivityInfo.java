@@ -85,7 +85,7 @@ public class ActivityInfo implements Parcelable {
 
 		private Integer age; //年龄
 
-		private Integer topFlag; //置顶标记
+		private Integer topFlag; //置顶标记 0:未置顶 2:已置顶
 
 		private double lon; //经度
 

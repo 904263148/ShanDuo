@@ -255,7 +255,7 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
     @Override
     public void success(String data) {
         actId = data;
-//        ToastUtil.showShortToast(context,"发布成功");
+        ToastUtil.showShortToast(context,"发布成功");
         if(isTop){
             openPopupWindow();
         }else {

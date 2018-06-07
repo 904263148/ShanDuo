@@ -51,6 +51,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Activity activity;
     private int positiona;
     private int typeid;
+
     private OpenPopupWindow openPopupWindow;
     private List<ActivityInfo.Act> list;
 
@@ -174,7 +175,29 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }else if (positiona == 2){
                 if (typeid == 4) {
                     holder.tvevaluation.setText("刷新");
-                    holder.tvJoin.setText("置顶");
+                    holder.tvevaluation.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String activityId = list.get(position).getId();
+                            OnRefresh.onOnRefresh( position ,activityId );
+                        }
+                    });
+                     int topFlag = list.get(position).getTopFlag();
+
+                    if (topFlag == 0) {
+                        holder.tvJoin.setText("置顶");
+                        holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String activityId = list.get(position).getId();
+                                OnSettop.onSettop(position, activityId);
+                            }
+                        });
+                    }else if (topFlag == 1){
+                        holder.tvJoin.setText("已置顶");
+                        holder.tvJoin.setClickable(false);
+                        holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.myactivity_shape));
+                    }
                 }else if (typeid == 5){
                     holder.tvevaluation.setVisibility(View.GONE);
                     holder.tvJoin.setText("查看详情");
@@ -241,6 +264,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         return list.get(position).getType();
     }
+
+    //取消报名
     public interface ClickListener {
         void onClick( int position ,String activityId ,int userId);
     }
@@ -251,6 +276,27 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private ClickListener mClickListener;
 
+    //刷新
+    public interface OnClickListener {
+        void onOnRefresh( int position ,String activityId );
+    }
+
+    public void setOnRefresh(OnClickListener OnRefresh){
+        this.OnRefresh = OnRefresh;
+    }
+
+    private OnClickListener OnRefresh;
+
+    //置顶
+    public interface settopClickListener {
+        void onSettop( int position ,String activityId );
+    }
+
+    public void setOnSettop(settopClickListener OnSettop){
+        this.OnSettop = OnSettop;
+    }
+
+    private settopClickListener OnSettop;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
