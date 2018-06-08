@@ -105,6 +105,8 @@
     <string name="cancel_join">取消报名</string>
     <string name="cancel_activity">取消活动</string>
 
+    <string name="title_button_report">立即举报</string>
+
     <string name="title_confirm_join_act">您确认参加活动吗</string>
     <string name="title_cancel_join_act">您确认取消参加活动吗</string>
     <string name="title_delete_friend">您确认删除该好友吗</string>

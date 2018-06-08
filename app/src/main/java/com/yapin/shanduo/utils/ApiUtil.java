@@ -121,4 +121,8 @@ public class ApiUtil {
 
     //刷新
     public final static String REFRESHACTIVITY = ConfigUtil.configUrl() +"/jmoney/refreshactivity";
+
+    //举报
+    public final static String REPORT = ConfigUtil.configUrl() + "/reputation/saveReport";
+
 }

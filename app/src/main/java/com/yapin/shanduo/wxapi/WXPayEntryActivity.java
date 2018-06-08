@@ -53,9 +53,17 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
         Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
-            ToastUtil.showShortToast(ShanDuoPartyApplication.getContext() , "支付成功");
-            StartActivityUtil.start(this , MainActivity.class);
-            onBackPressed();
+
+            if(resp.errCode == 0){
+                ToastUtil.showShortToast(ShanDuoPartyApplication.getContext() , "支付成功");
+                StartActivityUtil.start(this , MainActivity.class);
+            }else if(resp.errCode == -1){
+                ToastUtil.showShortToast(ShanDuoPartyApplication.getContext() , "支付失败");
+                onBackPressed();
+            }else {
+                ToastUtil.showShortToast(ShanDuoPartyApplication.getContext() , "取消支付");
+                onBackPressed();
+            }
 
 //            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //            builder.setTitle("提示");

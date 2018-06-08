@@ -148,7 +148,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 break;
             default:
                 Toast.makeText(this,getString(R.string.login_error),Toast.LENGTH_SHORT).show();
-                navToHome();
+                StartActivityUtil.start(this , FirstUseActivity.class);
+                finish();
                 break;
         }
 

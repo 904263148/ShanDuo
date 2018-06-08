@@ -34,19 +34,7 @@
             android:textSize="@dimen/share_font_size"
             android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
-            />
-
-        <TextView
-            android:id="@+id/share_wechat_coment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/icon_share_wechatmoment"
-            android:gravity="center_horizontal"
-            android:text="@string/share_wechat_coment"
-            android:textSize="@dimen/share_font_size"
-            android:textColor="@color/font_color_gray"
-            android:background="?android:attr/selectableItemBackground"
+            android:visibility="gone"
             />
 
         <TextView
@@ -63,6 +51,19 @@
             />
 
         <TextView
+            android:id="@+id/share_wechat_coment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/icon_share_wechatmoment"
+            android:gravity="center_horizontal"
+            android:text="@string/share_wechat_coment"
+            android:textSize="@dimen/share_font_size"
+            android:textColor="@color/font_color_gray"
+            android:background="?android:attr/selectableItemBackground"
+            />
+
+        <TextView
             android:id="@+id/share_qq"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
             android:textSize="@dimen/share_font_size"
             android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
+            android:visibility="gone"
             />
 
         <TextView
@@ -99,6 +101,7 @@
             android:textSize="@dimen/share_font_size"
             android:textColor="@color/font_color_gray"
             android:background="?android:attr/selectableItemBackground"
+
             />
 
     </LinearLayout>
@@ -146,6 +149,7 @@
             android:gravity="center_horizontal"
             android:textSize="12dp"
             android:textColor="@color/home_title_color"
+            android:visibility="gone"
             />
 
         <TextView
@@ -155,6 +159,7 @@
             android:gravity="center_horizontal"
             android:textSize="12dp"
             android:textColor="@color/home_title_color"
+            android:visibility="gone"
             />
 
         <TextView

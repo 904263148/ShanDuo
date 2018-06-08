@@ -149,4 +149,8 @@ public class Constants {
     public static final String ACT_SHARE_URL = "https://yapinkeji.com/yapingzh/global/activity.html?activityId=";
     public static final String TREND_SHARE_URL = "https://yapinkeji.com/yapingzh/global/dynamic.html?dynamicId=";
 
+    //举报
+    public static final String REPORT_ACT = "1";
+    public static final String REPORT_TREND = "2";
+
 }

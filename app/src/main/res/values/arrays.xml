@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="report">
+        <item>诽谤辱骂</item>
+        <item>淫秽色情</item>
+        <item>垃圾广告</item>
+        <item>暴力血腥</item>
+        <item>欺诈(酒托,医托等骗钱行为)</item>
+        <item>违规行为(涉毒,暴恐,违禁品等)</item>
+    </string-array>
+</resources>

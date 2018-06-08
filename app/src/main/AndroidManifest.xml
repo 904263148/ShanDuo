@@ -95,7 +95,7 @@
         <activity android:name=".ui.activity.AccountandsecurityActivity" />
         <activity android:name=".ui.activity.LoginPasswordActivity" />
         <activity android:name=".ui.activity.PaymentPasswordActivity" />
-        <activity android:name=".ui.activity.NewPaymentPasswordActivity"/>
+        <activity android:name=".ui.activity.NewPaymentPasswordActivity" />
         <activity android:name=".ui.activity.AboutflickerActivity" />
         <activity android:name=".ui.activity.TransactionrecordActivity" />
         <activity android:name=".ui.activity.BriefintroductionActivity" />
@@ -113,7 +113,6 @@
             android:name=".im.ui.ChatActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/MyTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".im.ui.SearchFriendActivity"
@@ -136,12 +135,12 @@
         <service
             android:name="com.tencent.qalsdk.service.QalService"
             android:exported="false"
-            android:process=":QALSERVICE"></service>
+            android:process=":QALSERVICE" />
         <!-- 消息收发辅助 service -->
         <service
             android:name="com.tencent.qalsdk.service.QalAssistService"
             android:exported="false"
-            android:process=":QALSERVICE"></service>
+            android:process=":QALSERVICE" />
         <!-- 离线消息广播接收器 -->
         <receiver
             android:name="com.tencent.qalsdk.QALBroadcastReceiver"
@@ -301,8 +300,7 @@
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
         <activity
             android:name=".ui.activity.AddactivityActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.MywalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity
@@ -367,13 +365,11 @@
         <activity
             android:name=".ui.activity.TrendInfoActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.ReplayInfoActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -423,7 +419,8 @@
             android:theme="@style/MyTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.PictureReviewActivity" />
-        <activity android:name=".ui.activity.FirstUseActivity"></activity>
+        <activity android:name=".ui.activity.FirstUseActivity" />
+        <activity android:name=".ui.activity.ReportActivity"></activity>
     </application>
 
 </manifest>

@@ -98,7 +98,6 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/egg_font_size"
                     android:textColor="@color/font_color_gray"
-                    android:text="[WIFI在线]"
                     />
 
                 <TextView

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.ReportActivity"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/share_report"
+            android:textSize="@dimen/egg_font_size_xxx"
+            android:textColor="@color/home_title_color"
+            />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:background="@color/white"
+        >
+    </ListView>
+
+    <Button
+        android:id="@+id/bt_report"
+        android:layout_marginTop="25dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/title_button_report"
+        android:textColor="@color/colorAccent"
+        android:textSize="15dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+</LinearLayout>

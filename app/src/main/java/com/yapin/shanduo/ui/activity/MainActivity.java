@@ -256,6 +256,11 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 fragment.show(getSupportFragmentManager() , act.getId());
                 fragment.setType(0 , act.getId());
                 break;
+            case Constants.HOME_TREND:
+                TrendInfo.Trend trend = (TrendInfo.Trend) object;
+                fragment.show(getSupportFragmentManager() , trend.getId());
+                fragment.setType(1 , trend.getId());
+                break;
         }
 
 

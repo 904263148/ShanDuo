@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.ui.activity.ReportActivity;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.StartActivityUtil;
 
 import java.util.HashMap;
 
@@ -74,6 +76,11 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
                 showShare(SinaWeibo.NAME);
                 break;
             case R.id.share_report:
+                Bundle bundle = new Bundle();
+                String reportType = type == 0 ? Constants.REPORT_ACT : Constants.REPORT_TREND ;
+                bundle.putString("typeId" ,reportType);
+                bundle.putString("id" , id);
+                StartActivityUtil.start(getActivity() , ReportActivity.class ,bundle);
                 break;
         }
     }

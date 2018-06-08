@@ -49,6 +49,7 @@ import com.yapin.shanduo.im.model.VoiceMessage;
 import com.yapin.shanduo.im.utils.FileUtil;
 import com.yapin.shanduo.im.utils.MediaUtil;
 import com.yapin.shanduo.im.utils.RecorderUtil;
+import com.yapin.shanduo.ui.activity.BaseActivity;
 import com.yapin.shanduo.ui.activity.MapGaodeActivity;
 import com.yapin.shanduo.ui.activity.RightSlidingFragmentActivity;
 import com.yapin.shanduo.ui.activity.UserProfActivity;
@@ -59,7 +60,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatActivity extends RightSlidingFragmentActivity implements ChatView {
+public class ChatActivity extends BaseActivity implements ChatView {
 
     private Context context;
     private Activity activity;

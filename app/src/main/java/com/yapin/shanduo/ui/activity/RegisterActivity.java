@@ -6,26 +6,37 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tencent.TIMCallBack;
+import com.tencent.TIMFriendshipManager;
+import com.tencent.qcloud.presentation.business.LoginBusiness;
+import com.tencent.qcloud.presentation.event.FriendshipEvent;
+import com.tencent.qcloud.presentation.event.GroupEvent;
+import com.tencent.qcloud.presentation.presenter.FriendshipManagerPresenter;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.GetCodePresenter;
 import com.yapin.shanduo.presenter.RegisterPresenter;
 import com.yapin.shanduo.ui.contract.GetCodeContract;
 import com.yapin.shanduo.ui.contract.RegisterContract;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 //  View.OnFocusChangeListener
-public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View {
+public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View ,TIMCallBack{
 
     @BindView(R.id.et_phone)
     EditText etPhone;
@@ -159,6 +170,22 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
     public void success(String data) {
         ToastUtil.showShortToast(context , data);
         dialog.dismiss();
+
+        PrefUtil.setToken(context , PrefJsonUtil.getProfile(context).getToken());
+
+        UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
+        UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());
+
+        Log.d("user_im_sign","用户的IM签名"+PrefJsonUtil.getProfile(context).getUserSig());
+        Log.d("user_id","用户的id"+PrefJsonUtil.getProfile(context).getUserId());
+
+        //登录之前要初始化群和好友关系链缓存
+        FriendshipEvent.getInstance().init();
+        GroupEvent.getInstance().init();
+        LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
+
+        FriendshipManagerPresenter.setMyNick(PrefJsonUtil.getProfile(context).getName() ,this);
+
         setResult(RESULT_OK);
         onBackPressed();
     }
@@ -205,6 +232,28 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         }
         ToastUtil.showShortToast(context , msg);
         dialog.dismiss();
+    }
+
+    @Override
+    public void onError(int i, String s) {
+        Log.d("TIM_Change_Profile",s);
+    }
+
+    @Override
+    public void onSuccess() {
+        Log.d("TIM_Change_Profile","success");
+        TIMFriendshipManager.getInstance().setFaceUrl(ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture(), new TIMCallBack(){
+            @Override
+            public void onError(int code, String desc) {
+                //错误码 code 和错误描述 desc，可用于定位请求失败原因
+                //错误码 code 列表请参见错误码表
+                Log.e("TIM_Change_Head", "setFaceUrl failed: " + code + " desc" + desc);
+            }
+            @Override
+            public void onSuccess() {
+                Log.e("TIM_Change_Head", "setFaceUrl succ");
+            }
+        });
     }
 
 }
