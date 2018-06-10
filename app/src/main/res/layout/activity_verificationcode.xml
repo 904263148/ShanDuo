@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="11dp"
+        >
+
+        <ImageView
+            android:id="@+id/tv_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:src="@drawable/icon_return"
+            />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:background="@color/colorAccent"
+        android:layout_marginTop="1dp"
+        android:paddingTop="13dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/verif_hint"
+        android:textSize="12dp"
+        android:textColor="@color/home_title_color"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+86"
+                    android:textSize="20dp"
+                    android:textColor="@color/font_color_gray"/>
+
+                <EditText
+                    android:id="@+id/et_phone"
+                    android:layout_marginLeft="6dp"
+                    android:background="@null"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/app_login_phone"
+                    android:textSize="20dp"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:textColor="@color/home_title_color"
+                    />
+
+                <TextView
+                    android:layout_gravity="right|center"
+                    android:id="@+id/tv_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:gravity="center"
+                    android:text="发送验证码"
+                    android:textSize="11dp"
+                    android:background="@drawable/cod_background_shape"
+                    android:textColor="@color/color_white"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/font_color_gray"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="13dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Received_hint"
+            android:textSize="12dp"
+            android:textColor="@color/font_color_gray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_code"
+                    android:layout_marginLeft="6dp"
+                    android:background="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/app_register_hint"
+                    android:textSize="20dp"
+                    android:maxLength="6"
+                    android:inputType="number"
+                    android:textColor="@color/home_title_color"
+                    />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/font_color_gray"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/bt_logout"
+            android:layout_marginTop="40dp"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape"
+            android:text="下一步"
+            android:textColor="@color/colorAccent"
+            android:textSize="15dp"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

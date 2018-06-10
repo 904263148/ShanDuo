@@ -33,6 +33,10 @@ public class NewPaymentPasswordActivity extends BaseActivity implements NewPayme
     String password;
     String newPassword;
 
+    String phone;
+    String code;
+    int payId;
+
     @BindView(R.id.again_paypswd_pet)
     PasswordInputView again_paypswd_pet;
 
@@ -52,13 +56,22 @@ public class NewPaymentPasswordActivity extends BaseActivity implements NewPayme
         password = bundle.getString("password");
         again_paypswd_pet.setOnChangeListener(this);
 
+        Bundle bundle1 = getIntent().getExtras();
+        phone = bundle1.getString("phone");
+        code = bundle1.getString("code");
+        payId = bundle1.getInt("payId");
+
     }
 
     @OnClick({R.id.bt_Submission , R.id.iv_back})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.bt_Submission:
-                    presenter.newpaymentpassword(password, newPassword);
+                if (payId == 3){
+                    presenter.newpaymentpassword("1" , code ,"", newPassword);
+                }else {
+                    presenter.newpaymentpassword("2" , "" ,password, newPassword);
+                }
                 break;
             case R.id.iv_back:
                 finish();

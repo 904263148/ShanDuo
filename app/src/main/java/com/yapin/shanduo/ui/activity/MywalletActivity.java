@@ -140,7 +140,7 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
 
     @Override
     public void success(FlickerPurseInfo data) {
-        ToastUtil.showShortToast(context , data);
+//        ToastUtil.showShortToast(context , data);
         flickerPurseInfo = data;
         tv_money.setText(flickerPurseInfo.getMoney()+"");
         tv_beans.setText(flickerPurseInfo.getBeans()+"");

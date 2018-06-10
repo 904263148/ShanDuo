@@ -3,6 +3,7 @@ package com.yapin.shanduo.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -46,6 +47,10 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
     TextView tv_nickname;
     @BindView(R.id.iv_vip_Headportrait)
     ImageView iv_vip_Headportrait;
+    @BindView(R.id.tv_svip)
+    TextView tv_svip;
+    @BindView(R.id.tv_sex)
+    TextView tv_sex;
 
     private PopupWindow popupWindow;
     private ChargeTabAdapter adapter;
@@ -63,6 +68,32 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
     }
 
     private void initView(){
+
+        Drawable drawable = null;
+        if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
+            drawable = activity.getResources().getDrawable(R.drawable.icon_women);
+            tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+        } else {
+            drawable = activity.getResources().getDrawable(R.drawable.icon_men);
+            tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+        }
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tv_sex.setCompoundDrawables(drawable, null, null, null);
+        tv_sex.setCompoundDrawablePadding(2);
+        tv_sex.setText(PrefJsonUtil.getProfile(context).getAge()+"");
+
+        int level = PrefJsonUtil.getProfile(context).getVip();
+        if(level == 0){
+            tv_svip.setVisibility(View.GONE);
+        }else if(level < 9){
+            tv_svip.setVisibility(View.VISIBLE);
+            tv_svip.setText("VIP"+level);
+            tv_svip.setBackgroundResource(R.drawable.rounded_tv_vip);
+        }else {
+            tv_svip.setVisibility(View.VISIBLE);
+            tv_svip.setText("SVIP"+(level-10));
+            tv_svip.setBackgroundResource(R.drawable.rounded_tv_svip);
+        }
 
             tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);

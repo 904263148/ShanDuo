@@ -4,11 +4,10 @@ import com.yapin.shanduo.base.BasePresenter;
 import com.yapin.shanduo.base.BaseView;
 
 /**
- * Created by dell on 2018/5/31.
+ * Created by dell on 2018/6/9.
  */
 
-public interface LoginPasswordContract {
-
+public interface ChecktokenContract {
     interface View extends BaseView {
 
         void success(String data);
@@ -23,7 +22,6 @@ public interface LoginPasswordContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loginpassword(String typeId ,String phone , String code ,String password , String newPassword);
+        void getchecktoken( );
     }
-
 }

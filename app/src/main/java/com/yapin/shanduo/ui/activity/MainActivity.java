@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -35,8 +36,13 @@ import com.tencent.open.utils.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
+import com.yapin.shanduo.model.entity.SigninInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
+import com.yapin.shanduo.presenter.CheckcheckinPresenter;
+import com.yapin.shanduo.presenter.SigninPresenter;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
+import com.yapin.shanduo.ui.contract.CheckcheckinContract;
+import com.yapin.shanduo.ui.contract.SigninContract;
 import com.yapin.shanduo.ui.fragment.ChatFragment;
 import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.ui.fragment.HomeFragment;
@@ -67,7 +73,8 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 import cn.sharesdk.wechat.utils.WXImageObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
 
-public class MainActivity extends AppCompatActivity implements OpenPopupWindow, PopupWindow.OnDismissListener, View.OnClickListener, PlatformActionListener , RefreshAll{
+public class MainActivity extends AppCompatActivity implements OpenPopupWindow, PopupWindow.OnDismissListener,
+        View.OnClickListener, PlatformActionListener , RefreshAll ,SigninContract.View ,CheckcheckinContract.View{
 
     @BindView(R.id.iv_home)
     ImageView ivHome;
@@ -98,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     @BindView(R.id.tv_add)
     TextView tvAdd;
 
+
     private Context context;
     private Activity activity;
 
@@ -126,16 +134,32 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     private HomeFragment homeFragment;
 
+    private SigninPresenter presenter;
+    private CheckcheckinPresenter checkcheckinPresenter;
+
+    private SigninInfo signinInfo = new SigninInfo();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        presenter = new SigninPresenter();
+        presenter.init(context,this);
+
+        checkcheckinPresenter = new CheckcheckinPresenter();
+        checkcheckinPresenter.init(context,this);
+
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+
+        }else {
+            presenter.getsignin();
+        }
+
         //设置PopupWindow的View
         publishPopView = LayoutInflater.from(this).inflate(R.layout.publish_popupwindow , null);
-        initView();
 
+        initView();
     }
 
     @Override
@@ -145,6 +169,58 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
             return;
         setIntent(intent);
         initView();
+    }
+    //签到弹窗
+    public void initSignin(){
+        if (signinInfo.isSignin()==false){
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(activity);
+            //    通过LayoutInflater来加载一个xml的布局文件作为一个View对象
+            View v = LayoutInflater.from(activity).inflate(R.layout.activity_signin, null);
+            //    设置我们自己定义的布局文件作为弹出框的Content
+            builder2.setView(v);
+            final AlertDialog dialog = builder2.show();
+            //去除边框
+            dialog.getWindow().setLayout(650, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView tv_number = (TextView) v.findViewById(R.id.tv_number);
+            TextView tv_Determine = (TextView) v.findViewById(R.id.tv_Determine);
+            TextView tv_level = (TextView) v.findViewById(R.id.tv_level);
+            TextView tv_experience = (TextView) v.findViewById(R.id.tv_experience);
+            ImageView iv_back = (ImageView) v.findViewById(R.id.iv_back);
+            tv_number.setText(signinInfo.getCount()+"");
+            String count = tv_number.getText().toString().trim();
+            if ("1".equals(count)){
+                tv_experience.setText("+10点经验");
+            }else if ("2".equals(count)){
+                tv_experience.setText("+10闪多豆");
+            }else if ("3".equals(count)){
+                tv_experience.setText("+15点经验");
+            }else if ("4".equals(count)){
+                tv_experience.setText("+15闪多豆");
+            }else if ("5".equals(count)){
+                tv_experience.setText("+20点经验");
+            }else if ("6".equals(count)){
+                tv_experience.setText("+25点经验");
+            }else if ("7".equals(count)){
+                tv_experience.setText("+20闪多豆");
+            }
+                    iv_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            tv_Determine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkcheckinPresenter.setcheck();
+                    dialog.dismiss();
+                }
+            });
+
+        }else if (signinInfo.isSignin() ==  true){
+
+        }
     }
 
     public void initView() {
@@ -160,8 +236,8 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
-        publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
+//        publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
+//        publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
 
         fragment = new CustomBottomSheetDialogFragment();
 
@@ -406,4 +482,34 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     }
 
 
+    @Override
+    public void success(SigninInfo data) {
+        signinInfo = data;
+        initSignin();
+    }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context,data);
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(context,"网络连接异常");
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context,msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
+    }
 }

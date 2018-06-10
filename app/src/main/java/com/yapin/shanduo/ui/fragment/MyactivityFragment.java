@@ -62,7 +62,8 @@ import static android.app.Activity.RESULT_OK;
 public class MyactivityFragment extends Fragment implements MyactivityinfoAdapter.OnItemClickListener ,
         LoadMoreRecyclerView.OnLoadMoreListener , MyactivityContract.View , JoinActContract.View  ,
         SwipeRefreshLayout.OnRefreshListener ,MyactivityinfoAdapter.ClickListener ,
-        MyactivityinfoAdapter.OnClickListener ,PayDialogFragment.DialogDismiss ,MyactivityinfoAdapter.settopClickListener{
+        MyactivityinfoAdapter.OnClickListener ,PayDialogFragment.DialogDismiss ,MyactivityinfoAdapter.settopClickListener ,
+        MyactivityinfoAdapter.Onpopupwindow {
 
     @BindView(R.id.my_recycler_view)
     LoadMoreRecyclerView recyclerView;
@@ -79,6 +80,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     private LinearLayoutManager layoutManager;
 
     private PayDialogFragment payDialogFragment;
+    private CustomBottomSheetDialogFragment fragment;
 
     private int positiona;
     private int typeId;
@@ -128,6 +130,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
+        fragment = new CustomBottomSheetDialogFragment();
         dialog = new ProgressDialog(activity);
         dialog.setMessage("加载中...");
         dialog.setCancelable(false);
@@ -142,6 +145,7 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         adapter.setmClickListener(this);
         adapter.setOnRefresh(this);
         adapter.setOnSettop(this);
+        adapter.setOnpopupwindow(this);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(MyactivityFragment.this);
         refreshLayout.setOnRefreshListener(this);
@@ -314,5 +318,11 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         payDialogFragment.show(ft, "tag");
+    }
+
+    @Override
+    public void onpopupwindow(int position, String activityId) {
+        fragment.show(getFragmentManager() , activityId);
+        fragment.setType(0 , activityId);
     }
 }

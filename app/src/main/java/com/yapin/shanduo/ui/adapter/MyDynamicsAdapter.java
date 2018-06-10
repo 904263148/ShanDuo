@@ -20,6 +20,7 @@ import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
@@ -73,7 +74,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             final ViewHolder holder = (ViewHolder) viewHolder;
             GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
             holder.tvName.setText(list.get(position).getName());
-
             Drawable drawable = null;
             if ("0".equals(list.get(position).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);
@@ -96,6 +96,15 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
             holder.tvLikeCount.setText(list.get(position).getPraise()+"");
 
+            String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(list.get(position).getCreateDate()), TimeUtil.getNowTime());
+            if(TextUtils.isEmpty(diff)){
+                holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
+                holder.tvPublishTime.setText(TimeUtil.getDateTohhmm(list.get(position).getCreateDate()));
+            }else {
+                holder.tvDate.setText(diff);
+                holder.tvPublishTime.setText("");
+            }
+
             int level = list.get(position).getVip();
             if(level == 0){
                 holder.tvVip.setVisibility(View.GONE);
@@ -113,6 +122,8 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
 //                    openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_TREND);
+                    String Id = list.get(position).getId();
+                    setpopupwindow.onpopupwindow( position ,Id );
                 }
             });
 
@@ -182,6 +193,17 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    //分享
+    public interface Onpopupwindow {
+        void onpopupwindow( int position ,String Id );
+    }
+
+    public void setOnpopupwindow(Onpopupwindow Onpopup){
+        this.setpopupwindow = Onpopup;
+    }
+
+    private Onpopupwindow setpopupwindow;
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -248,6 +270,8 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView tvRelayCount;
         @BindView(R.id.tv_like_count)
         TextView tvLikeCount;
+        @BindView(R.id.tv_date)
+        TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

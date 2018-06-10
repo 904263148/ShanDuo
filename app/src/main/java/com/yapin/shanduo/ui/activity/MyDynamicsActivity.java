@@ -26,6 +26,7 @@ import com.yapin.shanduo.ui.adapter.MyDynamicsAdapter;
 import com.yapin.shanduo.ui.adapter.TrendInfoAdapter;
 import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.contract.MyDynamicsContract;
+import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -46,7 +47,9 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/3.
  */
 
-public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View , LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnItemClickListener , MyDynamicsAdapter.OnLikeClickListener ,  LikeContract.View{
+public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View ,
+        LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnItemClickListener ,
+        MyDynamicsAdapter.OnLikeClickListener ,  LikeContract.View , MyDynamicsAdapter.Onpopupwindow{
 
     private Context context;
     private Activity activity;
@@ -69,6 +72,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
     private MyDynamicsPresenter presenter;
     private LikePresenter likePresenter;
+    private CustomBottomSheetDialogFragment fragment;
 
     private List<TrendInfo.Trend> list = new ArrayList<>();
     private TrendInfo.Trend footerItem = new TrendInfo.Trend();
@@ -83,6 +87,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         presenter = new MyDynamicsPresenter();
         presenter.init(this);
         layoutManager = new LinearLayoutManager(context);
+        fragment = new CustomBottomSheetDialogFragment();
         initView();
     }
 
@@ -96,6 +101,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
         adapter.setLikeClickListener(this);
+        adapter.setOnpopupwindow(this);
         presenter.getdynamics( PrefUtil.getLon(context) , PrefUtil.getLat(context) ,page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -205,5 +211,11 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onpopupwindow(int position, String Id) {
+        fragment.show(getSupportFragmentManager() , Id);
+        fragment.setType(1 , Id);
     }
 }

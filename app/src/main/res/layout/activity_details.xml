@@ -337,20 +337,9 @@
         </com.yapin.shanduo.widget.LoadingView>
 
     </LinearLayout>
-<!--
 
-    <LinearLayout
-        android:id="@+id/ll_join"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/tab_shape"
-        >
--->
 
         <TextView
-
             android:layout_alignParentBottom="true"
             android:id="@+id/tv_confirm"
             android:layout_width="match_parent"
@@ -359,9 +348,8 @@
             android:gravity="center"
             android:textSize="15sp"
             android:textColor="@color/home_title_color"
-            android:background="@drawable/tab_shape"
+            android:background="@drawable/but_cancel_shape"
             />
 
-    <!--</LinearLayout>-->
 
 </RelativeLayout>

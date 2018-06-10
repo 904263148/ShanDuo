@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,7 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.tencent.TIMCallBack;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
@@ -40,18 +39,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by dell on 2018/5/31.
+ * Created by dell on 2018/6/8.
  */
 
-public class LoginPasswordActivity extends BaseActivity implements LoginPasswordContract.View ,TextWatcher, View.OnClickListener{
+public class CodeLogpwdActivity extends BaseActivity implements LoginPasswordContract.View ,TextWatcher, View.OnClickListener{
 
     private LoginPasswordPresenter presenter;
     private Context context;
     private Activity activity;
 
+    String phone;
+    String code;
+    int payId;
 
-    @BindView(R.id.et_Old_cipher)   //旧密码
-    EditText et_Old_cipher;
+    private static final int LOGINPWD = 1;
+
     @BindView(R.id.et_Newpassword_one)  //第一次
     EditText et_Newpassword_one;
     @BindView(R.id.et_Newpassword_two)
@@ -59,11 +61,10 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
     @BindView(R.id.bt_modification)
     Button bt_modification; //按钮
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_password);
+        setContentView(R.layout.activity_codelogpwd);
 
         context = ShanDuoPartyApplication.getContext();
         activity = this;
@@ -72,39 +73,33 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         presenter = new LoginPasswordPresenter();
         presenter.init(context,this);
 
+
+        Bundle bundle = getIntent().getExtras();
+        phone = bundle.getString("phone");
+        code = bundle.getString("code");
+        payId = bundle.getInt("payId");
+
         initview();
         initData();
 
     }
 
-    @OnClick({R.id.iv_back , R.id.tv_code_pwd})
+    @OnClick({R.id.iv_back})
     public void onclick(View v){
         switch (v.getId()){
             case R.id.iv_back:
                 finish();
-                break;
-            case R.id.tv_code_pwd:
-                Bundle b = new Bundle();
-                b.putInt("payid" , 5);
-                StartActivityUtil.start(activity , VerificationcodeActivity.class ,b , Constants.CODE_LOGPWD);
                 break;
         }
     }
 
     private void initview() {
 
-        et_Old_cipher.addTextChangedListener(this);
         et_Newpassword_one.addTextChangedListener(this);
         et_Newpassword_two.addTextChangedListener(this);
         bt_modification.setSelected(false);
         bt_modification.setOnClickListener(this);
-        et_Old_cipher.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                clearAll();
-                return false;
-            }
-        });
+
         et_Newpassword_one.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -137,6 +132,36 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         returnlogin();
     }
 
+    public  void  returnlogin(){
+
+        if (payId == 1){
+            setResult(RESULT_OK);
+            finish();
+//            StartActivityUtil.start(activity, LoginActivity.class);
+//            finish();
+        }else if (payId == 5){
+            PrefUtil.setToken(context, "");
+            PrefJsonUtil.setProfile(context, "");
+            LoginBusiness.logout(new TIMCallBack() {
+                @Override
+                public void onError(int i, String s) {
+//                        Log.d("TIM_logout",s);
+                }
+                @Override
+                public void onSuccess() {
+//                        Log.d("TIM_logout","退出登录成功");
+                    TlsBusiness.logout(UserInfo.getInstance().getId());
+                    UserInfo.getInstance().setId(null);
+                    MessageEvent.getInstance().clear();
+                    FriendshipInfo.getInstance().clear();
+                    GroupInfo.getInstance().clear();
+                    StartActivityUtil.start(activity, LoginActivity.class ,LOGINPWD);
+                    finish();
+                }
+            });
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -144,35 +169,12 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
             return;
         }
         switch (requestCode) {
-            case Constants.CODE_LOGPWD:
+            case LOGINPWD:
                 setResult(RESULT_OK);
                 finish();
                 break;
         }
-    }
 
-    public  void  returnlogin(){
-        PrefUtil.setToken(context , "");
-        PrefJsonUtil.setProfile(context , "");
-
-        LoginBusiness.logout(new TIMCallBack() {
-            @Override
-            public void onError(int i, String s) {
-//                        Log.d("TIM_logout",s);
-            }
-
-            @Override
-            public void onSuccess() {
-//                        Log.d("TIM_logout","退出登录成功");
-                TlsBusiness.logout(UserInfo.getInstance().getId());
-                UserInfo.getInstance().setId(null);
-                MessageEvent.getInstance().clear();
-                FriendshipInfo.getInstance().clear();
-                GroupInfo.getInstance().clear();
-                StartActivityUtil.start(activity , LoginActivity.class);
-                finish();
-            }
-        });
     }
 
     @Override
@@ -209,8 +211,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
          * bt_confirm.setSelected(true)实现蓝色，
          *  bt_confirm.setSelected(false);实现灰色
          */
-        if(!TextUtils.isEmpty(et_Newpassword_two.getText().toString())&&!TextUtils.isEmpty(et_Old_cipher.getText().toString())
-                &&!TextUtils.isEmpty(et_Newpassword_one.getText().toString())){
+        if(!TextUtils.isEmpty(et_Newpassword_two.getText().toString())&&!TextUtils.isEmpty(et_Newpassword_one.getText().toString())){
             bt_modification.setSelected(true);
         }else{
             bt_modification.setSelected(false);
@@ -234,12 +235,12 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
             requstFocus(et_Newpassword_two, "两次密码不一致", Color.RED,true);
             return;
         }
-        if(et_Newpassword_two.getText().toString().equals(et_Newpassword_one.getText().toString()) && et_Newpassword_one.getText().toString().equals(et_Old_cipher.getText().toString())){
-            et_Newpassword_two.setText("");
-            et_Newpassword_one.setText("");
-            requstFocus(et_Newpassword_two, "旧密码和新密码一致", Color.RED,true);
-            return;
-        }
+//        if(et_Newpassword_two.getText().toString().equals(et_Newpassword_one.getText().toString()) && et_Newpassword_one.getText().toString().equals(et_Old_cipher.getText().toString())){
+//            et_Newpassword_two.setText("");
+//            et_Newpassword_one.setText("");
+//            requstFocus(et_Newpassword_two, "旧密码和新密码一致", Color.RED,true);
+//            return;
+//        }
         dialog=ProgressDialog.show(this,"","修改中,请稍后...",true);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -248,26 +249,17 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
 //                    et_Old_cipher.setText("");
 //                    requstFocus(et_Old_cipher, "原密码错误", Color.RED, true);
 //                }else{
-                String password = et_Old_cipher.getText().toString().trim();
                 String newpassword = et_Newpassword_two.getText().toString().trim();
-                presenter.loginpassword("2" ,"" , "" ,password , newpassword);
-//                    Toast.makeText(LoginPasswordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-//                }
+
+                    presenter.loginpassword("1" ,phone ,code ,"" , newpassword);
+
                 dialog.dismiss();
             }
         },2000);
     }
 
     private boolean checkNull() {
-        if(TextUtils.isEmpty(et_Old_cipher.getText().toString())){
-            requstFocus(et_Old_cipher, null, Color.GRAY,true);
-            return true;
-        }
-        if(et_Old_cipher.getText().toString().length()<8){
-            et_Old_cipher.setText("");
-            requstFocus(et_Old_cipher, "原密码格式错误", Color.RED,true);
-            return true;
-        }
+
         if(TextUtils.isEmpty(et_Newpassword_one.getText().toString())){
             requstFocus(et_Newpassword_one, null, Color.GRAY,true);
             return true;
@@ -285,10 +277,7 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
     }
     public void requstFocus(EditText et,String hint,int hintColor,boolean needFocus){
         if(hint==null){
-            hint="请输入8-16位密码";
-//            et_Old_cipher.set("若包含字母，请注意区分大小写");
-//            et_Newpassword_one.setHint("8-16位，至少包含数字/字母/字符2种组合");
-//            et_Newpassword_two.setHint("8-16位，至少包含数字/字母/字符2种组合");
+            hint="请输入六位密码";
         }
         et.setHint(hint);
         et.setHintTextColor(hintColor);
@@ -297,7 +286,6 @@ public class LoginPasswordActivity extends BaseActivity implements LoginPassword
         }
     }
     public void clearAll(){
-        requstFocus(et_Old_cipher, "若包含字母，请注意区分大小写", Color.GRAY,false);
         requstFocus(et_Newpassword_one, "8-16位，至少包含数字/字母/字符2种组合", Color.GRAY,false);
         requstFocus(et_Newpassword_two,"8-16位，至少包含数字/字母/字符2种组合", Color.GRAY,false);
     }

@@ -11,6 +11,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.PaymentPasswordPresenter;
 import com.yapin.shanduo.ui.contract.PaymentPasswordContract;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.PasswordInputView;
@@ -51,11 +52,16 @@ public class PaymentPasswordActivity extends BaseActivity implements PaymentPass
         again_paypswd_pet.setOnChangeListener(this);
     }
 
-    @OnClick({R.id.iv_back})
+    @OnClick({R.id.iv_back ,R.id.tv_code_pwd})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.tv_code_pwd:
+                Bundle b = new Bundle();
+                b.putInt("payid" , 3);
+                StartActivityUtil.start(activity , VerificationcodeActivity.class ,b , Constants.PAY_FORGET);
                 break;
         }
     }
@@ -82,6 +88,10 @@ public class PaymentPasswordActivity extends BaseActivity implements PaymentPass
         }
         switch (requestCode) {
             case NEWPAYMENTPASSWORD:
+                setResult(RESULT_OK);
+                finish();
+                break;
+            case Constants.PAY_FORGET:
                 setResult(RESULT_OK);
                 finish();
                 break;

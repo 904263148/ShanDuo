@@ -7,5 +7,5 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 
 public interface NewPaymentPasswordModel {
-    void load(OnLoadListener<String> listener, String password , String newPassword);
+    void load(OnLoadListener<String> listener,String typeId , String code , String password , String newPassword);
 }

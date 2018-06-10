@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class NewPaymentPasswordModelImpl implements NewPaymentPasswordModel {
     @Override
-    public void load(final OnLoadListener<String> listener, String password, String newPassword) {
+    public void load(final OnLoadListener<String> listener,String typeId , String code , String password, String newPassword) {
         final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -33,7 +33,8 @@ public class NewPaymentPasswordModelImpl implements NewPaymentPasswordModel {
 
         Map<String,String> params = new HashMap<>();
         params.put("token", PrefUtil.getToken(context));
-        params.put("typeId","2");
+        params.put("typeId",typeId);
+        params.put("code" ,code);
         params.put("password",password);
         params.put("newPassword",newPassword);
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.NumberInfo;
+import com.yapin.shanduo.presenter.ChecktokenPresenter;
 import com.yapin.shanduo.presenter.NumberPresenter;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
@@ -27,6 +28,7 @@ import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MywalletActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
+import com.yapin.shanduo.ui.contract.ChecktokenContract;
 import com.yapin.shanduo.ui.contract.NumberContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
@@ -42,11 +44,12 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PersonFragment extends Fragment implements NumberContract.View{
+public class PersonFragment extends Fragment implements NumberContract.View ,ChecktokenContract.View{
 
     private Activity activity;
     private Context context;
     private NumberPresenter presenter;
+    private ChecktokenPresenter checktokenPresenter;
 
     private final int PUBLISH_ACT_OPEN_LOGIN = 1;
     private final int PUBLISH_MYDYNAMICS_LOGIN = 2;
@@ -91,6 +94,8 @@ public class PersonFragment extends Fragment implements NumberContract.View{
         ButterKnife.bind(this,view);
         presenter = new NumberPresenter();
         presenter.init(context,this);
+        checktokenPresenter = new ChecktokenPresenter();
+        checktokenPresenter.init(context,this);
         tv_nickname = view.findViewById(R.id.tv_nickname);
         ib_Headportrait = view.findViewById(R.id.ib_Headportrait);
         tv_sex = view.findViewById(R.id.tv_sex);
@@ -113,47 +118,18 @@ public class PersonFragment extends Fragment implements NumberContract.View{
     private void initViewinfo() {
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
+//        checktokenPresenter.getchecktoken();
+//        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+//            ll_person_a.setVisibility(View.GONE);
+//            ll_person_aa.setVisibility(View.VISIBLE);
+//        }else {
+//            ll_person_aa.setVisibility(View.GONE);
+//            ll_person_a.setVisibility(View.VISIBLE);
 
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            ll_person_a.setVisibility(View.GONE);
-            ll_person_aa.setVisibility(View.VISIBLE);
-        }else {
-            ll_person_aa.setVisibility(View.GONE);
-            ll_person_a.setVisibility(View.VISIBLE);
-
-            presenter.getnumber();
+//            presenter.getnumber();
 
 
-            tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
-            tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
-            GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
-
-            Drawable drawable = null;
-            if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
-                drawable = activity.getResources().getDrawable(R.drawable.icon_women);
-                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
-            } else {
-                drawable = activity.getResources().getDrawable(R.drawable.icon_men);
-                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
-            }
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            tv_sex.setCompoundDrawables(drawable, null, null, null);
-            tv_sex.setCompoundDrawablePadding(2);
-            tv_sex.setText(PrefJsonUtil.getProfile(context).getAge()+"");
-
-            int level = PrefJsonUtil.getProfile(context).getVip();
-            if(level == 0){
-                tv_svip.setVisibility(View.GONE);
-            }else if(level < 9){
-                tv_svip.setVisibility(View.VISIBLE);
-                tv_svip.setText("VIP"+level);
-                tv_svip.setBackgroundResource(R.drawable.rounded_tv_vip);
-            }else {
-                tv_svip.setVisibility(View.VISIBLE);
-                tv_svip.setText("SVIP"+(level-10));
-                tv_svip.setBackgroundResource(R.drawable.rounded_tv_svip);
-            }
-        }
+//        }
 
     }
     @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter})
@@ -238,12 +214,59 @@ public class PersonFragment extends Fragment implements NumberContract.View{
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            ll_person_a.setVisibility(View.GONE);
+            ll_person_aa.setVisibility(View.VISIBLE);
+        }else {
+            ll_person_aa.setVisibility(View.GONE);
+            ll_person_a.setVisibility(View.VISIBLE);
+            presenter.getnumber();
+            tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
+            tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
+            GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
+
+            Drawable drawable = null;
+            if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_women);
+                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+            } else {
+                drawable = activity.getResources().getDrawable(R.drawable.icon_men);
+                tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
+            }
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tv_sex.setCompoundDrawables(drawable, null, null, null);
+            tv_sex.setCompoundDrawablePadding(2);
+            tv_sex.setText(PrefJsonUtil.getProfile(context).getAge()+"");
+
+            int level = PrefJsonUtil.getProfile(context).getVip();
+            if(level == 0){
+                tv_svip.setVisibility(View.GONE);
+            }else if(level < 9){
+                tv_svip.setVisibility(View.VISIBLE);
+                tv_svip.setText("VIP"+level);
+                tv_svip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            }else {
+                tv_svip.setVisibility(View.VISIBLE);
+                tv_svip.setText("SVIP"+(level-10));
+                tv_svip.setBackgroundResource(R.drawable.rounded_tv_svip);
+            }
+        }
+    }
+
+    @Override
     public void success(NumberInfo data) {
 //        ToastUtil.showShortToast(context , data);
         numberInfo = data;
             tv_friend_count.setText(numberInfo.getAttention());
             tv_act_count.setText(numberInfo.getActivity());
             tv_trend_count.setText(numberInfo.getDynamic());
+    }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context , data);
     }
 
     @Override

@@ -89,9 +89,14 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 
     }
 
-    @OnClick({R.id.iv_back , R.id.ll_reg , R.id.tv_login})
+    @OnClick({R.id.iv_back , R.id.ll_reg , R.id.tv_login ,R.id.tv_forget})
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.tv_forget:
+                Bundle b = new Bundle();
+                b.putInt("payid" , 1);
+                StartActivityUtil.start(activity , VerificationcodeActivity.class ,b , Constants.FORGET);
+                break;
             case R.id.iv_back :
                 onBackPressed();
                 break;
@@ -133,6 +138,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
 
         FriendshipManagerPresenter.setMyNick(PrefJsonUtil.getProfile(context).getName() ,this);
+
+
 
         setResult(RESULT_OK);
         onBackPressed();

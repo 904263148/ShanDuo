@@ -154,15 +154,33 @@
 
             </com.yapin.shanduo.widget.MyGridView>
 
-            <TextView
-                android:id="@+id/tv_publish_my_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:paddingTop="8dp"
-                android:text="刚刚发布"
-                android:textSize="10dp"
-                android:textColor="@color/font_color_gray"
-                />
+                >
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5-11"
+                    android:textSize="@dimen/normal_font_size_small"
+                    android:textColor="@color/font_color_gray"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_publish_my_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="刚刚"
+                    android:textSize="@dimen/normal_font_size_small"
+                    android:textColor="@color/font_color_gray"
+                    android:layout_marginLeft="17dp"
+                    />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

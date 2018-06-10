@@ -2,27 +2,31 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewAnimator;
 
-import com.tencent.qcloud.tlslibrary.helper.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CreditItem;
 import com.yapin.shanduo.presenter.CreditDetailPresenter;
-import com.yapin.shanduo.ui.adapter.CreditTabAdapter;
+import com.yapin.shanduo.presenter.JoinActPresenter;
+import com.yapin.shanduo.ui.adapter.KickingTabAdapter;
 import com.yapin.shanduo.ui.contract.CreditDetailContract;
+import com.yapin.shanduo.ui.contract.JoinActContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
@@ -32,7 +36,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ScrollingActivity extends AppCompatActivity implements CreditDetailContract.View {
+/**
+ * Created by dell on 2018/6/7.
+ */
+
+public class KickingActivity extends AppCompatActivity implements CreditDetailContract.View ,JoinActContract.View {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -54,14 +62,21 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
     TextView tv_kicking;
     @BindView(R.id.textview)
     TextView textview;
+    @BindView(R.id.ll_layoutkicking)
+    LinearLayout ll_layoutkicking;
 
-    private CreditTabAdapter adapter;
+    private KickingTabAdapter adapter;
     private int page = 1;
     private int pageSize = 10;
     private List<CreditItem> list = new ArrayList<>();
     private CreditDetailPresenter presenter;
     private Context context;
     private Activity activity;
+    private String activityId;
+    private int positiona;
+    private int typeid;
+
+    private JoinActPresenter joinActPresenter;
 
     private String userId = "";
 
@@ -72,16 +87,35 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
         ButterKnife.bind(this);
         presenter = new CreditDetailPresenter();
         presenter.init(this);
+        joinActPresenter = new JoinActPresenter();
+        joinActPresenter.init(this);
     }
 
     @Override
     public void initView() {
-//        userId = getIntent().getStringExtra("userId");
-
-        textview.setVisibility(View.GONE);
-        tv_kicking.setVisibility(View.GONE);
-
-        userId = getIntent().getStringExtra("userId") == null ? "" : getIntent().getStringExtra("userId");
+        Bundle bundle = getIntent().getExtras();
+        activityId = bundle.getString("activityId");
+        userId = getIntent().getStringExtra("userId");
+        positiona = bundle.getInt("positiona");
+        typeid = bundle.getInt("typeid");
+        if (positiona == 0){
+            textview.setVisibility(View.GONE);
+            tv_kicking.setVisibility(View.GONE);
+        }else if (positiona == 1){
+            textview.setVisibility(View.GONE);
+            tv_kicking.setVisibility(View.GONE);
+        }
+        if (3 == typeid ){
+            ll_layoutkicking.setVisibility(View.GONE);
+        }else if (2 == typeid ){
+            ll_layoutkicking.setVisibility(View.GONE);
+        }
+//        else if (4 == typeid ){
+//            tv_confirm.setText("取消活动");
+//        }else if (5 == typeid ){
+//            tv_confirm.setText("取消活动");
+//        }
+//        userId = getIntent().getStringExtra("userId") == null ? "" : getIntent().getStringExtra("userId");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +131,7 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
         tabList.add("发布");
         tabList.add("参加");
 
-        adapter = new CreditTabAdapter(getSupportFragmentManager(), tabList , userId);
+        adapter = new KickingTabAdapter(getSupportFragmentManager(), tabList , userId);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.post(new Runnable() {
@@ -127,29 +161,61 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
         setData();
     }
 
-    @OnClick()
-    public void onClick(View view){
-
-    }
-
     @Override
     public void loading() {
 
     }
 
+    @OnClick({R.id.tv_kicking})
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_kicking:
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(R.string.title_refuse)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                return;
+                            }
+                        }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        joinActPresenter.join(activityId , "3" ,userId);
+                    }
+                }).create().show();
+
+                break;
+        }
+    }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context,data.toString());
+        finish();
+    }
+
+
+
     @Override
     public void networkError() {
+        ToastUtil.showShortToast(context,"网络连接异常");
+    }
 
+    @Override
+    public void joinError(String msg) {
+        ToastUtil.showShortToast(context,msg);
     }
 
     @Override
     public void error(String msg) {
-
+        ToastUtil.showShortToast(context,msg);
     }
 
     @Override
     public void showFailed(String msg) {
-
+        ToastUtil.showShortToast(context,msg);
     }
 
 }

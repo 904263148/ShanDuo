@@ -90,7 +90,6 @@
         <activity android:name=".ui.activity.SetupActivity" />
         <activity android:name=".ui.activity.InitiatorevaluationActivity" />
         <activity android:name=".ui.activity.ParticipantevaluationActivity" />
-        <activity android:name=".ui.activity.CreditcenterActivity" />
         <activity android:name=".ui.activity.DetailsActivity" />
         <activity android:name=".ui.activity.AccountandsecurityActivity" />
         <activity android:name=".ui.activity.LoginPasswordActivity" />
@@ -99,6 +98,9 @@
         <activity android:name=".ui.activity.AboutflickerActivity" />
         <activity android:name=".ui.activity.TransactionrecordActivity" />
         <activity android:name=".ui.activity.BriefintroductionActivity" />
+        <activity android:name=".ui.activity.KickingActivity" />
+        <activity android:name=".ui.activity.VerificationcodeActivity" />
+        <activity android:name=".ui.activity.CodeLogpwdActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />

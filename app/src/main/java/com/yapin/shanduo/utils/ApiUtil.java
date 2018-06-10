@@ -29,7 +29,7 @@ public class ApiUtil {
     //首页动态
     public final static String HOME_TREND = ConfigUtil.configUrl() + "/jdynamic/dynamicList";
 
-    //参加活动
+    //参加 ,取消 活动   踢人
     public final static String JOIN_ACT = ConfigUtil.configUrl() +"/activity/joinActivities";
 
     //首页轮播
@@ -69,7 +69,7 @@ public class ApiUtil {
     public final static String ACT_JOIN_USER = ConfigUtil.configUrl() +"/activity/participant";
 
     //查询token是否有效
-    public final static String JUDGE_TOKEN = ConfigUtil.configUrl() + "juser/checktoken";
+    public final static String JUDGE_TOKEN = ConfigUtil.configUrl() + "/juser/checktoken";
 
     //参与者对活动评价
     public final static String INITIATOREVALU = ConfigUtil.configUrl() + "/score/updateScore";
@@ -121,6 +121,16 @@ public class ApiUtil {
 
     //刷新
     public final static String REFRESHACTIVITY = ConfigUtil.configUrl() +"/jmoney/refreshactivity";
+
+    //验证验证码
+    public final static String VERIFICATION = ConfigUtil.configUrl() +"/sms/checkcode";
+
+    //签到
+    public final static String SIGNIN = ConfigUtil.configUrl() +"/experience/signin";
+
+    //返回签到信息
+    public final static String CHECK_CHECKIN = ConfigUtil.configUrl() +"/experience/checksignin";
+
 
     //举报
     public final static String REPORT = ConfigUtil.configUrl() + "/reputation/saveReport";

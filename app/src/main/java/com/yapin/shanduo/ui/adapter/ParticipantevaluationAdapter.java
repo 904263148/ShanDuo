@@ -139,6 +139,10 @@ public class ParticipantevaluationAdapter extends BaseAdapter {
 //                }
 //        });
 
+        String evaluate = "";
+        evaluate = holder.et_evaluate.getText().toString();
+        infos.get(position).setEvaluated(evaluate);
+
         holder.et_evaluate.setTag(position);//存tag值
         holder.et_evaluate.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -168,10 +172,10 @@ public class ParticipantevaluationAdapter extends BaseAdapter {
             }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable != null && !"".equals(editable.toString())) {
+//                if (editable != null && !"".equals(editable.toString())) {
                     int position = (Integer) mHolder.et_evaluate.getTag();
                     infos.get(position).setEvaluated(editable.toString());
-                }
+//                }
             }
         }
 

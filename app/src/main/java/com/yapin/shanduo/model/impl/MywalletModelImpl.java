@@ -53,7 +53,7 @@ public class MywalletModelImpl implements MywalletModel {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("info" , info.toString());
+//                Log.d("info" , info.toString());
                 listener.onSuccess(info);
 //                List<TransactionrecordInfo> list = info.getList();
 //                listener.onSuccess(list , info.getList());

@@ -2,16 +2,17 @@ package com.yapin.shanduo.ui.contract;
 
 import com.yapin.shanduo.base.BasePresenter;
 import com.yapin.shanduo.base.BaseView;
+import com.yapin.shanduo.model.entity.SigninInfo;
 
 /**
- * Created by dell on 2018/5/31.
+ * Created by dell on 2018/6/8.
  */
 
-public interface LoginPasswordContract {
+public interface SigninContract {
 
     interface View extends BaseView {
 
-        void success(String data);
+        void success(SigninInfo data);
 
         void loading();
 
@@ -23,7 +24,6 @@ public interface LoginPasswordContract {
     }
 
     interface Presenter extends BasePresenter {
-        void loginpassword(String typeId ,String phone , String code ,String password , String newPassword);
+        void getsignin( );
     }
-
 }

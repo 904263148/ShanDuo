@@ -23,6 +23,6 @@ public interface NewPaymentPasswordContract {
     }
 
     interface Presenter extends BasePresenter {
-        void newpaymentpassword(String password ,String newPassword );
+        void newpaymentpassword(String typeId , String code ,String password ,String newPassword );
     }
 }

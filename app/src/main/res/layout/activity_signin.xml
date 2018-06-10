@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@drawable/app_commonroof">
+
+        <FrameLayout
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:paddingLeft="7dp"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center"
+                android:layout_margin="5dp"
+                android:padding="5dp"
+                android:src="@drawable/icon_com_delete" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="12dp"
+                android:textColor="@color/mainfont"
+                android:text="签到"
+                />
+
+        </FrameLayout>
+
+        <TextView
+            android:background="@color/color_gray"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:paddingTop="15dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_thefirst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:text="第"
+                    android:textColor="@color/home_title_color"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/tab_indicator_color"
+                    android:textSize="40dp"
+                    android:layout_toRightOf="@+id/tv_thefirst"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="天"
+                    android:textSize="12dp"
+                    android:textColor="@color/tab_indicator_color"
+                    android:layout_alignBaseline="@+id/tv_number"
+                    android:layout_toRightOf="@+id/tv_number"
+                    />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_level"
+                    android:layout_width="25dp"
+                    android:layout_height="10dp"
+                    android:text="LV90"
+                    android:textSize="7sp"
+                    android:background="@drawable/rounded_tv_level"
+                    android:textColor="@color/color_white"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/tv_experience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/tv_number"
+                    android:gravity="center"
+                    android:text="+100经验"
+                    android:textColor="@color/tab_indicator_color"
+                    android:textSize="7sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_Determine"
+                    android:gravity="center"
+                    android:background="@drawable/button_shape"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp"
+                    android:text="确定"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="12dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

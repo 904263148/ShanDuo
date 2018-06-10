@@ -2,15 +2,10 @@ package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +15,14 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
-import com.yapin.shanduo.ui.activity.CreditcenterActivity;
 import com.yapin.shanduo.ui.activity.DetailsActivity;
 import com.yapin.shanduo.ui.activity.InitiatorevaluationActivity;
-import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.KickingActivity;
 import com.yapin.shanduo.ui.activity.ParticipantevaluationActivity;
-import com.yapin.shanduo.ui.contract.JoinActContract;
-import com.yapin.shanduo.ui.fragment.MyactivityFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
-import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.widget.FooterLoading;
 
@@ -39,7 +30,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by dell on 2018/5/19.
@@ -135,7 +125,10 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 holder.tvevaluation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                            StartActivityUtil.start(activity, CreditcenterActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userId",list.get(position).getUserId()+"");
+                            bundle.putInt("positiona" ,0);
+                            StartActivityUtil.start(activity, KickingActivity.class ,bundle);
                     }
                 });
                     if (typeid == 0){
@@ -201,6 +194,18 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }else if (typeid == 5){
                     holder.tvevaluation.setVisibility(View.GONE);
                     holder.tvJoin.setText("查看详情");
+                    holder.tvJoin.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String activityId = list.get(position).getId();
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable("act" , list.get(position));
+                            bundle.putInt("positiona",positiona);
+                            bundle.putString("activityId" ,activityId);
+                            bundle.putInt("typeid" ,typeid);
+                            StartActivityUtil.start(activity , DetailsActivity.class, bundle);
+                        }
+                    });
                 }else {
                     if (typeid == 2) {
                         holder.tvevaluation.setVisibility(View.GONE);
@@ -232,6 +237,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
 //                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
+                    String activityId = list.get(position).getId();
+                    setpopupwindow.onpopupwindow( position ,activityId );
                 }
             });
 
@@ -243,7 +250,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     bundle.putParcelable("act" , list.get(position));
                     bundle.putInt("positiona",positiona);
                     bundle.putString("activityId" ,activityId);
-                    bundle.putInt("typeid" ,typeid);
+                    bundle.putInt("typeid" ,list.get(position).getTypeId());
                     StartActivityUtil.start(activity , DetailsActivity.class, bundle);
                 }
             });
@@ -275,6 +282,17 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     private ClickListener mClickListener;
+
+    //分享
+    public interface Onpopupwindow {
+        void onpopupwindow( int position ,String activityId );
+    }
+
+    public void setOnpopupwindow(Onpopupwindow Onpopup){
+        this.setpopupwindow = Onpopup;
+    }
+
+    private Onpopupwindow setpopupwindow;
 
     //刷新
     public interface OnClickListener {

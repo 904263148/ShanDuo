@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -200,6 +201,9 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                 onBackPressed();
                 break;
             case R.id.but_add_Releaseactivities:
+                if(checkNull()){
+                    return;
+                }
                 String []ary = textlonlat.split("\\,");
                 lat=ary[0];
                 lon=ary[1];
@@ -249,6 +253,58 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
             case R.id.et_add_Remarks:
                 isTop = true;
                 break;
+        }
+    }
+
+    private boolean checkNull() {
+//        if(TextUtils.isEmpty(et_add_title.getText().toString())){
+//            requstFocus(et_add_title, null, Color.GRAY,true);
+//            return true;
+//        }
+        if(et_add_title.getText().toString().length()<1){
+            et_add_title.setText("");
+            requstFocus(et_add_title, "活动主题不能为空！", Color.RED,true);
+            return true;
+        }
+
+        if(tv_add_starttime.getText().toString().length()<1){
+            tv_add_starttime.setText("");
+            requstFocus((EditText) tv_add_starttime, "活动开始时间不能为空！", Color.RED,true);
+            return true;
+        }
+
+        if(tv_add_Deadline.getText().toString().length()<1){
+            tv_add_Deadline.setText("");
+            requstFocus((EditText) tv_add_Deadline, "报名截止时间不能为空！", Color.RED,true);
+            return true;
+        }
+
+        if(et_add_Modeofconsumption.getText().toString().length()<1){
+            et_add_Modeofconsumption.setText("");
+            requstFocus((EditText) et_add_Modeofconsumption, "付款方式不能为空！", Color.RED,true);
+            return true;
+        }
+
+        if(tv_add_place.getText().toString().length()<1){
+            tv_add_place.setText("");
+            requstFocus((EditText) tv_add_place, "活动地址不能为空！", Color.RED,true);
+            return true;
+        }
+
+        return false;
+    }
+
+    public void requstFocus(EditText et,String hint,int hintColor,boolean needFocus){
+        if(hint==null){
+            hint="请输入：";
+//            et_Old_cipher.set("若包含字母，请注意区分大小写");
+//            et_Newpassword_one.setHint("8-16位，至少包含数字/字母/字符2种组合");
+//            et_Newpassword_two.setHint("8-16位，至少包含数字/字母/字符2种组合");
+        }
+        et.setHint(hint);
+        et.setHintTextColor(hintColor);
+        if(needFocus){
+            et.requestFocus();
         }
     }
 

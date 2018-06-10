@@ -26,6 +26,7 @@ import com.yapin.shanduo.ui.contract.JoinActUserContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadingView;
 
@@ -40,7 +41,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/31.
  */
 
-public class DetailsActivity extends BaseActivity implements JoinActUserContract.View ,ConfirmContract.View {
+public class DetailsActivity extends BaseActivity implements JoinActUserContract.View ,ConfirmContract.View , GridViewAdapter.OnItemClickListener{
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -122,6 +123,15 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
         activityId = bundle.getString( "activityId");
         typeid = bundle.getInt("typeid");
         act = getIntent().getParcelableExtra("act");
+        if (3 == typeid ){
+            tv_confirm.setText("删除活动");
+        }else if (2 == typeid ){
+            tv_confirm.setText("删除活动");
+        }else if (4 == typeid ){
+            tv_confirm.setText("取消活动");
+        }else if (5 == typeid ){
+            tv_confirm.setText("取消活动");
+        }
 //        positiona = getIntent().getParcelableExtra("positiona");
         tvKind.setText(act.getActivityName());
         tvTime.setText(act.getActivityStartTime());
@@ -160,13 +170,8 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
             tvVip.setText("SVIP"+(level-10));
             tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
-//        if (positiona == 0){
-//            tv_confirm.setVisibility(View.GONE);
-//        }else if (positiona == 1){
-//            tv_confirm.setVisibility(View.GONE);
-//        }else
+
             if (positiona == 2 ){
-                tv_confirm.setText("取消活动");
                 tv_confirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -194,6 +199,7 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
         Log.i("typeidinit", "initView: "+positiona);
         adapter = new GridViewAdapter(context , activity , list);
         gridView.setAdapter(adapter);
+        adapter.setClickListener(this);
         presenter.getData(act.getId() , "1" , "10");
         loadingView.loading();
     }
@@ -235,7 +241,7 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
 
     @Override
     public void success(String data) {
-        ToastUtil.showShortToast(context,"取消成功");
+        ToastUtil.showShortToast(context,data);
     }
 
     @Override
@@ -262,5 +268,15 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
     @Override
     public void showFailed(String msg) {
         loadingView.setGone();
+    }
+
+    @Override
+    public void onItemClick(int id) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId" , id+"");
+        bundle.putString("activityId" , activityId);
+        bundle.putInt("positiona",positiona);
+        bundle.putInt("typeid" ,typeid);
+        StartActivityUtil.start(activity , KickingActivity.class, bundle);
     }
 }

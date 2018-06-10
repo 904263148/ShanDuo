@@ -339,6 +339,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder2.setView(v);
                     final AlertDialog dialog = builder2.show();
+                    dialog.getWindow().setLayout(650, LinearLayout.LayoutParams.WRAP_CONTENT);
                     again_paypswd_pet = (PasswordInputView)v.findViewById(R.id.again_paypswd_pet);
                     ll_cancel = (LinearLayout)v.findViewById(R.id.ll_cancel);
                     tv_Determine = (TextView)v.findViewById(R.id.tv_Determine);
@@ -381,6 +382,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder3.setView(v);
                     final AlertDialog dialog = builder3.show();
+                    dialog.getWindow().setLayout(650, LinearLayout.LayoutParams.WRAP_CONTENT);
                     again_paypswd_pet = (PasswordInputView)v.findViewById(R.id.again_paypswd_pet);
                     ll_cancel = (LinearLayout)v.findViewById(R.id.ll_cancel);
                     tv_Determine = (TextView)v.findViewById(R.id.tv_Determine);
@@ -424,6 +426,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder1.setView(v);
                     final AlertDialog dialog = builder1.show();
+                    dialog.getWindow().setLayout(650, LinearLayout.LayoutParams.WRAP_CONTENT);
                     again_paypswd_pet = (PasswordInputView)v.findViewById(R.id.again_paypswd_pet);
                     ll_cancel = (LinearLayout)v.findViewById(R.id.ll_cancel);
                     tv_Determine = (TextView)v.findViewById(R.id.tv_Determine);
@@ -491,17 +494,20 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
 
     @Override
     public void networkError() {
-
+        ToastUtil.showShortToast(context,"服务器连接异常");
+//        dialogDismiss.dismiss();
     }
 
     @Override
     public void error(String msg) {
-
+        ToastUtil.showShortToast(context,msg.toString());
+        dialogDismiss.dismiss();
     }
 
     @Override
     public void showFailed(String msg) {
-
+        ToastUtil.showShortToast(context,msg.toString());
+        dialogDismiss.dismiss();
     }
 
     @Override

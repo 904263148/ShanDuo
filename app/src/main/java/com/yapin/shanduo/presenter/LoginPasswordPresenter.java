@@ -31,7 +31,7 @@ public class LoginPasswordPresenter implements LoginPasswordContract.Presenter {
     }
 
     @Override
-    public void loginpassword(String password, String newPassword) {
+    public void loginpassword(String typeId ,String phone , String code ,String password, String newPassword) {
         loginPasswordModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -47,7 +47,7 @@ public class LoginPasswordPresenter implements LoginPasswordContract.Presenter {
             public void networkError() {
                 view.networkError();
             }
-        },password , newPassword);
+        },typeId , phone , code ,password , newPassword);
     }
 
 }

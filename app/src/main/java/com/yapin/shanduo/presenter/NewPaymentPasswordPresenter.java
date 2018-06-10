@@ -31,7 +31,7 @@ public class NewPaymentPasswordPresenter implements NewPaymentPasswordContract.P
     }
 
     @Override
-    public void newpaymentpassword(String password, String newPassword) {
+    public void newpaymentpassword(String typeId , String code ,String password, String newPassword) {
         newPaymentPasswordModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -47,6 +47,6 @@ public class NewPaymentPasswordPresenter implements NewPaymentPasswordContract.P
             public void networkError() {
                 view.networkError();
             }
-        },password ,newPassword);
+        },typeId , code ,password ,newPassword);
     }
 }

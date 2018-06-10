@@ -17,6 +17,15 @@ public class Constants {
     public final static int TYPE_FOOTER_LOAD = 1;
     public final static int TYPE_FOOTER_FULL = 2;
 
+    //忘记密码log
+    public final static int FORGET = 1;
+    public final static int SETFOGGET = 2;
+    public final static int CODE_LOGPWD = 5;
+    //忘记支付密码
+    public final static int PAY_FORGET = 3;
+    public final static int PAY_SETFOGGET = 4;
+
+
     //我的活动
     public final static int MY_ACTIVITY = 5;
     /**

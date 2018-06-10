@@ -1,15 +1,17 @@
 package com.yapin.shanduo.model.impl;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.google.gson.Gson;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.LoginPasswordModel;
+import com.yapin.shanduo.model.SigninModel;
+import com.yapin.shanduo.model.entity.SigninInfo;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
 import com.yapin.shanduo.presenter.OnLoadListener;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
-import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 
 import org.json.JSONException;
@@ -19,12 +21,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by dell on 2018/5/31.
+ * Created by dell on 2018/6/8.
  */
 
-public class LoginPasswordModelImpl implements LoginPasswordModel {
+public class SigninModelImpl implements SigninModel{
     @Override
-    public void load(final OnLoadListener<String> listener,String typeId ,String phone , String code , String password, String newPassword) {
+    public void load(final OnLoadListener<SigninInfo> listener) {
         final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -33,13 +35,8 @@ public class LoginPasswordModelImpl implements LoginPasswordModel {
 
         Map<String,String> params = new HashMap<>();
         params.put("token", PrefUtil.getToken(context));
-        params.put("typeId",typeId);
-        params.put("phone",phone );
-        params.put("code",code );
-        params.put("password",password);
-        params.put("newPassword",newPassword);
 
-        OkHttp.post(context, ApiUtil.LOGINPASSWORD, params, new JavaOkCallback() {
+        OkHttp.post(context, ApiUtil.CHECK_CHECKIN, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
                 listener.onError(msg);
@@ -47,12 +44,14 @@ public class LoginPasswordModelImpl implements LoginPasswordModel {
 
             @Override
             public void onResponse(String response) {
+                SigninInfo info = null;
                 try {
-                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
-                    listener.onSuccess("修改成功");
+                    info = new Gson().fromJson(new JSONObject(response).get("result").toString(),SigninInfo.class);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                listener.onSuccess(info);
+//                Log.d("infosignin" , info.toString());
 
             }
         });
