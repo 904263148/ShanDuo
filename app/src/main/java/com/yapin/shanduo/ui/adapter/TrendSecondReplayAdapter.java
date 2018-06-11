@@ -19,6 +19,7 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.TimeUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -73,7 +74,7 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
                 holder.tvDate.setText(diff);
                 holder.tvTime.setText("");
             }
-            holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + list.get(position).getReplyName() +"</font><font color = '#333333'>:"+ list.get(position).getComment()+"</font>"));
+            holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + list.get(position).getReplyName() +"</font><font color = '#333333'>:"+ Utils.unicodeToString(list.get(position).getComment())+"</font>"));
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.setBackgroundColor(activity.getResources().getColor(R.color.bg_color));

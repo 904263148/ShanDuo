@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -77,10 +79,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
             return;
         isInitView = true;
 
-        setIsEvent(Constants.IS_EVENT);
-
         dialog = new ProgressDialog(this);
-        dialog.setMessage("加载中...");
+        dialog.setMessage(getString(R.string.dialog_loading));
         dialog.setCanceledOnTouchOutside(false);
 
 //        et_login_user.setOnFocusChangeListener(this);
@@ -107,7 +107,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 
                 String username = et_login_user.getText().toString().trim();
                 String password = et_login_pwd.getText().toString().trim();
-                UserManage.getInstance().saveUserInfo(LoginActivity.this, username, password);
                 if (username.equals("")) {
                     Toast.makeText(LoginActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
                 } else if (password.equals("")) {
@@ -128,6 +127,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 
         UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
         UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());
+
+        UserManage.getInstance().saveUserInfo(LoginActivity.this, et_login_user.getText().toString().trim(), et_login_pwd.getText().toString().trim());
 
         Log.d("user_im_sign","用户的IM签名"+PrefJsonUtil.getProfile(context).getUserSig());
         Log.d("user_id","用户的id"+PrefJsonUtil.getProfile(context).getUserId());
@@ -157,10 +158,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         dialog.dismiss();
     }
 
+    String msg1 = "";
+
     @Override
     public void error(String msg) {
-        ToastUtil.showShortToast(context,msg);
         dialog.dismiss();
+        ToastUtil.showShortToast(context ,msg);
+
     }
 
     @Override

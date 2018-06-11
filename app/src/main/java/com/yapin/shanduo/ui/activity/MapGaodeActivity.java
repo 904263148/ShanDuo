@@ -126,6 +126,9 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private Context context;
     private Activity activity;
 
+    private String chatLatLon;
+    private String chatDesc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +146,6 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         initView();
 
         resultData = new ArrayList<>();
-
-
 
     }
 
@@ -238,7 +239,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 try {
 //                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH +"map_shot.png");
 
-                    boolean b = BitmapUtils.saveMapImageToSD(getApplicationContext() , Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH , "map.jpg", bitmap, 100);
+                    boolean b = BitmapUtils.saveMapImageToSD(getApplicationContext() , Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH  ,chatLatLon+"map.jpg", bitmap, 100);
 
 //                    boolean b = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 //                    try {
@@ -254,11 +255,13 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                     StringBuffer buffer = new StringBuffer();
                     if (b) {
                         buffer.append("截屏成功 ");
+                        intent.putExtra("chatLatLon" , chatLatLon);
+                        intent.putExtra("chatDesc" , chatDesc);
                         setResult(RESULT_OK , intent);
                     }else {
                         buffer.append("截屏失败 ");
                     }
-                    ToastUtil.show(getApplicationContext(), buffer.toString());
+//                    ToastUtil.show(getApplicationContext(), buffer.toString());
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -538,6 +541,9 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
 
                 searchResultAdapter.setSelectedPosition(position);
                 searchResultAdapter.notifyDataSetChanged();
+
+                chatLatLon = resultData.get(position).getLatLonPoint().toString().trim();
+                chatDesc = resultData.get(position).getTitle().toString().trim();
 
                 if(chat_map)
                     return;

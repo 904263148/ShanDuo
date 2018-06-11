@@ -163,7 +163,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
                 if(user.isAttention()){
                     ChatActivity.navToChat(activity , userId , TIMConversationType.C2C);
                 }else {
-                    presenter.addFriend(userId, "", "" ,"");
+                    addFriendPresenter.addFriend(userId);
+//                    presenter.addFriend(userId, "", "" ,"");
                 }
                 break;
             case R.id.tv_delete_friend:
@@ -279,7 +280,10 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
     @Override
     public void deleteSuccess(String data) {
-        presenter.delFriend(userId);
+//        presenter.delFriend(userId);
+        Toast.makeText(this, getResources().getString(R.string.profile_del_succeed), Toast.LENGTH_SHORT).show();
+        StartActivityUtil.start(activity , MainActivity.class);
+        onBackPressed();
     }
 
     @Override

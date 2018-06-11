@@ -42,7 +42,7 @@ public abstract class JavaOkCallback implements okhttp3.Callback{
     public void onResponse(Call call, Response response) throws IOException {
         try {
             final String res = response.body().string();
-            Log.d("res",res);
+            Log.d("JavaOkCallback",res);
             final JSONObject jsonObject = new JSONObject(res);
             final boolean success = jsonObject.getBoolean("success");
 

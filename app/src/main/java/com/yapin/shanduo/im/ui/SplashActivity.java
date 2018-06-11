@@ -45,6 +45,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         super.onCreate(savedInstanceState);
         context = ShanDuoPartyApplication.getContext();
         clearNotification();
+
+        Utils.setLocation(context);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);

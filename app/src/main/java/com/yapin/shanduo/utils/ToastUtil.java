@@ -1,6 +1,7 @@
 package com.yapin.shanduo.utils;
 
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.amap.api.services.core.AMapException;
@@ -12,6 +13,8 @@ import com.yapin.shanduo.model.entity.FlickerPurseInfo;
  */
 public class ToastUtil {
 
+    static Toast toast = null;
+
     /**
      * 显示短时间的Toast
      *
@@ -19,7 +22,22 @@ public class ToastUtil {
      * @param msg     提示内容
      */
     public static void showShortToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
+            try {
+                if(toast!=null){
+                    toast.setText(msg);
+                }else{
+                    toast= Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                }
+                toast.show();
+            } catch (Exception e) {
+                //解决在子线程中调用Toast的异常情况处理
+                Looper.prepare();
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+
+//        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**

@@ -36,8 +36,8 @@ public class HomeTrendModelImpl implements HomeTrendLoadModel{
         Map<String,String> params = new HashMap<>();
         params.put("token" , PrefUtil.getToken(context));
         params.put("typeId" , typeId);
-        params.put("lat" , lat);
-        params.put("lon" , lon);
+        params.put("lat" , PrefUtil.getLat(context));
+        params.put("lon" , PrefUtil.getLon(context));
         params.put("page" , page);
         params.put("pageSize" ,pageSize);
         if("4".equals(typeId)) params.put("userId",userId);

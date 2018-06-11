@@ -61,6 +61,8 @@ public class ReportActivity extends RightSlidingActivity implements ReportContra
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 
+        setToolbar(toolbar);
+
         typeId = getIntent().getStringExtra("typeId");
         String id = getIntent().getStringExtra("id");
         if(Constants.REPORT_ACT.equals(typeId)){
@@ -85,6 +87,10 @@ public class ReportActivity extends RightSlidingActivity implements ReportContra
         btReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(checkPosition == -1){
+                    ToastUtil.showShortToast(context , R.string.tips_no_report);
+                    return;
+                }
                 presenter.getData(PrefJsonUtil.getProfile(context).getUserId() , activityId , dynamicId , typeId , report[checkPosition]);
             }
         });

@@ -62,6 +62,8 @@
     <string name="tips_no_credit">没什么好看的</string>
     <string name="tips_no_token">必须登录才能查看好友活动哟~</string>
     <string name="tips_my_no_token">请先登录哦</string>
+    <string name="tips_no_report">请选择举报内容</string>
+    <string name="tips_loading">加载中#8230</string>
 
     <string name="title_home">首页</string>
     <string name="title_chat">聊天</string>
@@ -303,6 +305,7 @@
     <string name="summary_voice">[语音]</string>
     <string name="summary_video">[小视频]</string>
     <string name="summary_file">[文件]</string>
+    <string name="summary_location">[位置]</string>
     <string name="summary_friend_add">请求添加好友</string>
     <string name="summary_friend_added">我已添加</string>
     <string name="summary_friend_add_me">请求添加</string>

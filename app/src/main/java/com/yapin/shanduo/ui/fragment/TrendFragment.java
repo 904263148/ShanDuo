@@ -122,6 +122,8 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         adapter = new TrendInfoAdapter(context, activity , list , position);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this);
+
+        page = 1;
         presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
         recyclerView.setOnLoadMoreListener(this);
 

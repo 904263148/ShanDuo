@@ -376,6 +376,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
      */
     @Override
     public void sendText() {
+        String text = input.getText().toString();
         Message message = new TextMessage(input.getText());
         presenter.sendMessage(message.getMessage());
         input.setText("");
@@ -531,6 +532,8 @@ public class ChatActivity extends BaseActivity implements ChatView {
                 }
             }
         } else if(requestCode == OPEN_GAODEMAP){
+            if(resultCode != RESULT_OK) return;
+
             File file = new File(Environment.getExternalStorageDirectory() + Constants.PICTURE_PATH +"map.jpg");
             if (file.exists() && file.length() > 0){
                 if (file.length() > 1024 * 1024 * 10){

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tencent.qcloud.tlslibrary.helper.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CommentInfo;
@@ -109,6 +111,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     TextView tvLikeCount;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
 
     private Context context;
     private Activity activity;
@@ -133,6 +137,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     private InputMethodManager imm;
 
     private CustomBottomSheetDialogFragment fragment;
+
+    private int totalPage = 1;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -271,28 +277,19 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
         presenter.getData(trend.getId() , TYPEID ,page+"" , pageSize+"");
 
-        etComment.addTextChangedListener(new TextWatcher() {
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int index = etComment.getSelectionStart() - 1;
-                if (index > 0) {
-                    if (Utils.isemojicharacter(s.charAt(index))) {
-                        Editable edit = etComment.getText();
-                        edit.delete(index, index + 1);
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if(!isLoading && page < totalPage){
+                        isLoading = true;
+                        onLoadMore();//调用刷新控件对应的加载更多方法
                     }
                 }
             }
         });
+
     }
 
     @OnClick({R.id.iv_share , R.id.rl_back , R.id.tv_publish  ,R.id.tv_mile , R.id.tv_like_count , R.id.iv_head})
@@ -318,7 +315,9 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                     ToastUtil.showShortToast(context , "内容不能为空");
                     return;
                 }
-                replayPresenter.getData(trend.getId() , etComment.getText().toString().trim() , TYPEID , "" ,"");
+
+                String unicode = Utils.stringToUnicode(etComment.getText().toString().trim());
+                replayPresenter.getData(trend.getId() , unicode , TYPEID , "" ,"");
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 break;
@@ -371,6 +370,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
             list.clear();
             list.add(footerItem);
         }
+        this.totalPage = totalPage;
         recyclerView.setPage(page, totalPage);
         footerItem.setType(page < totalPage ? Constants.TYPE_FOOTER_LOAD : Constants.TYPE_FOOTER_FULL);
         list.addAll(list.size() - 1, data);

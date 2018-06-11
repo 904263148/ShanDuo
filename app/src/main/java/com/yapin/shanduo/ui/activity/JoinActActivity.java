@@ -27,6 +27,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
@@ -163,6 +164,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         adapter.setClickListener(this);
         presenter.getData(act.getId() , "1" , "10");
         loadingView.loading();
+
     }
 
     @OnClick({R.id.iv_back , R.id.tv_back , R.id.tv_confirm})

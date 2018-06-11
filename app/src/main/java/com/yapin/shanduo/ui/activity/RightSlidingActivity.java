@@ -5,7 +5,9 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -125,6 +127,24 @@ public class RightSlidingActivity extends AppCompatActivity {
             @Override
             public void onAnimationRepeat(Animator animation) {
 
+            }
+        });
+    }
+
+    /**
+     * 设置toolbar
+     *
+     * @param toolbar toolbar
+     */
+    public void setToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }

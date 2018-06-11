@@ -23,6 +23,7 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.TimeUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -81,35 +82,35 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvAge.setCompoundDrawablePadding(2);
             holder.tvAge.setText(list.get(position).getAge() +"");
 
-            holder.tvOneComment.setText(list.get(position).getComment());
+            holder.tvOneComment.setText(Utils.unicodeToString(list.get(position).getComment()));
 
             List<SecondComment.Comments> commentList = list.get(position).getComments();
             if(list.get(position).getCount() == 0){
                 holder.llTwoReplay.setVisibility(View.GONE);
             }else if (list.get(position).getCount() == 1) {
                 holder.llTwoReplay.setVisibility(View.VISIBLE);
-                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" +"<font color = '#999999'>"+ commentList.get(0).getComment()+"</font>"));
+                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" +"<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(0).getComment())+"</font>"));
                 holder.tvTwoReplay2.setVisibility(View.GONE);
                 holder.tvTwoReplay3.setVisibility(View.GONE);
                 holder.tvReplayCount.setVisibility(View.GONE);
             }else if(list.get(position).getCount() == 2){
                 holder.llTwoReplay.setVisibility(View.VISIBLE);
-                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(0).getComment()+"</font>"));
-                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(1).getComment()+"</font>"));
+                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(0).getComment())+"</font>"));
+                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(1).getComment())+"</font>"));
                 holder.tvTwoReplay3.setVisibility(View.GONE);
                 holder.tvReplayCount.setVisibility(View.GONE);
             }else if(list.get(position).getCount() == 3){
                 holder.llTwoReplay.setVisibility(View.VISIBLE);
-                holder.tvTwoReplay1.setText(Html.fromHtml("<font color ='#4660ff'>" + commentList.get(0).getUserName() +":</font>"  + "<font color = '#999999'>"+ commentList.get(0).getComment()+"</font>"));
-                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(1).getComment()+"</font>"));
-                holder.tvTwoReplay3.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(2).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(2).getComment()+"</font>"));
+                holder.tvTwoReplay1.setText(Html.fromHtml("<font color ='#4660ff'>" + commentList.get(0).getUserName() +":</font>"  + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(0).getComment())+"</font>"));
+                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(1).getComment())+"</font>"));
+                holder.tvTwoReplay3.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(2).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(2).getComment())+"</font>"));
                 holder.tvReplayCount.setVisibility(View.GONE);
             }else{
                 holder.llTwoReplay.setVisibility(View.VISIBLE);
                 holder.tvReplayCount.setVisibility(View.VISIBLE);
-                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(0).getComment()+"</font>"));
-                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(1).getComment()+"</font>"));
-                holder.tvTwoReplay3.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(2).getUserName() +":</font>" + "<font color = '#999999'>"+ commentList.get(2).getComment()+"</font>"));
+                holder.tvTwoReplay1.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(0).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(0).getComment())+"</font>"));
+                holder.tvTwoReplay2.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(1).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(1).getComment())+"</font>"));
+                holder.tvTwoReplay3.setText(Html.fromHtml("<font color = '#4660ff'>" + commentList.get(2).getUserName() +":</font>" + "<font color = '#999999'>"+ Utils.unicodeToString(commentList.get(2).getComment())+"</font>"));
                 holder.tvReplayCount.setText(Html.fromHtml("<font color = '#4660ff'>回复量" + list.get(position).getCount() +"条></font>"));
             }
 

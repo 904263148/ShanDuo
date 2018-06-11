@@ -45,6 +45,7 @@ import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.CirclePageIndicator;
 import com.yapin.shanduo.widget.DotView;
 import com.yapin.shanduo.widget.MyGallyPageTransformer;
+import com.yapin.shanduo.widget.VpSwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.refresh)
-    SwipeRefreshLayout refreshLayout;
+    VpSwipeRefreshLayout refreshLayout;
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
     @BindView(R.id.iv_banner)
@@ -154,22 +155,6 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
-            }
-        });
-
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        refreshLayout.setEnabled(false);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        refreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
             }
         });
 

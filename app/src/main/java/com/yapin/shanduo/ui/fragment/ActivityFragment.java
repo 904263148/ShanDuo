@@ -124,6 +124,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
             loadingView.noData(R.string.tips_no_token);
             return;
         }
+        page = 1;
         presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
         recyclerView.setOnLoadMoreListener(this);
 

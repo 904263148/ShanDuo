@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,6 +87,8 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
     RelativeLayout rlComment;
     @BindView(R.id.refresh)
     SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
 
     private Context context;
     private Activity activity;
@@ -93,6 +96,8 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
     TrendSecondReplayPresenter presenter;
 
     private CommentInfo.Comment comment;
+
+    private int totalPage = 1;
 
     private LinearLayoutManager layoutManager;
     private int page = 1;
@@ -146,7 +151,7 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
         tvAge.setCompoundDrawablePadding(2);
         tvAge.setText(comment.getAge() +"");
 
-        tvOneComment.setText(comment.getComment());
+        tvOneComment.setText(Utils.unicodeToString(comment.getComment()));
 
         String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(comment.getCreateDate()), TimeUtil.getNowTime());
         if(TextUtils.isEmpty(diff)){
@@ -172,28 +177,19 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
 
         presenter.getData(comment.getId() , TYPE_ID , page+"" ,pageSize+"");
 
-        etComment.addTextChangedListener(new TextWatcher() {
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int index = etComment.getSelectionStart() - 1;
-                if (index > 0) {
-                    if (Utils.isemojicharacter(s.charAt(index))) {
-                        Editable edit = etComment.getText();
-                        edit.delete(index, index + 1);
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    if(!isLoading && page < totalPage){
+                        isLoading = true;
+                        onLoadMore();//调用刷新控件对应的加载更多方法
                     }
                 }
             }
         });
+
     }
 
     @OnClick({R.id.iv_back , R.id.tv_publish , R.id.rl_tag})
@@ -215,7 +211,7 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
                     id = list.get(replay_position).getUserId()+"";
 //                    replayPresenter.getData(list.get(replay_position).getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,list.get(replay_position).getUserId()+"");
                 }
-                replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,id);
+                replayPresenter.getData(comment.getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,id);
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 break;
@@ -254,6 +250,7 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
             list.clear();
             list.add(footerItem);
         }
+        this.totalPage = totalPage;
         recyclerView.setPage(page, totalPage);
         footerItem.setType(page < totalPage ? Constants.TYPE_FOOTER_LOAD : Constants.TYPE_FOOTER_FULL);
         list.addAll(list.size() - 1, data);
