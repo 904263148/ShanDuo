@@ -77,7 +77,6 @@ public class BitmapUtils {
         boolean b = bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);
         bos.flush();
         bos.close();
-        ToastUtil.showShortToast(context, "图片已保存在" + filePath + "文件夹");
         return b;
     }
 

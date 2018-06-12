@@ -245,6 +245,14 @@ public class ChatActivity extends BaseActivity implements ChatView {
                             handler.postDelayed(resetTitle,3000);
                             break;
                         default:
+                            if (messageList.size()==0){
+                                mMessage.setHasTime(null);
+                            }else{
+                                mMessage.setHasTime(messageList.get(messageList.size()-1).getMessage());
+                            }
+                            messageList.add(mMessage);
+                            adapter.notifyDataSetChanged();
+                            listView.setSelection(adapter.getCount()-1);
                             break;
                     }
                 }else{
@@ -534,17 +542,15 @@ public class ChatActivity extends BaseActivity implements ChatView {
         } else if(requestCode == OPEN_GAODEMAP){
             if(resultCode != RESULT_OK) return;
 
-            File file = new File(Environment.getExternalStorageDirectory() + Constants.PICTURE_PATH +"map.jpg");
-            if (file.exists() && file.length() > 0){
-                if (file.length() > 1024 * 1024 * 10){
-                    Toast.makeText(this, getString(R.string.chat_file_too_large),Toast.LENGTH_SHORT).show();
-                }else{
-                    Message message = new ImageMessage(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH +"map.jpg",false);
-                    presenter.sendMessage(message.getMessage());
-                }
-            }else{
-                Toast.makeText(this, getString(R.string.chat_file_not_exist),Toast.LENGTH_SHORT).show();
-            }
+            String chatLatLon = data.getStringExtra("chatLatLon");
+            String chatDesc = data.getStringExtra("chatDesc");
+            String imgId = data.getStringExtra("imgId");
+
+            String [] latlon = chatLatLon.split(",");
+            String lat = latlon == null || latlon.length == 0 ? "" : latlon[0];
+            String lon = latlon == null || latlon.length == 0 ? "" : latlon[1];
+            Message message = new CustomMessage(CustomMessage.Type.LOCATION , lat , lon , chatDesc , imgId);
+            presenter.sendMessage(message.getMessage());
         }
 
     }

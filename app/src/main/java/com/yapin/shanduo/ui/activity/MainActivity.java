@@ -364,6 +364,8 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         //设置背景色
         setBackgroundAlpha(0.5f);
 
+        publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
+        publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
     }
 
     //设置屏幕背景透明效果

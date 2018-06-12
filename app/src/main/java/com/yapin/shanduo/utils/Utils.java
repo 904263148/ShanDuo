@@ -478,4 +478,14 @@ public class Utils {
         return str;
     }
 
+    /**
+     * byte转String
+     */
+    public static String byteArrayToStr(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;
+        }
+        String str = new String(byteArray);
+        return str;
+    }
 }

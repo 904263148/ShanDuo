@@ -131,8 +131,10 @@ public class ApiUtil {
     //返回签到信息
     public final static String CHECK_CHECKIN = ConfigUtil.configUrl() +"/experience/checksignin";
 
-
     //举报
     public final static String REPORT = ConfigUtil.configUrl() + "/reputation/saveReport";
+
+    //图片上传后返回图片地址
+    public final static String UPLOAD_IMG_URL = ConfigUtil.configUrl() + "/file/uploads";
 
 }

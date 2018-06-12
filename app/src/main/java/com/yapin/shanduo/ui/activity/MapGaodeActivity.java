@@ -53,7 +53,10 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.presenter.ImageUrlPresenter;
+import com.yapin.shanduo.presenter.UploadPresenter;
 import com.yapin.shanduo.ui.adapter.SearchResultAdapter;
+import com.yapin.shanduo.ui.contract.UploadContract;
 import com.yapin.shanduo.utils.BitmapUtils;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.FileUtil;
@@ -75,7 +78,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MapGaodeActivity extends AppCompatActivity implements LocationSource,
-        AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener{
+        AMapLocationListener, GeocodeSearch.OnGeocodeSearchListener, PoiSearch.OnPoiSearchListener, UploadContract.View{
 
     @BindView(R.id.tv_send)
     TextView tvSend;
@@ -129,6 +132,11 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private String chatLatLon;
     private String chatDesc;
 
+    private boolean isClick = false;
+
+    private ImageUrlPresenter uploadPresenter;
+    private List<String> listShow = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,14 +151,17 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         mapView.onCreate(savedInstanceState);
         init();
         textlonlat = PrefUtil.getcity(context);
+
+        uploadPresenter = new ImageUrlPresenter();
+        uploadPresenter.init(this);
+
         initView();
 
         resultData = new ArrayList<>();
 
     }
 
-    private void initView() {
-
+    public void initView() {
         if(chat_map)
             tvSend.setVisibility(View.VISIBLE);
 
@@ -231,7 +242,6 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         aMap.getMapScreenShot(new AMap.OnMapScreenShotListener() {
             @Override
             public void onMapScreenShot(Bitmap bitmap) {
-                Intent intent = new Intent();
                 if(null == bitmap){
                     return;
                 }
@@ -239,7 +249,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                 try {
 //                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH +"map_shot.png");
 
-                    boolean b = BitmapUtils.saveMapImageToSD(getApplicationContext() , Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH  ,chatLatLon+"map.jpg", bitmap, 100);
+                    boolean b = BitmapUtils.saveMapImageToSD(getApplicationContext() , Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH  ,"map.jpg", bitmap, 100);
 
 //                    boolean b = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
 //                    try {
@@ -255,18 +265,20 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
                     StringBuffer buffer = new StringBuffer();
                     if (b) {
                         buffer.append("截屏成功 ");
-                        intent.putExtra("chatLatLon" , chatLatLon);
-                        intent.putExtra("chatDesc" , chatDesc);
-                        setResult(RESULT_OK , intent);
+                        listShow.clear();
+                        listShow.add(Environment.getExternalStorageDirectory() +Constants.PICTURE_PATH + "map.jpg");
+                        uploadPresenter.upload(listShow);
+
                     }else {
                         buffer.append("截屏失败 ");
+                        ToastUtil.showShortToast(context , "位置获取失败");
+                        onBackPressed();
                     }
 //                    ToastUtil.show(getApplicationContext(), buffer.toString());
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                finish();
+
             }
 
             @Override
@@ -520,8 +532,12 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
 
         searchResultAdapter.setData(resultData);
         searchResultAdapter.notifyDataSetChanged();
-    }
 
+        if(!isClick && chat_map && resultData.size() != 0){
+            chatLatLon = resultData.get(0).getLatLonPoint().toString().trim();
+            chatDesc = resultData.get(0).getTitle().toString().trim();
+        }
+    }
 
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
@@ -532,6 +548,9 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //            if (position != searchResultAdapter.getSelectedPosition()) {
+
+            isClick = true;
+
                 PoiItem poiItem = (PoiItem) searchResultAdapter.getItem(position);
                 LatLng curLatlng = new LatLng(poiItem.getLatLonPoint().getLatitude(), poiItem.getLatLonPoint().getLongitude());
 
@@ -690,4 +709,36 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    @Override
+    public void uploadSuccess(String imgIds) {
+        Intent intent = new Intent();
+        intent.putExtra("chatLatLon" , chatLatLon);
+        intent.putExtra("chatDesc" , chatDesc);
+        intent.putExtra("imgId" , imgIds);
+        setResult(RESULT_OK , intent);
+        onBackPressed();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(context , "位置获取失败");
+        onBackPressed();
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context , "位置获取失败");
+        onBackPressed();
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(context , "位置获取失败");
+        onBackPressed();
+    }
 }

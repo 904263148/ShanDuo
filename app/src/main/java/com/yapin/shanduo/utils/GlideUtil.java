@@ -114,4 +114,15 @@ public class GlideUtil {
                 .into(imageView);
     }
 
+    /**
+     * 加载缩略图
+     */
+    public static void load(Context context, byte [] imgId, ImageView imageView) {
+        String url = ApiUtil.IMG_URL + Utils.byteArrayToStr(imgId);
+        Glide.with(context).load(Utils.byteArrayToStr(imgId) == null ? "" : url)
+                .error(R.color.color_white)
+                .placeholder(R.color.color_white)
+                .into(imageView);
+    }
+
 }
