@@ -101,6 +101,20 @@ public class ActivityInfo implements Parcelable {
 
 		private Integer typeId; // 0:参与者未评价 1:参与者已评价 2:发起者未评价 3:发起者已评价 4:活动报名截止 5:报名截止活动未开始
 
+		private Integer level;
+
+		public void setOthersScore(Integer othersScore) {
+			this.othersScore = othersScore;
+		}
+
+		public Integer getLevel() {
+			return level;
+		}
+
+		public void setLevel(Integer level) {
+			this.level = level;
+		}
+
 		public Integer getTypeId() {
 			return typeId;
 		}
@@ -328,6 +342,7 @@ public class ActivityInfo implements Parcelable {
 			dest.writeValue(this.vipGrade);
 			dest.writeValue(this.othersScore);
 			dest.writeValue(this.typeId);
+			dest.writeValue(this.level);
 		}
 
 		protected Act(Parcel in) {
@@ -356,6 +371,7 @@ public class ActivityInfo implements Parcelable {
 			this.vipGrade = (Integer) in.readValue(Integer.class.getClassLoader());
 			this.othersScore = (Integer) in.readValue(Integer.class.getClassLoader());
 			this.typeId = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.level = (Integer) in.readValue(Integer.class.getClassLoader());
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

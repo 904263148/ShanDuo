@@ -81,6 +81,8 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
     GridView gridView;
     @BindView(R.id.ll_join)
     LinearLayout llJoin;
+    @BindView(R.id.tv_lv)
+    TextView tvLv;
     
     private Context context;
     private Activity activity;
@@ -115,17 +117,19 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         activity = this;
         act = getIntent().getParcelableExtra("act");
         type = getIntent().getIntExtra("type" , 0);
-        tvKind.setText(act.getActivityName());
+        tvKind.setText(Utils.unicodeToString(act.getActivityName()));
         tvTime.setText(act.getActivityStartTime());
         tvType.setText(act.getMode());
         tvManCount.setText(act.getManNumber());
         tvWomanCount.setText(act.getWomanNumber());
-        tvHost.setText(act.getUserName());
-        tvMemo.setText(act.getRemarks());
+        tvHost.setText(Utils.unicodeToString(act.getUserName()));
+        tvMemo.setText(Utils.unicodeToString(act.getRemarks()));
         tvPlace.setText(act.getActivityAddress());
         tvMile.setText(act.getLocation()+"km");
         tvEndTime.setText("报名截止日期:"+act.getActivityCutoffTime());
         GlideUtil.load(context , activity , ApiUtil.IMG_URL+ act.getHeadPortraitId() ,ivHead);
+
+        tvLv.setText("LV" + act.getLevel());
 
         Drawable drawable = null;
         if ("0".equals(act.getGender())) {

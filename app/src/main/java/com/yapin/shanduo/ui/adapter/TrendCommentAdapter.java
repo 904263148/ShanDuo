@@ -68,7 +68,8 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ViewHolder holder = (ViewHolder) viewHolder;
 
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL+list.get(position).getPortraitId() , holder.ivHead);
-            holder.tvName.setText(list.get(position).getName());
+
+            holder.tvName.setText( Utils.unicodeToString(list.get(position).getName()) );
             Drawable drawable = null;
             if ("0".equals(list.get(position).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);

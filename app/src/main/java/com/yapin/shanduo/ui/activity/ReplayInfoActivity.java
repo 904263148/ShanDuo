@@ -137,7 +137,7 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL+comment.getPortraitId() , ivHead);
-        tvName.setText(comment.getName());
+        tvName.setText( Utils.unicodeToString(comment.getName()) );
         Drawable drawable = null;
         if ("0".equals(comment.getGender())) {
             drawable = activity.getResources().getDrawable(R.drawable.icon_women);

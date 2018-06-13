@@ -65,6 +65,15 @@ public class TrendInfo implements Parcelable {
         private double lon;
         private double lat;
         private Integer dynamicCount;
+        private Integer level;
+
+        public Integer getLevel() {
+            return level;
+        }
+
+        public void setLevel(Integer level) {
+            this.level = level;
+        }
 
         public String getLocation() {
             return location;
@@ -248,6 +257,7 @@ public class TrendInfo implements Parcelable {
             dest.writeDouble(this.lon);
             dest.writeDouble(this.lat);
             dest.writeValue(this.dynamicCount);
+            dest.writeValue(this.level);
         }
 
         protected Trend(Parcel in) {
@@ -270,6 +280,7 @@ public class TrendInfo implements Parcelable {
             this.lon = in.readDouble();
             this.lat = in.readDouble();
             this.dynamicCount = (Integer) in.readValue(Integer.class.getClassLoader());
+            this.level = (Integer) in.readValue(Integer.class.getClassLoader());
         }
 
         public static final Creator<Trend> CREATOR = new Creator<Trend>() {

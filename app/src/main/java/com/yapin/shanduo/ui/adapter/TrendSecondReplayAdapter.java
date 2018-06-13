@@ -65,7 +65,7 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewHolder instanceof ViewHolder) {
             TrendSecondReplayAdapter.ViewHolder holder = (TrendSecondReplayAdapter.ViewHolder) viewHolder;
             GlideUtil.load(context, activity, ApiUtil.IMG_URL + list.get(position).getPortraitId(), holder.ivHead);
-            holder.tvName.setText(list.get(position).getUserName());
+            holder.tvName.setText(Utils.unicodeToString(list.get(position).getUserName()));
             String diff = TimeUtil.getTimeDiff(TimeUtil.getDateToString(list.get(position).getCreateDate()), TimeUtil.getNowTime());
             if(TextUtils.isEmpty(diff)){
                 holder.tvDate.setText(TimeUtil.getDateToMMDD(list.get(position).getCreateDate()));
@@ -74,7 +74,7 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
                 holder.tvDate.setText(diff);
                 holder.tvTime.setText("");
             }
-            holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + list.get(position).getReplyName() +"</font><font color = '#333333'>:"+ Utils.unicodeToString(list.get(position).getComment())+"</font>"));
+            holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + Utils.unicodeToString(list.get(position).getReplyName()) +"</font><font color = '#333333'>:"+ Utils.unicodeToString(list.get(position).getComment())+"</font>"));
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.setBackgroundColor(activity.getResources().getColor(R.color.bg_color));

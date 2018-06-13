@@ -15,6 +15,7 @@ import com.yapin.shanduo.model.entity.FriendInfo;
 import com.yapin.shanduo.model.entity.User;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class LinkFriendAdapter extends BaseAdapter {
             viewHolder.catalog.setVisibility(View.GONE);
         }
 
-        viewHolder.tvName.setText(this.list.get(position).getName());
+        viewHolder.tvName.setText(Utils.unicodeToString(list.get(position).getName()));
         GlideUtil.load(mContext ,activity , ApiUtil.IMG_URL+list.get(position).getPicture()  , viewHolder.ivHead);
         Drawable drawable = null;
         if ("0".equals(list.get(position).getGender())) {
@@ -105,7 +106,7 @@ public class LinkFriendAdapter extends BaseAdapter {
             viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
 
-        viewHolder.tvSign.setText(list.get(position).getSignature());
+        viewHolder.tvSign.setText(Utils.unicodeToString(list.get(position).getSignature()));
 
         return view;
     }

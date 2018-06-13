@@ -13,6 +13,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.JoinActUser;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class GridViewAdapter extends BaseAdapter {
         } else {
             viewHolder = (GridViewAdapter.ViewHolder) view.getTag();
         }
-        viewHolder.textView.setText(list.get(position).getUser_name());
+        viewHolder.textView.setText(Utils.unicodeToString(list.get(position).getUser_name()));
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL + list.get(position).getHead_portrait_id() , viewHolder.imageView);
 
         view.setOnClickListener(new View.OnClickListener() {

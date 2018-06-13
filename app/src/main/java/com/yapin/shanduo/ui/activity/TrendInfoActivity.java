@@ -165,7 +165,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         GlideUtil.load(context, activity,ApiUtil.IMG_URL+ trend.getPortraitId(), ivHead);
-        tvName.setText(trend.getName());
+        tvName.setText(Utils.unicodeToString(trend.getName()));
 
         Drawable drawable = null;
         if ("0".equals(trend.getGender())) {
@@ -181,7 +181,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         tvAge.setText(trend.getAge() + "");
 
         tvMile.setText(trend.getDistance() + "km");
-        tvContent.setText(trend.getContent());
+        tvContent.setText(Utils.unicodeToString(trend.getContent()));
 
         tvReplayCount.setText(trend.getDynamicCount()+"");
         tvCommentCount.setText("("+trend.getDynamicCount()+")");

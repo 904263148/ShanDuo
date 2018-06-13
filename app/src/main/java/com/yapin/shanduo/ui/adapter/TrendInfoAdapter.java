@@ -81,7 +81,9 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (viewHolder instanceof ViewHolder) {
             final ViewHolder holder = (ViewHolder) viewHolder;
             GlideUtil.load(context, activity,ApiUtil.IMG_URL+ list.get(position).getPortraitId(), holder.ivHead);
-            holder.tvName.setText(list.get(position).getName());
+            holder.tvName.setText(Utils.unicodeToString(list.get(position).getName()));
+
+            holder.tvLv.setText("LV" + list.get(position).getLevel());
 
             Drawable drawable = null;
             if ("0".equals(list.get(position).getGender())) {
@@ -97,7 +99,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.tvAge.setText(list.get(position).getAge() + "");
 
             holder.tvMile.setText(list.get(position).getDistance() + "km");
-            holder.tvContent.setText(list.get(position).getContent());
+            holder.tvContent.setText(Utils.unicodeToString(list.get(position).getContent()));
 
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
             holder.tvLikeCount.setText(list.get(position).getPraise()+"");
@@ -292,6 +294,8 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvLikeCount;
         @BindView(R.id.tv_date)
         TextView tvDate;
+        @BindView(R.id.tv_lv)
+        TextView tvLv;
 
         public ViewHolder(View itemView) {
             super(itemView);

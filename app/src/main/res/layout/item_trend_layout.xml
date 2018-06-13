@@ -56,34 +56,53 @@
                     android:paddingBottom="2dp"
                     />
 
-                <TextView
-                    android:id="@+id/tv_vip"
-                    android:layout_width="25dp"
-                    android:layout_height="10dp"
-                    android:text="SVIP2"
-                    android:textSize="7sp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_below="@+id/tv_name"
-                    android:background="@drawable/rounded_tv_vip"
-                    android:textColor="@color/color_white"
-                    android:layout_toRightOf="@+id/tv_home_age"
-                    android:layout_marginLeft="2dp"
-                    android:gravity="center"
-                    />
+                    >
 
-                <TextView
-                    android:id="@+id/tv_home_age"
-                    android:layout_width="25dp"
-                    android:layout_height="10dp"
-                    android:text="23"
-                    android:textSize="7sp"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/rounded_tv_sex_women"
-                    android:textColor="@color/color_white"
-                    android:gravity="center"
-                    android:drawableLeft="@drawable/icon_women"
-                    android:drawablePadding="2dp"
-                    android:layout_below="@+id/tv_name"
-                    />
+                    <TextView
+                        android:id="@+id/tv_home_age"
+                        android:layout_width="25dp"
+                        android:layout_height="10dp"
+                        android:text="23"
+                        android:textSize="7sp"
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/rounded_tv_sex_women"
+                        android:textColor="@color/color_white"
+                        android:gravity="center"
+                        android:drawableLeft="@drawable/icon_women"
+                        android:drawablePadding="2dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_vip"
+                        android:layout_width="25dp"
+                        android:layout_height="10dp"
+                        android:text="SVIP2"
+                        android:textSize="7sp"
+                        android:background="@drawable/rounded_tv_vip"
+                        android:textColor="@color/color_white"
+                        android:layout_marginLeft="3dp"
+                        android:gravity="center"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_lv"
+                        android:layout_width="25dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/rounded_tv_level"
+                        android:gravity="center"
+                        android:text="LV1"
+                        android:textColor="@color/color_white"
+                        android:layout_marginLeft="3dp"
+                        android:textSize="7sp" />
+
+
+                </LinearLayout>
+
             </RelativeLayout>
             <TextView
                 android:id="@+id/tv_mile"

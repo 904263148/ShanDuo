@@ -33,6 +33,7 @@ import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -138,9 +139,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
 
-        FriendshipManagerPresenter.setMyNick(PrefJsonUtil.getProfile(context).getName() ,this);
-
-
+        FriendshipManagerPresenter.setMyNick( Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()) ,this);
 
         setResult(RESULT_OK);
         onBackPressed();
