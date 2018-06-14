@@ -92,9 +92,9 @@ public class PlaceActivity extends BaseActivity implements  LocationSource, AMap
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory
                 .fromResource(R.drawable.icon_location_point));// 设置小蓝点的图标
-        myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));// 设置圆形的边框颜色
+        myLocationStyle.strokeColor(getResources().getColor(R.color.home_sex_man_color));// 设置圆形的边框颜色
         myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));// 设置圆形的填充颜色
-        myLocationStyle.strokeWidth(0f);// 设置圆形的边框粗细
+        myLocationStyle.strokeWidth(1f);// 设置圆形的边框粗细
         aMap.setMyLocationStyle(myLocationStyle);
 
         //开始定位

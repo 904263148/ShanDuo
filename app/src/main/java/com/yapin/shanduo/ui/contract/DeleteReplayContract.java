@@ -3,12 +3,13 @@ package com.yapin.shanduo.ui.contract;
 import com.yapin.shanduo.base.BaseView;
 
 /**
- * 作者：L on 2018/6/1 0001 19:32
+ * 作者：L on 2018/6/14 0014 11:52
  */
-public interface CreateGroupContract {
+public interface DeleteReplayContract {
 
     interface View extends BaseView {
-        void success(String data);
+
+        void show(String data);
 
         void loading();
 
@@ -21,6 +22,7 @@ public interface CreateGroupContract {
     }
 
     interface Presenter{
-        void createGroup(String typeId, String groupId, String groupType, String name);
+        void delete( String commentId);
     }
+
 }

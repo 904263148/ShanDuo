@@ -22,10 +22,12 @@ import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.model.entity.FriendInfo;
 import com.yapin.shanduo.model.entity.User;
 import com.yapin.shanduo.presenter.LinkManPresenter;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.adapter.LinkFriendAdapter;
 import com.yapin.shanduo.ui.contract.LinkManContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.widget.LoadingView;
 import com.yapin.shanduo.widget.QuickIndexBar;
 
@@ -184,7 +186,10 @@ public class LinkFriendFragment extends Fragment implements LinkManContract.View
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ChatActivity.navToChat(activity , list.get(position).getUserId()+"" , TIMConversationType.C2C);
-        Log.d("TIM_user_id",list.get(position).getUserId()+"");
+        Bundle bundle = new Bundle();
+        bundle.putString("userId" , list.get(position).getUserId()+"");
+        StartActivityUtil.start(activity , UserProfActivity.class , bundle);
+//        ChatActivity.navToChat(activity , list.get(position).getUserId()+"" , TIMConversationType.C2C);
+//        Log.d("TIM_user_id",list.get(position).getUserId()+"");
     }
 }

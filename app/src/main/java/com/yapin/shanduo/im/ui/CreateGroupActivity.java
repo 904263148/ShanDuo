@@ -47,6 +47,8 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
 
     private ArrayList<String> select;
 
+    private long maxNum = 200;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,29 +57,6 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
         presenter.init(this);
         createGroupPresenter = new CreateGroupPresenter();
         createGroupPresenter.init(this);
-
-        findViewById(R.id.bt_create_group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TIMGroupManager.CreateGroupParam param = TIMGroupManager.getInstance().new CreateGroupParam();
-                param.setGroupType("Public");
-                param.setGroupName("hello");
-                param.setIntroduction("hello world");
-                param.setNotification("welcome to hello group");
-                //创建群组
-                TIMGroupManager.getInstance().createGroup(param, new TIMValueCallBack<String>() {
-                    @Override
-                    public void onError(int code, String desc) {
-                        Log.d("TIM_create_group", "create group failed. code: " + code + " errmsg: " + desc);
-                    }
-                    @Override
-                    public void onSuccess(String s) {
-                        Log.d("TIM_create_group", "create group succ, groupId:" + s);
-                    }
-                });
-            }
-        });
-
     }
 
     @Override
@@ -100,7 +79,7 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
             }
         });
 
-        tvCount = findViewById(R.id.tv_count);
+        tvCount = (TextView) findViewById(R.id.tv_count);
         findViewById(R.id.rl_count).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,20 +92,26 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
                             case 0:
                                 tvCount.setText("群人数上限:200");
                                 groupType = "1";
+                                maxNum = 200;
                                 break;
                             case 1:
                                 tvCount.setText("群人数上限:500");
                                 groupType = "2";
+                                maxNum = 500;
                                 break;
                             case 2:
                                 tvCount.setText("群人数上限:1000");
                                 groupType = "3";
+                                maxNum = 1000;
                                 break;
                         }
                     }
                 }).show();
             }
         });
+
+
+
     }
 
     @Override
@@ -144,6 +129,7 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
         GroupManagerPresenter.createGroup(mInputView.getText().toString(),
                 type,
                 select,
+                maxNum,
                 new TIMValueCallBack<String>() {
                     @Override
                     public void onError(int code, String desc) {
@@ -157,7 +143,7 @@ public class CreateGroupActivity extends RightSlidingActivity implements CheckGr
                     @Override
                     public void onSuccess(String s) {
                         Log.d("TIM_create_group", "create group succ, groupId:" + s);
-                        createGroupPresenter.createGroup(Constants.TYPE_CREATE , s , groupType);
+                        createGroupPresenter.createGroup(Constants.TYPE_CREATE , s , groupType ,mInputView.getText().toString());
                     }
                 }
         );

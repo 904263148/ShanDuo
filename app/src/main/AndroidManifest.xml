@@ -119,7 +119,7 @@
         <activity
             android:name=".im.ui.SearchFriendActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            />
         <activity android:name=".im.ui.AddFriendActivity" />
         <activity
             android:name=".im.ui.ProfileActivity"
@@ -284,7 +284,7 @@
         <activity
             android:name=".im.ui.SearchGroupActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            />
         <activity android:name=".im.ui.ApplyGroupActivity" />
         <activity android:name=".im.ui.GroupManageMessageActivity" />
         <activity android:name=".im.ui.FriendshipManageMessageActivity" />
@@ -302,12 +302,15 @@
         <activity android:name=".im.ui.MessageNotifySettingActivity" />
         <activity
             android:name=".ui.activity.AddactivityActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/MyTheme"
+            />
         <activity android:name=".ui.activity.MywalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity
             android:name=".ui.activity.PublishTrendActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            />
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
         <meta-data
@@ -406,7 +409,7 @@
         <activity
             android:name=".ui.activity.SearchAllActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            />
         <activity android:name=".ui.activity.UserProfActivity" />
         <activity
             android:name=".ui.activity.JoinActActivity"
@@ -419,7 +422,7 @@
         <activity
             android:name=".ui.activity.SearchActActivity"
             android:theme="@style/MyTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            />
         <activity android:name=".ui.activity.PictureReviewActivity" />
         <activity android:name=".ui.activity.FirstUseActivity" />
         <activity android:name=".ui.activity.ReportActivity"></activity>

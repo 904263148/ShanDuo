@@ -1,5 +1,7 @@
 package com.yapin.shanduo.utils;
 
+import com.tencent.qcloud.sdk.Constant;
+
 public class ApiUtil {
 
     //获取验证码
@@ -140,6 +142,15 @@ public class ApiUtil {
     //批量删除动态
     public final static String DELETE_DYNAMIC = ConfigUtil.configUrl() + "/jdynamic/hidedynamics";
 
+    //删除评论
+    public final static String DELETE_REPLAY = ConfigUtil.configUrl() + "jdynamic/hidecomment" ;
 
+    //获取用户所加入的群组
+    public final static String GROUP_LIST = ConfigUtil.configUrl() + "jgroup/groupList" ;
 
+    //查找群
+    public final static String SEARCH_GROUP = ConfigUtil.configUrl() + "jgroup/queryname" ;
+
+    //查询用户详细资料
+    public final static String USER_DETAIL = ConfigUtil.configUrl() + "juser/details" ;
 }

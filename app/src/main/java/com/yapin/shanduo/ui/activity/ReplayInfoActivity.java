@@ -2,10 +2,12 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -24,17 +26,20 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CommentInfo;
 import com.yapin.shanduo.model.entity.SecondComment;
+import com.yapin.shanduo.presenter.DeleteReplayPresenter;
 import com.yapin.shanduo.presenter.TrendInfoPresenter;
 import com.yapin.shanduo.presenter.TrendReplayPresenter;
 import com.yapin.shanduo.presenter.TrendSecondReplayPresenter;
 import com.yapin.shanduo.ui.adapter.TrendCommentAdapter;
 import com.yapin.shanduo.ui.adapter.TrendSecondReplayAdapter;
+import com.yapin.shanduo.ui.contract.DeleteReplayContract;
 import com.yapin.shanduo.ui.contract.TrendInfoContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
 import com.yapin.shanduo.ui.contract.TrendSecondReplayContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.ToastUtil;
@@ -49,7 +54,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ReplayInfoActivity extends RightSlidingActivity implements TrendSecondReplayContract.View , LoadMoreRecyclerView.OnLoadMoreListener
-        ,SwipeRefreshLayout.OnRefreshListener , TrendSecondReplayAdapter.OnItemClickListener , TrendReplayContract.View{
+        ,SwipeRefreshLayout.OnRefreshListener , TrendSecondReplayAdapter.OnItemClickListener , TrendReplayContract.View, DeleteReplayContract.View{
 
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
@@ -89,6 +94,8 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.tv_delete)
+    TextView tvDelete;
 
     private Context context;
     private Activity activity;
@@ -111,10 +118,13 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
     private final static String TYPE_ID = "2";
 
     private TrendReplayPresenter replayPresenter;
+    private DeleteReplayPresenter deleteReplayPresenter;
 
     private InputMethodManager imm;
 
     private int replay_position = -1;
+
+    private boolean isOwner = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,6 +136,8 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
         presenter.init(this);
         replayPresenter = new TrendReplayPresenter();
         replayPresenter.init(this);
+        deleteReplayPresenter = new DeleteReplayPresenter();
+        deleteReplayPresenter.init(this);
     }
 
     @Override
@@ -162,6 +174,10 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
             tvTime.setText("");
         }
 
+        if(comment.getUserId() == Integer.parseInt(PrefJsonUtil.getProfile(context).getUserId())){
+            tvDelete.setVisibility(View.VISIBLE);
+        }
+
         layoutManager = new LinearLayoutManager(context);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
@@ -192,7 +208,7 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
 
     }
 
-    @OnClick({R.id.iv_back , R.id.tv_publish , R.id.rl_tag})
+    @OnClick({R.id.iv_back , R.id.tv_publish , R.id.rl_tag , R.id.tv_delete})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -219,6 +235,24 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
                 replay_position = -1;
                 imm.toggleSoftInput(1 , InputMethodManager.RESULT_SHOWN);
                 etComment.setHint("回复"+comment.getName());
+                break;
+            case R.id.tv_delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(R.string.title_delete_replay)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                return;
+                            }
+                        }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        isOwner = true;
+                        deleteReplayPresenter.delete(comment.getId());
+                    }
+                }).create().show();
                 break;
         }
     }
@@ -260,8 +294,13 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
 
     @Override
     public void show(String data) {
-        ToastUtil.showShortToast(context , "发表成功");
-        onRefresh();
+        ToastUtil.showShortToast(context , data);
+        if(isOwner){
+            setResult(RESULT_OK);
+            onBackPressed();
+        }else {
+            onRefresh();
+        }
     }
 
     @Override
@@ -290,6 +329,25 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
         replay_position = position;
         imm.toggleSoftInput(1 , InputMethodManager.RESULT_SHOWN);
         etComment.setHint("回复"+list.get(position).getUserName());
+    }
+
+    @Override
+    public void onItemDelete(final String id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.title_delete_replay)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        return;
+                    }
+                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                deleteReplayPresenter.delete(id);
+            }
+        }).create().show();
     }
 
     @Override

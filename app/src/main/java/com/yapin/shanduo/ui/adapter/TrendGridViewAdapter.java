@@ -65,7 +65,7 @@ public class TrendGridViewAdapter extends BaseAdapter{
 //            imageView = (ImageView) convertView;
 //        }
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        GlideUtil.load(context , activity , ApiUtil.IMG_URL + list.get(position) , imageView , 2);
+        GlideUtil.load(activity , ApiUtil.IMG_URL + list.get(position) , imageView);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

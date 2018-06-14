@@ -1,20 +1,33 @@
 package com.yapin.shanduo.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.presenter.ConfirmPresenter;
 import com.yapin.shanduo.ui.activity.ReportActivity;
+import com.yapin.shanduo.ui.contract.ConfirmContract;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import java.util.HashMap;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
@@ -29,16 +42,27 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 /**
  * 作者：L on 2018/5/28 0028 16:57
  */
-public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements PlatformActionListener{
+public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements PlatformActionListener , ConfirmContract.View{
+
+    @BindView(R.id.share_delete)
+    TextView tvDelete;
 
     private View view;
 
     private String id;
     private int type;
 
+    private Context context;
+    private Activity activity;
+
+    private ConfirmPresenter presenter;
+
+    private int userId;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userId = Integer.parseInt(getTag());
     }
 
     @Nullable
@@ -46,7 +70,20 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.share_popup,null);
         ButterKnife.bind(this,view);
+        context = ShanDuoPartyApplication.getContext();
+        activity = getActivity();
+        presenter = new ConfirmPresenter();
+        presenter.init(context , this);
         return view;
+    }
+
+    @Override
+    public void initView() {
+        if(userId == Integer.parseInt(PrefJsonUtil.getProfile(ShanDuoPartyApplication.getContext()).getUserId())){
+            tvDelete.setVisibility(View.VISIBLE);
+        }else {
+            tvDelete.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void setType(int type , String id){
@@ -54,8 +91,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
         this.id = id;
     }
 
-
-    @OnClick({R.id.share_wechat_coment , R.id.share_wechat ,R.id.share_qq , R.id.share_friend ,R.id.share_qzone , R.id.share_sina ,R.id.share_report })
+    @OnClick({R.id.share_wechat_coment , R.id.share_wechat ,R.id.share_qq , R.id.share_friend ,R.id.share_qzone , R.id.share_sina ,R.id.share_report ,R.id.share_delete})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.share_friend:
@@ -81,6 +117,27 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
                 bundle.putString("typeId" ,reportType);
                 bundle.putString("id" , id);
                 StartActivityUtil.start(getActivity() , ReportActivity.class ,bundle);
+                break;
+            case R.id.share_delete:
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder.setMessage(R.string.title_delete_act)
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                return;
+                            }
+                        }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        if(type == 0){
+                            presenter.deleteconfirm(id);
+                        }else {
+
+                        }
+                    }
+                }).create().show();
                 break;
         }
     }
@@ -133,4 +190,38 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
         //取消分享的回调
         Log.d("shareSDK" , "取消了~");
     }
+
+    @Override
+    public void success(String data) {
+        ToastUtil.showShortToast(context , data);
+        if(type == 0){
+            //注册广播
+            Intent intent = new Intent("actDeleteComplete");
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+        }else {
+
+        }
+        dismiss();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context , msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(context , msg);
+    }
+
 }

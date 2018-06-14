@@ -10,6 +10,7 @@ import com.yapin.shanduo.presenter.OnLoadListener;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 
 import org.json.JSONObject;
 
@@ -37,7 +38,8 @@ public class LoginModelImpl implements LoginLoadModel {
             @Override
             public void onResponse(String response) {
                 try {
-                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
+                    PrefUtil.setToken(context , new JSONObject(response).getString("result"));
+//                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
                     listener.onSuccess("登录成功");
                 } catch (Exception e) {
                     e.printStackTrace();

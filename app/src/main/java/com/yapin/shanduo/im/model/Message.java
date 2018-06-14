@@ -85,8 +85,7 @@ public abstract class Message {
                 viewHolder.sender.setText(name);
             }else{
                 viewHolder.sender.setVisibility(View.GONE);
-                if(FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() != null && !("".equals(FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl())))
-                    GlideUtil.load(context  , FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() , viewHolder.leftHead);
+                GlideUtil.load(context  , FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() , viewHolder.leftHead);
             }
 //            Message mMessage = MessageFactory.getMessage(message);
 //            if (mMessage instanceof CustomMessage) {

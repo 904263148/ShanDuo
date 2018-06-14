@@ -217,7 +217,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
     public void refreshData(){
         GlideUtil.load(context , activity , ApiUtil.IMG_URL + user.getPicture() , ivHead);
-        tvName.setText(user.getName());
+        tvName.setText(Utils.unicodeToString(user.getName()));
         tvId.setText(user.getUserId()+"");
         Drawable drawable = null;
         if ("0".equals(user.getGender())) {

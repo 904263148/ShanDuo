@@ -21,6 +21,18 @@
             android:src="@drawable/head"
             />
 
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_alignParentRight="true"
+            android:text="删除"
+            android:padding="5dp"
+            android:textColor="@color/home_title_color"
+            android:textSize="@dimen/egg_font_size_xx"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -468,6 +468,9 @@ public class Utils {
      * 把十六进制Unicode编码字符串转换为中文字符串
      */
     public static String unicodeToString(String str) {
+        if(str == null){
+            return "";
+        }
         Pattern pattern = Pattern.compile("(\\\\u(\\p{XDigit}{2,4}))");
         Matcher matcher = pattern.matcher(str);
         char ch;

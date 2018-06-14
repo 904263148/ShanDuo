@@ -73,7 +73,8 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.tvPresenterName.setText(Utils.unicodeToString(item.getPresenter_name()));
                 }
                 GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getPresenter_head(), viewHolder.ivPresenterHead);
-                viewHolder.tvMode.setText(item.getMode());
+
+                viewHolder.tvMode.setText(Utils.unicodeToString(item.getMode()));
                 viewHolder.tvActName.setText(Utils.unicodeToString(item.getActivity_name()));
                 int level = item.getVipGrade();
                 if (level == 0) {

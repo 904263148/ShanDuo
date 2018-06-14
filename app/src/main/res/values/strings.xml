@@ -112,6 +112,9 @@
     <string name="title_confirm_join_act">您确认参加活动吗</string>
     <string name="title_cancel_join_act">您确认取消参加活动吗</string>
     <string name="title_delete_friend">您确认删除该好友吗</string>
+    <string name="title_delete_act">您确认删除该活动吗</string>
+    <string name="title_delete_trend">您确认删除该动态吗</string>
+    <string name="title_delete_replay">您确认删除该评论吗</string>
 
     <string name="title_cancel_activity">您确定不要它了吗</string>
     <string name="title_refuse">残忍拒绝吗？</string>

@@ -168,7 +168,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
 
                         @Override
                         public void onSuccess() {
-                            createGroupPresenter.createGroup(Constants.TYPE_DELETE , identify  , "");
+                            createGroupPresenter.createGroup(Constants.TYPE_DELETE , identify  , "" , "");
                         }
                     });
                 }else{

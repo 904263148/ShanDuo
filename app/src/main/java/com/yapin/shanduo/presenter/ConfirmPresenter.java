@@ -22,7 +22,6 @@ public class ConfirmPresenter implements ConfirmContract.Presenter {
         this.view = view;
         this.view.initView();
         confirmModel = new ConfirmModelImpl();
-
     }
 
     @Override

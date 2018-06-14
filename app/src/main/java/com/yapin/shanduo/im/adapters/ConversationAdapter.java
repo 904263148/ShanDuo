@@ -14,6 +14,7 @@ import com.yapin.shanduo.im.model.Conversation;
 import com.yapin.shanduo.im.utils.TimeUtil;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             view.setTag(viewHolder);
         }
         final Conversation data = getItem(position);
-        viewHolder.tvName.setText(data.getName());
+        viewHolder.tvName.setText(Utils.unicodeToString(data.getName()));
         if(data.getAvatarUrls() == null || "".equals(data.getAvatarUrls())){
             viewHolder.avatar.setImageResource(data.getAvatar());
         }else {
