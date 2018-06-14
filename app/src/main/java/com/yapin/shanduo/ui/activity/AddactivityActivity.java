@@ -56,7 +56,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/4.
  */
 
-public class AddactivityActivity extends BaseActivity implements AddactivityContract.View,View.OnClickListener , PayOrderContract.View ,PopupWindow.OnDismissListener{
+public class AddactivityActivity extends RightSlidingActivity implements AddactivityContract.View,View.OnClickListener , PayOrderContract.View ,PopupWindow.OnDismissListener{
 
     @BindView(R.id.et_add_title)
     EditText et_add_title;

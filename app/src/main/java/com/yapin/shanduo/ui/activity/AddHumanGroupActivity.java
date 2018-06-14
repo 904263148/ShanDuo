@@ -40,8 +40,6 @@ public class AddHumanGroupActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        setIsEvent(Constants.IS_EVENT);
-
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 

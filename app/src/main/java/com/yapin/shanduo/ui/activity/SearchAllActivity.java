@@ -66,7 +66,7 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
         inputSearch.setOnKeyListener(this);
         listView.setOnItemClickListener(this);
 
-        TextView tvCancel = findViewById(R.id.cancel);
+        TextView tvCancel = (TextView) findViewById(R.id.cancel);
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

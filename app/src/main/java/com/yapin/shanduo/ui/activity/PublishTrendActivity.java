@@ -57,7 +57,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 
 @RuntimePermissions
-public class PublishTrendActivity extends BaseActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View{
+public class PublishTrendActivity extends RightSlidingActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View{
 
     public static final int TYPE_SHOW = 0;
 

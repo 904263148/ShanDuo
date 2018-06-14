@@ -7,5 +7,5 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 public interface CreateGroupLoadModel {
 
-    void load(OnLoadListener<String> listener , String typeId , String groupId , String groupType);
+    void load(OnLoadListener<String> listener , String typeId , String groupId , String groupType , String name);
 }

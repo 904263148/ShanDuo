@@ -139,8 +139,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
 
-        FriendshipManagerPresenter.setMyNick( Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()) ,this);
-
         setResult(RESULT_OK);
         onBackPressed();
     }
@@ -185,30 +183,6 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         }
     }
 
-//    @Override
-//    public void onFocusChange(View v, boolean hasFocus) {
-//        if(hasFocus) {
-//            switch (v.getId()) {
-//                case R.id.et_login_user:
-//                    ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-//                    if (TextUtils.isEmpty(et_login_pwd.getText().toString().trim())) {
-//                        ivPwd.setBackgroundResource(R.drawable.icon_password);
-//                    } else {
-//                        ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-//                    }
-//                    break;
-//                case R.id.et_login_pwd:
-//                    ivPwd.setBackgroundResource(R.drawable.icon_pwd_checked);
-//                    if ( TextUtils.isEmpty(et_login_user.getText().toString().trim()) ) {
-//                        ivPhone.setBackgroundResource(R.drawable.icon_name_unchecked);
-//                    } else {
-//                        ivPhone.setBackgroundResource(R.drawable.icon_name_checked);
-//                    }
-//                    break;
-//            }
-//        }
-//    }
-
     @Override
     public void onError(int i, String s) {
         Log.d("TIM_Change_Profile",s);
@@ -217,17 +191,5 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
     @Override
     public void onSuccess() {
         Log.d("TIM_Change_Profile","success");
-        TIMFriendshipManager.getInstance().setFaceUrl(ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture(), new TIMCallBack(){
-            @Override
-            public void onError(int code, String desc) {
-                //错误码 code 和错误描述 desc，可用于定位请求失败原因
-                //错误码 code 列表请参见错误码表
-                Log.e("TIM_Change_Head", "setFaceUrl failed: " + code + " desc" + desc);
-            }
-            @Override
-            public void onSuccess() {
-                Log.e("TIM_Change_Head", "setFaceUrl succ");
-            }
-        });
     }
 }

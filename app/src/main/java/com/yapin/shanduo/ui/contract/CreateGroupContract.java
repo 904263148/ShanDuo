@@ -21,6 +21,6 @@ public interface CreateGroupContract {
     }
 
     interface Presenter{
-        void createGroup(String typeId, String groupId, String groupType);
+        void createGroup(String typeId, String groupId, String groupType, String name);
     }
 }

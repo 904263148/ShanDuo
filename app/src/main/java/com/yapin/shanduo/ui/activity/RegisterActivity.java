@@ -184,8 +184,6 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
 
-        FriendshipManagerPresenter.setMyNick(PrefJsonUtil.getProfile(context).getName() ,this);
-
         setResult(RESULT_OK);
         onBackPressed();
     }
@@ -242,18 +240,6 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
     @Override
     public void onSuccess() {
         Log.d("TIM_Change_Profile","success");
-        TIMFriendshipManager.getInstance().setFaceUrl(ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture(), new TIMCallBack(){
-            @Override
-            public void onError(int code, String desc) {
-                //错误码 code 和错误描述 desc，可用于定位请求失败原因
-                //错误码 code 列表请参见错误码表
-                Log.e("TIM_Change_Head", "setFaceUrl failed: " + code + " desc" + desc);
-            }
-            @Override
-            public void onSuccess() {
-                Log.e("TIM_Change_Head", "setFaceUrl succ");
-            }
-        });
     }
 
 }

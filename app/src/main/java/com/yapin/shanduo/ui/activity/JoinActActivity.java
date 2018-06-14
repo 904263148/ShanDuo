@@ -171,7 +171,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
 
     }
 
-    @OnClick({R.id.iv_back , R.id.tv_back , R.id.tv_confirm})
+    @OnClick({R.id.iv_back , R.id.tv_back , R.id.tv_confirm , R.id.rl_mile , R.id.iv_head})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.iv_back:
@@ -247,6 +247,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
             tvConfirm.setText(R.string.confirm_join);
         }else {
             tvConfirm.setText(R.string.cancel_join);
+            presenter.getData(act.getId() , "1" , "10");
         }
     }
 

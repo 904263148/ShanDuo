@@ -18,7 +18,7 @@ public class CreateGroupPresenter implements CreateGroupContract.Presenter{
     }
 
     @Override
-    public void createGroup(String typeId, String groupId, String groupType) {
+    public void createGroup(String typeId, String groupId, String groupType, String name) {
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -34,6 +34,7 @@ public class CreateGroupPresenter implements CreateGroupContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , typeId , groupId , groupType);
+        } , typeId , groupId , groupType , name
+        );
     }
 }

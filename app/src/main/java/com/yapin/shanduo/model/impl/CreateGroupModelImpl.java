@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class CreateGroupModelImpl implements CreateGroupLoadModel {
     @Override
-    public void load(final OnLoadListener<String> listener, String typeId, String groupId, String groupType) {
+    public void load(final OnLoadListener<String> listener, String typeId, String groupId, String groupType , String name) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -34,6 +34,7 @@ public class CreateGroupModelImpl implements CreateGroupLoadModel {
         params.put("typeId" , typeId);
         params.put("groupId" , groupId);
         params.put("groupType" , groupType);
+        params.put("name" , name);
         OkHttp.post(context, ApiUtil.CREATE_GROUP, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
