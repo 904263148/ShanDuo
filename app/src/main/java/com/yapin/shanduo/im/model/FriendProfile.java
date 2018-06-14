@@ -36,10 +36,10 @@ public class FriendProfile implements ProfileSummary {
      */
     @Override
     public String getAvatarUrl() {
-        if(!profile.getFaceUrl().equals("")){
+        if(!profile.getFaceUrl().equals("") && profile.getFaceUrl() != null){
             return profile.getFaceUrl();
         }
-        return null;
+        return "";
     }
 
     /**

@@ -17,21 +17,55 @@ public class TokenInfo implements Parcelable {
 	private String name;//昵称
 	private String picture;//头像图片URL
 	private String phone;//手机号
-	private String ageId;//年龄段ID
 	private String birthday;//生日
+	private Integer age;//年龄
 	private String gender;//性别 ,0女,1男
 	private String emotion;//情感状态,0,保密,1,已婚,2,未婚
 	private String signature;//个性签名
 	private String background;//背景图片URL
-	private String labelId;//个性标签
 	private String hometown;//家乡
 	private String occupation;//职业
 	private String school;//学校
-	private String jurisdiction;//权限 普通用户,商户,vip,svip
+	private String jurisdiction;//权限 普通用户,商户
+	private Integer vip;//vip等级
+	private Integer level;//等级
+	private Integer attention;//好友数量
+	private Integer dynamic;//动态数量
+	private Integer activity;//活动数量
 	private String remarks;//备注
 	private String userSig;//IM聊天使用签名
-	private Integer vip;//vip等级
-	private Integer age;
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Integer getAttention() {
+		return attention;
+	}
+
+	public void setAttention(Integer attention) {
+		this.attention = attention;
+	}
+
+	public Integer getDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(Integer dynamic) {
+		this.dynamic = dynamic;
+	}
+
+	public Integer getActivity() {
+		return activity;
+	}
+
+	public void setActivity(Integer activity) {
+		this.activity = activity;
+	}
 
 	public Integer getAge() {
 		return age;
@@ -97,14 +131,6 @@ public class TokenInfo implements Parcelable {
 		this.phone = phone;
 	}
 
-	public String getAgeId() {
-		return ageId;
-	}
-
-	public void setAgeId(String ageId) {
-		this.ageId = ageId;
-	}
-
 	public String getBirthday() {
 		return birthday;
 	}
@@ -143,14 +169,6 @@ public class TokenInfo implements Parcelable {
 
 	public void setBackground(String background) {
 		this.background = background;
-	}
-
-	public String getLabelId() {
-		return labelId;
-	}
-
-	public void setLabelId(String labelId) {
-		this.labelId = labelId;
 	}
 
 	public String getHometown() {
@@ -193,6 +211,9 @@ public class TokenInfo implements Parcelable {
 		this.remarks = remarks;
 	}
 
+	public TokenInfo() {
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -205,24 +226,23 @@ public class TokenInfo implements Parcelable {
 		dest.writeString(this.name);
 		dest.writeString(this.picture);
 		dest.writeString(this.phone);
-		dest.writeString(this.ageId);
 		dest.writeString(this.birthday);
+		dest.writeValue(this.age);
 		dest.writeString(this.gender);
 		dest.writeString(this.emotion);
 		dest.writeString(this.signature);
 		dest.writeString(this.background);
-		dest.writeString(this.labelId);
 		dest.writeString(this.hometown);
 		dest.writeString(this.occupation);
 		dest.writeString(this.school);
 		dest.writeString(this.jurisdiction);
+		dest.writeValue(this.vip);
+		dest.writeValue(this.level);
+		dest.writeValue(this.attention);
+		dest.writeValue(this.dynamic);
+		dest.writeValue(this.activity);
 		dest.writeString(this.remarks);
 		dest.writeString(this.userSig);
-		dest.writeValue(this.vip);
-		dest.writeValue(this.age);
-	}
-
-	public TokenInfo() {
 	}
 
 	protected TokenInfo(Parcel in) {
@@ -231,24 +251,26 @@ public class TokenInfo implements Parcelable {
 		this.name = in.readString();
 		this.picture = in.readString();
 		this.phone = in.readString();
-		this.ageId = in.readString();
 		this.birthday = in.readString();
+		this.age = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.gender = in.readString();
 		this.emotion = in.readString();
 		this.signature = in.readString();
 		this.background = in.readString();
-		this.labelId = in.readString();
 		this.hometown = in.readString();
 		this.occupation = in.readString();
 		this.school = in.readString();
 		this.jurisdiction = in.readString();
+		this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.level = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.attention = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.dynamic = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.activity = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.remarks = in.readString();
 		this.userSig = in.readString();
-		this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
-		this.age = (Integer) in.readValue(Integer.class.getClassLoader());
 	}
 
-	public static final Parcelable.Creator<TokenInfo> CREATOR = new Parcelable.Creator<TokenInfo>() {
+	public static final Creator<TokenInfo> CREATOR = new Creator<TokenInfo>() {
 		@Override
 		public TokenInfo createFromParcel(Parcel source) {
 			return new TokenInfo(source);

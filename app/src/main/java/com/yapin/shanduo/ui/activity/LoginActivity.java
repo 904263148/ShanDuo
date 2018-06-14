@@ -24,7 +24,9 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.LoginPresenter;
+import com.yapin.shanduo.presenter.UserDetailPresenter;
 import com.yapin.shanduo.ui.contract.LoginContract;
+import com.yapin.shanduo.ui.contract.UserDetailContract;
 import com.yapin.shanduo.ui.manage.UserManage;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
@@ -39,7 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity implements LoginContract.View , TIMCallBack{
+public class LoginActivity extends BaseActivity implements LoginContract.View , TIMCallBack ,UserDetailContract.View{
 
     @BindView(R.id.et_login_user)
     EditText et_login_user;
@@ -53,6 +55,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 //    ImageView ivPwd;
 
     private LoginPresenter presenter;
+    private UserDetailPresenter userDetailPresenter;
     private Context context;
     private Activity activity;
 
@@ -70,6 +73,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
         ButterKnife.bind(this);
         presenter = new LoginPresenter();
         presenter.init(context,this);
+        userDetailPresenter = new UserDetailPresenter();
+        userDetailPresenter.init(this);
         tv_forget.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         //.setText(Html.fromHtml("<u>"+"忘记了密码？"+"</u>"));
     }
@@ -121,10 +126,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View , 
 
     @Override
     public void success(String data) {
+        userDetailPresenter.start();
+    }
+
+    @Override
+    public void dataSuccess(String data) {
         dialog.dismiss();
         ToastUtil.showShortToast(context,data);
-        Log.e("token", PrefJsonUtil.getProfile(context).getToken());
-        PrefUtil.setToken(context , PrefJsonUtil.getProfile(context).getToken());
 
         UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
         UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());

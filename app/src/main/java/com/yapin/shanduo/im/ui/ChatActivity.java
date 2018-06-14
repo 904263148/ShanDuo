@@ -55,6 +55,7 @@ import com.yapin.shanduo.ui.activity.RightSlidingFragmentActivity;
 import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.utils.ActivityTransitionUtil;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
                         }
                     });
                     FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
-                    title.setTitleText(titleStr = profile == null ? identify : profile.getName());
+                    title.setTitleText(titleStr = profile == null ? identify : Utils.unicodeToString(profile.getName()));
                 }else{
                     title.setMoreImgAction(new View.OnClickListener() {
                         @Override

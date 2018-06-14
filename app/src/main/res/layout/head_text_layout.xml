@@ -18,6 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="uncle"
         android:textSize="@dimen/egg_font_size"
         android:textColor="@color/font_color_gray"

@@ -2,11 +2,13 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -24,11 +26,14 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CommentInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
+import com.yapin.shanduo.presenter.DeleteFriendPresenter;
+import com.yapin.shanduo.presenter.DeleteReplayPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.presenter.TrendInfoPresenter;
 import com.yapin.shanduo.presenter.TrendReplayPresenter;
 import com.yapin.shanduo.ui.adapter.TrendCommentAdapter;
 import com.yapin.shanduo.ui.adapter.TrendGridViewAdapter;
+import com.yapin.shanduo.ui.contract.DeleteReplayContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.contract.TrendInfoContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
@@ -53,7 +58,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TrendInfoActivity extends RightSlidingActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
-        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View{
+        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View , DeleteReplayContract.View{
 
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
@@ -133,13 +138,16 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     private TrendReplayPresenter replayPresenter;
     private LikePresenter likePresenter;
+    private DeleteReplayPresenter deleteReplayPresenter;
 
     private InputMethodManager imm;
 
     private CustomBottomSheetDialogFragment fragment;
 
     private int totalPage = 1;
-    
+
+    private final int OPEN_REPLAY = 1;//打开回复详情标记，做删除后刷新标记
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,6 +161,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         replayPresenter.init(this);
         likePresenter  = new LikePresenter();
         likePresenter.init(this);
+        deleteReplayPresenter = new DeleteReplayPresenter();
+        deleteReplayPresenter.init(this);
     }
 
     @Override
@@ -300,7 +310,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                     StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
                     return;
                 }
-                fragment.show(getSupportFragmentManager() , trend.getId());
+                fragment.show(getSupportFragmentManager() , trend.getUserId()+"");
                 fragment.setType(1 , trend.getId());
                 break;
             case R.id.rl_back:
@@ -403,6 +413,10 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK) return;
+        if(requestCode == OPEN_REPLAY){
+            onRefresh();
+        }
     }
 
     @Override
@@ -425,7 +439,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("comment" , list.get(position));
-        StartActivityUtil.start(activity , ReplayInfoActivity.class , bundle);
+        StartActivityUtil.start(activity , ReplayInfoActivity.class , bundle , OPEN_REPLAY);
     }
 
     @Override
@@ -433,6 +447,25 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         Bundle bundle = new Bundle();
         bundle.putString("userId" , id+"");
         StartActivityUtil.start(activity , UserProfActivity.class , bundle);
+    }
+
+    @Override
+    public void onItemDelete(final String trendId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(R.string.title_delete_replay)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        return;
+                    }
+                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                deleteReplayPresenter.delete(trendId);
+            }
+        }).create().show();
     }
 
     @Override
@@ -448,4 +481,5 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         page = 1;
         presenter.getData(trend.getId() , TYPEID ,page+"" , pageSize+"");
     }
+
 }

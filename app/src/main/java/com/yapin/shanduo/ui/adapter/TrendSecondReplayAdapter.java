@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
@@ -18,6 +19,7 @@ import com.yapin.shanduo.model.entity.SecondComment;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
@@ -74,6 +76,19 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
                 holder.tvDate.setText(diff);
                 holder.tvTime.setText("");
             }
+
+            if(list.get(position).getUserId() == Integer.parseInt(PrefJsonUtil.getProfile(context).getUserId())){
+                holder.tvDelete.setVisibility(View.VISIBLE);
+                holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemDelete(list.get(position).getId());
+                    }
+                });
+            }else {
+                holder.tvDelete.setVisibility(View.GONE);
+            }
+
             holder.tvOneComment.setText(Html.fromHtml("<font color = '#999999'>回复</font><font color = '#4861ff'>@" + Utils.unicodeToString(list.get(position).getReplyName()) +"</font><font color = '#333333'>:"+ Utils.unicodeToString(list.get(position).getComment())+"</font>"));
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
@@ -94,6 +109,8 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
+        void onItemDelete(String id);
     }
 
     private OnItemClickListener listener;
@@ -116,6 +133,10 @@ public class TrendSecondReplayAdapter extends RecyclerView.Adapter<RecyclerView.
         TextView tvOneComment;
         @BindView(R.id.tv_tag)
         TextView tvTag;
+        @BindView(R.id.tv_delete)
+        TextView tvDelete;
+        @BindView(R.id.rl_bg)
+        RelativeLayout rlBg;
 
         public ViewHolder(View itemView) {
             super(itemView);

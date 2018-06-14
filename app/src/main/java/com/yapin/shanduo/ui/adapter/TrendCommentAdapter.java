@@ -22,6 +22,7 @@ import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
@@ -84,6 +85,19 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvAge.setText(list.get(position).getAge() +"");
 
             holder.tvOneComment.setText(Utils.unicodeToString(list.get(position).getComment()));
+
+            if(list.get(position).getUserId() == Integer.parseInt(PrefJsonUtil.getProfile(context).getUserId())){
+                holder.tvDelete.setVisibility(View.VISIBLE);
+
+                holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemDelete(list.get(position).getId());
+                    }
+                });
+            }else {
+                holder.tvDelete.setVisibility(View.GONE);
+            }
 
             List<SecondComment.Comments> commentList = list.get(position).getComments();
             if(list.get(position).getCount() == 0){
@@ -153,6 +167,7 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         void onHeadClick(int id);
 
+        void onItemDelete(String trendId);
     }
 
     private OnItemClickListener listener;
@@ -185,6 +200,8 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvDate;
         @BindView(R.id.tv_time)
         TextView tvTime;
+        @BindView(R.id.tv_delete)
+        TextView tvDelete;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -23,8 +23,10 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.GetCodePresenter;
 import com.yapin.shanduo.presenter.RegisterPresenter;
+import com.yapin.shanduo.presenter.UserDetailPresenter;
 import com.yapin.shanduo.ui.contract.GetCodeContract;
 import com.yapin.shanduo.ui.contract.RegisterContract;
+import com.yapin.shanduo.ui.contract.UserDetailContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.InputMethodUtil;
@@ -36,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 //  View.OnFocusChangeListener
-public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View ,TIMCallBack{
+public class RegisterActivity extends BaseActivity implements GetCodeContract.View , RegisterContract.View ,TIMCallBack,UserDetailContract.View{
 
     @BindView(R.id.et_phone)
     EditText etPhone;
@@ -52,6 +54,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
     private Activity activity;
     private GetCodePresenter codePresenter;
     private RegisterPresenter registerPresenter;
+    private UserDetailPresenter userDetailPresenter;
 
     private ProgressDialog dialog;
 
@@ -68,6 +71,8 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         codePresenter.init(context,this);
         registerPresenter = new RegisterPresenter();
         registerPresenter.init(context , this);
+        userDetailPresenter = new UserDetailPresenter();
+        userDetailPresenter.init(this);
     }
 
     @Override
@@ -167,7 +172,7 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
     }
 
     @Override
-    public void success(String data) {
+    public void dataSuccess(String data) {
         ToastUtil.showShortToast(context , data);
         dialog.dismiss();
 
@@ -186,6 +191,31 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
 
         setResult(RESULT_OK);
         onBackPressed();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+
+    }
+
+    @Override
+    public void showFailed(String msg) {
+
+    }
+
+    @Override
+    public void success(String data) {
+        userDetailPresenter.start();
     }
 
     @Override

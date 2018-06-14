@@ -1,47 +1,50 @@
 package com.yapin.shanduo.model.impl;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.LoginLoadModel;
+import com.yapin.shanduo.model.DeleteReplayLoadModel;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
 import com.yapin.shanduo.presenter.OnLoadListener;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
-import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginModelImpl implements LoginLoadModel {
+/**
+ * 作者：L on 2018/6/14 0014 11:49
+ */
+public class DeleteReplayModelImpl implements DeleteReplayLoadModel{
     @Override
-    public void load(final OnLoadListener<String> listener, String username, String password) {
-        final Context context = ShanDuoPartyApplication.getContext();
+    public void load(final OnLoadListener<String> listener, String commentId) {
+        Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
             return;
         }
         Map<String,String> params = new HashMap<>();
-        params.put("username",username);
-        params.put("password",password);
-        OkHttp.get(context, ApiUtil.LOGIN_IN, params, new JavaOkCallback() {
+        params.put("token" , PrefUtil.getToken(context));
+        params.put("commentId" , commentId);
+        OkHttp.post(context, ApiUtil.DELETE_REPLAY, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
-                if(listener != null)
-                    listener.onError(msg);
+                Log.d("DeleteReplayModelImpl" , msg);
+                listener.onError(msg);
             }
 
             @Override
             public void onResponse(String response) {
+                Log.d("DeleteReplayModelImpl" , response);
                 try {
-                    PrefUtil.setToken(context , new JSONObject(response).getString("result"));
-//                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
-                    listener.onSuccess("登录成功");
-                } catch (Exception e) {
+                    listener.onSuccess(new JSONObject(response).getString("result"));
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }

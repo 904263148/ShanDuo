@@ -1,5 +1,7 @@
 package com.yapin.shanduo.utils;
 
+import com.tencent.qcloud.sdk.Constant;
+
 public class ApiUtil {
 
     //获取验证码
@@ -137,4 +139,15 @@ public class ApiUtil {
     //图片上传后返回图片地址
     public final static String UPLOAD_IMG_URL = ConfigUtil.configUrl() + "/file/uploads";
 
+    //删除评论
+    public final static String DELETE_REPLAY = ConfigUtil.configUrl() + "jdynamic/hidecomment" ;
+
+    //获取用户所加入的群组
+    public final static String GROUP_LIST = ConfigUtil.configUrl() + "jgroup/groupList" ;
+
+    //查找群
+    public final static String SEARCH_GROUP = ConfigUtil.configUrl() + "jgroup/queryname" ;
+
+    //查询用户详细资料
+    public final static String USER_DETAIL = ConfigUtil.configUrl() + "juser/details" ;
 }

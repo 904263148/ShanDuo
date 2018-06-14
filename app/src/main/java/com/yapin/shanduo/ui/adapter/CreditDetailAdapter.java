@@ -18,6 +18,7 @@ import com.yapin.shanduo.model.entity.CreditItem;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -66,10 +67,10 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.rlInfo.setVisibility(View.GONE);
                 viewHolder.llTitle.setVisibility(View.VISIBLE);
 
-                viewHolder.tvPresenterName.setText(item.getPresenter_name());
+                viewHolder.tvPresenterName.setText(Utils.unicodeToString(item.getPresenter_name()));
                 GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getPresenter_head(), viewHolder.ivPresenterHead);
-                viewHolder.tvMode.setText(item.getMode());
-                viewHolder.tvActName.setText(item.getActivity_name());
+                viewHolder.tvMode.setText(Utils.unicodeToString(item.getMode()));
+                viewHolder.tvActName.setText(Utils.unicodeToString(item.getActivity_name()));
                 int level = item.getVipGrade();
                 if (level == 0) {
                     viewHolder.tvVip.setVisibility(View.GONE);
@@ -99,7 +100,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 viewHolder.rlInfo.setVisibility(View.VISIBLE);
                 viewHolder.llTitle.setVisibility(View.GONE);
 
-                viewHolder.tvName.setText(item.getUser_name());
+                viewHolder.tvName.setText(Utils.unicodeToString(item.getUser_name()));
                 GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getHead_portrait_id(), viewHolder.ivHead);
 //                if (type == 0) {
 ////                    viewHolder.tvHidden.setVisibility(View.GONE);
@@ -115,7 +116,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }else {
                     viewHolder.llHeart.setVisibility(View.VISIBLE);
                     viewHolder.tvContent.setVisibility(View.VISIBLE);
-                    viewHolder.tvContent.setText(item.getEvaluation_content());
+                    viewHolder.tvContent.setText(Utils.unicodeToString(item.getEvaluation_content()));
                     switch (item.getScore()) {
                         case 1:
                             viewHolder.ivHeart1.setBackgroundResource(R.drawable.icon_heart_red);
@@ -166,7 +167,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.tvPresenterContent.setVisibility(View.GONE);
                 }else {
                     viewHolder.tvPresenterContent.setVisibility(View.VISIBLE);
-                    viewHolder.tvPresenterContent.setText(item.getBe_evaluated());
+                    viewHolder.tvPresenterContent.setText(Utils.unicodeToString(item.getBe_evaluated()));
                 }
 
                 switch (item.getOthers_score()) {

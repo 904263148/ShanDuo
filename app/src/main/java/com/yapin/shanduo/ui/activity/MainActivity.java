@@ -329,17 +329,15 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         switch (type){
             case Constants.HOME_ACT:
                 ActivityInfo.Act act= (ActivityInfo.Act) object;
-                fragment.show(getSupportFragmentManager() , act.getId());
+                fragment.show(getSupportFragmentManager() , act.getUserId()+"");
                 fragment.setType(0 , act.getId());
                 break;
             case Constants.HOME_TREND:
                 TrendInfo.Trend trend = (TrendInfo.Trend) object;
-                fragment.show(getSupportFragmentManager() , trend.getId());
+                fragment.show(getSupportFragmentManager() , trend.getUserId()+"");
                 fragment.setType(1 , trend.getId());
                 break;
         }
-
-
     }
 
     @Override
@@ -482,6 +480,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
         return super.onKeyDown(keyCode, event);
     }
+
 
 
     @Override

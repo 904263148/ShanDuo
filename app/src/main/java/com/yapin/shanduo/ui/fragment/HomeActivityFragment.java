@@ -201,6 +201,18 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         };
         localBroadcastManager.registerReceiver(br, intentFilter);
 
+        IntentFilter intentFilter1 = new IntentFilter();
+        intentFilter1.addAction("actDeleteComplete");
+        BroadcastReceiver br1 = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onRefresh();
+            }
+
+        };
+        localBroadcastManager.registerReceiver(br1, intentFilter1);
+
     }
 
     @Override
