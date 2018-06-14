@@ -137,4 +137,9 @@ public class ApiUtil {
     //图片上传后返回图片地址
     public final static String UPLOAD_IMG_URL = ConfigUtil.configUrl() + "/file/uploads";
 
+    //批量删除动态
+    public final static String DELETE_DYNAMIC = ConfigUtil.configUrl() + "/jdynamic/hidedynamics";
+
+
+
 }

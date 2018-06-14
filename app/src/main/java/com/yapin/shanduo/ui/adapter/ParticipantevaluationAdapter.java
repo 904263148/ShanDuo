@@ -27,6 +27,7 @@ import com.yapin.shanduo.ui.activity.ParticipantevaluationActivity;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.RatingBarView;
 
 import java.util.ArrayList;
@@ -110,11 +111,7 @@ public class ParticipantevaluationAdapter extends BaseAdapter {
             }
         });
 
-//        Log.e(this.getClass().getName(), "getView: " + infos);
-
         String id = list.get(position).getId().toString();
-
-//        Log.e(this.getClass().getName(), "list.get(position).getId(): " + id);
 
         infos.get(position).setUserId(id);
 
@@ -174,7 +171,7 @@ public class ParticipantevaluationAdapter extends BaseAdapter {
             public void afterTextChanged(Editable editable) {
 //                if (editable != null && !"".equals(editable.toString())) {
                     int position = (Integer) mHolder.et_evaluate.getTag();
-                    infos.get(position).setEvaluated(editable.toString());
+                    infos.get(position).setEvaluated(Utils.stringToUnicode(editable.toString()));
 //                }
             }
         }

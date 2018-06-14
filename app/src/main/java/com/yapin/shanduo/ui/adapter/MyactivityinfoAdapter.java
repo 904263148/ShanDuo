@@ -24,6 +24,7 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
 import java.util.List;
@@ -79,13 +80,13 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         if(viewHolder instanceof ViewHolder){
             ViewHolder holder = (ViewHolder) viewHolder;
-            holder.tvKind.setText(list.get(position).getActivityName());
+            holder.tvKind.setText(Utils.unicodeToString(list.get(position).getActivityName()));
             holder.tvTime.setText(list.get(position).getActivityStartTime());
             holder.tvType.setText(list.get(position).getMode());
             holder.tvMan.setText(list.get(position).getManNumber());
             holder.tvWoman.setText(list.get(position).getWomanNumber());
-            holder.tvHost.setText(list.get(position).getUserName());
-            holder.tvMemo.setText(list.get(position).getRemarks());
+            holder.tvHost.setText(Utils.unicodeToString(list.get(position).getUserName()));
+            holder.tvMemo.setText(Utils.unicodeToString(list.get(position).getRemarks()));
             holder.tvPlace.setText(list.get(position).getActivityAddress());
             holder.tvMile.setText(list.get(position).getLocation()+"km");
             holder.tvEndTime.setText("报名截止日期:"+list.get(position).getActivityCutoffTime());

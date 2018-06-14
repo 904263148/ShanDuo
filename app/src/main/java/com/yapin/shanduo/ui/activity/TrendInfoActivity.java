@@ -117,6 +117,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     private Context context;
     private Activity activity;
     private TrendInfo.Trend trend;
+    private int id;
 
     private TrendInfoPresenter presenter;
 
@@ -180,7 +181,15 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         tvAge.setCompoundDrawablePadding(2);
         tvAge.setText(trend.getAge() + "");
 
-        tvMile.setText(trend.getDistance() + "km");
+        if (id == 1){
+            tvMile.setText(trend.getLocation());
+            if (trend.getLocation().equals("")){
+                tvMile.setVisibility(View.GONE);
+            }
+        }else {
+            tvMile.setText(trend.getDistance() + "km");
+        }
+
         tvContent.setText(Utils.unicodeToString(trend.getContent()));
 
         tvReplayCount.setText(trend.getDynamicCount()+"");

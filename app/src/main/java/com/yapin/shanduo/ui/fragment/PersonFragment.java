@@ -37,6 +37,7 @@ import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -222,16 +223,25 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
         }else {
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
+
             presenter.getnumber();
-            tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
+            tv_nickname.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()));
             tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
+            tv_level.setText("LV"+PrefJsonUtil.getProfile(context).getLevel()+"");
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
 
             Drawable drawable = null;
             if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
+//                Drawable d=Drawable.createFromPath(drawable);
+                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_women_bg));
+//                String photo="/drawable/icon_women_bg.png";
+//                ll_person_a.setBackgroundDrawable(Drawable.createFromPath(photo));
             } else {
+//                String photo="/drawable/icon_man_bg.png";
+//                ll_person_a.setBackgroundDrawable(Drawable.createFromPath(photo));
+                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_man_bg));
                 drawable = activity.getResources().getDrawable(R.drawable.icon_men);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
             }

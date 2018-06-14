@@ -236,9 +236,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-//        publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
-//        publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
-
         fragment = new CustomBottomSheetDialogFragment();
 
         homeFragment = (HomeFragment) adapter.getItem(0);

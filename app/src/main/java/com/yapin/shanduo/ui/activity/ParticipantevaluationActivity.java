@@ -48,12 +48,9 @@ public class ParticipantevaluationActivity extends BaseActivity implements Parti
     private Activity activity;
 
     String activityId;
-    String score;
-    String evaluationcontent;
     String name;
     String theme;
     String headportrait;
-    String Numberofpeople;
     String mode;
 
     private int isJoin = 0 ;
@@ -115,7 +112,6 @@ public class ParticipantevaluationActivity extends BaseActivity implements Parti
 
                 Log.e(ParticipantevaluationActivity.class.getName(), "onClick: " + dataResult);
 
-//                Log.i("dateadapter", adapter.getData().toString());
 
                 presenter.initiat(activityId , dataResult);
                 break;

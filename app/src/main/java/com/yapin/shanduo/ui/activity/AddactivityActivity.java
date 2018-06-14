@@ -208,12 +208,13 @@ public class AddactivityActivity extends BaseActivity implements AddactivityCont
                 lat=ary[0];
                 lon=ary[1];
 //                Log.i("test","/n经度："+lon+"/n纬度："+lat);
-                activityName = et_add_title.getText().toString().trim();
+
+                activityName =  Utils.stringToUnicode(et_add_title.getText().toString().trim());
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
                 manNumber = et_add_Numberofboys.getText().toString().trim();
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();
                 activityAddress = tv_add_place.getText().toString().trim();
-                remarks = et_add_title_remarks.getText().toString().trim();
+                remarks =  Utils.stringToUnicode(et_add_title_remarks.getText().toString().trim());
                 activityCutoffTime =tv_add_Deadline.getText().toString().trim();
                 activityStartTime=tv_add_starttime.getText().toString().trim();
                 presenter.addactivity(activityName,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);

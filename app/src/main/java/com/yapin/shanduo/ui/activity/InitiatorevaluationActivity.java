@@ -20,6 +20,7 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.RatingBarView;
 
 import java.util.ArrayList;
@@ -113,8 +114,8 @@ public class InitiatorevaluationActivity extends BaseActivity implements Initiat
         theme = bundle.getString("activityName");
         headportrait = bundle.getString("headPortraitId");
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL + headportrait , iv_Headportrait);
-        tv_theme.setText("主题："+theme);
-        tv_name.setText(name);
+        tv_theme.setText("主题："+Utils.unicodeToString(theme));
+        tv_name.setText(Utils.unicodeToString(name));
 //        Log.i("idaaaa", activityId+"");
 
 
@@ -147,7 +148,7 @@ public class InitiatorevaluationActivity extends BaseActivity implements Initiat
 //                }else{
 //                    Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
 //                }
-                evaluationcontent = et_Inputbox.getText().toString().trim()+sb.toString();
+                evaluationcontent = Utils.stringToUnicode(et_Inputbox.getText().toString().trim())+sb.toString();
 
 //                Log.i("dddadada", beEvaluated.toString()+"");
 

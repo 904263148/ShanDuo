@@ -120,7 +120,7 @@ public class VerificationcodeActivity extends BaseActivity implements Verificati
     @Override
     public void success(String data) {
         ToastUtil.showShortToast(context, data);
-        if (payId == 1 && payId == 5) {
+        if (payId == 1 || payId == 5) {
             Bundle bundle = new Bundle();
             bundle.putString("phone", phone);
             bundle.putString("code", code);

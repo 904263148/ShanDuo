@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/rl_detele"
     >
     <TextView
         android:id="@+id/tv_my_tag"
@@ -159,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
+                android:gravity="center"
                 >
                 <TextView
                     android:id="@+id/tv_date"
@@ -178,6 +180,20 @@
                     android:textColor="@color/font_color_gray"
                     android:layout_marginLeft="17dp"
                     />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:buttonTint="@color/color_editing"
+                        android:layout_gravity="right"
+                        android:id="@+id/item_checkbox"
+                        android:clickable="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
 
             </LinearLayout>
 

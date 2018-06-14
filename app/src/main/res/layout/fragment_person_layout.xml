@@ -14,6 +14,10 @@
         android:background="@drawable/icon_man_bg"
         android:paddingTop="25dp"
         >
+<!--        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/icon_man_bg"/>-->
 
         <LinearLayout
             android:layout_marginTop="30dp"

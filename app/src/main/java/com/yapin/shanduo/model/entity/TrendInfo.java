@@ -43,7 +43,7 @@ public class TrendInfo implements Parcelable {
         this.list = list;
     }
 
-    public static class Trend implements Parcelable {
+    public static class Trend extends TrendInfo implements Parcelable {
 
         private int type = Constants.TYPE_SHOW;
 

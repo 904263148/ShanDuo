@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -38,6 +39,7 @@ import com.yapin.shanduo.utils.ImageFilterUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.ScrollGridLayoutManager;
 
 import java.io.BufferedInputStream;
@@ -116,25 +118,57 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             uploadPresenter = new UploadPresenter();
             uploadPresenter.init(context ,this);
 
-        modify_tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
-        modify_et_nickname.setText(PrefJsonUtil.getProfile(context).getName());
-        modify_tv_rg.setText(PrefJsonUtil.getProfile(context).getGender().equals("1")?"男":"女");
-        date_display.setText(PrefJsonUtil.getProfile(context).getBirthday());
-        tv_Emotionalstate.setText(PrefJsonUtil.getProfile(context).getEmotion());
-        if (tv_Emotionalstate.equals("0")){
-            tv_Emotionalstate.setText("保密");
-        }else if (tv_Emotionalstate.equals("1")){
-            tv_Emotionalstate.setText("已婚");
-        }else {
-            tv_Emotionalstate.setText("未婚");
-        }
-        tv_Personalitysignature.setText(PrefJsonUtil.getProfile(context).getSignature());
-        tv_Hometown.setText(PrefJsonUtil.getProfile(context).getHometown());
-        tv_Occupation.setText(PrefJsonUtil.getProfile(context).getOccupation());
-        tv_School.setText(PrefJsonUtil.getProfile(context).getSchool());
-        GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Head_portrait);
-        GlideUtil.load(activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getBackground() , iv_background);
 
+            modify_tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
+
+            if (PrefJsonUtil.getProfile(context).getName() == null){
+                modify_et_nickname.setText("还没有填写哦！");
+            }else {
+                modify_et_nickname.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()));
+            }
+            modify_tv_rg.setText(PrefJsonUtil.getProfile(context).getGender().equals("1")?"男":"女");
+
+
+            date_display.setText(PrefJsonUtil.getProfile(context).getBirthday());
+
+
+                tv_Emotionalstate.setText(PrefJsonUtil.getProfile(context).getEmotion());
+                if (tv_Emotionalstate.equals("0")){
+                    tv_Emotionalstate.setText("保密");
+                }else if (tv_Emotionalstate.equals("1")){
+                    tv_Emotionalstate.setText("已婚");
+                }else {
+                    tv_Emotionalstate.setText("未婚");
+                }
+
+
+            if (PrefJsonUtil.getProfile(context).getSignature() == null){
+                tv_Personalitysignature.setText("还没有填写哦！");
+            }else {
+                tv_Personalitysignature.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getSignature()));
+            }
+            if (PrefJsonUtil.getProfile(context).getHometown() == null){
+                tv_Hometown.setText("还没有填写哦！");
+            }else {
+                tv_Hometown.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getHometown()));
+            }
+            if (PrefJsonUtil.getProfile(context).getOccupation() == null){
+                tv_Occupation.setText("还没有填写哦！");
+            }else {
+                tv_Occupation.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getOccupation()));
+            }
+            if (PrefJsonUtil.getProfile(context).getSchool() == null){
+                tv_School.setText("还没有填写哦！");
+            }else {
+                tv_School.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getSchool()));
+            }
+        GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Head_portrait);
+
+        if (PrefJsonUtil.getProfile(context).getBackground() == null){
+            iv_background.setImageDrawable(getResources().getDrawable(R.drawable.icin_vip_back));
+        }else {
+            GlideUtil.load(activity, ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getBackground(), iv_background);
+        }
         if( !(TextUtils.isEmpty(PrefJsonUtil.getProfile(context).getBackground())) ){
             //异步处理
             new Thread(new Runnable() {
@@ -208,7 +242,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                      * 第二个参数代表索引，指定默认哪一个单选框被勾选上，0表示默认'男' 会被勾选上
                      * 第三个参数给每一个单选项绑定一个监听器
                      */
-                    builder.setSingleChoiceItems(sex, getIsEvent(),new DialogInterface.OnClickListener()
+                    builder.setSingleChoiceItems(sex, 3,new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -266,7 +300,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                     final String[] emotions = {"已婚", "未婚","保密"};
                     //    设置一个单项选择下拉框
-                    builder1.setSingleChoiceItems(emotions, getIsEvent(), new DialogInterface.OnClickListener()
+                    builder1.setSingleChoiceItems(emotions, 3, new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
@@ -311,7 +345,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                                 public void onClick(DialogInterface dialog, int which)
                                 {
                                     name = et_nickname.getText().toString().trim();
-                                    presenter.modify(name,"","","","","","","", "" , "");
+                                    presenter.modify(Utils.stringToUnicode(name),"","","","","","","", "" , "");
                                 }
                             });
                             builder2.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -338,7 +372,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             signature = tv_Personalitysignature.getText().toString().trim();
-                            presenter.modify("","","","",signature,"","","", "" , "");
+                            presenter.modify("","","","",Utils.stringToUnicode(signature),"","","", "" , "");
                         }
                     });
                     builder3.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -364,7 +398,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             hometown = tv_Hometown.getText().toString().trim();
-                            presenter.modify("","","","","",hometown,"","", "" , "");
+                            presenter.modify("","","","","",Utils.stringToUnicode(hometown),"","", "" , "");
                         }
                     });
                     builder4.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -390,7 +424,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             school = tv_School.getText().toString().trim();
-                            presenter.modify("","","","","","","",school, "" , "");
+                            presenter.modify("","","","","","","",Utils.stringToUnicode(school), "" , "");
                         }
                     });
                     builder5.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -416,7 +450,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             occupation = tv_Occupation.getText().toString().trim();
-                            presenter.modify("","","","","","",occupation,"", "" , "");
+                            presenter.modify("","","","","","",Utils.stringToUnicode(occupation),"", "" , "");
                         }
                     });
                     builder6.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -440,6 +474,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
 
     @Override
     public void success(String data) {
+        ToastUtil.showShortToast(context,"修改成功");
+
         if ("1".equals(gender)) {//男
             modify_tv_rg.setText("男");
         }else if("0".equals(gender)){//女
@@ -451,14 +487,43 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         }else if("2".equals(emotion)){
             tv_Emotionalstate.setText("未婚");
         }
-        modify_et_nickname.setText(name);
-        tv_Personalitysignature.setText(signature);
-        tv_Hometown.setText(hometown);
-        tv_School.setText(school);
-        tv_Occupation.setText(occupation);
 
-        ToastUtil.showShortToast(context,"修改成功");
+        if (PrefJsonUtil.getProfile(context).getName() == null){
+            modify_et_nickname.setText("还没有填写哦！");
+        }else {
+            modify_et_nickname.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()));
+        }
+        if (PrefJsonUtil.getProfile(context).getSignature() == null){
+            tv_Personalitysignature.setText("还没有填写哦！");
+        }else {
+            tv_Personalitysignature.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getSignature()));
+        }
+        if (PrefJsonUtil.getProfile(context).getHometown() == null){
+            tv_Hometown.setText("还没有填写哦！");
+        }else {
+            tv_Hometown.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getHometown()));
+        }
+        if (PrefJsonUtil.getProfile(context).getOccupation() == null){
+            tv_Occupation.setText("还没有填写哦！");
+        }else {
+            tv_Occupation.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getOccupation()));
+        }
+        if (PrefJsonUtil.getProfile(context).getSchool() == null){
+            tv_School.setText("还没有填写哦！");
+        }else {
+            tv_School.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getSchool()));
+        }
 
+    }
+
+    /**
+     * 调用onCreate(), 目的是刷新数据,
+     * 从另一activity界面返回到该activity界面时, 此方法自动调用
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        onCreate(null);
     }
 
     private void show(List<String> paths){

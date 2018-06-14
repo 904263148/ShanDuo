@@ -32,7 +32,14 @@ public class TokenInfo implements Parcelable {
 	private String userSig;//IM聊天使用签名
 	private Integer vip;//vip等级
 	private Integer age;
+	private Integer level;//等级
 
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	public Integer getAge() {
 		return age;
 	}
@@ -220,6 +227,7 @@ public class TokenInfo implements Parcelable {
 		dest.writeString(this.userSig);
 		dest.writeValue(this.vip);
 		dest.writeValue(this.age);
+		dest.writeValue(this.level);
 	}
 
 	public TokenInfo() {
@@ -246,6 +254,7 @@ public class TokenInfo implements Parcelable {
 		this.userSig = in.readString();
 		this.vip = (Integer) in.readValue(Integer.class.getClassLoader());
 		this.age = (Integer) in.readValue(Integer.class.getClassLoader());
+		this.level = (Integer) in.readValue(Integer.class.getClassLoader());
 	}
 
 	public static final Parcelable.Creator<TokenInfo> CREATOR = new Parcelable.Creator<TokenInfo>() {

@@ -27,6 +27,7 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +96,7 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
             tv_svip.setBackgroundResource(R.drawable.rounded_tv_svip);
         }
 
-            tv_nickname.setText(PrefJsonUtil.getProfile(context).getName());
+            tv_nickname.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()));
             GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , ib_Headportrait);
         GlideUtil.load(context ,activity , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , iv_vip_Headportrait);
 

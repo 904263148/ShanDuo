@@ -28,6 +28,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
@@ -133,13 +134,14 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
             tv_confirm.setText("取消活动");
         }
 //        positiona = getIntent().getParcelableExtra("positiona");
-        tvKind.setText(act.getActivityName());
+        tvKind.setText(Utils.unicodeToString(act.getActivityName()));
         tvTime.setText(act.getActivityStartTime());
         tvType.setText(act.getMode());
         tvManCount.setText(act.getManNumber());
         tvWomanCount.setText(act.getWomanNumber());
-        tvHost.setText(act.getUserName());
-        tvMemo.setText(act.getRemarks());
+        tvHost.setText(Utils.unicodeToString(act.getUserName()));
+
+        tvMemo.setText(Utils.unicodeToString(act.getRemarks()));
         tvPlace.setText(act.getActivityAddress());
         tvMile.setText(act.getLocation()+"km");
         tvEndTime.setText("报名截止日期:"+act.getActivityCutoffTime());
@@ -222,6 +224,7 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
         }else {
             loadingView.setGone();
         }
+        list.clear();
         list.addAll(data);
         adapter.notifyDataSetChanged();
         isJoin = list.get(0).getJoinActivity();
@@ -253,11 +256,6 @@ public class DetailsActivity extends BaseActivity implements JoinActUserContract
     public void networkError() {
         loadingView.setGone();
     }
-
-//    @Override
-//    public void joinError(String msg) {
-//        ToastUtil.showShortToast(context , msg);
-//    }
 
     @Override
     public void error(String msg) {

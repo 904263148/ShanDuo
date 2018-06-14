@@ -326,7 +326,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     }
 
     public void publishTrend(String imgIds){
-        content=tv_pd_text.getText().toString().trim();
+        content=Utils.stringToUnicode(tv_pd_text.getText().toString().trim());
         presenter.publish(content , imgIds, lat, lon, location);
     }
 

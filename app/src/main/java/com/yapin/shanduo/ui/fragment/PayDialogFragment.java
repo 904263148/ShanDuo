@@ -80,16 +80,16 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
 //    Button btConfirm;
     @BindView(R.id.ll_tag)
     LinearLayout llTag;
-    @BindView(R.id.ll_bean)
-    LinearLayout ll_bean;
-    @BindView(R.id.tv_bean)
-    TextView tv_bean;
+//    @BindView(R.id.ll_bean)
+//    LinearLayout ll_bean;
+//    @BindView(R.id.tv_bean)
+//    TextView tv_bean;
     @BindView(R.id.ll_frequency)
     LinearLayout ll_frequency;
     @BindView(R.id.ll_Pea_frequency)    //刷新次数
     LinearLayout ll_Pea_frequency;
-    @BindView(R.id.ll_Pea_bean)    //闪多豆支付
-    LinearLayout ll_Pea_bean;
+//    @BindView(R.id.ll_Pea_bean)    //闪多豆支付
+//    LinearLayout ll_Pea_bean;
     @BindView(R.id.ll_balance) //余额支付
     LinearLayout ll_balance;
     @BindView(R.id.ll_a_Recharge)   //充值
@@ -106,8 +106,8 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
     Button bt_Settop;
     @BindView(R.id.tv_Pea_frequency)
     TextView tv_Pea_frequency;
-    @BindView(R.id.tv_Pea_bean_pay)
-    TextView tv_Pea_bean_pay;
+//    @BindView(R.id.tv_Pea_bean_pay)
+//    TextView tv_Pea_bean_pay;
 
 
     private PasswordInputView again_paypswd_pet;    //支付密码
@@ -186,7 +186,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 tvTitle.setText("开通会员");
                 ll_a_Recharge.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 llTag.setVisibility(View.GONE);
                 tvMemo1.setVisibility(View.GONE);
                 tvMemo2.setVisibility(View.GONE);
@@ -194,7 +194,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 bt_Recharge.setVisibility(View.GONE);
                 bt_Settop.setVisibility(View.GONE);
                 ll_Pea_frequency.setVisibility(View.GONE);
-                ll_Pea_bean.setVisibility(View.GONE);
+//                ll_Pea_bean.setVisibility(View.GONE);
                 if(position == 0){
                     typeId = Constants.TYPE_VIP;
                 }else if (position == 1){
@@ -203,25 +203,25 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 break;
             case Constants.REFRESH:
                 tvTitle.setText("刷新活动");
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 ll_a_Recharge.setVisibility(View.GONE);
                 bt_Recharge.setVisibility(View.GONE);
                 bt_Settop.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
                 bt_vip.setVisibility(View.GONE);
                 llTag.setVisibility(View.GONE);
-                tv_bean.setText("200");
+//                tv_bean.setText("200");
                 break;
             case Constants.SET_TOP:
                 tvTitle.setText("置顶活动");
                 ll_a_Recharge.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 bt_Refresh.setVisibility(View.GONE);
                 bt_Recharge.setVisibility(View.GONE);
                 bt_vip.setVisibility(View.GONE);
                 ll_Pea_frequency.setVisibility(View.GONE);
-                ll_Pea_bean.setVisibility(View.GONE);
+//                ll_Pea_bean.setVisibility(View.GONE);
 
                 break;
             case Constants.RECHARGE:
@@ -229,9 +229,9 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 llTag.setVisibility(View.GONE);
                 ll_balance.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 ll_Pea_frequency.setVisibility(View.GONE);
-                ll_Pea_bean.setVisibility(View.GONE);
+//                ll_Pea_bean.setVisibility(View.GONE);
                 bt_Refresh.setVisibility(View.GONE);
                 bt_Settop.setVisibility(View.GONE);
                 bt_vip.setVisibility(View.GONE);
@@ -240,8 +240,9 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
         }
 
     }
+    //R.id.ll_Pea_bean,
     @OnClick({R.id.ib_back , R.id.ll_alipay , R.id.ll_balance  , R.id.ll_wechat, R.id.bt_vip ,R.id.bt_Settop ,
-            R.id.ll_Pea_bean,R.id.ll_Pea_frequency , R.id.bt_cancel , R.id.bt_Refresh ,R.id.bt_Recharge})
+            R.id.ll_Pea_frequency , R.id.bt_cancel , R.id.bt_Refresh ,R.id.bt_Recharge})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.ib_back:
@@ -253,11 +254,11 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
             case R.id.ll_Pea_frequency:
                 payId = Constants.PEA_FREQUENCY;
                 ll_frequency.setVisibility(View.GONE);
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
                 tv_Pea_frequency.setTextSize(12);
-                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_bean_pay.setTextSize(10);
+//                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tv_Pea_bean_pay.setTextSize(10);
                 tvBalancePay.setTextColor(getResources().getColor(R.color.home_title_color));
                 tvBalancePay.setTextSize(10);
                 tvWechatPay.setTextColor(getResources().getColor(R.color.font_color_gray));
@@ -265,24 +266,24 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 tvAlipay.setTextColor(getResources().getColor(R.color.font_color_gray));
                 tvAlipay.setTextSize(10);
                 break;
-            case R.id.ll_Pea_bean:
-                payId = Constants.PAY_PEABEAN;
-                ll_bean.setVisibility(View.VISIBLE);
-                ll_frequency.setVisibility(View.GONE);
-                tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_frequency.setTextSize(10);
-                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_bean_pay.setTextSize(12);
-                tvBalancePay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tvBalancePay.setTextSize(10);
-                tvWechatPay.setTextColor(getResources().getColor(R.color.font_color_gray));
-                tvWechatPay.setTextSize(10);
-                tvAlipay.setTextColor(getResources().getColor(R.color.font_color_gray));
-                tvAlipay.setTextSize(10);
-                break;
+//            case R.id.ll_Pea_bean:
+//                payId = Constants.PAY_PEABEAN;
+////                ll_bean.setVisibility(View.VISIBLE);
+//                ll_frequency.setVisibility(View.GONE);
+//                tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tv_Pea_frequency.setTextSize(10);
+////                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
+////                tv_Pea_bean_pay.setTextSize(12);
+//                tvBalancePay.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tvBalancePay.setTextSize(10);
+//                tvWechatPay.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                tvWechatPay.setTextSize(10);
+//                tvAlipay.setTextColor(getResources().getColor(R.color.font_color_gray));
+//                tvAlipay.setTextSize(10);
+//                break;
             case R.id.ll_balance:
                 payId = Constants.PAY_BALANCE;
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
                 tvBalancePay.setTextColor(getResources().getColor(R.color.home_title_color));
                 tvBalancePay.setTextSize(12);
@@ -292,12 +293,12 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 tvAlipay.setTextSize(10);
                 tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
                 tv_Pea_frequency.setTextSize(10);
-                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_bean_pay.setTextSize(10);
+//                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tv_Pea_bean_pay.setTextSize(10);
                 break;
             case R.id.ll_wechat:
                 payId = Constants.PAY_WECHAT;
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
                 tvWechatPay.setTextColor(getResources().getColor(R.color.home_title_color));
                 tvWechatPay.setTextSize(12);
@@ -307,12 +308,12 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 tvAlipay.setTextSize(10);
                 tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
                 tv_Pea_frequency.setTextSize(10);
-                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_bean_pay.setTextSize(10);
+//                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tv_Pea_bean_pay.setTextSize(10);
                 break;
             case R.id.ll_alipay:
                 payId = Constants.PAY_ALIPAY;
-                ll_bean.setVisibility(View.GONE);
+//                ll_bean.setVisibility(View.GONE);
                 ll_frequency.setVisibility(View.GONE);
                 tvAlipay.setTextColor(getResources().getColor(R.color.home_title_color));
                 tvAlipay.setTextSize(12);
@@ -322,13 +323,14 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 tvWechatPay.setTextSize(10);
                 tv_Pea_frequency.setTextColor(getResources().getColor(R.color.home_title_color));
                 tv_Pea_frequency.setTextSize(10);
-                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
-                tv_Pea_bean_pay.setTextSize(10);
+//                tv_Pea_bean_pay.setTextColor(getResources().getColor(R.color.home_title_color));
+//                tv_Pea_bean_pay.setTextSize(10);
                 break;
             case R.id.bt_Refresh:
-                if (payId == Constants.PAY_PEABEAN){
-                    peabeanPresenter.peabean(activityId , "2");
-                }else if (payId == Constants.PEA_FREQUENCY){
+//                if (payId == Constants.PAY_PEABEAN){
+//                    peabeanPresenter.peabean(activityId , "2");
+//                }else
+                if (payId == Constants.PEA_FREQUENCY){
                     peabeanPresenter.peabean(activityId , "1");
                 }else if (payId == Constants.PAY_WECHAT){
                     payOrderPresenter.payOrder("3", "", "4", "", "", activityId);
