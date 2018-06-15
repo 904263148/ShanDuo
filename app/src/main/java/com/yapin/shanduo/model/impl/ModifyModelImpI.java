@@ -33,7 +33,6 @@ public class ModifyModelImpI implements ModifyLoadModel {
         Map<String,String> params = new HashMap<>();
         params.put("token", PrefJsonUtil.getProfile(context).getToken());
         params.put("typeId","3");
-//        params.put("headPortraitId","22");
         params.put("name",name);
         params.put("birthday",birthday);
         params.put("gender",gender);
@@ -49,16 +48,13 @@ public class ModifyModelImpI implements ModifyLoadModel {
             public void onFailure(String msg) {
                 listener.onError(msg);
             }
-
             @Override
             public void onResponse(String response) {
                 try {
-                    PrefJsonUtil.setProfile(context , new JSONObject(response).getString("result"));
-                    listener.onSuccess("修改成功");
+                    listener.onSuccess(new JSONObject(response).getString("result"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
     }

@@ -112,9 +112,6 @@ public class ApiUtil {
     //提交订单
     public final static String GET_ORDER = ConfigUtil.configUrl() + "jorder/payorder";
 
-    //查询好友动态活动数量
-    public final static String USERCOUNT = ConfigUtil.configUrl() +"/juser/usercount";
-
     //删除好友
     public final static String DELETE_FRIEND = ConfigUtil.configUrl() + "jattention/delattention" ;
 

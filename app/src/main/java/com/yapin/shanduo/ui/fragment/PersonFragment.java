@@ -18,9 +18,6 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.entity.NumberInfo;
-import com.yapin.shanduo.presenter.ChecktokenPresenter;
-import com.yapin.shanduo.presenter.NumberPresenter;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
@@ -28,15 +25,13 @@ import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
 import com.yapin.shanduo.ui.activity.MywalletActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
-import com.yapin.shanduo.ui.contract.ChecktokenContract;
-import com.yapin.shanduo.ui.contract.NumberContract;
+import com.yapin.shanduo.ui.contract.UserDetailContract;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
-import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
 import butterknife.ButterKnife;
@@ -44,13 +39,12 @@ import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
+ * implements  UserDetailContract.View
  */
-public class PersonFragment extends Fragment implements NumberContract.View ,ChecktokenContract.View{
+public class PersonFragment extends Fragment {
 
     private Activity activity;
     private Context context;
-    private NumberPresenter presenter;
-    private ChecktokenPresenter checktokenPresenter;
 
     private final int PUBLISH_ACT_OPEN_LOGIN = 1;
     private final int PUBLISH_MYDYNAMICS_LOGIN = 2;
@@ -75,8 +69,6 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
       private TextView tv_act_count;
       private TextView tv_trend_count;
 
-    private NumberInfo numberInfo = new NumberInfo();
-
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
         Bundle args = new Bundle();
@@ -93,10 +85,7 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person_layout,container,false);
         ButterKnife.bind(this,view);
-        presenter = new NumberPresenter();
-        presenter.init(context,this);
-        checktokenPresenter = new ChecktokenPresenter();
-        checktokenPresenter.init(context,this);
+
         tv_nickname = view.findViewById(R.id.tv_nickname);
         ib_Headportrait = view.findViewById(R.id.ib_Headportrait);
         tv_sex = view.findViewById(R.id.tv_sex);
@@ -119,18 +108,6 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
     private void initViewinfo() {
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
-//        checktokenPresenter.getchecktoken();
-//        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-//            ll_person_a.setVisibility(View.GONE);
-//            ll_person_aa.setVisibility(View.VISIBLE);
-//        }else {
-//            ll_person_aa.setVisibility(View.GONE);
-//            ll_person_a.setVisibility(View.VISIBLE);
-
-//            presenter.getnumber();
-
-
-//        }
 
     }
     @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter})
@@ -197,8 +174,10 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
 
         switch (requestCode){
             case PUBLISH_ACT_OPEN_LOGIN:
+                onResume();
                 break;
             case MYACTIVITIESACTIVITY:
+                onResume();
                 break;
             case EDITING:
                 break;
@@ -210,7 +189,6 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
                 break;
             case SETUP:
                 break;
-
         }
     }
 
@@ -224,7 +202,10 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
 
-            presenter.getnumber();
+            tv_friend_count.setText(PrefJsonUtil.getProfile(context).getAttention()+"");
+            tv_act_count.setText(PrefJsonUtil.getProfile(context).getActivity()+"");
+            tv_trend_count.setText(PrefJsonUtil.getProfile(context).getDynamic()+"");
+
             tv_nickname.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getName()));
             tv_id.setText(PrefJsonUtil.getProfile(context).getUserId());
             tv_level.setText("LV"+PrefJsonUtil.getProfile(context).getLevel()+"");
@@ -234,13 +215,8 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
             if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
-//                Drawable d=Drawable.createFromPath(drawable);
                 ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_women_bg));
-//                String photo="/drawable/icon_women_bg.png";
-//                ll_person_a.setBackgroundDrawable(Drawable.createFromPath(photo));
             } else {
-//                String photo="/drawable/icon_man_bg.png";
-//                ll_person_a.setBackgroundDrawable(Drawable.createFromPath(photo));
                 ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_man_bg));
                 drawable = activity.getResources().getDrawable(R.drawable.icon_men);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
@@ -265,42 +241,4 @@ public class PersonFragment extends Fragment implements NumberContract.View ,Che
         }
     }
 
-    @Override
-    public void success(NumberInfo data) {
-//        ToastUtil.showShortToast(context , data);
-        numberInfo = data;
-            tv_friend_count.setText(numberInfo.getAttention());
-            tv_act_count.setText(numberInfo.getActivity());
-            tv_trend_count.setText(numberInfo.getDynamic());
-    }
-
-    @Override
-    public void success(String data) {
-        ToastUtil.showShortToast(context , data);
-    }
-
-    @Override
-    public void loading() {
-
-    }
-
-    @Override
-    public void networkError() {
-        ToastUtil.showShortToast(context,"网络连接异常");
-    }
-
-    @Override
-    public void error(String msg) {
-        ToastUtil.showShortToast(context,msg);
-    }
-
-    @Override
-    public void showFailed(String msg) {
-
-    }
-
-    @Override
-    public void initView() {
-
-    }
 }

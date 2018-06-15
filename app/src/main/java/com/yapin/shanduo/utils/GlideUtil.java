@@ -20,7 +20,7 @@ public class GlideUtil {
      * @param context context
      * @return transform
      */
-    private static GlideCircleTransform transform(Context context) {
+    public static GlideCircleTransform transform(Context context) {
         if (circleTransform == null) {
             circleTransform = new GlideCircleTransform(context);
         }

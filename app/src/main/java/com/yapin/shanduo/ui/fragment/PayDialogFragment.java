@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,8 @@ import com.yapin.shanduo.model.entity.PayResult;
 import com.yapin.shanduo.presenter.PayOrderPresenter;
 import com.yapin.shanduo.presenter.PeabeanPresenter;
 import com.yapin.shanduo.ui.activity.MainActivity;
+import com.yapin.shanduo.ui.activity.MembercenterActivity;
+import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.contract.PayOrderContract;
 import com.yapin.shanduo.ui.contract.PeabeanContract;
 import com.yapin.shanduo.utils.Constants;
@@ -113,6 +116,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
     private PasswordInputView again_paypswd_pet;    //支付密码
     private LinearLayout ll_cancel;     //取消按钮
     private TextView tv_Determine;//确认按钮
+    private static final int MEMBERCENTER = 20;
 
     int a=6;
 
@@ -242,7 +246,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
     }
     //R.id.ll_Pea_bean,
     @OnClick({R.id.ib_back , R.id.ll_alipay , R.id.ll_balance  , R.id.ll_wechat, R.id.bt_vip ,R.id.bt_Settop ,
-            R.id.ll_Pea_frequency , R.id.bt_cancel , R.id.bt_Refresh ,R.id.bt_Recharge})
+            R.id.ll_Pea_frequency , R.id.bt_cancel , R.id.bt_Refresh ,R.id.bt_Recharge ,R.id.tv_memo2})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.ib_back:
@@ -468,6 +472,18 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                     String money = (et_a_Recharge.getText().toString());
                     payOrderPresenter.payOrder(payId, "", "1", money + ".00", "", "");
 
+                break;
+            case R.id.tv_memo2:
+                StartActivityUtil.start(activity, MembercenterActivity.class , MEMBERCENTER);
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case MEMBERCENTER:
                 break;
         }
     }

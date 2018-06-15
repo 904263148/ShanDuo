@@ -50,7 +50,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <EditText
+        <com.yapin.shanduo.widget.EmojiEditText
             android:id="@+id/et_add_title"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -278,7 +278,7 @@
                 android:background="@color/bg_color"
                 />
 
-    <EditText
+    <com.yapin.shanduo.widget.EmojiEditText
         android:id="@+id/tv_add_place_remarks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

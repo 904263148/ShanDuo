@@ -49,6 +49,7 @@ import com.yapin.shanduo.ui.fragment.HomeFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
             TextView tv_experience = (TextView) v.findViewById(R.id.tv_experience);
             ImageView iv_back = (ImageView) v.findViewById(R.id.iv_back);
             tv_number.setText(signinInfo.getCount()+"");
+            tv_level.setText("LV"+ PrefJsonUtil.getProfile(context).getLevel()+"");
             String count = tv_number.getText().toString().trim();
             if ("1".equals(count)){
                 tv_experience.setText("+10点经验");
@@ -203,13 +205,12 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
             }else if ("7".equals(count)){
                 tv_experience.setText("+20闪多豆");
             }
-                    iv_back.setOnClickListener(new View.OnClickListener() {
+            iv_back.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     dialog.dismiss();
                 }
             });
-
             tv_Determine.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

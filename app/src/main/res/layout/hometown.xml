@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+    <com.yapin.shanduo.widget.EmojiEditText
         android:id="@+id/hometown"
         android:layout_width="match_parent"
         android:layout_height="40dp"

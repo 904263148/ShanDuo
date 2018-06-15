@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -112,6 +113,14 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
             case R.id.charge_vip:
                 openPublishPopup();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != RESULT_OK){
+            return;
         }
     }
 

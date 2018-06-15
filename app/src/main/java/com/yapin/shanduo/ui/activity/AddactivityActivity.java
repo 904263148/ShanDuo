@@ -209,7 +209,7 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                 lon=ary[1];
 //                Log.i("test","/n经度："+lon+"/n纬度："+lat);
 
-                activityName =  Utils.stringToUnicode(et_add_title.getText().toString().trim());
+                activityName =  et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
                 manNumber = et_add_Numberofboys.getText().toString().trim();
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();

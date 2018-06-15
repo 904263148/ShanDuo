@@ -196,8 +196,8 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
                     }
                     result.append(string);
                 }
-                Log.i("deleteparamsstr", "load:----"+result);
-                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+//                Log.i("deleteparamsstr", "load:----"+result);
+//                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
                 deletedynamicPresenter.Deletedynamic(result.toString());
                 break;
         }
