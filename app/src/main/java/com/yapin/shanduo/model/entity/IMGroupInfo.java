@@ -47,10 +47,10 @@ public class IMGroupInfo implements Parcelable {
         TotalCount = totalCount;
     }
 
-    static class GroupInfo implements Parcelable {
+    public static class GroupInfo implements Parcelable {
         private String FaceUrl;
         private String GroupId;
-        private String LastMsgTime;
+        private long LastMsgTime;
         private String Name;
 
         public String getFaceUrl() {
@@ -69,11 +69,11 @@ public class IMGroupInfo implements Parcelable {
             GroupId = groupId;
         }
 
-        public String getLastMsgTime() {
+        public long getLastMsgTime() {
             return LastMsgTime;
         }
 
-        public void setLastMsgTime(String lastMsgTime) {
+        public void setLastMsgTime(long lastMsgTime) {
             LastMsgTime = lastMsgTime;
         }
 
@@ -85,6 +85,9 @@ public class IMGroupInfo implements Parcelable {
             Name = name;
         }
 
+        public GroupInfo() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -94,21 +97,18 @@ public class IMGroupInfo implements Parcelable {
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.FaceUrl);
             dest.writeString(this.GroupId);
-            dest.writeString(this.LastMsgTime);
+            dest.writeLong(this.LastMsgTime);
             dest.writeString(this.Name);
-        }
-
-        public GroupInfo() {
         }
 
         protected GroupInfo(Parcel in) {
             this.FaceUrl = in.readString();
             this.GroupId = in.readString();
-            this.LastMsgTime = in.readString();
+            this.LastMsgTime = in.readLong();
             this.Name = in.readString();
         }
 
-        public static final Parcelable.Creator<GroupInfo> CREATOR = new Parcelable.Creator<GroupInfo>() {
+        public static final Creator<GroupInfo> CREATOR = new Creator<GroupInfo>() {
             @Override
             public GroupInfo createFromParcel(Parcel source) {
                 return new GroupInfo(source);

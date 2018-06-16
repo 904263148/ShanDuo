@@ -47,10 +47,18 @@ public class NomalConversation extends Conversation {
 
     @Override
     public String getAvatarUrls() {
-        FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
         String avatar="";
-        if(  ! (profile == null) ){
-            avatar = profile.getAvatarUrl();
+        switch (type){
+            case C2C:
+                FriendProfile profile = FriendshipInfo.getInstance().getProfile(identify);
+
+                if(  ! (profile == null) ){
+                    avatar = profile.getAvatarUrl();
+                }
+                break;
+            case Group:
+                avatar = GroupInfo.getInstance().getFaceUrl(identify) == null ? "" : GroupInfo.getInstance().getFaceUrl(identify);
+                break;
         }
         return avatar;
     }

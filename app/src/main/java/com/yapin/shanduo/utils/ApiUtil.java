@@ -150,4 +150,7 @@ public class ApiUtil {
 
     //查询用户详细资料
     public final static String USER_DETAIL = ConfigUtil.configUrl() + "juser/details" ;
+
+    //修改群名称
+    public final static String EDIT_GROUP_NAME = ConfigUtil.configUrl() + "jgroup/updategroup" ;
 }

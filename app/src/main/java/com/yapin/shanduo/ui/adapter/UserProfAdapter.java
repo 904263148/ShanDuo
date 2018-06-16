@@ -13,6 +13,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TokenInfo;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.Utils;
 
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class UserProfAdapter extends ArrayAdapter<TokenInfo> {
         }
         viewHolder.catalog.setVisibility(View.GONE);
         viewHolder.tvOnline.setVisibility(View.GONE);
-        viewHolder.tvName.setText(list.get(position).getName());
-        viewHolder.tvSign.setText(list.get(position).getSignature());
+        viewHolder.tvName.setText(Utils.unicodeToString(list.get(position).getName()));
+        viewHolder.tvSign.setText(Utils.unicodeToString(list.get(position).getSignature()));
 
         GlideUtil.load(context ,ApiUtil.IMG_URL+list.get(position).getPicture()  , viewHolder.ivHead);
 

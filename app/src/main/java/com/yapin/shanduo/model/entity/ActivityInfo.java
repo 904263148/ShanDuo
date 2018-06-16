@@ -103,6 +103,16 @@ public class ActivityInfo implements Parcelable {
 
 		private Integer level;
 
+		private String detailedAddress;
+
+		public String getDetailedAddress() {
+			return detailedAddress;
+		}
+
+		public void setDetailedAddress(String detailedAddress) {
+			this.detailedAddress = detailedAddress;
+		}
+
 		public void setOthersScore(Integer othersScore) {
 			this.othersScore = othersScore;
 		}
@@ -343,6 +353,7 @@ public class ActivityInfo implements Parcelable {
 			dest.writeValue(this.othersScore);
 			dest.writeValue(this.typeId);
 			dest.writeValue(this.level);
+			dest.writeString(this.detailedAddress);
 		}
 
 		protected Act(Parcel in) {
@@ -372,6 +383,7 @@ public class ActivityInfo implements Parcelable {
 			this.othersScore = (Integer) in.readValue(Integer.class.getClassLoader());
 			this.typeId = (Integer) in.readValue(Integer.class.getClassLoader());
 			this.level = (Integer) in.readValue(Integer.class.getClassLoader());
+			this.detailedAddress = in.readString();
 		}
 
 		public static final Creator<Act> CREATOR = new Creator<Act>() {

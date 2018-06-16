@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".im.ui.GroupProfileActivity"
+    android:background="@color/bg_color"
     >
     <com.tencent.qcloud.ui.TemplateTitle
         android:id="@+id/chat_title"
@@ -13,7 +14,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:titleText="@string/chat_setting_title"
-        app:canBack="true" />
+        app:canBack="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+
+    </RelativeLayout>
 
     <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/idText"

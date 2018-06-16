@@ -42,7 +42,7 @@ public class GroupMemberActivity extends Activity implements TIMValueCallBack<Li
         groupId = getIntent().getStringExtra("id");
         type = getIntent().getStringExtra("type");
         listView = (ListView) findViewById(R.id.list);
-        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
+//        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
         TIMGroupManager.getInstance().getGroupMembers(groupId, this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

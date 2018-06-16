@@ -37,8 +37,8 @@ public class GroupListActivity extends Activity implements Observer {
         type = getIntent().getStringExtra("type");
         setTitle();
         listView =(ListView) findViewById(R.id.list);
-        list = GroupInfo.getInstance().getGroupListByType(type);
-        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
+//        list = GroupInfo.getInstance().getGroupListByType(type);
+//        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

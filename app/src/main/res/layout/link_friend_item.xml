@@ -107,7 +107,6 @@
                     android:textSize="@dimen/egg_font_size"
                     android:textColor="@color/font_color_gray"
                     android:text="这是一段个性签名"
-                    android:layout_marginLeft="5dp"
                     />
 
             </LinearLayout>

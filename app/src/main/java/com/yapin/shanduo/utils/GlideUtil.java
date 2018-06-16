@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.widget.CircleImageView;
 import com.yapin.shanduo.widget.glide.GlideCircleTransform;
 import com.yapin.shanduo.widget.glide.GlideRoundTransform;
 
@@ -67,6 +68,22 @@ public class GlideUtil {
         Glide.with(activity).load(url == null ? "" : url)
                 .placeholder(R.color.color_white)
                 .error(R.drawable.head)
+                .transform(transform(context))
+                .into(imageView);
+    }
+
+    /**
+     * 加载头像url
+     *
+     * @param context   context
+     * @param activity  activity
+     * @param url       头像url
+     * @param imageView 头像view
+     */
+    public static void loadIMHead(Context context, Activity activity, String url, ImageView imageView) {
+        Glide.with(activity).load(url == null ? "" : url)
+                .placeholder(R.drawable.head_group)
+                .error(R.drawable.head_group)
                 .transform(transform(context))
                 .into(imageView);
     }

@@ -31,7 +31,7 @@ public class BlackListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_black_list);
         listView = (ListView) findViewById(R.id.list);
-        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
+//        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

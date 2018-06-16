@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.tencent.qcloud.ui.CircleImageView;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.im.model.GroupProfile;
 import com.yapin.shanduo.im.model.ProfileSummary;
 import com.yapin.shanduo.utils.GlideUtil;
 

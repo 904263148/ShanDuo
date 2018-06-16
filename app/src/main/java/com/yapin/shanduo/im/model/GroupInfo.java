@@ -1,5 +1,7 @@
 package com.yapin.shanduo.im.model;
 
+import android.content.Context;
+
 import com.tencent.TIMGroupAssistant;
 import com.tencent.TIMGroupCacheInfo;
 import com.tencent.TIMGroupMemberRoleType;
@@ -145,6 +147,21 @@ public class GroupInfo implements Observer {
         return TIMGroupMemberRoleType.NotMember;
     }
 
+    /**
+     * 获取在该群身份
+     *
+     * @param id 群identify
+     */
+    public String getFaceUrl(String id){
+        for (String key : groups.keySet()){
+            for (GroupProfile item : groups.get(key)){
+                if (item.getIdentify().equals(id)){
+                    return item.getAvatarUrl();
+                }
+            }
+        }
+        return "";
+    }
 
     /**
      * 获取该群的群消息接收状态
@@ -167,8 +184,8 @@ public class GroupInfo implements Observer {
      *
      * @param type 群类型
      */
-    public List<ProfileSummary> getGroupListByType(String type){
-        List<ProfileSummary> result = new ArrayList<>();
+    public List<GroupProfile> getGroupListByType(String type){
+        List<GroupProfile> result = new ArrayList<>();
         if (groups != null && groups.get(type) != null){
             result.addAll(groups.get(type));
             return result;

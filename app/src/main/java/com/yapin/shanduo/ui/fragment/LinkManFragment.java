@@ -109,11 +109,11 @@ public class LinkManFragment extends Fragment {
                 StartActivityUtil.start(activity , this , AddHumanGroupActivity.class);
                 break;
             case R.id.ll_search:
-                if (viewPager.getCurrentItem() == 0) {
+//                if (viewPager.getCurrentItem() == 0) {
                     StartActivityUtil.start(activity ,this , SearchFriendActivity.class);
-                }else {
-                    StartActivityUtil.start(activity ,this , SearchGroupActivity.class);
-                }
+//                }else {
+//                    StartActivityUtil.start(activity ,this , SearchGroupActivity.class);
+//                }
                 break;
         }
     }

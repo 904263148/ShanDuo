@@ -2,7 +2,7 @@ package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -12,38 +12,37 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.tencent.TIMGroupCacheInfo;
-import com.tencent.qcloud.presentation.event.GroupEvent;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.im.adapters.ProfileSummaryAdapter;
-import com.yapin.shanduo.im.model.GroupInfo;
-import com.yapin.shanduo.im.model.GroupProfile;
-import com.yapin.shanduo.im.model.ProfileSummary;
-import com.yapin.shanduo.im.ui.GroupListActivity;
+import com.yapin.shanduo.im.ui.GroupProfileActivity;
+import com.yapin.shanduo.model.entity.IMGroupInfo;
+import com.yapin.shanduo.presenter.GroupListPresenter;
+import com.yapin.shanduo.ui.adapter.LinkGroupAdapter;
+import com.yapin.shanduo.ui.contract.GroupListContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.widget.LoadingView;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LinkGroupFragment extends Fragment implements Observer {
+public class LinkGroupFragment extends Fragment implements GroupListContract.View{
 
-    private ProfileSummaryAdapter adapter;
-    private ListView listView;
-    private String type;
-    private List<ProfileSummary> list;
+    @BindView(R.id.list)
+    ListView listView;
+    @BindView(R.id.loading_view)
+    LoadingView loadingView;
 
     private View view;
-
     private Context context;
     private Activity activity;
-    private LoadingView loadingView;
+    private GroupListPresenter presenter;
+    private List<IMGroupInfo.GroupInfo> list = new ArrayList<>();
+    private LinkGroupAdapter adapter;
 
     public LinkGroupFragment() {
         // Required empty public constructor
@@ -67,31 +66,39 @@ public class LinkGroupFragment extends Fragment implements Observer {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_link_group, container, false);
-        ButterKnife.bind(this,view);
-        initView();
+        ButterKnife.bind(this, view);
+        presenter = new GroupListPresenter();
+        presenter.init(this);
         return view;
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
-        type = "Public";
-        loadingView = view.findViewById(R.id.loading_view);
-        listView =(ListView) view.findViewById(R.id.list);
-        list = GroupInfo.getInstance().getGroupListByType(type);
-        adapter = new ProfileSummaryAdapter(context, R.layout.item_profile_summary, list);
+
+        adapter = new LinkGroupAdapter(context ,activity ,list);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                list.get(position).onClick(activity);
+                Intent intent = new Intent(context, GroupProfileActivity.class);
+                intent.putExtra("identify", list.get(position).getGroupId());
+                startActivity(intent);
             }
         });
-        GroupEvent.getInstance().addObserver(this);
-        if(list.size() == 0){
-            loadingView.noData(R.string.tips_no_group);
+
+        presenter.getData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            loadingView.noData(R.string.tips_no_login);
         }else {
-            loadingView.setGone();
+            presenter.getData();
         }
     }
 
@@ -106,72 +113,39 @@ public class LinkGroupFragment extends Fragment implements Observer {
     }
 
     @Override
-    public void update(Observable observable, Object data) {
-        if (observable instanceof GroupEvent){
-            if (data instanceof GroupEvent.NotifyCmd){
-                GroupEvent.NotifyCmd cmd = (GroupEvent.NotifyCmd) data;
-                switch (cmd.type){
-                    case DEL:
-                        delGroup((String) cmd.data);
-                        break;
-                    case ADD:
-                        addGroup((TIMGroupCacheInfo) cmd.data);
-                        break;
-                    case UPDATE:
-                        updateGroup((TIMGroupCacheInfo) cmd.data);
-                        break;
-                }
-            }
-        }
-    }
-
-    private void delGroup(String groupId){
-        Iterator<ProfileSummary> it = list.iterator();
-        while (it.hasNext()){
-            ProfileSummary item = it.next();
-            if (item.getIdentify().equals(groupId)){
-                it.remove();
-                adapter.notifyDataSetChanged();
-                return;
-            }
-        }
-    }
-
-
-    private void addGroup(TIMGroupCacheInfo info){
-        if (info!=null && info.getGroupInfo().getGroupType().equals(type)){
-            GroupProfile profile = new GroupProfile(info);
-            list.add(profile);
-            adapter.notifyDataSetChanged();
-        }
-
-    }
-
-    private void updateGroup(TIMGroupCacheInfo info){
-        delGroup(info.getGroupInfo().getGroupId());
-        addGroup(info);
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();
-        GroupEvent.getInstance().deleteObserver(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            loadingView.setVisibility(View.VISIBLE);
-            loadingView.noData(R.string.tips_no_login);
+    public void show(List<IMGroupInfo.GroupInfo> data) {
+        if(data.size() == 0){
+            loadingView.noData(R.string.tips_no_group);
         }else {
-            list = GroupInfo.getInstance().getGroupListByType(type);
-            if(list.size() == 0){
-                loadingView.noData(R.string.tips_no_group);
-            }else {
-                loadingView.setGone();
-                adapter.notifyDataSetChanged();
-            }
+            loadingView.setGone();
         }
+        list.clear();
+        list.addAll(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context , msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(context , msg);
     }
 }

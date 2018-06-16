@@ -120,13 +120,12 @@ public class ChatFragment extends Fragment implements ConversationView,Friendshi
     @Override
     public void onResume(){
         super.onResume();
-        refresh();
-        PushUtil.getInstance().reset();
         if(TextUtils.isEmpty(PrefUtil.getToken(ShanDuoPartyApplication.getContext()))){
             loadingView.noData(R.string.tips_no_login);
             loadingView.setVisibility(View.VISIBLE);
         }else {
             loadingView.setGone();
+//            presenter.getConversation();
         }
     }
 

@@ -18,6 +18,7 @@ import com.yapin.shanduo.presenter.SearchHumanPresenter;
 import com.yapin.shanduo.ui.adapter.UserProfAdapter;
 import com.yapin.shanduo.ui.contract.SearchHumanContract;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,11 +127,11 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
 
     @Override
     public void error(String msg) {
-
+        ToastUtil.showShortToast(context , msg);
     }
 
     @Override
     public void showFailed(String msg) {
-
+        ToastUtil.showShortToast(context , msg);
     }
 }

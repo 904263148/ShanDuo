@@ -3,6 +3,7 @@ package com.yapin.shanduo.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -46,6 +47,14 @@ public class StartActivityUtil {
         ActivityTransitionUtil.startActivityTransition(activity);
     }
 
+    public static void start(Activity activity,Fragment fragment, Class<?> cls, Uri bundle, int requestCode) {
+        Intent intent = new Intent();
+        intent.setData(bundle);
+        intent.setClass(activity, cls);
+        fragment.startActivityForResult(intent , requestCode);
+        ActivityTransitionUtil.startActivityTransition(activity);
+    }
+
     public static void start(Activity activity, Class<?> cls, int requestCode) {
         Intent intent = new Intent();
         intent.setClass(activity, cls);
@@ -73,6 +82,14 @@ public class StartActivityUtil {
         intent.putExtras(bundle);
         intent.setClass(activity, cls);
         fragment.startActivityForResult(intent, requestCode);
+        ActivityTransitionUtil.startActivityTransition(activity);
+    }
+
+    public static void start(Activity activity, Class<?> cls, Uri bundle, int requestCode) {
+        Intent intent = new Intent();
+        intent.setData(bundle);
+        intent.setClass(activity, cls);
+        activity.startActivityForResult(intent , requestCode);
         ActivityTransitionUtil.startActivityTransition(activity);
     }
 }

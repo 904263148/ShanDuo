@@ -2,6 +2,7 @@ package com.yapin.shanduo.im.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 
 import com.tencent.TIMGroupBasicSelfInfo;
 import com.tencent.TIMGroupCacheInfo;
@@ -56,7 +57,10 @@ public class GroupProfile implements ProfileSummary {
      */
     @Override
     public String getAvatarUrl() {
-        return null;
+        if(profile.getFaceUrl() == null || TextUtils.isEmpty(profile.getFaceUrl())){
+            return "";
+        }
+        return profile.getFaceUrl();
     }
 
     /**

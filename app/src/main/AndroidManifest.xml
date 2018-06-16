@@ -425,7 +425,8 @@
             />
         <activity android:name=".ui.activity.PictureReviewActivity" />
         <activity android:name=".ui.activity.FirstUseActivity" />
-        <activity android:name=".ui.activity.ReportActivity"></activity>
+        <activity android:name=".ui.activity.ReportActivity"/>
+        <activity android:name=".ui.activity.ClipImageActivity"/>
     </application>
 
 </manifest>

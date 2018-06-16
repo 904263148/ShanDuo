@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -83,6 +84,10 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
     LinearLayout llJoin;
     @BindView(R.id.tv_lv)
     TextView tvLv;
+    @BindView(R.id.ll_detail_place)
+    LinearLayout llDetailPlace;
+    @BindView(R.id.tv_detail_place)
+    TextView tvDetailPlace;
     
     private Context context;
     private Activity activity;
@@ -130,6 +135,11 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         GlideUtil.load(context , activity , ApiUtil.IMG_URL+ act.getHeadPortraitId() ,ivHead);
 
         tvLv.setText("LV" + act.getLevel());
+
+        if(act.getDetailedAddress() != null && !TextUtils.isEmpty(act.getDetailedAddress())){
+            llDetailPlace.setVisibility(View.VISIBLE);
+            tvDetailPlace.setText(act.getDetailedAddress());
+        }
 
         Drawable drawable = null;
         if ("0".equals(act.getGender())) {
@@ -230,15 +240,15 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
 
     @Override
     public void show(List<JoinActUser.ActUser> data, int totalPage) {
+        list.clear();
+        list.addAll(data);
         if(totalPage == 0){
             loadingView.noData(R.string.tips_no_user_join);
-            return;
         }else {
             loadingView.setGone();
+            isJoin = list.get(0).getJoinActivity();
         }
-        list.addAll(data);
         adapter.notifyDataSetChanged();
-        isJoin = list.get(0).getJoinActivity();
         refreshData();
     }
 
@@ -247,7 +257,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
             tvConfirm.setText(R.string.confirm_join);
         }else {
             tvConfirm.setText(R.string.cancel_join);
-            presenter.getData(act.getId() , "1" , "10");
         }
     }
 
@@ -259,7 +268,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
             isJoin = Constants.UNJOIN_ACT;
         }
         ToastUtil.showShortToast(context , data);
-        refreshData();
+        presenter.getData(act.getId() , "1" , "10");
     }
 
     @Override

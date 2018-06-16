@@ -2,6 +2,7 @@ package com.yapin.shanduo.im.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class ConversationAdapter extends ArrayAdapter<Conversation> {
             viewHolder.avatar.setImageResource(data.getAvatar());
         }else {
             GlideUtil.load(context ,activity ,data.getAvatarUrls() , viewHolder.avatar );
+            Log.d("IM_Group_FaceUrl" , data.getAvatarUrls());
         }
         viewHolder.lastMessage.setText(data.getLastMessageSummary());
         viewHolder.time.setText(TimeUtil.getTimeStr(data.getLastMessageTime()));

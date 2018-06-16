@@ -237,6 +237,36 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/ll_detail_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="10dp"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:text="详细地址:"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/font_color_gray"
+                />
+
+            <TextView
+                android:id="@+id/tv_detail_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/act_item_font_size"
+                android:textColor="@color/font_black_color"
+                android:layout_toRightOf="@+id/tv_place_tag"
+                android:text="xx市" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

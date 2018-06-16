@@ -1,15 +1,20 @@
 package com.yapin.shanduo.im.ui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMGroupAddOpt;
@@ -23,19 +28,34 @@ import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.tencent.qcloud.ui.LineControllerView;
 import com.tencent.qcloud.ui.ListPickerDialog;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.GroupInfo;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.CreateGroupPresenter;
+import com.yapin.shanduo.presenter.EditGroupPresenter;
+import com.yapin.shanduo.presenter.ImageUrlPresenter;
+import com.yapin.shanduo.ui.activity.ClipImageActivity;
 import com.yapin.shanduo.ui.contract.CreateGroupContract;
+import com.yapin.shanduo.ui.contract.EditGroupNameContact;
+import com.yapin.shanduo.ui.contract.UploadContract;
+import com.yapin.shanduo.ui.fragment.SelectPhotoDialogFragment;
+import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.FileUtil;
+import com.yapin.shanduo.utils.GlideUtil;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
+import com.yapin.shanduo.widget.CircleImageView;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GroupProfileActivity extends FragmentActivity implements GroupInfoView, View.OnClickListener ,CreateGroupContract.View{
+public class GroupProfileActivity extends FragmentActivity implements GroupInfoView, View.OnClickListener ,CreateGroupContract.View , SelectPhotoDialogFragment.ImageCropListener , UploadContract.View , TIMCallBack , EditGroupNameContact.View{
 
     private final String TAG = "GroupProfileActivity";
 
@@ -50,6 +70,14 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
     private Map<String, TIMGroupReceiveMessageOpt> messageOptContent;
     private LineControllerView name,intro;
     private CreateGroupPresenter createGroupPresenter;
+
+    private Context context;
+    private Activity activity;
+
+    private SelectPhotoDialogFragment selectPhotoDialogFragment;
+    private ImageUrlPresenter imageUrlPresenter;
+    private ImageView ivHead;
+    private EditGroupPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +97,13 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
         controlInGroup.setVisibility(isInGroup? View.VISIBLE:View.GONE);
         TextView controlOutGroup = (TextView) findViewById(R.id.controlOutGroup);
         controlOutGroup.setVisibility(isInGroup ? View.GONE : View.VISIBLE);
+
+        selectPhotoDialogFragment = new SelectPhotoDialogFragment();
+        selectPhotoDialogFragment.setImagePathListener(this);
+        imageUrlPresenter = new ImageUrlPresenter();
+        imageUrlPresenter.init(this);
+        presenter = new EditGroupPresenter();
+        presenter.init(this);
     }
 
     /**
@@ -78,10 +113,19 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
      */
     @Override
     public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
+
+        context = ShanDuoPartyApplication.getContext();
+        activity = this;
+
         info = groupInfos.get(0);
         isGroupOwner = info.getGroupOwner().equals(UserInfo.getInstance().getId());
         roleType = GroupInfo.getInstance().getRole(identify);
         type = info.getGroupType();
+
+        ivHead = findViewById(R.id.iv_head);
+        GlideUtil.loadIMHead(context , activity , info.getFaceUrl() , ivHead);
+        ivHead.setOnClickListener(this);
+
         LineControllerView member = (LineControllerView) findViewById(R.id.member);
         if (isInGroup){
             member.setContent(String.valueOf(info.getMemberNum()));
@@ -157,20 +201,21 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                 break;
             case R.id.btnDel:
                 if (isGroupOwner){
-                    GroupManagerPresenter.dismissGroup(identify, new TIMCallBack() {
-                        @Override
-                        public void onError(int i, String s) {
-                            Log.i(TAG, "onError code" + i + " msg " + s);
-                            if (i == 10004 && type.equals(GroupInfo.privateGroup)){
-                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_quit_fail_private),Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                            createGroupPresenter.createGroup(Constants.TYPE_DELETE , identify  , "" , "");
-                        }
-                    });
+//                    GroupManagerPresenter.dismissGroup(identify, new TIMCallBack() {
+//                        @Override
+//                        public void onError(int i, String s) {
+//                            Log.i(TAG, "onError code" + i + " msg " + s);
+//                            if (i == 10004 && type.equals(GroupInfo.privateGroup)){
+//                                Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_quit_fail_private),Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//
+//                        }
+//                    });
+                    createGroupPresenter.createGroup(Constants.TYPE_DELETE , identify  , "" , "");
                 }else{
                     GroupManagerPresenter.quitGroup(identify, new TIMCallBack() {
                         @Override
@@ -225,6 +270,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                             @Override
                             public void onEdit(final String text, TIMCallBack callBack) {
                                 TIMGroupManager.getInstance().modifyGroupName(identify, text, callBack);
+                                presenter.editName(text , identify);
                             }
                         },20);
 
@@ -265,8 +311,24 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                     }
                 });
                 break;
+            case R.id.iv_head:
+                if(isGroupOwner){
+                    selectPhotoDialogFragment.show(getSupportFragmentManager() , "");
+                }
+                break;
         }
     }
+
+    //请求相机
+    private static final int REQUEST_CAPTURE = 105;
+    //请求相册
+    private static final int REQUEST_PICK = 101;
+    //请求截图
+    private static final int REQUEST_CROP_PHOTO = 102;
+    //调用照相机返回图片文件
+    private File tempFile;
+    private List<String> path = new ArrayList<>();
+    private String FacePath;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -280,6 +342,50 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
             }
         }
 
+        switch (requestCode) {
+            case REQUEST_CAPTURE: //调用系统相机返回
+                if (resultCode == RESULT_OK) {
+                    gotoClipActivity(Uri.fromFile(tempFile));
+                }
+                break;
+            case REQUEST_PICK:  //调用系统相册返回
+                if (resultCode == RESULT_OK) {
+                    Uri uri = data.getData();
+                    gotoClipActivity(uri);
+                }
+                break;
+            case REQUEST_CROP_PHOTO:  //剪切图片返回
+                if (resultCode == RESULT_OK) {
+                    final Uri uri = data.getData();
+                    if (uri == null) {
+                        return;
+                    }
+                    FacePath = FileUtil.getRealFilePathFromUri(context, uri);
+//                    Bitmap bitMap = BitmapFactory.decodeFile(cropImagePath);
+                    //此处后面可以将bitMap转为二进制上传后台网络
+                    //......
+                    setImFace();
+                }
+                break;
+        }
+
+
+    }
+
+    /**
+     * 打开截图界面
+     */
+    public void gotoClipActivity(Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        StartActivityUtil.start(activity ,ClipImageActivity.class , uri , REQUEST_CROP_PHOTO);
+    }
+
+    public void setImFace(){
+        path.clear();
+        path.add(FacePath);
+        imageUrlPresenter.upload(path);
     }
 
     private boolean isManager(){
@@ -290,6 +396,16 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
     public void success(String data) {
         Toast.makeText(GroupProfileActivity.this, getString(R.string.chat_setting_dismiss_succ),Toast.LENGTH_SHORT).show();
         onBackPressed();
+    }
+
+    @Override
+    public void uploadSuccess(String imgIds) {
+        TIMGroupManager.getInstance().modifyGroupFaceUrl(identify, ApiUtil.IMG_URL + imgIds, this);
+    }
+
+    @Override
+    public void show(String data) {
+        ToastUtil.showShortToast(context,data);
     }
 
     @Override
@@ -315,5 +431,21 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
     @Override
     public void initView() {
 
+    }
+
+    @Override
+    public void setImagePath(File path) {
+        this.tempFile = path;
+    }
+
+    @Override
+    public void onError(int i, String s) {
+        ToastUtil.showShortToast(context ,s);
+    }
+
+    @Override
+    public void onSuccess() {
+        ToastUtil.showShortToast(context , "修改群头像成功");
+        Glide.with(context).load(FacePath).transform(GlideUtil.transform(context)).into(ivHead);
     }
 }
