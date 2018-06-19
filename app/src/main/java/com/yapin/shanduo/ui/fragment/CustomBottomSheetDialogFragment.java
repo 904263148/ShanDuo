@@ -18,8 +18,10 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.ConfirmPresenter;
+import com.yapin.shanduo.presenter.DeletedynamicPresenter;
 import com.yapin.shanduo.ui.activity.ReportActivity;
 import com.yapin.shanduo.ui.contract.ConfirmContract;
+import com.yapin.shanduo.ui.contract.DeletedynamicContract;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -42,7 +44,7 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 /**
  * 作者：L on 2018/5/28 0028 16:57
  */
-public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements PlatformActionListener , ConfirmContract.View{
+public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment implements PlatformActionListener , ConfirmContract.View , DeletedynamicContract.View {
 
     @BindView(R.id.share_delete)
     TextView tvDelete;
@@ -56,6 +58,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
     private Activity activity;
 
     private ConfirmPresenter presenter;
+    private DeletedynamicPresenter deletedynamicPresenter;
 
     private int userId;
 
@@ -74,6 +77,8 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
         activity = getActivity();
         presenter = new ConfirmPresenter();
         presenter.init(context , this);
+        deletedynamicPresenter = new DeletedynamicPresenter();
+        deletedynamicPresenter.init(context , this);
         return view;
     }
 
@@ -134,7 +139,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
                         if(type == 0){
                             presenter.deleteconfirm(id);
                         }else {
-
+                            deletedynamicPresenter.Deletedynamic(id);
                         }
                     }
                 }).create().show();
@@ -194,13 +199,15 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
     @Override
     public void success(String data) {
         ToastUtil.showShortToast(context , data);
+        Intent intent;
         if(type == 0){
             //注册广播
-            Intent intent = new Intent("actDeleteComplete");
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            intent = new Intent("actDeleteComplete");
         }else {
-
+            //注册广播
+            intent = new Intent("trendDeleteComplete");
         }
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         dismiss();
     }
 

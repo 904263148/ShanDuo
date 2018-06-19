@@ -172,6 +172,11 @@ public class SearchActActivity extends RightSlidingActivity implements  View.OnK
     }
 
     @Override
+    public void onHeadClick(int id) {
+
+    }
+
+    @Override
     public void onLoadMore() {
         page++;
         setRefreshLoading(true);

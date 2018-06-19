@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface SearchHumanLoadModel {
 
-    void load(OnLoadListener<List<TokenInfo>> listener , String query);
+    void load(OnLoadListener<List<TokenInfo>> listener , String query , String typeId);
 }

@@ -22,7 +22,7 @@ public class SearchHumanPresenter implements SearchHumanContract.Presenter{
     }
 
     @Override
-    public void getData(String query) {
+    public void getData(String query, String typeId) {
         loadModel.load(new OnLoadListener<List<TokenInfo>>() {
             @Override
             public void onSuccess(List<TokenInfo> success) {
@@ -38,6 +38,6 @@ public class SearchHumanPresenter implements SearchHumanContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , query);
+        } , query, typeId);
     }
 }

@@ -164,6 +164,18 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
         };
         localBroadcastManager.registerReceiver(br, intentFilter);
 
+        IntentFilter intentFilter1 = new IntentFilter();
+        intentFilter1.addAction("trendDeleteComplete");
+        BroadcastReceiver br1 = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                onRefresh();
+            }
+
+        };
+        localBroadcastManager.registerReceiver(br1, intentFilter1);
+
     }
 
     @Override

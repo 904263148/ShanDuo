@@ -24,6 +24,7 @@ import com.yapin.shanduo.ui.activity.JoinActActivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.PlaceActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
+import com.yapin.shanduo.ui.activity.UserProfActivity;
 import com.yapin.shanduo.ui.adapter.ActivityInfoAdapter;
 import com.yapin.shanduo.ui.contract.HomeActContract;
 import com.yapin.shanduo.ui.contract.JoinActContract;
@@ -182,6 +183,17 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
                 break;
         }
 
+    }
+
+    @Override
+    public void onHeadClick(int id) {
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+        }else {
+            Bundle bundle = new Bundle();
+            bundle.putString("userId", id + "");
+            StartActivityUtil.start(activity, UserProfActivity.class, bundle);
+        }
     }
 
     /**

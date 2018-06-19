@@ -17,6 +17,7 @@ import com.yapin.shanduo.model.entity.TokenInfo;
 import com.yapin.shanduo.presenter.SearchHumanPresenter;
 import com.yapin.shanduo.ui.adapter.UserProfAdapter;
 import com.yapin.shanduo.ui.contract.SearchHumanContract;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
@@ -48,6 +49,7 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
     private UserProfAdapter adapter;
 
     private List<TokenInfo> list = new ArrayList<>();
+    private String type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,9 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
     public void initView() {
         context = ShanDuoPartyApplication.getContext();
         activity = this;
+
+        type = getIntent().getStringExtra("type");
+
         adapter = new UserProfAdapter(context ,R.layout.link_friend_item ,list);
         listView.setAdapter(adapter);
         inputSearch.setOnKeyListener(this);
@@ -88,7 +93,7 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
                 adapter.notifyDataSetChanged();
                 String key = inputSearch.getText().toString();
                 if (key.equals("")) return true;
-                presenter.getData(key);
+                presenter.getData(key , Constants.SEARCH_USER);
                 return true;
             default:
                 return super.onKeyUp(keyCode, event);

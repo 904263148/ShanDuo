@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class SearchHumanModelImpl implements SearchHumanLoadModel{
     @Override
-    public void load(final OnLoadListener<List<TokenInfo>> listener, String query) {
+    public void load(final OnLoadListener<List<TokenInfo>> listener, String query, String typeId) {
         final Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -38,6 +38,7 @@ public class SearchHumanModelImpl implements SearchHumanLoadModel{
         Map<String,String> params = new HashMap<>();
         params.put("token" , PrefUtil.getToken(context));
         params.put("query" , query);
+        params.put("typeId" , typeId);
         OkHttp.post(context, ApiUtil.SEARCH_HUMAN, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

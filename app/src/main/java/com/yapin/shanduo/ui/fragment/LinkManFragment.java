@@ -32,6 +32,7 @@ import com.yapin.shanduo.im.ui.SearchFriendActivity;
 import com.yapin.shanduo.im.ui.SearchGroupActivity;
 import com.yapin.shanduo.model.entity.PayResult;
 import com.yapin.shanduo.ui.activity.AddHumanGroupActivity;
+import com.yapin.shanduo.ui.activity.SearchAllActivity;
 import com.yapin.shanduo.ui.adapter.LinkTabAdapter;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -110,7 +111,9 @@ public class LinkManFragment extends Fragment {
                 break;
             case R.id.ll_search:
 //                if (viewPager.getCurrentItem() == 0) {
-                    StartActivityUtil.start(activity ,this , SearchFriendActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("type" , Constants.SEARCH_FRIEND);
+                StartActivityUtil.start(activity , this , SearchAllActivity.class , bundle);
 //                }else {
 //                    StartActivityUtil.start(activity ,this , SearchGroupActivity.class);
 //                }

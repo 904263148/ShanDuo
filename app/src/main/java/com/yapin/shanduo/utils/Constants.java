@@ -162,4 +162,8 @@ public class Constants {
     public static final String REPORT_ACT = "1";
     public static final String REPORT_TREND = "2";
 
+    //搜索好友标识
+    public static final String SEARCH_USER = "1";
+    public static final String SEARCH_FRIEND = "2";
+
 }

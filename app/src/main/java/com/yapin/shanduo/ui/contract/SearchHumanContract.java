@@ -25,7 +25,7 @@ public interface SearchHumanContract {
     }
 
     interface Presenter{
-        void getData(String query);
+        void getData(String query, String typeId);
     }
 
 }

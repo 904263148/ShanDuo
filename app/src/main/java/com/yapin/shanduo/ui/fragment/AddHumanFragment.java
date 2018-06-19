@@ -14,6 +14,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.ui.SearchFriendActivity;
 import com.yapin.shanduo.ui.activity.SearchAllActivity;
+import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
 import butterknife.BindView;
@@ -73,7 +74,7 @@ public class AddHumanFragment extends Fragment {
         switch (view.getId()){
             case R.id.ll_search:
                 Bundle bundle = new Bundle();
-                bundle.putString("type" , "1");
+                bundle.putString("type" , Constants.SEARCH_USER);
                 StartActivityUtil.start(activity , this , SearchAllActivity.class , bundle);
                 break;
         }
