@@ -54,10 +54,22 @@
 
     </LinearLayout>
     <View
-        android:id="@+id/titleLine"
+        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1px"
+        android:layout_below="@id/title"
         android:background="@color/line" />
+    <TextView
+        android:id="@+id/noResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="280dp"
+        android:textSize="14sp"
+        android:textColor="@color/text_gray1"
+        android:visibility="gone"
+        android:text="@string/search_no_result"
+        android:layout_gravity="center"
+        />
 
     <ListView
         android:id="@+id/list"

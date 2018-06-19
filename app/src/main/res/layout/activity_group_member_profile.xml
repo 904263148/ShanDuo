@@ -20,7 +20,8 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <com.tencent.qcloud.ui.CircleImageView
+        <ImageView
+            android:id="@+id/iv_head"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"
@@ -46,25 +47,11 @@
         android:background="@color/line" />
 
     <com.tencent.qcloud.ui.LineControllerView
-        android:id="@+id/manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:name="@string/group_member_manage"
-        app:isSwitch="true" />
-    <com.tencent.qcloud.ui.LineControllerView
-        android:id="@+id/setQuiet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:name="@string/group_member_quiet"
-        app:canNav="true"/>
-    <com.tencent.qcloud.ui.LineControllerView
         android:id="@+id/groupCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:isBottom="true"
         app:name="@string/group_member_card" />
-
-
 
     <TextView
         android:id="@+id/kick"

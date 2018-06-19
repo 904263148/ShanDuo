@@ -23,6 +23,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.tencent.TIMGroupMemberRoleType;
 import com.yapin.shanduo.model.entity.PhotoFolder;
 
 import java.io.File;
@@ -509,5 +510,16 @@ public class Utils {
         }
         String str = new String(byteArray);
         return str;
+    }
+
+    /**
+     * 群成员类型
+     */
+    public static TIMGroupMemberRoleType getRoleType(String role) {
+        if("Owner".equals(role)){
+            return TIMGroupMemberRoleType.Owner;
+        }else {
+            return TIMGroupMemberRoleType.Normal;
+        }
     }
 }

@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".im.ui.GroupMemberActivity">
+    tools:context=".im.ui.GroupMemberActivity"
+    android:background="@color/bg_color"
+    >
+
     <com.tencent.qcloud.ui.TemplateTitle
         android:id="@+id/group_mem_title"
         android:layout_width="match_parent"
@@ -14,6 +17,18 @@
         app:canBack="true" />
     <ListView
         android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <com.yapin.shanduo.widget.LoadMoreRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.yapin.shanduo.widget.LoadingView
+        android:id="@+id/loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -21,6 +21,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
-        android:textCursorDrawable="@color/black"
+        android:textCursorDrawable="@null"
         android:layout_below="@id/editTitle"/>
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.yapin.shanduo.im.ui;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,42 +11,58 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.tencent.TIMGroupDetailInfo;
-import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
-import com.tencent.qcloud.presentation.viewfeatures.GroupInfoView;
 import com.yapin.shanduo.R;
-import com.yapin.shanduo.im.adapters.ProfileSummaryAdapter;
-import com.yapin.shanduo.im.model.GroupProfile;
-import com.yapin.shanduo.im.model.ProfileSummary;
-import com.yapin.shanduo.ui.activity.BaseActivity;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.model.entity.IMGroupInfo;
+import com.yapin.shanduo.presenter.SearchGroupPresenter;
 import com.yapin.shanduo.ui.activity.RightSlidingActivity;
+import com.yapin.shanduo.ui.adapter.LinkGroupAdapter;
+import com.yapin.shanduo.ui.contract.SearchGroupContract;
+import com.yapin.shanduo.utils.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchGroupActivity extends RightSlidingActivity implements GroupInfoView, View.OnKeyListener{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class SearchGroupActivity extends RightSlidingActivity implements View.OnKeyListener, SearchGroupContract.View {
 
     private final String TAG = "SearchGroupActivity";
+    @BindView(R.id.inputSearch)
+    EditText searchInput;
+    @BindView(R.id.list)
+    ListView listView;
+    @BindView(R.id.noResult)
+    TextView noResult;
 
-    private GroupManagerPresenter groupManagerPresenter;
-    private List<ProfileSummary> list= new ArrayList<>();
-    private ProfileSummaryAdapter adapter;
-    private EditText searchInput;
-    private ListView listView;
+    private List<IMGroupInfo.GroupInfo> list = new ArrayList<>();
+    private LinkGroupAdapter adapter;
+    private Context context;
+    private Activity activity;
+    private SearchGroupPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_group);
-        searchInput = (EditText) findViewById(R.id.inputSearch);
-        listView =(ListView) findViewById(R.id.list);
-        adapter = new ProfileSummaryAdapter(this, R.layout.item_profile_summary, list);
+        ButterKnife.bind(this);
+        presenter = new SearchGroupPresenter();
+        presenter.init(this);
+    }
+
+    @Override
+    public void initView() {
+        context = ShanDuoPartyApplication.getContext();
+        activity = this;
+        adapter = new LinkGroupAdapter(context, activity, list);
         listView.setAdapter(adapter);
-        groupManagerPresenter = new GroupManagerPresenter(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                list.get(position).onClick(SearchGroupActivity.this);
+                Intent intent = new Intent(context, GroupProfileActivity.class);
+                intent.putExtra("identify", list.get(position).getGroupId());
+                startActivity(intent);
             }
         });
         TextView tvCancel = (TextView) findViewById(R.id.cancel);
@@ -60,7 +78,7 @@ public class SearchGroupActivity extends RightSlidingActivity implements GroupIn
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (event.getAction() != KeyEvent.ACTION_UP){   // 忽略其它事件
+        if (event.getAction() != KeyEvent.ACTION_UP) {   // 忽略其它事件
             return false;
         }
 
@@ -70,24 +88,39 @@ public class SearchGroupActivity extends RightSlidingActivity implements GroupIn
                 adapter.notifyDataSetChanged();
                 String key = searchInput.getText().toString();
                 if (key.equals("")) return true;
-                groupManagerPresenter.searchGroupByName(key);
+                presenter.getData(key);
                 return true;
             default:
                 return false;
         }
     }
 
-    /**
-     * 显示群资料
-     *
-     * @param groupInfos 群资料信息列表
-     */
     @Override
-    public void showGroupInfo(List<TIMGroupDetailInfo> groupInfos) {
-        list.clear();
-        for (TIMGroupDetailInfo item : groupInfos){
-            list.add(new GroupProfile(item));
-        }
-        adapter.notifyDataSetChanged();
+    public void show(List<IMGroupInfo.GroupInfo> data) {
+            noResult.setVisibility(View.GONE);
+            list.addAll(data);
+            adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+
+    }
+
+    @Override
+    public void error(String msg) {
+        noResult.setVisibility(View.VISIBLE);
+        ToastUtil.showShortToast(context , msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(context , msg);
+    }
+
 }

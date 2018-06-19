@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +20,12 @@ import com.tencent.qcloud.ui.LineControllerView;
 import com.tencent.qcloud.ui.ListPickerDialog;
 import com.tencent.qcloud.ui.TemplateTitle;
 import com.yapin.shanduo.R;
+import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.GroupInfo;
 import com.yapin.shanduo.im.model.GroupMemberProfile;
 import com.yapin.shanduo.im.model.UserInfo;
+import com.yapin.shanduo.model.entity.IMGroupUserInfo;
+import com.yapin.shanduo.utils.GlideUtil;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -30,7 +35,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
     private String userIdentify, groupIdentify, userCard,groupType;
     private TIMGroupMemberRoleType currentUserRole;
-    private GroupMemberProfile profile;
+    private IMGroupUserInfo.GroupMebInfo profile;
     private LineControllerView setManager;
     private String[] quietingOpt;
     private String[] quietOpt;
@@ -38,14 +43,12 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
     private final int CARD_REQ = 100;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_member_profile);
-        profile = (GroupMemberProfile) getIntent().getSerializableExtra("data");
-        userIdentify = profile.getIdentify();
+        profile = getIntent().getParcelableExtra("data");
+        userIdentify = profile.getMember_Account();
         groupIdentify = getIntent().getStringExtra("groupId");
         groupType = getIntent().getStringExtra("type");
         userCard = profile.getNameCard();
@@ -66,7 +69,11 @@ public class GroupMemberProfileActivity extends FragmentActivity {
             }
         });
         TextView tvName = (TextView) findViewById(R.id.name);
-        tvName.setText(userIdentify);
+        tvName.setText(profile.getName());
+
+        ImageView ivHead = findViewById(R.id.iv_head);
+        GlideUtil.load(ShanDuoPartyApplication.getContext() , this , profile.getPicture() , ivHead);
+
         TextView tvKick = (TextView) findViewById(R.id.kick);
         tvKick.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup)? View.VISIBLE:View.GONE);
         tvKick.setOnClickListener(new View.OnClickListener() {
@@ -87,44 +94,44 @@ public class GroupMemberProfileActivity extends FragmentActivity {
                 });
             }
         });
-        setManager = (LineControllerView) findViewById(R.id.manager);
-        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRole() &&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
-        setManager.setSwitch(profile.getRole() == TIMGroupMemberRoleType.Admin);
-        setManager.setCheckListener(checkListener);
-        final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
-        setQuiet.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
-        if (canManage()){
-            if (isQuiet()){
-                setQuiet.setContent(getString(R.string.group_member_quiet_ing));
-            }
-            setQuiet.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new ListPickerDialog().show(getQuietOption(), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, final int which) {
-                            TIMGroupManager.getInstance().modifyGroupMemberInfoSetSilence(groupIdentify, userIdentify, getQuietTime(which),
-                                    new TIMCallBack() {
-                                        @Override
-                                        public void onError(int i, String s) {
-                                            Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_quiet_err), Toast.LENGTH_SHORT).show();
-                                        }
-
-                                        @Override
-                                        public void onSuccess() {
-                                            if (getQuietTime(which) == 0){
-                                                setQuiet.setContent("");
-                                            }else{
-                                                setQuiet.setContent(getString(R.string.group_member_quiet_ing));
-                                            }
-                                            profile.setQuietTime(getQuietTime(which) + Calendar.getInstance().getTimeInMillis()/1000);
-                                        }
-                                    });
-                        }
-                    });
-                }
-            });
-        }
+//        setManager = (LineControllerView) findViewById(R.id.manager);
+//        setManager.setVisibility(currentUserRole == TIMGroupMemberRoleType.Owner && currentUserRole != profile.getRoleType() &&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
+//        setManager.setSwitch(profile.getRoleType() == TIMGroupMemberRoleType.Admin);
+//        setManager.setCheckListener(checkListener);
+//        final LineControllerView setQuiet = (LineControllerView) findViewById(R.id.setQuiet);
+//        setQuiet.setVisibility(canManage()&&!groupType.equals(GroupInfo.privateGroup) ? View.VISIBLE : View.GONE);
+//        if (canManage()){
+//            if (isQuiet()){
+//                setQuiet.setContent(getString(R.string.group_member_quiet_ing));
+//            }
+//            setQuiet.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    new ListPickerDialog().show(getQuietOption(), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, final int which) {
+//                            TIMGroupManager.getInstance().modifyGroupMemberInfoSetSilence(groupIdentify, userIdentify, getQuietTime(which),
+//                                    new TIMCallBack() {
+//                                        @Override
+//                                        public void onError(int i, String s) {
+//                                            Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_quiet_err), Toast.LENGTH_SHORT).show();
+//                                        }
+//
+//                                        @Override
+//                                        public void onSuccess() {
+//                                            if (getQuietTime(which) == 0){
+//                                                setQuiet.setContent("");
+//                                            }else{
+//                                                setQuiet.setContent(getString(R.string.group_member_quiet_ing));
+//                                            }
+////                                            profile.setQuietTime(getQuietTime(which) + Calendar.getInstance().getTimeInMillis()/1000);
+//                                        }
+//                                    });
+//                        }
+//                    });
+//                }
+//            });
+//        }
         LineControllerView nameCard = (LineControllerView) findViewById(R.id.groupCard);
         nameCard.setContent(userCard);
         if (UserInfo.getInstance().getId().equals(userIdentify)){
@@ -152,8 +159,8 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
 
     private boolean canManage(){
-        if ((currentUserRole == TIMGroupMemberRoleType.Owner && profile.getRole() != TIMGroupMemberRoleType.Owner) ||
-                (currentUserRole == TIMGroupMemberRoleType.Admin && profile.getRole() == TIMGroupMemberRoleType.Normal)) return true;
+        if ((currentUserRole == TIMGroupMemberRoleType.Owner && profile.getRoleType() != TIMGroupMemberRoleType.Owner) ||
+                (currentUserRole == TIMGroupMemberRoleType.Admin && profile.getRoleType() == TIMGroupMemberRoleType.Normal)) return true;
         return false;
     }
 
@@ -179,36 +186,36 @@ public class GroupMemberProfileActivity extends FragmentActivity {
         setResult(RESULT_OK, mIntent);
     }
 
-    private final CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-            TIMGroupManager.getInstance().modifyGroupMemberInfoSetRole(groupIdentify, userIdentify,
-                    isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal,
-                    new TIMCallBack() {
-                        @Override
-                        public void onError(int i, String s) {
-                            switch (i){
-                                case 10004:
-                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_type_err), Toast.LENGTH_SHORT).show();
-                                    break;
-                                default:
-                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_err), Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                            //防止循环调用
-                            setManager.setCheckListener(null);
-                            setManager.setSwitch(!isChecked);
-                            setManager.setCheckListener(checkListener);
-                        }
-
-                        @Override
-                        public void onSuccess() {
-                            Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_succ), Toast.LENGTH_SHORT).show();
-                            profile.setRoleType(isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal);
-                        }
-                    });
-        }
-    };
+//    private final CompoundButton.OnCheckedChangeListener checkListener = new CompoundButton.OnCheckedChangeListener() {
+//        @Override
+//        public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+//            TIMGroupManager.getInstance().modifyGroupMemberInfoSetRole(groupIdentify, userIdentify,
+//                    isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal,
+//                    new TIMCallBack() {
+//                        @Override
+//                        public void onError(int i, String s) {
+//                            switch (i){
+//                                case 10004:
+//                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_type_err), Toast.LENGTH_SHORT).show();
+//                                    break;
+//                                default:
+//                                    Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_err), Toast.LENGTH_SHORT).show();
+//                                    break;
+//                            }
+//                            //防止循环调用
+//                            setManager.setCheckListener(null);
+//                            setManager.setSwitch(!isChecked);
+//                            setManager.setCheckListener(checkListener);
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//                            Toast.makeText(GroupMemberProfileActivity.this, getString(R.string.group_member_manage_set_succ), Toast.LENGTH_SHORT).show();
+//                            profile.setRoleType(isChecked ? TIMGroupMemberRoleType.Admin : TIMGroupMemberRoleType.Normal);
+//                        }
+//                    });
+//        }
+//    };
 
 
     @Override
@@ -226,6 +233,7 @@ public class GroupMemberProfileActivity extends FragmentActivity {
 
     private boolean isQuiet(){
         if (profile == null) return false;
-        return profile.getQuietTime() != 0 && profile.getQuietTime() > Calendar.getInstance().getTimeInMillis()/1000;
+        return false;
+//        return profile.getQuietTime() != 0 && profile.getQuietTime() > Calendar.getInstance().getTimeInMillis()/1000;
     }
 }

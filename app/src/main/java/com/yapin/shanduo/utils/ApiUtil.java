@@ -153,4 +153,7 @@ public class ApiUtil {
 
     //修改群名称
     public final static String EDIT_GROUP_NAME = ConfigUtil.configUrl() + "jgroup/updategroup" ;
+
+    //分页获取群组成员信息
+    public final static String GROUP_USER = ConfigUtil.configUrl() + "jgroup/getgroupuser" ;
 }
