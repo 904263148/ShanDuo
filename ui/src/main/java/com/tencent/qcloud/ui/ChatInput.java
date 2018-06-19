@@ -350,7 +350,7 @@ public class ChatInput extends RelativeLayout implements TextWatcher,View.OnClic
             chatView.sendFile();
         }
         if(id == R.id.btn_location){
-//            chatView.sendLocation();
+            chatView.sendLocation();
         }
 
     }
