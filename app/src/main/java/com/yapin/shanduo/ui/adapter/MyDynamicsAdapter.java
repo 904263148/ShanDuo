@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -168,6 +169,8 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (list.get(position).getLocation().equals("")){
                 holder.tvMile.setVisibility(View.GONE);
             }
+            Log.i("getDistance", "initView:--- "+list.get(position).getDistance());
+
             holder.tvContent.setText(Utils.unicodeToString(list.get(position).getContent()));
 
             holder.tvRelayCount.setText(list.get(position).getDynamicCount()+"");
@@ -198,8 +201,9 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int userId = list.get(position).getUserId();
                     String Id = list.get(position).getId();
-                    setpopupwindow.onpopupwindow( position ,Id );
+                    setpopupwindow.onpopupwindow( position ,userId , Id);
                 }
             });
 
@@ -293,7 +297,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     //分享
     public interface Onpopupwindow {
-        void onpopupwindow( int position ,String Id );
+        void onpopupwindow( int position ,int userId ,String Id);
     }
 
     public void setOnpopupwindow(Onpopupwindow Onpopup){

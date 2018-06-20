@@ -133,8 +133,8 @@ public class TransactionrecordAdapter extends RecyclerView.Adapter<RecyclerView.
         ImageView im_modeimage;
         @BindView(R.id.tv_money)
         TextView tv_money;
-        @BindView(R.id.tv_time)
-        TextView tv_time;
+//        @BindView(R.id.tv_time)
+//        TextView tv_time;
         @BindView(R.id.tv_vip)
         TextView tv_vip;
         @BindView(R.id.tv_lunarday)

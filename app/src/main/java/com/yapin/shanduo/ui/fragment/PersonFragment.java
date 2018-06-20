@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.model.UserInfo;
+import com.yapin.shanduo.presenter.UserDetailPresenter;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
@@ -32,6 +34,7 @@ import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.ui.activity.SetupActivity;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
 import butterknife.ButterKnife;
@@ -41,10 +44,11 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  * implements  UserDetailContract.View
  */
-public class PersonFragment extends Fragment {
+public class PersonFragment extends Fragment implements UserDetailContract.View{
 
     private Activity activity;
     private Context context;
+    UserDetailPresenter presenter;
 
     private final int PUBLISH_ACT_OPEN_LOGIN = 1;
     private final int PUBLISH_MYDYNAMICS_LOGIN = 2;
@@ -78,6 +82,8 @@ public class PersonFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        presenter = new UserDetailPresenter();
+        presenter.init(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -174,10 +180,8 @@ public class PersonFragment extends Fragment {
 
         switch (requestCode){
             case PUBLISH_ACT_OPEN_LOGIN:
-                onResume();
                 break;
             case MYACTIVITIESACTIVITY:
-                onResume();
                 break;
             case EDITING:
                 break;
@@ -199,6 +203,7 @@ public class PersonFragment extends Fragment {
             ll_person_a.setVisibility(View.GONE);
             ll_person_aa.setVisibility(View.VISIBLE);
         }else {
+            presenter.start();
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
 
@@ -241,4 +246,34 @@ public class PersonFragment extends Fragment {
         }
     }
 
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void dataSuccess(String data) {
+        UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
+        UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());
+    }
+
+    @Override
+    public void loading() {
+
+    }
+
+    @Override
+    public void networkError() {
+        ToastUtil.showShortToast(context,"网络连接异常");
+    }
+
+    @Override
+    public void error(String msg) {
+        ToastUtil.showShortToast(context ,msg);
+    }
+
+    @Override
+    public void showFailed(String msg) {
+        ToastUtil.showShortToast(context ,msg);
+    }
 }

@@ -46,9 +46,8 @@ import butterknife.OnClick;
  */
 //,MyDynamicsAdapter.onItemLongClick  MyDynamicsAdapter.OnItemClickListener ,
 public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View ,
-        LoadMoreRecyclerView.OnLoadMoreListener ,
-        MyDynamicsAdapter.OnLikeClickListener ,  LikeContract.View , MyDynamicsAdapter.Onpopupwindow ,
-        DeletedynamicContract.View{
+        LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnLikeClickListener ,
+        LikeContract.View , MyDynamicsAdapter.Onpopupwindow ,DeletedynamicContract.View{
 
     private Context context;
     private Activity activity;
@@ -156,14 +155,14 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
             adapter.notifyDataSetChanged();
         }
         adapter.notifyDataSetChanged();
-        presenter.getdynamics( PrefUtil.getLon(context) , PrefUtil.getLat(context) ,page+"" , pageSize+"");
+        presenter.getdynamics( PrefUtil.getLat(context), PrefUtil.getLon(context) ,page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 setRefreshLoading(true, false);
                 page = 1;
-                presenter.getdynamics(PrefUtil.getLon(context) , PrefUtil.getLat(context),page+"" , pageSize+"");
+                presenter.getdynamics(PrefUtil.getLat(context), PrefUtil.getLon(context) ,page+"" , pageSize+"");
             }
         });
     }
@@ -279,7 +278,7 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     public void onLoadMore() {
         page++;
         setRefreshLoading(false, true);
-        presenter.getdynamics(PrefUtil.getLon(context) , PrefUtil.getLat(context),page+"" , pageSize+"");
+        presenter.getdynamics(PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
 
     }
 
@@ -301,15 +300,9 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     }
 
     @Override
-    public void onpopupwindow(int position, String Id) {
-        fragment.show(getSupportFragmentManager() , Id);
+    public void onpopupwindow(int position, int userId , String Id) {
+        fragment.show(getSupportFragmentManager() , userId+"");
         fragment.setType(1 , Id);
     }
 
-//    @Override
-//    public void onItemLongClick(View view, int position) {
-////        if (actionMode == null) {
-////            actionMode = startSupportActionMode(MainActivity.this);
-////        }
-//    }
 }

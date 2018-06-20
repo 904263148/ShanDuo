@@ -321,8 +321,8 @@ public class MyactivityFragment extends Fragment implements MyactivityinfoAdapte
     }
 
     @Override
-    public void onpopupwindow(int position, String activityId) {
-        fragment.show(getFragmentManager() , activityId);
+    public void onpopupwindow(int position, int userId , String activityId) {
+        fragment.show(getFragmentManager() , userId+"");
         fragment.setType(0 , activityId);
     }
 }

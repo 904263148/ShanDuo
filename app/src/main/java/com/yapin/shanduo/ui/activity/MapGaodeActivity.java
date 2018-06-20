@@ -95,7 +95,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     private String textlonlat;
 
 //    private String[] items = {"KTV", "酒店", "风景名胜", "体育休闲"};
-    private String items = "生活服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|地名地址信息";
+    private String items = "KTV|酒店|风景名胜|体育休闲";
     private Marker locationMarker;
 
     private ProgressDialog progDialog = null;
@@ -448,7 +448,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         showDialog();
         searchText.setText("");
         if (searchLatlonPoint != null){
-            RegeocodeQuery query = new RegeocodeQuery(searchLatlonPoint, 3000, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
+            RegeocodeQuery query = new RegeocodeQuery(searchLatlonPoint, 2000, GeocodeSearch.AMAP);// 第一个参数表示一个Latlng，第二参数表示范围多少米，第三个参数表示是火系坐标系还是GPS原生坐标系
             geocoderSearch.getFromLocationAsyn(query);
         }
     }
@@ -462,7 +462,8 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
     protected void doSearchQuery() {
 //        Log.i("MY", "doSearchQuery");
         currentPage = 0;
-        query = new PoiSearch.Query(searchKey, searchType, textlonlat );// 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        // 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
+        query = new PoiSearch.Query(searchKey, searchType, textlonlat );
         query.setCityLimit(true);
         query.setPageSize(20);
         query.setPageNum(currentPage);
@@ -470,7 +471,7 @@ public class MapGaodeActivity extends AppCompatActivity implements LocationSourc
         if (searchLatlonPoint != null) {
             poiSearch = new PoiSearch(this, query);
             poiSearch.setOnPoiSearchListener(this);
-            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 3000, true));//
+            poiSearch.setBound(new PoiSearch.SearchBound(searchLatlonPoint, 2000, true));//
             poiSearch.searchPOIAsyn();
 
 

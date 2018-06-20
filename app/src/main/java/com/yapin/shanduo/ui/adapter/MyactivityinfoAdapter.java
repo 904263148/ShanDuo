@@ -239,7 +239,8 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
 //                    openPopupWindow.openPopupWindow(list.get(position) , Constants.HOME_ACT);
                     String activityId = list.get(position).getId();
-                    setpopupwindow.onpopupwindow( position ,activityId );
+                    int userId = list.get(position).getUserId();
+                    setpopupwindow.onpopupwindow( position ,userId , activityId );
                 }
             });
 
@@ -286,7 +287,7 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     //分享
     public interface Onpopupwindow {
-        void onpopupwindow( int position ,String activityId );
+        void onpopupwindow( int position ,int userId , String activityId );
     }
 
     public void setOnpopupwindow(Onpopupwindow Onpopup){

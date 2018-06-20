@@ -41,6 +41,7 @@ public class PayOrderModelImpl implements PayOrderLoadModel{
         params.put("month" , month);
         params.put("activityId" , activityId);
         params.put("location" , PrefUtil.getCity(context));
+        Log.d("params", "load: --"+params.toString());
         OkHttp.post(context, ApiUtil.GET_ORDER, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

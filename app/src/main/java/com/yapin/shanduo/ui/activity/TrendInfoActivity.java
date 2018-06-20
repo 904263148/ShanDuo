@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -198,6 +199,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
             }
         }else {
             tvMile.setText(trend.getDistance() + "km");
+//            Log.i("getDistance", "initView: "+trend.getDistance());
         }
 
         tvContent.setText(Utils.unicodeToString(trend.getContent()));
