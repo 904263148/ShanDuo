@@ -60,26 +60,6 @@ public class Utils {
     }
 
     /**
-     * 获取拍照、相册选取照片权限
-     *
-     */
-    public static void getPhotoPermission(Activity activity){
-        if (Build.VERSION.SDK_INT >= 23) {
-            int REQUEST_CODE_CONTACT = 101;
-            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE , Manifest.permission.CAMERA};
-            //验证是否许可权限
-            for (String str : permissions) {
-                if (activity.checkSelfPermission(str) != PackageManager.PERMISSION_GRANTED) {
-                    //申请权限
-                    activity.requestPermissions(permissions, REQUEST_CODE_CONTACT);
-                    return;
-                }
-            }
-        }
-    }
-
-
-    /**
      * 打开拍照
      *
      * @param activity    activity

@@ -67,14 +67,13 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         context = ShanDuoPartyApplication.getContext();
         clearNotification();
 
-        Utils.setLocation(context);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         final List<String> permissionsList = new ArrayList<>();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if ((checkSelfPermission(Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.READ_PHONE_STATE);
             if ((checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if((checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED)) permissionsList.add(Manifest.permission.ACCESS_COARSE_LOCATION);
             if (permissionsList.size() == 0){
                 init();
             }else{
@@ -84,7 +83,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         }else{
             init();
         }
-
     }
 
     /**
@@ -238,6 +236,9 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
 
     private void init(){
+
+        Utils.setLocation(context);
+
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
         int loglvl = pref.getInt("loglvl", TIMLogLevel.DEBUG.ordinal());
         //初始化IMSDK

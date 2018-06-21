@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.tencent.TIMCallBack;
 import com.tencent.TIMFriendshipManager;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.qcloud.presentation.business.LoginBusiness;
 import com.tencent.qcloud.presentation.event.FriendshipEvent;
 import com.tencent.qcloud.presentation.event.GroupEvent;
@@ -188,6 +190,19 @@ public class RegisterActivity extends BaseActivity implements GetCodeContract.Vi
         FriendshipEvent.getInstance().init();
         GroupEvent.getInstance().init();
         LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
+
+        //注册信鸽推送
+        XGPushManager.appendAccount(context , PrefJsonUtil.getProfile(context).getUserId() ,new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                Log.d("TPush", "注册成功，设备token为：" + data);
+            }
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
 
         setResult(RESULT_OK);
         onBackPressed();

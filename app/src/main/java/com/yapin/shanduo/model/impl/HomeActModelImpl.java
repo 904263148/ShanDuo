@@ -15,6 +15,7 @@ import com.yapin.shanduo.presenter.OnMultiLoadListener;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.NetWorkUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +42,8 @@ public class HomeActModelImpl implements HomeActLoadModel{
             params.put("token" , PrefJsonUtil.getProfile(context).getToken());
         }
         params.put("type",type);
-        params.put("lon",lon);
-        params.put("lat",lat);
+        params.put("lon", PrefUtil.getLon(context));
+        params.put("lat", PrefUtil.getLat(context));
         params.put("page",page);
         params.put("pageSize",pageSize);
         if("7".equals(type)) params.put("userId" , userId);

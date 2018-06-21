@@ -1,7 +1,5 @@
 package com.yapin.shanduo.utils;
 
-import com.tencent.qcloud.sdk.Constant;
-
 public class ApiUtil {
 
     //获取验证码

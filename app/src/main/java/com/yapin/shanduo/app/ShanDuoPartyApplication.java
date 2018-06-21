@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.design.widget.AppBarLayout;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alipay.android.app.IAlixPay;
@@ -14,6 +15,9 @@ import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
 import com.tencent.TIMOfflinePushSettings;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
@@ -24,6 +28,8 @@ import com.yapin.shanduo.im.utils.Foreground;
 import com.yapin.shanduo.model.entity.DaoMaster;
 import com.yapin.shanduo.model.entity.DaoSession;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.PrefJsonUtil;
+import com.yapin.shanduo.utils.PrefUtil;
 
 public class ShanDuoPartyApplication extends MultiDexApplication{
 
@@ -53,9 +59,8 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
                 }
             });
         }
-
         //扫码初始化
-        ZXingLibrary.initDisplayOpinion(this);
+//        ZXingLibrary.initDisplayOpinion(this);
 
         //微信支付注册
         IWXAPI msgApi = WXAPIFactory.createWXAPI(context, null);
@@ -63,6 +68,24 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
 
         //shareSDK
         MobSDK.init(context);
+
+        //信鸽
+        XGPushConfig.enableDebug(this,true);
+
+        if( !TextUtils.isEmpty(PrefUtil.getToken(context))){
+            //注册信鸽推送
+            XGPushManager.appendAccount(context , PrefJsonUtil.getProfile(context).getUserId() ,new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object data, int flag) {
+                    //token在设备卸载重装的时候有可能会变
+                    Log.d("TPush", "注册成功，设备token为：" + data);
+                }
+                @Override
+                public void onFail(Object data, int errCode, String msg) {
+                    Log.d("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+                }
+            });
+        }
     }
 
 

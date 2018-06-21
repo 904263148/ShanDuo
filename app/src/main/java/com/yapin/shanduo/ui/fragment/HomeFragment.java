@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -29,6 +30,7 @@ import com.yapin.shanduo.ui.activity.PublishActivity;
 import com.yapin.shanduo.ui.activity.ScanActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
+import com.yapin.shanduo.ui.activity.SmartRefreshActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
@@ -109,7 +111,7 @@ public class HomeFragment extends Fragment{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
-                StartActivityUtil.start(activity ,this , ScanActivity.class , OPEN_SCAN);
+                StartActivityUtil.start(activity ,this , SmartRefreshActivity.class , OPEN_SCAN);
                 break;
             case R.id.tv_act:
                 tvAct.setTextColor(getResources().getColor(R.color.home_title_select_color));

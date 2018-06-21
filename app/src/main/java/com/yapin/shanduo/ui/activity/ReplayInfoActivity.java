@@ -99,13 +99,9 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
 
     private Context context;
     private Activity activity;
-
-    TrendSecondReplayPresenter presenter;
-
+    private TrendSecondReplayPresenter presenter;
     private CommentInfo.Comment comment;
-
     private int totalPage = 1;
-
     private LinearLayoutManager layoutManager;
     private int page = 1;
     private int pageSize = 10;

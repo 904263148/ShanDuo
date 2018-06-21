@@ -4,8 +4,11 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +35,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
+import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
 
@@ -124,11 +128,33 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         adapter.setOnItemClickListener(this);
 
         page = 1;
-        presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
+        if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请READ_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+                    Constants.REQUEST_CODE_CONTACT);
+        }else {
+            presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
+        }
         recyclerView.setOnLoadMoreListener(this);
 
         if(position == 3){
             recyclerView.setNestedScrollingEnabled(false);
+        }
+    }
+
+    /**
+     * 外部存储权限申请返回
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == Constants.REQUEST_CODE_CONTACT) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted
+                Utils.setLocation(context);
+                presenter.getData((position+1)+"" , "" , "" , page+"" , pageSize+"" , userId);
+            }
         }
     }
 

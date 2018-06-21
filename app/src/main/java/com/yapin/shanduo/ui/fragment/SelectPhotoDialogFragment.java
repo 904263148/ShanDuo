@@ -99,7 +99,7 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
                         != PackageManager.PERMISSION_GRANTED) {
                     //申请READ_EXTERNAL_STORAGE权限
                     ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            READ_EXTERNAL_STORAGE_REQUEST_CODE);
+                            WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
                 } else {
                     //跳转到调用系统相机
                     gotoCamera();

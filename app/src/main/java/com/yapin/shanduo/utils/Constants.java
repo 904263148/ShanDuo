@@ -166,4 +166,7 @@ public class Constants {
     public static final String SEARCH_USER = "1";
     public static final String SEARCH_FRIEND = "2";
 
+    //申请权限标识
+    public static final int REQUEST_CODE_CONTACT = 101;
+
 }
