@@ -31,7 +31,7 @@ public class PeabeanPresenter implements PeabeanContract.Presenter {
     }
 
     @Override
-    public void peabean(String activityId ,String typeId) {
+    public void peabean(String activityId) {
         peabeanModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -47,6 +47,6 @@ public class PeabeanPresenter implements PeabeanContract.Presenter {
             public void networkError() {
                 view.networkError();
             }
-        },activityId ,typeId);
+        },activityId );
     }
 }

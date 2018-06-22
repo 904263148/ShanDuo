@@ -107,33 +107,33 @@
 
             </LinearLayout>
 
-            <!--<LinearLayout
-                android:id="@+id/ll_bean"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center|bottom"
-                >
-                <TextView
-                    android:id="@+id/tv_bean"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200"
-                    android:textSize="25dp"
-                    android:textColor="@color/tab_indicator_color"
-                    />
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_bean"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:gravity="center|bottom"-->
+                <!--&gt;-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_bean"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="200"-->
+                    <!--android:textSize="25dp"-->
+                    <!--android:textColor="@color/tab_indicator_color"-->
+                    <!--/>-->
 
-                <TextView
-                    android:id="@+id/t_bean"
-                    android:layout_marginLeft="2dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="闪多豆"
-                    android:textSize="12dp"
-                    android:textColor="@color/mainfont"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/t_bean"-->
+                    <!--android:layout_marginLeft="2dp"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="赏金"-->
+                    <!--android:textSize="12dp"-->
+                    <!--android:textColor="@color/mainfont"-->
+                    <!--/>-->
 
-            </LinearLayout>-->
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/ll_frequency"
@@ -202,6 +202,8 @@
                     android:hint="金额"
                     android:textSize="15dp"
                     android:textColor="@color/tab_indicator_color"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@drawable/test_cursor_shape"
                     />
 
                 <TextView
@@ -243,8 +245,7 @@
                     />
 
             </LinearLayout>
-
-           <!-- <LinearLayout
+            <LinearLayout
                 android:id="@+id/ll_Pea_bean"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -265,12 +266,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="闪多豆支付"
+                    android:text="赏金支付"
                     android:textSize="@dimen/egg_font_size"
                     android:textColor="@color/home_title_color"
                     />
 
-            </LinearLayout>-->
+            </LinearLayout>
 
 
             <LinearLayout

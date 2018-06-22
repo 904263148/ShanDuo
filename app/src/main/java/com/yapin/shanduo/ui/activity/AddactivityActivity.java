@@ -12,6 +12,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,6 +47,7 @@ import com.yapin.shanduo.utils.DateTimePickDialogUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
+import com.yapin.shanduo.widget.EmojiEditText;
 
 import java.util.Map;
 
@@ -59,7 +62,7 @@ import butterknife.OnClick;
 public class AddactivityActivity extends RightSlidingActivity implements AddactivityContract.View,View.OnClickListener , PayOrderContract.View ,PopupWindow.OnDismissListener{
 
     @BindView(R.id.et_add_title)
-    EditText et_add_title;
+    EmojiEditText et_add_title;
     @BindView(R.id.et_add_numberofgirls)
     EditText et_add_numberofgirls;
     @BindView(R.id.et_add_Numberofboys)
@@ -77,7 +80,7 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     @BindView(R.id.but_add_Releaseactivities)
     Button but_add_Releaseactivities;
     @BindView(R.id.tv_add_place_remarks)
-    TextView tv_add_place_remarks;
+    EmojiEditText tv_add_place_remarks;
 
     String activityCutoffTime;
     String activityStartTime;
@@ -211,7 +214,9 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
 
                 activityName =  et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
+//                Selection.setSelection((Spannable) et_add_numberofgirls, et_add_numberofgirls.length());
                 manNumber = et_add_Numberofboys.getText().toString().trim();
+//                Selection.setSelection((Spannable) et_add_Numberofboys, et_add_Numberofboys.length());
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();
                 activityAddress = tv_add_place.getText().toString().trim();
                 remarks =  Utils.stringToUnicode(et_add_title_remarks.getText().toString().trim());

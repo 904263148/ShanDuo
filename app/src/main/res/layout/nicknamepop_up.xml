@@ -9,7 +9,9 @@
         android:layout_height="40dp"
         android:paddingLeft="15dp"
         android:background="@null"
-        android:hint="@string/app_modify_nickname"/>
+        android:hint="@string/app_modify_nickname"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"/>
 
 
 </RelativeLayout>

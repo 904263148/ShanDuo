@@ -2,15 +2,17 @@ package com.yapin.shanduo.ui.contract;
 
 import com.yapin.shanduo.base.BasePresenter;
 import com.yapin.shanduo.base.BaseView;
+import com.yapin.shanduo.model.entity.SigninInfo;
+import com.yapin.shanduo.model.entity.TaskInfo;
 
 /**
- * Created by dell on 2018/6/6.
+ * Created by dell on 2018/6/21.
  */
 
-public interface PeabeanContract {
+public interface TaskContract {
     interface View extends BaseView {
 
-        void success(String data);
+        void success(TaskInfo data);
 
         void loading();
 
@@ -22,6 +24,6 @@ public interface PeabeanContract {
     }
 
     interface Presenter extends BasePresenter {
-        void peabean(String activityId );
+        void gettask();
     }
 }

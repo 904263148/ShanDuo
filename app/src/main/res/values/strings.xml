@@ -72,6 +72,41 @@
     <string name="title_my">我的</string>
     <string name="title_act">活动</string>
     <string name="title_trend">动态</string>
+    <string name="My_activities">\t我的活动</string>
+    <string name="My_dynamics">\t我的动态</string>
+    <string name="Credit_center">\t信用中心</string>
+    <string name="My_wallet">\t我的钱包</string>
+    <string name="Member_Center">\t会员中心</string>
+    <string name="Set_up">\t设置</string>
+    <string name="Loginandregistration">登录/注册</string>
+
+    <string name="Accountandsecurity">账户与安全</string>
+    <string name="Messagenotification">消息通知</string>
+    <string name="About_flicker">关于闪多</string>
+    <string name="Privacy">隐私</string>
+    <string name="Cleanupcaching">清理缓存</string>
+
+    <string name="Sign_in">签到</string>
+    <string name="The_first">第</string>
+    <string name="day">天</string>
+
+    <string name="Flicker_Purse">闪多钱包</string>
+    <string name="Purse_balance">钱包余额</string>
+    <string name="Pea_bean">闪多豆</string>
+    <string name="Recharge">充值</string>
+    <string name="Transaction_record">交易记录</string>
+
+    <string name="Modifythepassword">修改密码</string>
+    <string name="Old_cipher">旧密码：</string>
+    <string name="New_password">新密码：</string>
+    <string name="Confirmthe_newpassword">确认新密码：</string>
+    <string name="hint_Prompt">若包含字母，请注意区分大小写</string>
+    <string name="hint_newpassword">8-16位，至少包含数字/字母/字符2种组合</string>
+    <string name="Forgetthepassword">忘记密码了？</string>
+    <string name="Verificationofidentity">请输入支付密码，以验证身份</string>
+    <string name="Settingupanewpaymentpassword">设置新的支付密码</string>
+    <string name="hint_newpaymentpassword">请输入新的支付密码，用于支付验证</string>
+    <string name="Completethemodification">完成修改</string>
 
     <string name="title_trend_info">动态详情</string>
     <string name="comment_place">评论区</string>

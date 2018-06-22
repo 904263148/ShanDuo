@@ -123,10 +123,10 @@ public class ApiUtil {
     public final static String VERIFICATION = ConfigUtil.configUrl() +"/sms/checkcode";
 
     //签到
-    public final static String SIGNIN = ConfigUtil.configUrl() +"/experience/signin";
+    public final static String SIGNIN = ConfigUtil.configUrl() +"/jexperience/signin";
 
     //返回签到信息
-    public final static String CHECK_CHECKIN = ConfigUtil.configUrl() +"/experience/checksignin";
+    public final static String CHECK_CHECKIN = ConfigUtil.configUrl() +"/jexperience/checksignin";
 
     //举报
     public final static String REPORT = ConfigUtil.configUrl() + "/reputation/saveReport";
@@ -154,4 +154,7 @@ public class ApiUtil {
 
     //分页获取群组成员信息
     public final static String GROUP_USER = ConfigUtil.configUrl() + "jgroup/getgroupuser" ;
+
+    //做任务
+    public final static String TASK_SIGN = ConfigUtil.configUrl() + "/task/releaseRecord" ;
 }

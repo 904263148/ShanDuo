@@ -194,7 +194,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
             }else {
                 holder.tvVip.setVisibility(View.VISIBLE);
-                holder.tvVip.setText("SVIP"+level);
+                holder.tvVip.setText("SVIP"+(level-10));
                 holder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
             }
 
@@ -284,16 +284,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private onItemLongClick onItemClickListener;
 
-    //多选按钮
-//    public interface onItemcheckbox {
-//        void onItemcheckbox( int position ,boolean isChecked );
-//    }
-//
-//    public void setonItemcheckbox(onItemcheckbox onItemcheckbox){
-//        this.onItemcheckbox = onItemcheckbox;
-//    }
-//
-//    private onItemcheckbox onItemcheckbox;
 
     //分享
     public interface Onpopupwindow {
@@ -316,15 +306,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return list.get(position).getType();
     }
 
-//    public interface OnItemClickListener {
-//        void onItemClick(int position);
-//    }
-//
-//    private OnItemClickListener listener;
-//
-//    public void setOnItemClickListener(OnItemClickListener listener) {
-//        this.listener = listener;
-//    }
 
     public interface OnLikeClickListener {
         void onLikeClick(String id);

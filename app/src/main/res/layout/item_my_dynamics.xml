@@ -129,14 +129,14 @@
                     android:id="@+id/iv_my_img1"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     />
 
                 <ImageView
                     android:id="@+id/iv_my_img2"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/iv_my_img1"
                     />

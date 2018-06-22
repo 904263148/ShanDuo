@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:background="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingLeft="7dp"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:src="@drawable/icon_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15dp"
+            android:textColor="@color/mainfont"
+            android:text="签到领奖"
+            />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:src="@drawable/icon_title"/>
+
+        <LinearLayout
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_sigin_Title"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="明天可以领取10闪多豆"
+                android:textSize="15dp"
+                android:textColor="@color/textview_text_color"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/ll_sigina"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todaya"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesa"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="58"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceiveda"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="1天"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_siginb"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todayb"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesb"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="128"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivedb"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="2天"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_siginc"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todayc"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesc"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="88"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivedc"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="3天"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_sigind"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todayd"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesd"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="88"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivedd"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="4天"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_sigine"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todaye"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopese"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="88"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivede"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="5天"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_siginf"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todayf"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesf"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="88"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivedf"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="6天"
+                        />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_siging"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_sigin_todayg"
+                        android:paddingRight="3dp"
+                        android:paddingLeft="3dp"
+                        android:paddingTop="1dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_today"
+                        android:text="明天可领"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="6dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_redenvelopesg"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center"
+                        android:paddingTop="27dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_redenvelopes"
+                        android:text="588"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sigin_Alreadyreceivedg"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:textColor="@color/font_color_gray"
+                        android:text="7天"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:background="@color/colorAccent"
+            android:paddingLeft="10dp"
+            android:gravity="left|center"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="日常任务"
+            android:textColor="@color/textview_text_color"
+            android:textSize="15dp"
+            />
+
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/textview_text_color"
+                android:text="发布活动"
+                />
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/experience_color"
+                android:text="+188闪多豆"
+                />
+
+            <TextView
+                android:id="@+id/tv_sigin_Releasetimes"
+                android:layout_marginLeft="9dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/experience_color"
+                android:text="0/2"
+                />
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_Gotorelease"
+                    android:layout_gravity="right|center"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/sigin_shape"
+                    android:text="去发布"
+                    android:gravity="center"
+                    android:textColor="@color/color_white"
+                    android:textSize="12sp"
+                    />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/textview_text_color"
+                android:text="参与活动"
+                />
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/experience_color"
+                android:text="+88闪多豆"
+                />
+
+            <TextView
+                android:id="@+id/tv_Numberofparticipants"
+                android:layout_marginLeft="9dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/experience_color"
+                android:text="0/3"
+                />
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_Gotosignup"
+                    android:layout_gravity="right|center"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/sigin_shape"
+                    android:text="去报名"
+                    android:gravity="center"
+                    android:textColor="@color/color_white"
+                    android:textSize="12sp"
+                    />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="1dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:textColor="@color/textview_text_color"
+                android:text="分享APP"
+                />
+
+            <FrameLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_Toshare"
+                    android:layout_gravity="right|center"
+                    android:layout_width="60dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/sigin_shape"
+                    android:text="去分享"
+                    android:gravity="center"
+                    android:textColor="@color/color_white"
+                    android:textSize="12sp"
+                    />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -129,7 +129,7 @@ public class Constants {
     public static final String PAY_BALANCE = "1";
     public static final String PAY_ALIPAY = "2";
     public static final String PAY_WECHAT = "3";
-//    public static final String PAY_PEABEAN = "4";
+    public static final String PAY_PEABEAN = "6";
     public static final String PEA_FREQUENCY = "5";
     //支付订单类型
     public static final String TYPE_CHARGE = "1";

@@ -10,6 +10,8 @@
         android:paddingLeft="10dp"
         android:background="@null"
         android:maxLength="20"
-        android:hint="家乡贯籍："/>
+        android:hint="家乡贯籍："
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"/>
 
 </LinearLayout>

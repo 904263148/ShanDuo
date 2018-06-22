@@ -57,7 +57,9 @@
             android:hint="对参与者点评价呗！..."
             android:paddingLeft="8dp"
             android:textSize="10dp"
-            android:textColor="@color/textview_text_color"/>
+            android:textColor="@color/textview_text_color"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/test_cursor_shape"/>
 
     </LinearLayout>
 

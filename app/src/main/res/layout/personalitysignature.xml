@@ -12,6 +12,8 @@
         android:background="@color/colorAccent"
         android:maxLength="60"
         android:minLines="3"
-        android:hint="个性签名："/>
+        android:hint="个性签名："
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"/>
 
 </RelativeLayout>

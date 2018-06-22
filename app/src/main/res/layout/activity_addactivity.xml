@@ -60,7 +60,8 @@
             android:textColor="@color/font_color_gray"
             android:textSize="13dp"
             android:maxLength="20"
-
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/test_cursor_shape"
             />
 
             <TextView
@@ -80,6 +81,8 @@
         android:minLines="4"
         android:gravity="left|top"
         android:paddingTop="8dp"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"
         />
 
             <TextView
@@ -107,6 +110,8 @@
             android:textSize="13dp"
             android:maxLength="3"
             android:drawableLeft="@drawable/icon_add_male"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/test_cursor_shape"
             />
 
         <EditText
@@ -120,6 +125,8 @@
             android:textSize="13dp"
             android:maxLength="3"
             android:drawableLeft="@drawable/icon_add_female"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/test_cursor_shape"
             />
 
     </LinearLayout>
@@ -290,6 +297,8 @@
         android:minLines="4"
         android:gravity="left|top"
         android:paddingTop="8dp"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"
         />
 
             <TextView

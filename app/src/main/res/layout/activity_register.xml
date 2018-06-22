@@ -178,6 +178,8 @@
                 android:textSize="12dp"
                 android:inputType="number"
                 android:maxLength="11"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/test_cursor_shape"
                 />
 
             <TextView
@@ -224,6 +226,8 @@
                 android:textSize="12dp"
                 android:maxLength="6"
                 android:inputType="number"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/test_cursor_shape"
                 />
 
         </LinearLayout>
@@ -256,6 +260,8 @@
                 android:textSize="12dp"
                 android:maxLength="16"
                 android:inputType="textPassword"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/test_cursor_shape"
                 />
 
         </LinearLayout>

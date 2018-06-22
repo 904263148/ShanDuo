@@ -10,6 +10,8 @@
         android:paddingLeft="15dp"
         android:background="@null"
         android:maxLength="20"
-        android:hint="职业："/>
+        android:hint="职业："
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"/>
 
 </LinearLayout>

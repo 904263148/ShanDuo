@@ -55,6 +55,8 @@
         android:paddingTop="18dp"
         android:textSize="15dp"
         android:background="@color/colorAccent"
+        android:cursorVisible="true"
+        android:textCursorDrawable="@drawable/test_cursor_shape"
         />
     <!--android:textColor="@color/textview_text"-->
 

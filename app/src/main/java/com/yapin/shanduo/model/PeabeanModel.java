@@ -7,5 +7,5 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 
 public interface PeabeanModel {
-    void load(OnLoadListener<String> listener, String activityId ,String typeId );
+    void load(OnLoadListener<String> listener, String activityId  );
 }

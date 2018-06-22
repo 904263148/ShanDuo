@@ -155,7 +155,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="好友"
+                    android:text="@string/title_linkman"
                     android:layout_marginLeft="2dp"
                     android:textSize="10sp"
                     />
@@ -172,7 +172,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="活动"
+                    android:text="@string/title_act"
                     android:layout_marginLeft="2dp"
                     android:textSize="10sp"
                     />
@@ -188,7 +188,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="动态"
+                    android:text="@string/title_trend"
                     android:layout_marginLeft="2dp"
                     android:textSize="10sp"
                     />
@@ -317,7 +317,7 @@
                 android:id="@+id/tv_login_reg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="登录/注册"
+                android:text="@string/Loginandregistration"
                 android:textColor="@color/textview_text_color"
                 android:textSize="20dp" />
         </LinearLayout>
@@ -349,7 +349,7 @@
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/icon_p_activity"
             android:drawableRight="@drawable/icon_my_forward"
-            android:text="\t我的活动"/>
+            android:text="@string/My_activities"/>
         <!--android:drawableRight="@drawable/icon_img_return"-->
 
 
@@ -365,7 +365,7 @@
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/icon_p_dynamic"
             android:drawableRight="@drawable/icon_my_forward"
-            android:text="\t我的动态"/>
+            android:text="@string/My_dynamics"/>
 
         <TextView
             android:id="@+id/tv_Creditcenter"
@@ -379,7 +379,7 @@
             android:gravity="center_vertical"
             android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_credit"
-            android:text="\t信用中心"/>
+            android:text="@string/Credit_center"/>
 
         <TextView
             android:id="@+id/text_mywallet"
@@ -393,7 +393,7 @@
             android:gravity="center_vertical"
             android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_wallet"
-            android:text="\t我的钱包"/>
+            android:text="@string/My_wallet"/>
 
         <TextView
             android:id="@+id/tv_member_center"
@@ -407,7 +407,7 @@
             android:gravity="center_vertical"
             android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_p_member"
-            android:text="\t会员中心"/>
+            android:text="@string/Member_Center"/>
 
         <TextView
             android:id="@+id/text_setup"
@@ -421,106 +421,10 @@
             android:gravity="center_vertical"
             android:drawableRight="@drawable/icon_my_forward"
             android:drawableLeft="@drawable/icon_my_upset"
-            android:text="\t设置"/>
+            android:text="@string/Set_up"/>
 
     </LinearLayout>
 
     </ScrollView>
-
-    <LinearLayout
-        android:background="@drawable/ll_suspension_shape"
-        android:visibility="gone"
-        android:id="@+id/ll_person_c"
-        android:layout_marginTop="140dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                />
-            <TextView
-                android:paddingTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="好友"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                />
-            <TextView
-                android:paddingTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="关注"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3"
-                />
-            <TextView
-                android:paddingTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="粉丝"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="9"
-                />
-            <TextView
-                android:paddingTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="群组"
-                />
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
 
 </LinearLayout>

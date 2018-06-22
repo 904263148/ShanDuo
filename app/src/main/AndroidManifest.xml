@@ -101,6 +101,7 @@
         <activity android:name=".ui.activity.KickingActivity" />
         <activity android:name=".ui.activity.VerificationcodeActivity" />
         <activity android:name=".ui.activity.CodeLogpwdActivity" />
+        <activity android:name=".ui.activity.SiginActivity" />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />
