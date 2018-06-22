@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +35,7 @@ import com.yapin.shanduo.presenter.DeleteReplayPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.presenter.TrendInfoPresenter;
 import com.yapin.shanduo.presenter.TrendReplayPresenter;
+import com.yapin.shanduo.ui.adapter.GridViewAdapter;
 import com.yapin.shanduo.ui.adapter.TrendCommentAdapter;
 import com.yapin.shanduo.ui.adapter.TrendGridViewAdapter;
 import com.yapin.shanduo.ui.contract.DeleteReplayContract;
@@ -39,6 +43,7 @@ import com.yapin.shanduo.ui.contract.LikeContract;
 import com.yapin.shanduo.ui.contract.TrendInfoContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
 import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
+import com.yapin.shanduo.ui.fragment.SavePicDialogFragment;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
@@ -49,6 +54,7 @@ import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.ImageWatcher;
 import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.util.ArrayList;
@@ -59,7 +65,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TrendInfoActivity extends RightSlidingActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
-        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View , DeleteReplayContract.View{
+        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View , DeleteReplayContract.View ,TrendGridViewAdapter.OnItemClickListener{
 
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
@@ -149,6 +155,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     private int totalPage = 1;
 
     private final int OPEN_REPLAY = 1;//打开回复详情标记，做删除后刷新标记
+    private SavePicDialogFragment savePicDialogFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -247,7 +254,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 ivImg1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PicWatcher.showImages(activity , ivImg1 , 0 , thumUrlsImageView , trend.getPicture());
+                        showImages(ivImg1 , 0 , thumUrlsImageView , trend.getPicture());
                     }
                 });
                 
@@ -264,13 +271,13 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 ivImg1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PicWatcher.showImages(activity , ivImg1 , 0 , thumUrlsImageView2 , trend.getPicture());
+                        showImages(ivImg1 , 0 , thumUrlsImageView2 , trend.getPicture());
                     }
                 });
                 ivImg2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PicWatcher.showImages(activity , ivImg2 , 1 , thumUrlsImageView2 , trend.getPicture());
+                        showImages(ivImg2 , 1 , thumUrlsImageView2 , trend.getPicture());
                     }
                 });
                 
@@ -279,6 +286,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 gridview.setVisibility(View.VISIBLE);
                 rlImg1.setVisibility(View.GONE);
                 TrendGridViewAdapter adapter = new TrendGridViewAdapter(context, trend.getPicture(), activity);
+                adapter.setOnItemClickListener(this);
                 gridview.setAdapter(adapter);
                 break;
         }
@@ -311,6 +319,23 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
             }
         });
 
+    }
+
+    private void showImages(ImageView imageView , int position , List<ImageView> thumUrlsImageView , List<String> imgUrl){
+        PicWatcher.showImages(activity, imageView, position, thumUrlsImageView, imgUrl, new ImageWatcher.OnPictureLongPressListener() {
+            @Override
+            public void onPictureLongPress(ImageView v, String url, int pos) {
+                if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请READ_EXTERNAL_STORAGE权限
+                    ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            Constants.REQUEST_CODE_WRITE);
+                }else {
+                    savePicDialogFragment = SavePicDialogFragment.newInstance(url);
+                    savePicDialogFragment.show(getSupportFragmentManager() , "");
+                }
+            }
+        });
     }
 
     @OnClick({R.id.iv_share , R.id.rl_back , R.id.tv_publish  ,R.id.tv_mile , R.id.tv_like_count , R.id.iv_head})
@@ -493,4 +518,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         presenter.getData(trend.getId() , TYPEID ,page+"" , pageSize+"");
     }
 
+    @Override
+    public void onSavePicClick(ImageView imageView, int position, List<ImageView> thumUrlsImageView, List<String> imgUrl) {
+        showImages(imageView, position, thumUrlsImageView, imgUrl);
+    }
 }

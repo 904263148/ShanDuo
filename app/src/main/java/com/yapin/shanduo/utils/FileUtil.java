@@ -2,12 +2,14 @@ package com.yapin.shanduo.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 
@@ -131,6 +133,43 @@ public class FileUtil {
             return f.getAbsolutePath();
         }
         return null;
+    }
+
+    // 保存图片到手机指定目录
+    public static void saveBitmap(Context context ,String imgName, byte[] bytes) {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            String filePath = null;
+            FileOutputStream fos = null;
+            try {
+                filePath = Environment.getExternalStorageDirectory() + Constants.PICTURE_PATH ;
+                File imgDir = new File(filePath);
+                if (!imgDir.exists()) {
+                    imgDir.mkdirs();
+                }
+                imgName = filePath + "/" + imgName;
+                fos = new FileOutputStream(imgName);
+                fos.write(bytes);
+                Toast.makeText(context, "图片已保存到" + filePath, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                File imgUri = new File(imgName);
+                Uri uri = Uri.fromFile(imgUri);
+                intent.setData(uri);
+                context.sendBroadcast(intent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fos != null) {
+                        fos.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Toast.makeText(context, "图片已保存失败,请检查SD卡是否可用", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

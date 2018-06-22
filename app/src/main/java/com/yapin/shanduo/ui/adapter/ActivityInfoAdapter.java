@@ -134,11 +134,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.ivMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                        StartActivityUtil.start(activity , LoginActivity.class);
-                    }else {
-                        openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_ACT);
-                    }
+                    openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_ACT);
                 }
             });
 

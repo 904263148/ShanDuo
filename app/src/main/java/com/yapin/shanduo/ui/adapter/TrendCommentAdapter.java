@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
@@ -24,6 +25,7 @@ import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.TimeUtil;
+import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 
@@ -144,6 +146,14 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
 
+//            holder.rlLong.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    ToastUtil.showShortToast(context , "长按了");
+//                    return true;
+//                }
+//            });
+
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
@@ -201,6 +211,8 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvTime;
         @BindView(R.id.tv_delete)
         TextView tvDelete;
+        @BindView(R.id.rl_long)
+        RelativeLayout rlLong;
 
         public ViewHolder(View itemView) {
             super(itemView);

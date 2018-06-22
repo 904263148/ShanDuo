@@ -56,7 +56,6 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     private Context context;
     private Activity activity;
     private ActivityInfoAdapter adapter;
-    private ShanDuoPartyApplication application;
     private LinearLayoutManager layoutManager;
 
     private int position;
@@ -77,6 +76,13 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     private JoinActPresenter joinActPresenter;
 
     private View view;
+
+    private final int OPEN_LOGIN_BY_JOIN = 1; //item点击和参加活动点击
+    private final int OPEN_LOGIN_BY_CREDIT = 2; //信用轨迹点击
+    private final int OPEN_LOGIN_BY_PLACE = 3; //地图点击
+    private final int OPEN_LOGIN_BY_INFO = 4; //用户头像点击
+    private int clickPosition = -1; //用于判断点击下标
+    private String clickId; //点击item对应的用户id
 
     public static ActivityFragment newInstance(int position , String userId) {
         ActivityFragment fragment = new ActivityFragment();
@@ -134,7 +140,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请READ_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     Constants.REQUEST_CODE_CONTACT);
         }else {
             presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
@@ -173,54 +179,97 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void onItemClick(int position) {
+        clickPosition = position;
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity , LoginActivity.class );
+            StartActivityUtil.start(activity , this , LoginActivity.class , OPEN_LOGIN_BY_JOIN);
             return;
         }
         Bundle bundle = new Bundle();
-        bundle.putParcelable("act" , list.get(position));
+        bundle.putParcelable("act" , list.get(clickPosition));
         bundle.putInt("type" , joinPosition);
         StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
     }
 
     @Override
     public void onTextClick(int position, ActivityInfo.Act act , int type) {
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity ,this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
-            return;
-        }
+        clickPosition = position;
+        Bundle bundle = new Bundle();
+        bundle.clear();
+        Class openClass = null;
         switch (type){
             case Constants.ACT_JOIN:
-                Bundle bundle = new Bundle();
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity ,this , LoginActivity.class , OPEN_LOGIN_BY_JOIN);
+                    return;
+                }
+                openClass = JoinActActivity.class;
                 bundle.putParcelable("act" , list.get(position));
                 bundle.putInt("type" , joinPosition);
-                StartActivityUtil.start(activity , this , JoinActActivity.class , bundle);
                 break;
             case Constants.ACT_LOCATION:
-                Bundle bundle1 = new Bundle();
-                bundle1.putDouble("lat" , act.getLat());
-                bundle1.putDouble("lon" , act.getLon());
-                bundle1.putString("place" , act.getActivityAddress());
-                StartActivityUtil.start(activity , this , PlaceActivity.class , bundle1);
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity ,this , LoginActivity.class , OPEN_LOGIN_BY_PLACE);
+                    return;
+                }
+                openClass = PlaceActivity.class;
+                bundle.putDouble("lat" , act.getLat());
+                bundle.putDouble("lon" , act.getLon());
+                bundle.putString("place" , act.getActivityAddress());
                 break;
             case Constants.ACT_CREDIT:
-                Bundle bundle2 = new Bundle();
-                bundle2.putString("userId" , act.getUserId()+"");
-                StartActivityUtil.start(activity , this , ScrollingActivity.class , bundle2);
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity ,this , LoginActivity.class , OPEN_LOGIN_BY_CREDIT);
+                    return;
+                }
+                openClass = ScrollingActivity.class;
+                bundle.putString("userId" , act.getUserId()+"");
                 break;
         }
-
+        StartActivityUtil.start(activity , this , openClass , bundle);
     }
 
     @Override
     public void onHeadClick(int id) {
+        clickId = id +"";
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+            StartActivityUtil.start(activity , this , LoginActivity.class , OPEN_LOGIN_BY_INFO);
         }else {
             Bundle bundle = new Bundle();
-            bundle.putString("userId", id + "");
+            bundle.putString("userId", clickId);
             StartActivityUtil.start(activity, UserProfActivity.class, bundle);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode != activity.RESULT_OK) return;
+
+        Bundle bundle = new Bundle();
+        bundle.clear();
+        Class openClass = null;
+        switch (requestCode){
+            case OPEN_LOGIN_BY_JOIN:
+                openClass = JoinActActivity.class;
+                bundle.putParcelable("act" , list.get(clickPosition));
+                bundle.putInt("type" , joinPosition);
+                break;
+            case OPEN_LOGIN_BY_CREDIT:
+                openClass = ScrollingActivity.class;
+                bundle.putString("userId" , list.get(clickPosition).getUserId()+"");
+                break;
+            case OPEN_LOGIN_BY_PLACE:
+                openClass = PlaceActivity.class;
+                bundle.putDouble("lat" , list.get(clickPosition).getLat());
+                bundle.putDouble("lon" , list.get(clickPosition).getLon());
+                bundle.putString("place" , list.get(clickPosition).getActivityAddress());
+                break;
+            case OPEN_LOGIN_BY_INFO:
+                openClass = UserProfActivity.class;
+                bundle.putString("userId" , clickId);
+                break;
+        }
+        StartActivityUtil.start(activity , this , openClass , bundle);
     }
 
     /**

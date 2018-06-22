@@ -2,9 +2,12 @@ package com.yapin.shanduo.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.widget.CircleImageView;
 import com.yapin.shanduo.widget.glide.GlideCircleTransform;
@@ -140,6 +143,29 @@ public class GlideUtil {
                 .error(R.color.color_white)
                 .placeholder(R.color.color_white)
                 .into(imageView);
+    }
+
+    /**
+     * Glide 加载图片保存到本地
+     *
+     * imgUrl 图片地址
+     * imgName 图片名称
+     */
+    public static void getBitmap(final Context context, String url , final String imgName) {
+        if(FileUtil.exist(Environment.getExternalStorageDirectory() + Constants.PICTURE_PATH + "/" + imgName )){
+            ToastUtil.showShortToast(context , "图片已下载");
+            return;
+        }
+        Glide.with(context).load(url).asBitmap().toBytes().into(new SimpleTarget<byte[]>() {
+            @Override
+            public void onResourceReady(byte[] bytes, GlideAnimation<? super byte[]> glideAnimation) {
+                try {
+                    FileUtil.saveBitmap(context , imgName , bytes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
 }
