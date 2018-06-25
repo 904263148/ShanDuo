@@ -29,7 +29,7 @@
                 android:layout_gravity="center"
                 android:textSize="20dp"
                 android:textColor="@color/mainfont"
-                android:text="编辑资料"
+                android:text="@string/app_updeta_editing"
                 />
 
 
@@ -122,7 +122,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="31dp"
-        android:text="基本资料"
+        android:text="@string/app_updeta_Basicinformation"
         android:paddingLeft="15dp"
         android:textSize="15sp"
         android:textColor="@color/color_editing"
@@ -144,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textview_text_color"
-            android:text="闪多号" />
+            android:text="@string/app_modify_Flickera" />
 
         <TextView
             android:id="@+id/modify_tv_flicker"
@@ -177,14 +177,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textview_text_color"
-            android:text="性别" />
+            android:text="@string/app_register_Gender" />
 
         <TextView
             android:id="@+id/modify_tv_rg"
             android:layout_gravity="right|center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="男"
+            android:text="@string/app_register_boy"
             android:drawableRight="@drawable/icon_forward"
             android:paddingRight="15dp"
             android:textColor="@color/textview_text_color"
@@ -210,7 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textview_text_color"
-            android:text="出生日期" />
+            android:text="@string/app_modify_Dateofbirth" />
 
         <TextView
             android:id="@+id/date_display"
@@ -243,7 +243,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/textview_text_color"
-            android:text="感情状态" />
+            android:text="@string/app_updeta_Emotionalstate" />
 
         <TextView
             android:id="@+id/tv_Emotionalstate"
@@ -262,7 +262,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:text="个人信息"
+            android:text="@string/app_updeta_Personalinformation"
             android:paddingLeft="15dp"
             android:textSize="15sp"
             android:textColor="@color/color_editing"
@@ -285,7 +285,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textview_text_color"
-                android:text="个性签名" />
+                android:text="@string/app_modify_Personalitysignature" />
 
             <TextView
                 android:id="@+id/tv_Personalitysignature"
@@ -318,14 +318,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textview_text_color"
-                android:text="家乡" />
+                android:text="@string/app_updeta_Hometown" />
 
             <TextView
                 android:id="@+id/tv_Hometown"
                 android:layout_gravity="right|center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="保密"
+                android:text="@string/app_updeta_Hometown"
                 android:drawableRight="@drawable/icon_forward"
                 android:paddingRight="15dp"
                 android:textColor="@color/textview_text_color"
@@ -350,7 +350,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textview_text_color"
-                android:text="职业" />
+                android:text="@string/app_updeta_Occupation" />
 
             <TextView
                 android:id="@+id/tv_Occupation"
@@ -382,7 +382,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/textview_text_color"
-                android:text="学校" />
+                android:text="@string/app_updeta_School" />
 
             <TextView
                 android:id="@+id/tv_School"

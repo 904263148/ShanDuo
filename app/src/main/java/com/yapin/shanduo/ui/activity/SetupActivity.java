@@ -58,12 +58,9 @@ public class SetupActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.iv_back , R.id.bt_logout,R.id.tv_account ,R.id.tv_about ,R.id.tv_signin})
+    @OnClick({R.id.iv_back , R.id.bt_logout,R.id.tv_account ,R.id.tv_about })
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.tv_signin:    //签到
-                StartActivityUtil.start(activity, SiginActivity.class);
-                break;
             case R.id.tv_about:     //关于闪多
                 StartActivityUtil.start(activity, AboutflickerActivity.class);
                 break;

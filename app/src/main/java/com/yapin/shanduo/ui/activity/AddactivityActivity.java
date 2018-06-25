@@ -114,6 +114,8 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     private String payId;
     private String passord = "";
 
+    int a;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,13 +139,14 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
             public void onClick(View view) {
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                 final String[] emotion = {"我请客", "AA制","男的AA，美女随意"};
+
                 //    设置一个单项选择下拉框
-                builder1.setSingleChoiceItems(emotion, 4, new DialogInterface.OnClickListener()
+                builder1.setSingleChoiceItems(emotion, a , new DialogInterface.OnClickListener()
                 {
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-//                        Toast.makeText(activity, "你选择的是：" + emotion[which], Toast.LENGTH_SHORT).show();
+                        a = which;
                         et_add_Modeofconsumption.setText(emotion[which]);
                     }
                 });
@@ -155,13 +158,13 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                         mode = et_add_Modeofconsumption.getText().toString().trim();
                     }
                 });
-                builder1.setNegativeButton("取消", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                    }
-                });
+//                builder1.setNegativeButton("取消", new DialogInterface.OnClickListener()
+//                {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which)
+//                    {
+//                    }
+//                });
                 builder1.show();
             }
         });
@@ -180,10 +183,8 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-//            data.getStringExtra("textTitle");
             setText(data.getStringExtra("textTitle"));
             textlonlat = data.getStringExtra("textlonlat");
-//            Log.i("test","/n地址是："+tv_add_place+"/n经纬度是："+textlonlat);
         }
     }
     //绑定定位选择的数据
@@ -198,7 +199,6 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
 
     @OnClick({R.id.but_add_Releaseactivities,R.id.tv_add_starttime,R.id.tv_add_finish ,R.id.et_add_Remarks})
     public void onClick(View view){
-//        activityName ,activityStartTime, activityAddress ,mode, manNumber ,womanNumber, remarks ,activityCutoffTime, lon, lat
         switch (view.getId()) {
             case R.id.tv_add_finish:
                 onBackPressed();
@@ -214,7 +214,6 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
 
                 activityName =  et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
-//                Selection.setSelection((Spannable) et_add_numberofgirls, et_add_numberofgirls.length());
                 manNumber = et_add_Numberofboys.getText().toString().trim();
 //                Selection.setSelection((Spannable) et_add_Numberofboys, et_add_Numberofboys.length());
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();
@@ -235,7 +234,6 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                     public void onClick(DialogInterface dialog, int which)
                     {
 
-//                        Toast.makeText(activity, "你选择的是：" + emotion[which], Toast.LENGTH_SHORT).show();
                         if (which == 0){
                         DateTimePickDialogUtil dateTimePicKDialog = new DateTimePickDialogUtil(AddactivityActivity.this, null);
                         dateTimePicKDialog.dateTimePicKDialog(tv_add_starttime, 0, true);
@@ -263,10 +261,7 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     }
 
     private boolean checkNull() {
-//        if(TextUtils.isEmpty(et_add_title.getText().toString())){
-//            requstFocus(et_add_title, null, Color.GRAY,true);
-//            return true;
-//        }
+
         if(et_add_title.getText().toString().length()<1){
             et_add_title.setText("");
             requstFocus(et_add_title, "活动主题不能为空！", Color.RED,true);
@@ -303,9 +298,6 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     public void requstFocus(EditText et,String hint,int hintColor,boolean needFocus){
         if(hint==null){
             hint="请输入：";
-//            et_Old_cipher.set("若包含字母，请注意区分大小写");
-//            et_Newpassword_one.setHint("8-16位，至少包含数字/字母/字符2种组合");
-//            et_Newpassword_two.setHint("8-16位，至少包含数字/字母/字符2种组合");
         }
         et.setHint(hint);
         et.setHintTextColor(hintColor);

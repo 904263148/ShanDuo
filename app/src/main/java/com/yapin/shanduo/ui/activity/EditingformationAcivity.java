@@ -137,7 +137,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             userDetailPresenter = new UserDetailPresenter();
             userDetailPresenter.init(this);
 
-
             modify_tv_flicker.setText(PrefJsonUtil.getProfile(context).getUserId());
 
             if (PrefJsonUtil.getProfile(context).getName() == null){
@@ -148,10 +147,9 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             modify_tv_rg.setText(PrefJsonUtil.getProfile(context).getGender().equals("1")?"男":"女");
             date_display.setText(PrefJsonUtil.getProfile(context).getBirthday());
 
-                tv_Emotionalstate.setText(PrefJsonUtil.getProfile(context).getEmotion());
-                if (tv_Emotionalstate.equals("0")){
+                if ("0".equals(PrefJsonUtil.getProfile(context).getEmotion())){
                     tv_Emotionalstate.setText("保密");
-                }else if (tv_Emotionalstate.equals("1")){
+                }else if ("1".equals(PrefJsonUtil.getProfile(context).getEmotion())){
                     tv_Emotionalstate.setText("已婚");
                 }else {
                     tv_Emotionalstate.setText("未婚");
@@ -251,23 +249,23 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     a = 1;
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("请选择性别");
-                    final String[] sex = {"男", "女"};
+                    final String[] sex = {"女", "男"};
                     //    设置一个单项选择下拉框
                     /**
                      * 第一个参数指定我们要显示的一组下拉单选框的数据集合
                      * 第二个参数代表索引，指定默认哪一个单选框被勾选上，0表示默认'男' 会被勾选上
                      * 第三个参数给每一个单选项绑定一个监听器
                      */
-                    builder.setSingleChoiceItems(sex, 3,new DialogInterface.OnClickListener()
+                    builder.setSingleChoiceItems(sex, Integer.parseInt(PrefJsonUtil.getProfile(context).getGender()),new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
                             // 自动生成的方法存根
                             if (which == 0) {//男
-                                gender = "1";
-                            }else if(which == 1){//女
                                 gender = "0";
+                            }else if(which == 1){//女
+                                gender = "1";
                             }
                         }
                     });
@@ -315,19 +313,19 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                 case R.id.fl_emot:    //感情状态
                     a = 3;
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
-                    final String[] emotions = {"已婚", "未婚","保密"};
+                    final String[] emotions = {"保密" , "已婚", "未婚"};
                     //    设置一个单项选择下拉框
-                    builder1.setSingleChoiceItems(emotions, 3, new DialogInterface.OnClickListener()
+                    builder1.setSingleChoiceItems(emotions, Integer.parseInt(PrefJsonUtil.getProfile(context).getEmotion()), new DialogInterface.OnClickListener()
                     {
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
                             if (which == 0) {
-                                emotion = "1";
-                            }else if(which == 1){
-                                emotion = "2";
-                            }else if (which ==2){
                                 emotion = "0";
+                            }else if(which == 1){
+                                emotion = "1";
+                            }else if (which ==2){
+                                emotion = "2";
                             }
                         }
                     });
@@ -523,7 +521,8 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
             modify_tv_rg.setText("男");
         }else if("0".equals(PrefJsonUtil.getProfile(context).getGender())){//女
             modify_tv_rg.setText("女");
-        }else if ("0".equals(PrefJsonUtil.getProfile(context).getEmotion())) {
+        }
+        if ("0".equals(PrefJsonUtil.getProfile(context).getEmotion())) {
             tv_Emotionalstate.setText("保密");
         }else if("1".equals(PrefJsonUtil.getProfile(context).getEmotion())){
             tv_Emotionalstate.setText("已婚");
@@ -566,7 +565,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
     @Override
     protected void onResume() {
         super.onResume();
-//        onCreate(null);
     }
 
     private void show(List<String> paths){
@@ -574,7 +572,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         listShow.addAll(paths);
         listShow.remove(0);
         uploadPresenter.upload(listShow);
-//        showAdapter.notifyItemRangeInserted(size, listShow.size() - size);
     }
 
     private int uploadType = 1;
@@ -599,8 +596,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
 
     @Override
     public void dataSuccess(String data) {
-//        dialog.dismiss();
-//        ToastUtil.showShortToast(context,data);
 
         UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());
         UserInfo.getInstance().setId(PrefJsonUtil.getProfile(context).getUserId());
@@ -612,7 +607,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
         }else {
             GlideUtil.load(activity, ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getBackground(), iv_background);
         }
-//        onBackPressed();
     }
 
     @Override
@@ -630,14 +624,9 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                 if (data == null) {
                     return;
                 }
-//                if(uploadType == 1){
-                    head_path = data.getStringArrayListExtra("path").get(0);
-//                }else {
-//                    bg_path = data.getStringArrayListExtra("path").get(0);
-//                }
+                head_path = data.getStringArrayListExtra("path").get(0);
                 paths.addAll(data.getStringArrayListExtra("path"));
                 uploadType = 1;
-//                presenter.upload(paths);
                 break;
             }
             case Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW_THEBACKGROUND:{
@@ -647,7 +636,6 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                 bg_path = data.getStringArrayListExtra("path").get(0);
                 paths.addAll(data.getStringArrayListExtra("path"));
                 uploadType = 2;
-//                presenter.upload(paths);
                 break;
             }
 

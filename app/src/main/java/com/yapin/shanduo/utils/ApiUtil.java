@@ -157,4 +157,8 @@ public class ApiUtil {
 
     //做任务
     public final static String TASK_SIGN = ConfigUtil.configUrl() + "/task/releaseRecord" ;
+
+    //做任务
+    public final static String GETVIPLEVEL = ConfigUtil.configUrl() + "/vip/getVipLevel" ;
+
 }

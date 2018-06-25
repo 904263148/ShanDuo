@@ -151,7 +151,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 if (lat==null){
                     lat = PrefUtil.getLat(context);
                 }
-                if (listShow!=null) {
+                if (listShow.size() >=2) {
                     listShow.remove(0);
                     uploadPresenter.upload(listShow);
                 }else{
@@ -289,8 +289,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             textlonlat = data.getStringExtra("textlonlat");
             String []ary = textlonlat.split("\\,");
 
-            lon=ary[0];
-            lat=ary[1];
+            lat=ary[0];
+            lon=ary[1];
 //            Log.i("test","地址是：--"+tv_pd_address+"--经纬度是："+textlonlat);
             break;
             }

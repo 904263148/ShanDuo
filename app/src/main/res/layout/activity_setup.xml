@@ -69,7 +69,6 @@
         />
 
     <TextView
-        android:id="@+id/tv_signin"
         android:layout_marginTop="1dp"
         android:background="@color/colorAccent"
         android:paddingLeft="15dp"
