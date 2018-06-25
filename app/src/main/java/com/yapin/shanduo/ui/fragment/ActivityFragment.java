@@ -1,6 +1,7 @@
 package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.yapin.shanduo.Manifest;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
@@ -84,6 +84,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     private int clickPosition = -1; //用于判断点击下标
     private String clickId; //点击item对应的用户id
 
+    private Dialog loadDialog;//...加载
+
     public static ActivityFragment newInstance(int position , String userId) {
         ActivityFragment fragment = new ActivityFragment();
         Bundle args = new Bundle();
@@ -117,12 +119,13 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
-        dialog = new ProgressDialog(activity);
-        dialog.setMessage("加载中...");
-        dialog.setCancelable(false);
+//        dialog = new ProgressDialog(activity);
+//        dialog.setMessage("加载中...");
+//        dialog.setCancelable(false);
+
+        loadDialog = ToastUtil.showLoading(activity);
 
         joinPosition = position;
-
         layoutManager = new LinearLayoutManager(context);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
@@ -301,6 +304,7 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void show(List<ActivityInfo.Act> data, int totalPage) {
+        loadDialog.dismiss();
         if (!isLoading) {
             if (totalPage == 0) {
                 loadingView.noData(R.string.tips_no_act);
@@ -315,46 +319,43 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
         list.addAll(list.size() - 1, data);
         adapter.notifyDataSetChanged();
         setRefreshLoading(false, false);
-        dialog.dismiss();
     }
 
     @Override
     public void success(String data) {
-        dialog.dismiss();
         ToastUtil.showShortToast(context ,data);
     }
 
     @Override
     public void loading() {
-        if (!isRefresh && !isLoading)
-            loadingView.loading();
+//        if (!isRefresh && !isLoading)
+//            loadDialog.show();
     }
 
     @Override
     public void networkError() {
-        dialog.dismiss();
+        loadDialog.dismiss();
         loadingView.loadError();
         setRefreshLoading(false, false);
     }
 
     @Override
     public void joinError(String msg) {
-        dialog.dismiss();
         ToastUtil.showShortToast(context , msg);
     }
 
     @Override
     public void error(String msg) {
-        dialog.dismiss();
-//        loadingView.loadError();
+        loadDialog.dismiss();
         setRefreshLoading(false, false);
+        ToastUtil.showShortToast(context , msg);
     }
 
     @Override
     public void showFailed(String msg) {
-        dialog.dismiss();
-        loadingView.loadError();
+        loadDialog.dismiss();
         setRefreshLoading(false, false);
+        ToastUtil.showShortToast(context , msg);
     }
 
 }

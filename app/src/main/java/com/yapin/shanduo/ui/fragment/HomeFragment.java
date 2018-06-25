@@ -30,6 +30,7 @@ import com.yapin.shanduo.ui.activity.PublishActivity;
 import com.yapin.shanduo.ui.activity.ScanActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
+import com.yapin.shanduo.ui.activity.SiginActivity;
 import com.yapin.shanduo.ui.activity.SmartRefreshActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
@@ -107,7 +108,7 @@ public class HomeFragment extends Fragment{
 
     }
 
-    @OnClick({R.id.btn_scan ,R.id.tv_act , R.id.tv_trend ,R.id.iv_search})
+    @OnClick({R.id.btn_scan ,R.id.tv_act , R.id.tv_trend ,R.id.iv_search , R.id.iv_sign})
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
@@ -129,6 +130,9 @@ public class HomeFragment extends Fragment{
                 break;
             case R.id.iv_search:
                 StartActivityUtil.start(activity , this , SearchActActivity.class );
+                break;
+            case R.id.iv_sign:
+                StartActivityUtil.start(activity , this , SiginActivity.class );
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -53,6 +54,7 @@ import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
+import com.yapin.shanduo.widget.LoadingView;
 import com.yapin.shanduo.widget.MyGridView;
 import com.yich.layout.picwatcherlib.ImageWatcher;
 import com.yich.layout.picwatcherlib.PicWatcher;
@@ -125,6 +127,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.scrollView)
     NestedScrollView scrollView;
+    @BindView(R.id.loading_view)
+    LoadingView loadingView;
 
     private Context context;
     private Activity activity;
@@ -157,6 +161,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     private final int OPEN_REPLAY = 1;//打开回复详情标记，做删除后刷新标记
     private SavePicDialogFragment savePicDialogFragment;
 
+    private Dialog loadDialog;//...加载
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +184,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     public void initView(){
         context = ShanDuoPartyApplication.getContext();
         activity = this;
+
+        loadDialog = ToastUtil.showLoading(this);
 
         fragment = new CustomBottomSheetDialogFragment();
 
@@ -318,7 +326,6 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 }
             }
         });
-
     }
 
     private void showImages(ImageView imageView , int position , List<ImageView> thumUrlsImageView , List<String> imgUrl){
@@ -407,11 +414,12 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     @Override
     public void show(List<CommentInfo.Comment> data, int totalPage) {
+        loadDialog.dismiss();
         if (!isLoading) {
 //            if (totalPage == 0) {
 //                loadingView.noData(R.string.tips_no_act);
 //            } else {
-//                loadingView.setGone();
+                loadingView.setGone();
 //            }
             list.clear();
             list.add(footerItem);
@@ -443,7 +451,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     @Override
     public void loading() {
-
+        if (!isRefresh && !isLoading)
+            loadDialog.show();
     }
 
     @Override
@@ -457,18 +466,23 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     @Override
     public void networkError() {
+        loadDialog.dismiss();
         setRefreshLoading(false, false);
+        loadingView.noData(R.string.title_network_error);
     }
 
     @Override
     public void error(String msg) {
+        loadDialog.dismiss();
         setRefreshLoading(false, false);
         ToastUtil.showShortToast(context , msg);
     }
 
     @Override
     public void showFailed(String msg) {
+        loadDialog.dismiss();
         setRefreshLoading(false, false);
+        ToastUtil.showShortToast(context , msg);
     }
 
     @Override

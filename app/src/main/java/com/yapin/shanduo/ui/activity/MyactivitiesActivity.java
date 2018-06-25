@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -50,9 +51,6 @@ public class MyactivitiesActivity extends BaseActivity {
     @BindView(R.id.my_main_tab)
     TabLayout tabLayout;
 
-
-    private final int OPEN_LOGIN = 1;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +68,10 @@ public class MyactivitiesActivity extends BaseActivity {
         mTableLayout.setupWithViewPager(mViewPager);
         mTableLayout.setTabMode(TabLayout.MODE_FIXED);
 
-
+        Uri uri = getIntent().getData();
+        if(uri != null){
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     @OnClick({R.id.tv_my_finish})

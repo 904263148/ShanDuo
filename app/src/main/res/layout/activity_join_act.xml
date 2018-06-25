@@ -286,8 +286,6 @@
                 android:id="@+id/tv_memo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:ellipsize="end"
                 android:text="还在等什么，赶紧加入吧"
                 android:textSize="@dimen/act_item_font_size"
                 android:textColor="@color/font_black_color"

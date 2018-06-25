@@ -3,10 +3,13 @@ package com.yapin.shanduo.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -18,9 +21,11 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.JoinActUser;
+import com.yapin.shanduo.presenter.ActivityDetailPresenter;
 import com.yapin.shanduo.presenter.JoinActPresenter;
 import com.yapin.shanduo.presenter.JoinActUserPresenter;
 import com.yapin.shanduo.ui.adapter.GridViewAdapter;
+import com.yapin.shanduo.ui.contract.ActivityDetailContract;
 import com.yapin.shanduo.ui.contract.JoinActContract;
 import com.yapin.shanduo.ui.contract.JoinActUserContract;
 import com.yapin.shanduo.utils.ApiUtil;
@@ -38,7 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class JoinActActivity extends RightSlidingActivity implements JoinActUserContract.View , JoinActContract.View , GridViewAdapter.OnItemClickListener{
+public class JoinActActivity extends RightSlidingActivity implements JoinActUserContract.View , JoinActContract.View , GridViewAdapter.OnItemClickListener , ActivityDetailContract.View{
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -96,6 +101,7 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
 
     private JoinActUserPresenter presenter;
     private JoinActPresenter joinActPresenter;
+    private ActivityDetailPresenter detailPresenter;
 
     private GridViewAdapter adapter;
 
@@ -104,24 +110,40 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
     private int isJoin = 0 ; // 0 未参加  1 已参加
 
     private int type;
+    private String actId;
+    private Uri uri; //..推送参数uri
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_act);
         ButterKnife.bind(this);
+        context = ShanDuoPartyApplication.getContext();
+        activity = this;
         presenter = new JoinActUserPresenter();
         presenter.init(this);
         joinActPresenter = new JoinActPresenter();
         joinActPresenter.init(this);
+        uri = getIntent().getData();
+        if (uri != null) {
+            actId= uri.getQueryParameter("actId");
+            type= Integer.parseInt(uri.getQueryParameter("type"));
+            detailPresenter = new ActivityDetailPresenter();
+            detailPresenter.init(this);
+            detailPresenter.getData(actId);
+        }else {
+            initView();
+        }
     }
 
     @Override
     public void initView() {
-        context = ShanDuoPartyApplication.getContext();
-        activity = this;
         act = getIntent().getParcelableExtra("act");
         type = getIntent().getIntExtra("type" , 0);
+        setActDetail(act);
+    }
+
+    public void setActDetail(ActivityInfo.Act act){
         tvKind.setText(Utils.unicodeToString(act.getActivityName()));
         tvTime.setText(act.getActivityStartTime());
         tvType.setText(act.getMode());
@@ -178,7 +200,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         adapter.setClickListener(this);
         presenter.getData(act.getId() , "1" , "10");
         loadingView.loading();
-
     }
 
     @OnClick({R.id.iv_back , R.id.tv_back , R.id.tv_confirm , R.id.rl_mile , R.id.iv_head})
@@ -269,6 +290,11 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         }
         ToastUtil.showShortToast(context , data);
         presenter.getData(act.getId() , "1" , "10");
+    }
+
+    @Override
+    public void show(ActivityInfo.Act data) {
+        setActDetail(data);
     }
 
     @Override

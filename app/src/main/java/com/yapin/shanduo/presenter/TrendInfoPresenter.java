@@ -23,7 +23,7 @@ public class TrendInfoPresenter implements TrendInfoContract.Presenter{
 
     @Override
     public void getData(String dynamicId  , String typeId , String page, String pageSize) {
-
+        view.loading();
         loadModel.load(new OnMultiLoadListener<List<CommentInfo.Comment>>() {
             @Override
             public void onSuccess(List<CommentInfo.Comment> success, int totalPage) {

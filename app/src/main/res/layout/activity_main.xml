@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_chat"
                 android:textSize="@dimen/home_title_size"
-                android:textColor="@color/font_color_gray"
+                android:textColor="@color/home_title_color_uncheck"
                 />
         </LinearLayout>
 
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_linkman"
                 android:textSize="@dimen/home_title_size"
-                android:textColor="@color/font_color_gray"
+                android:textColor="@color/home_title_color_uncheck"
                 />
 
         </LinearLayout>
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/title_my"
                 android:textSize="@dimen/home_title_size"
-                android:textColor="@color/font_color_gray"
+                android:textColor="@color/home_title_color_uncheck"
                 />
 
         </LinearLayout>
@@ -166,18 +166,19 @@
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="7dp"
         >
 
         <RelativeLayout
             android:id="@+id/rl_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/tv_add"
-            android:background="@color/color_white"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="6dp"
             >
 
             <ImageView
+                android:id="@+id/iv_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_circle"
@@ -198,7 +199,7 @@
             android:layout_height="wrap_content"
             android:text="@string/title_activity"
             android:textSize="@dimen/home_title_size"
-            android:textColor="@color/font_color_gray"
+            android:textColor="@color/home_title_color_uncheck"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             />

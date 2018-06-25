@@ -18,7 +18,6 @@ public class JoinActUserPresenter implements JoinActUserContract.Presenter{
     public void init(JoinActUserContract.View view){
         this.view = view;
         loadModel = new JoinActUserModelImpl();
-        view.initView();
     }
 
     @Override

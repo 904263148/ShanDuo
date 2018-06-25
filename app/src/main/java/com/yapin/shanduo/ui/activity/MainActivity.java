@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.bumptech.glide.Glide;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
@@ -31,6 +32,7 @@ import com.yapin.shanduo.ui.fragment.HomeFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
@@ -76,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     ImageView ivAdd;
     @BindView(R.id.tv_add)
     TextView tvAdd;
-
 
     private Context context;
     private Activity activity;
@@ -152,27 +153,27 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         switch (v.getId()){
             case R.id.ll_home:
                 viewPager.setCurrentItem(0, false);
-                tvAdd.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivHome.setImageResource(R.drawable.icon_home);
                 tvHome.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 ivChat.setImageResource(R.drawable.icon_chat_unselect);
-                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvChat.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
-                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvLinkman.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivMy.setImageResource(R.drawable.icon_my_unselect);
-                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvMy.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 break;
             case R.id.ll_chat:
                 viewPager.setCurrentItem(1, false);
-                tvAdd.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivHome.setImageResource(R.drawable.icon_home_unselect);
-                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvHome.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivChat.setImageResource(R.drawable.icon_chat);
                 tvChat.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
-                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvLinkman.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivMy.setImageResource(R.drawable.icon_my_unselect);
-                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvMy.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 break;
             case R.id.rl_add:
                 tvAdd.setTextColor(getResources().getColor(R.color.home_title_select_color));
@@ -186,25 +187,25 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 break;
             case R.id.ll_linkman:
                 viewPager.setCurrentItem(3, false);
-                tvAdd.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivHome.setImageResource(R.drawable.icon_home_unselect);
-                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvHome.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivChat.setImageResource(R.drawable.icon_chat_unselect);
-                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvChat.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivLinkman.setImageResource(R.drawable.icon_friend);
                 tvLinkman.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 ivMy.setImageResource(R.drawable.icon_my_unselect);
-                tvMy.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvMy.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 break;
             case R.id.ll_my:
                 viewPager.setCurrentItem(4, false);
-                tvAdd.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivHome.setImageResource(R.drawable.icon_home_unselect);
-                tvHome.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvHome.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivChat.setImageResource(R.drawable.icon_chat_unselect);
-                tvChat.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvChat.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivLinkman.setImageResource(R.drawable.icon_friend_unselect);
-                tvLinkman.setTextColor(getResources().getColor(R.color.font_color_gray));
+                tvLinkman.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
                 ivMy.setImageResource(R.drawable.icon_my);
                 tvMy.setTextColor(getResources().getColor(R.color.home_title_select_color));
                 break;
@@ -286,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     @Override
     public void onDismiss() {
         setBackgroundAlpha(1);
+        tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
 //        if(isPublish){
 //            Animation rotateAnimation = AnimationUtils.loadAnimation(this, R.anim.publish_45);
 //            rotateAnimation.setFillAfter(true);//设置为true，动画转化结束后被应用
@@ -318,6 +320,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         if(publishPopupWindow != null){
             if(publishPopupWindow.isShowing()) {
                 publishPopupWindow.dismiss();
+                tvAdd.setTextColor(getResources().getColor(R.color.home_title_color_uncheck));
             }
         }
 //        setBackgroundAlpha(1);

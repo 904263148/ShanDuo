@@ -123,6 +123,7 @@
     <string name="title_take_pic">拍摄</string>
     <string name="title_action">操作</string>
     <string name="title_save_pic">保存图片到相册</string>
+    <string name="title_network_error">网络异常</string>
 
     <string name="tips_no_friend">暂无好友</string>
     <string name="tips_no_login">请先登录</string>

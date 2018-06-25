@@ -70,7 +70,7 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
         MobSDK.init(context);
 
         //信鸽
-        XGPushConfig.enableDebug(this,true);
+//        XGPushConfig.enableDebug(this,true);
 
         if( !TextUtils.isEmpty(PrefUtil.getToken(context))){
             //注册信鸽推送

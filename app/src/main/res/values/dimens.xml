@@ -14,7 +14,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="home_align_bottom">3dp</dimen>
-    <dimen name="home_title_size">10dp</dimen>
+    <dimen name="home_title_size">8sp</dimen>
 
     <dimen name="title_size">15sp</dimen>
 

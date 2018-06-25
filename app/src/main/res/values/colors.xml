@@ -15,6 +15,7 @@
     <color name="bg_main_color">#F0F0F0</color>
     
     <color name="font_color_gray">#999999</color>
+    <color name="home_title_color_uncheck">#d8d8d8</color>
 
     <color name="un_selector_color">#e37c80</color>
     <color name="selector_color">#d2282c</color>

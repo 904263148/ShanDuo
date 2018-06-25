@@ -41,7 +41,7 @@ public class CreditModelImpl implements CreditLoadModel{
         params.put("page" , page);
         params.put("pageSize" , pageSize);
         params.put("type" , type);
-        OkHttp.post(context, ApiUtil.CREDIT_DETALILS, params, new JavaOkCallback() {
+        OkHttp.post(context, ApiUtil.CREDIT_DETAILS, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {
                 Log.d("CreditModelImpl",msg);

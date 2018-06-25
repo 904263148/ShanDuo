@@ -90,7 +90,7 @@ public class ApiUtil {
     public final static String ADD_FRIEND = ConfigUtil.configUrl() + "/jattention/saveapply";
 
     //信誉轨迹
-    public final static String CREDIT_DETALILS = ConfigUtil.configUrl() +"reputation/creditDetails";
+    public final static String CREDIT_DETAILS = ConfigUtil.configUrl() +"reputation/creditDetails";
 
     //检查是否可以创建群组
     public final static String CHECK_GROUP = ConfigUtil.configUrl() + "jgroup/checkgroup" ;
@@ -129,7 +129,7 @@ public class ApiUtil {
     public final static String CHECK_CHECKIN = ConfigUtil.configUrl() +"/jexperience/checksignin";
 
     //举报
-    public final static String REPORT = ConfigUtil.configUrl() + "/reputation/saveReport";
+    public final static String REPORT = ConfigUtil.configUrl() + "/report/saveReport";
 
     //图片上传后返回图片地址
     public final static String UPLOAD_IMG_URL = ConfigUtil.configUrl() + "/file/uploads";
@@ -163,6 +163,6 @@ public class ApiUtil {
 
 
     //单个活动详情
-    public final static String ACTIVITY_INFO = ConfigUtil.configUrl() + "activity/oneActivity" ;
+    public final static String ACTIVITY_INFO = ConfigUtil.configUrl() + "activity/details" ;
 
 }

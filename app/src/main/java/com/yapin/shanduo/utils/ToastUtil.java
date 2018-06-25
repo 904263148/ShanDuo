@@ -1,10 +1,19 @@
 package com.yapin.shanduo.utils;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Looper;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.amap.api.services.core.AMapException;
+import com.wang.avi.AVLoadingIndicatorView;
+import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.FlickerPurseInfo;
 
 /**
@@ -173,4 +182,26 @@ public class ToastUtil {
 
     public static void showShortToast(Context context, FlickerPurseInfo data) {
     }
+
+    /**
+     * 得到自定义的progressDialog
+     * @param activity
+     * @return
+     */
+    public static Dialog showLoading(Activity activity) {
+
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        View v = inflater.inflate(R.layout.loading_layout, null );// 得到加载view
+        AVLoadingIndicatorView loadingIndicatorView = v.findViewById(R.id.avi);
+        loadingIndicatorView.show();
+
+        Dialog loadingDialog = new Dialog(activity, R.style.loading_dialog);// 创建自定义样式dialog
+
+        loadingDialog.setCancelable(false);// 不可以用“返回键”取消
+        loadingDialog.setContentView(v, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));// 设置布局
+        return loadingDialog;
+    }
+
 }

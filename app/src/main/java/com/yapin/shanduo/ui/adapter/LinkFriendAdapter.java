@@ -79,6 +79,7 @@ public class LinkFriendAdapter extends BaseAdapter {
         }
 
         viewHolder.tvName.setText(Utils.unicodeToString(list.get(position).getName()));
+        viewHolder.tvName.setTextColor(activity.getResources().getColor(R.color.home_title_color));
         GlideUtil.load(mContext ,activity , ApiUtil.IMG_URL+list.get(position).getPicture()  , viewHolder.ivHead);
         Drawable drawable = null;
         if ("0".equals(list.get(position).getGender())) {
@@ -100,10 +101,12 @@ public class LinkFriendAdapter extends BaseAdapter {
             viewHolder.tvVip.setVisibility(View.VISIBLE);
             viewHolder.tvVip.setText("VIP"+level);
             viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_vip);
+            viewHolder.tvName.setTextColor(activity.getResources().getColor(R.color.home_vip_color));
         }else {
             viewHolder.tvVip.setVisibility(View.VISIBLE);
             viewHolder.tvVip.setText("SVIP"+(level-10));
             viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
+            viewHolder.tvName.setTextColor(activity.getResources().getColor(R.color.home_svip_color));
         }
 
         viewHolder.tvSign.setText(Utils.unicodeToString(list.get(position).getSignature()));
