@@ -27,6 +27,7 @@ import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.ImageWatcher;
 import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.sql.Time;
@@ -39,7 +40,7 @@ import butterknife.ButterKnife;
 /**
  * 作者：L on 2018/5/9 0009 11:16
  */
-public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
+public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TrendGridViewAdapter.OnItemClickListener{
 
     private Context context;
     private List<TrendInfo.Trend> list;
@@ -129,11 +130,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.ivShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                        ToastUtil.showShortToast(context , "登录后方能分享哦~");
-                        return;
-                    }
-                    openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_TREND);
+                openPopupWindow.openPopupWindow(list.get(position), Constants.HOME_TREND);
                 }
             });
 
@@ -177,7 +174,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     holder.ivImg1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView , list.get(position).getPicture());
+                            listener.onPicClick(holder.ivImg1, 0, thumUrlsImageView, list.get(position).getPicture());
                         }
                     });
                     break;
@@ -193,13 +190,13 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     holder.ivImg1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView2 , list.get(position).getPicture());
+                            listener.onPicClick(holder.ivImg1 , 0 , thumUrlsImageView2 , list.get(position).getPicture());
                         }
                     });
                     holder.ivImg2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg2 , 1 , thumUrlsImageView2 , list.get(position).getPicture());
+                            listener.onPicClick(holder.ivImg2 , 1 , thumUrlsImageView2 , list.get(position).getPicture());
                         }
                     });
                     break;
@@ -207,6 +204,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     holder.gridview.setVisibility(View.VISIBLE);
                     holder.rlImg1.setVisibility(View.GONE);
                     adapter = new TrendGridViewAdapter(context, list.get(position).getPicture(), activity);
+                    adapter.setOnItemClickListener(this);
                     holder.gridview.setAdapter(adapter);
                     break;
             }
@@ -215,19 +213,6 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        List<ImageView> thumUrlsImageView = new ArrayList<>();
-        ImageView p = (ImageView) v;
-        if(list.get(clickPosition).getPicture().size() == 1){
-
-        }else {
-
-        }
-        int position = v.getId() == R.id.iv_img1 ? 0 : 1 ;
-//        PicWatcher.showImages(activity , p , position , thumUrlsImageView , list.get(clickPosition).getPicture());
     }
 
     @Override
@@ -240,6 +225,12 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return list.get(position).getType();
     }
 
+    //回调，图片保存步骤之一
+    @Override
+    public void onSavePicClick(ImageView imageView, int position, List<ImageView> thumUrlsImageView, List<String> imgUrl) {
+        listener.onPicClick(imageView,position, thumUrlsImageView, imgUrl);
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int position);
 
@@ -248,6 +239,8 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         void onLocationClick(TrendInfo.Trend trend);
 
         void onHeadClick(int id);
+
+        void onPicClick(ImageView imageView , int position , List<ImageView> thumUrlsImageView , List<String> imgUrl);
     }
 
     private OnItemClickListener listener;

@@ -1,16 +1,21 @@
 package com.yapin.shanduo.ui.adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.yapin.shanduo.model.entity.TrendInfo;
+import com.yapin.shanduo.ui.fragment.SavePicDialogFragment;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.Utils;
+import com.yich.layout.picwatcherlib.ImageWatcher;
 import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.util.ArrayList;
@@ -26,9 +31,7 @@ public class TrendGridViewAdapter extends BaseAdapter{
     private Activity activity;
 
     private List<ImageView> thumUrlsImageView = new ArrayList<>();
-
     private ImageView imageView;
-    private int clickPosition;
 
     public TrendGridViewAdapter(Context context ,List<String> list , Activity activity){
         this.context = context;
@@ -70,10 +73,22 @@ public class TrendGridViewAdapter extends BaseAdapter{
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PicWatcher.showImages(activity , (ImageView) v, position , thumUrlsImageView , list);
+//                PicWatcher.showImages(activity , (ImageView) v, position , thumUrlsImageView , list);
+                listener.onSavePicClick((ImageView) v, position , thumUrlsImageView , list);
             }
         });
 
         return imageView;
+    }
+
+    //疯狂回调，点击图片可长按下载
+    public interface OnItemClickListener {
+        void onSavePicClick(ImageView imageView , int position , List<ImageView> thumUrlsImageView , List<String> imgUrl);
+    }
+
+    private OnItemClickListener listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

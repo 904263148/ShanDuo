@@ -33,6 +33,7 @@ import com.yapin.shanduo.utils.TimeUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.FooterLoading;
 import com.yapin.shanduo.widget.MyGridView;
+import com.yich.layout.picwatcherlib.ImageWatcher;
 import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ import butterknife.ButterKnife;
  * Created by dell on 2018/5/15.
  */
 
-public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TrendGridViewAdapter.OnItemClickListener{
 
     private Context context;
     private List<TrendInfo.Trend> list;
@@ -232,7 +233,12 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.ivImg1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView , list.get(position).getPicture());
+                            PicWatcher.showImages(activity, holder.ivImg1, 0, thumUrlsImageView, list.get(position).getPicture(), new ImageWatcher.OnPictureLongPressListener() {
+                                @Override
+                                public void onPictureLongPress(ImageView v, String url, int pos) {
+
+                                }
+                            });
                         }
                     });
                     break;
@@ -248,13 +254,23 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.ivImg1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg1 , 0 , thumUrlsImageView2 , list.get(position).getPicture());
+                            PicWatcher.showImages(activity, holder.ivImg1, 0, thumUrlsImageView2, list.get(position).getPicture(), new ImageWatcher.OnPictureLongPressListener() {
+                                @Override
+                                public void onPictureLongPress(ImageView v, String url, int pos) {
+
+                                }
+                            });
                         }
                     });
                     holder.ivImg2.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            PicWatcher.showImages(activity , holder.ivImg2 , 1 , thumUrlsImageView2 , list.get(position).getPicture());
+                            PicWatcher.showImages(activity, holder.ivImg2, 1, thumUrlsImageView2, list.get(position).getPicture(), new ImageWatcher.OnPictureLongPressListener() {
+                                @Override
+                                public void onPictureLongPress(ImageView v, String url, int pos) {
+
+                                }
+                            });
                         }
                     });
                     break;
@@ -262,6 +278,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.gridview.setVisibility(View.VISIBLE);
                     holder.rlImg1.setVisibility(View.GONE);
                     adapter = new TrendGridViewAdapter(context, list.get(position).getPicture(), activity);
+                    adapter.setOnItemClickListener(this);
                     holder.gridview.setAdapter(adapter);
                     break;
             }
@@ -275,6 +292,11 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     //多选删除
     public void setonItemLongClick(onItemLongClick onItemClickListener){
         this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void onSavePicClick(ImageView imageView, int position, List<ImageView> thumUrlsImageView, List<String> imgUrl) {
+
     }
 
     public interface onItemLongClick {

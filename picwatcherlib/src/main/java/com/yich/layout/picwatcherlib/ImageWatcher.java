@@ -18,6 +18,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -33,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.commit451.nativestackblur.NativeStackBlur;
@@ -49,7 +51,7 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-
+import static android.view.Gravity.BOTTOM;
 
 
 /**
@@ -225,7 +227,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         setVisibility(View.INVISIBLE);
         addView(tCurrentIdx = new TextView(context));
         LayoutParams lpCurrentIdx = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        lpCurrentIdx.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+        lpCurrentIdx.gravity = BOTTOM | Gravity.CENTER_HORIZONTAL;
         tCurrentIdx.setLayoutParams(lpCurrentIdx);
         tCurrentIdx.setTextColor(0xFFFFFFFF);
 
@@ -353,6 +355,7 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
                 }
                 break;
         }
+        super.onTouchEvent(event);
         return mGestureDetector.onTouchEvent(event);
     }
 
@@ -920,10 +923,10 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(final ViewGroup container,final int position) {
             FrameLayout itemView = new FrameLayout(container.getContext());
             container.addView(itemView);
-            ImageView imageView = new ImageView(container.getContext());
+            final ImageView imageView = new ImageView(container.getContext());
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             itemView.addView(imageView);
             mImageSparseArray.put(position, imageView);
@@ -949,12 +952,22 @@ public class ImageWatcher extends FrameLayout implements GestureDetector.OnGestu
             errorView.setTextColor(Color.parseColor("#FFFFFF"));
             errorView.setTag(ID_ERROR_VIEW);
             Drawable img = getResources().getDrawable(mErrorImageRes);
-    // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
+            // 调用setCompoundDrawables时，必须调用Drawable.setBounds()方法,否则图片不显示
             img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
             errorView.setCompoundDrawablePadding((int) ScreenUtils.dpToPx(getContext(),23.0f));
             errorView.setCompoundDrawables(null, img, null, null); //设置左图标
             itemView.addView(errorView);
             errorView.setVisibility(View.GONE);
+
+//            TextView saveView = new TextView(container.getContext());
+//            LayoutParams   savelpBottom=    new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//            savelpBottom.gravity = Gravity.CENTER|BOTTOM;
+//            savelpBottom.setMargins(0 ,0 ,0 ,50);
+//            saveView.setLayoutParams(savelpBottom);
+//            saveView.setText(Html.fromHtml("<u>保存</u>"));
+//            saveView.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+//            saveView.setTextColor(Color.parseColor("#FFFFFF"));
+//            itemView.addView(saveView);
 
             if (setDefaultDisplayConfigs(imageView, position, hasPlayBeginAnimation)) {
                 hasPlayBeginAnimation = true;

@@ -16,12 +16,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
-import com.yapin.shanduo.presenter.HomeActPresenter;
 import com.yapin.shanduo.presenter.HomeTrendPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
 import com.yapin.shanduo.ui.activity.LoginActivity;
@@ -38,6 +37,8 @@ import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
 import com.yapin.shanduo.widget.LoadingView;
+import com.yich.layout.picwatcherlib.ImageWatcher;
+import com.yich.layout.picwatcherlib.PicWatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,9 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     private int LikePosition = 0;
 
+    private SavePicDialogFragment savePicDialogFragment;
+    private String clickImageUrl = null;
+
     public TrendFragment() {
         // Required empty public constructor
     }
@@ -119,7 +123,6 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
         layoutManager = new LinearLayoutManager(context);
-
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -131,7 +134,7 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             //申请READ_EXTERNAL_STORAGE权限
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     Constants.REQUEST_CODE_CONTACT);
         }else {
             presenter.getData((position+1)+"" , PrefUtil.getLon(context) , PrefUtil.getLat(context) , page+"" , pageSize+"" , userId);
@@ -155,6 +158,9 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
                 Utils.setLocation(context);
                 presenter.getData((position+1)+"" , "" , "" , page+"" , pageSize+"" , userId);
             }
+        }else {
+            savePicDialogFragment = SavePicDialogFragment.newInstance(clickImageUrl);
+            savePicDialogFragment.show(getChildFragmentManager() , "");
         }
     }
 
@@ -278,6 +284,25 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         Bundle bundle = new Bundle();
         bundle.putString("userId" , id+"");
         StartActivityUtil.start(activity , UserProfActivity.class , bundle);
+    }
+
+    @Override
+    public void onPicClick(ImageView imageView, int position, List<ImageView> thumUrlsImageView, List<String> imgUrl) {
+        PicWatcher.showImages(activity, imageView, position, thumUrlsImageView, imgUrl, new ImageWatcher.OnPictureLongPressListener() {
+            @Override
+            public void onPictureLongPress(ImageView v, String url, int pos) {
+                clickImageUrl = url;
+                if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    //申请READ_EXTERNAL_STORAGE权限
+                    ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            Constants.REQUEST_CODE_WRITE);
+                }else {
+                    savePicDialogFragment = SavePicDialogFragment.newInstance(url);
+                    savePicDialogFragment.show(getChildFragmentManager() , "");
+                }
+            }
+        });
     }
 
     @Override

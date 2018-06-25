@@ -168,5 +168,5 @@ public class Constants {
 
     //申请权限标识
     public static final int REQUEST_CODE_CONTACT = 101;
-
+    public static final int REQUEST_CODE_WRITE = 102; //..写入权限
 }

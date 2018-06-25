@@ -42,9 +42,9 @@ public class PicWatcher {
      * @param overlay  覆盖在图片上的overlay
      * @param canCache 是否缓存图片
      */
-    private static  void showImages(final Activity activity, ImageView p, List<ImageView> thumUrlsImageView,int position, List<String> bigUrlLists,View overlay,boolean canCache){
+    private static  void showImages(final Activity activity, ImageView p, List<ImageView> thumUrlsImageView,int position, List<String> bigUrlLists,View overlay,boolean canCache, ImageWatcher.OnPictureLongPressListener listener){
         if (activity!=null){
-            ImageWatcher watcher=getWatchLayout(activity,canCache);
+            ImageWatcher watcher=getWatchLayout(activity,canCache , listener);
             watcher.show(p,thumUrlsImageView, position,bigUrlLists,overlay);
         }
     }
@@ -57,8 +57,8 @@ public class PicWatcher {
      * @param thumUrlsImageView  可见的imageview的集合
      * @param bigUrlLists 所有图片的下载地址集合
      */
-    public static  void showImages(final Activity activity, ImageView p,int position, List<ImageView> thumUrlsImageView, List<String> bigUrlLists){
-        showImages(activity,p,thumUrlsImageView,position,bigUrlLists,null,true);
+    public static  void showImages(final Activity activity, ImageView p,int position, List<ImageView> thumUrlsImageView, List<String> bigUrlLists , ImageWatcher.OnPictureLongPressListener listener){
+        showImages(activity,p,thumUrlsImageView,position,bigUrlLists,null,true ,listener);
     }
 
     /**
@@ -70,9 +70,9 @@ public class PicWatcher {
      * @param bigUrlLists 所有图片的下载地址
      * @param canCache 是否需要缓存图片，默认缓存
      */
-    public static  void showImages(final Activity activity, ImageView p,int position, List<ImageView> thumUrlsImageView, List<String> bigUrlLists,boolean  canCache){
-        showImages(activity,p,thumUrlsImageView,position,bigUrlLists,null,canCache);
-    }
+//    public static  void showImages(final Activity activity, ImageView p,int position, List<ImageView> thumUrlsImageView, List<String> bigUrlLists,boolean  canCache){
+//        showImages(activity,p,thumUrlsImageView,position,bigUrlLists,null,canCache);
+//    }
     /**
      *
      * @param activity 当前的activity
@@ -85,23 +85,23 @@ public class PicWatcher {
         thumImageViews.add(p);
         ArrayList<String>  bigurls=new ArrayList<>();
         bigurls.add(bigUrlLists);
-        showImages(activity,p,thumImageViews,0,bigurls,overLay,canCache);
+//        showImages(activity,p,thumImageViews,0,bigurls,overLay,canCache);
     }
     public static  void showSingleImage(final Activity activity, ImageView p, String bigUrlLists , View overLay){
         ArrayList<ImageView> thumImageViews=new ArrayList<ImageView>();
         thumImageViews.add(p);
         ArrayList<String>  bigurls=new ArrayList<>();
         bigurls.add(bigUrlLists);
-        showImages(activity,p,thumImageViews,0,bigurls,overLay,true);
+//        showImages(activity,p,thumImageViews,0,bigurls,overLay,true);
     }
     public static  void showSingleImage(final Activity activity, ImageView p, String bigUrlLists){
               showSingleImage(activity,p,bigUrlLists,null,true);
     }
-    private static ImageWatcher getWatchLayout(Activity activity,boolean canCache) {
+    private static ImageWatcher getWatchLayout(Activity activity,boolean canCache, ImageWatcher.OnPictureLongPressListener listener) {
         if ( (ViewGroup) activity.getWindow().getDecorView().findViewById(VIEW_IMAGE_WATCHER_ID)!=null){
              return (ImageWatcher)((ViewGroup) activity.getWindow().getDecorView().findViewById(VIEW_IMAGE_WATCHER_ID));
         }else{
-            return createViewPicLayout(activity, canCache);
+            return createViewPicLayout(activity, canCache , listener);
         }
     }
 
@@ -111,11 +111,11 @@ public class PicWatcher {
      *  创建图片查看的layout层
      * @param activity
      */
-    private static ImageWatcher createViewPicLayout(final Activity activity,final  boolean canCache) {
+    private static ImageWatcher createViewPicLayout(final Activity activity,final  boolean canCache , ImageWatcher.OnPictureLongPressListener listener) {
       return   ImageWatcher.Helper.with(activity) // 一般来讲， ImageWatcher 需要占据全屏的位置
                 .setTranslucentStatus(calcStatusBarHeight(activity)) // 如果是透明状态栏，你需要给ImageWatcher标记 一个偏移值，以修正点击ImageView查看的启动动画的Y轴起点的不正确
                 .setErrorImageRes(R.drawable.image_view_error) // 配置error图标 如果不介意使用lib自带的图标，并不一定要调用这个API
-//                .setOnPictureLongPressListener(this) // 长按图片的回调，你可以显示一个框继续提供一些复制，发送等功能
+                .setOnPictureLongPressListener(listener) // 长按图片的回调，你可以显示一个框继续提供一些复制，发送等功能
                 .setLoader(new Loader() {
 
                     @Override

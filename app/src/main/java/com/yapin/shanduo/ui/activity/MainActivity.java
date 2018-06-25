@@ -3,11 +3,8 @@ package com.yapin.shanduo.ui.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,8 +13,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -26,52 +21,29 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
-import com.tencent.TIMConversation;
-import com.tencent.TIMConversationType;
-import com.tencent.TIMManager;
-import com.tencent.TIMMessage;
-import com.tencent.TIMValueCallBack;
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.open.utils.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.TrendInfo;
-import com.yapin.shanduo.presenter.CheckcheckinPresenter;
-import com.yapin.shanduo.presenter.SigninPresenter;
 import com.yapin.shanduo.ui.adapter.ViewPagerAdapter;
-import com.yapin.shanduo.ui.contract.CheckcheckinContract;
-import com.yapin.shanduo.ui.contract.SigninContract;
-import com.yapin.shanduo.ui.fragment.ChatFragment;
 import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
 import com.yapin.shanduo.ui.fragment.HomeFragment;
 import com.yapin.shanduo.ui.inter.OpenPopupWindow;
 import com.yapin.shanduo.ui.inter.RefreshAll;
 import com.yapin.shanduo.utils.Constants;
-import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.sina.weibo.SinaWeibo;
-import cn.sharesdk.tencent.qq.QQ;
-import cn.sharesdk.tencent.qzone.QZone;
-import cn.sharesdk.wechat.friends.Wechat;
-import cn.sharesdk.wechat.moments.WechatMoments;
-import cn.sharesdk.wechat.utils.WXImageObject;
-import cn.sharesdk.wechat.utils.WXMediaMessage;
 
 public class MainActivity extends AppCompatActivity implements OpenPopupWindow, PopupWindow.OnDismissListener,
         View.OnClickListener, PlatformActionListener , RefreshAll {
@@ -121,8 +93,11 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     private ArrayList<AHBottomNavigationItem> bottomNavigationItems = new ArrayList<>();
 
-    private final int PUBLISH_ACT_OPEN_LOGIN = 1;
-    private final int PUBLISH_TREND_OPEN_LOGIN = 2;
+    private final int PUBLISH_ACT_OPEN_LOGIN = 1;//
+    private final int PUBLISH_TREND_OPEN_LOGIN = 2;//
+    private final int OPEN_LOGIN_BY_ACT_SHARE = 4; // ..活动分享点击
+    private final int OPEN_LOGIN_BY_TREND_SHARE = 5; // ..动态分享点击
+    private Object clickObject = null; // ..分享点击的实体类
 
     private final int OPEN_OTHER_ACTIVITY = 3;
 
@@ -252,14 +227,22 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
 
     @Override
     public void openPopupWindow(Object object , int type) {
-
+        clickObject = object;
         switch (type){
             case Constants.HOME_ACT:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity, LoginActivity.class , OPEN_LOGIN_BY_ACT_SHARE);
+                    return;
+                }
                 ActivityInfo.Act act= (ActivityInfo.Act) object;
                 fragment.show(getSupportFragmentManager() , act.getUserId()+"");
                 fragment.setType(0 , act.getId());
                 break;
             case Constants.HOME_TREND:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity, LoginActivity.class , OPEN_LOGIN_BY_TREND_SHARE);
+                    return;
+                }
                 TrendInfo.Trend trend = (TrendInfo.Trend) object;
                 fragment.show(getSupportFragmentManager() , trend.getUserId()+"");
                 fragment.setType(1 , trend.getId());
@@ -364,6 +347,16 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                 break;
             case PUBLISH_TREND_OPEN_LOGIN:
                 StartActivityUtil.start(activity , PublishTrendActivity.class);
+                break;
+            case OPEN_LOGIN_BY_ACT_SHARE:
+                ActivityInfo.Act act= (ActivityInfo.Act) clickObject;
+                fragment.show(getSupportFragmentManager() , act.getUserId()+"");
+                fragment.setType(0 , act.getId());
+                break;
+            case OPEN_LOGIN_BY_TREND_SHARE:
+                TrendInfo.Trend trend = (TrendInfo.Trend) clickObject;
+                fragment.show(getSupportFragmentManager() , trend.getUserId()+"");
+                fragment.setType(1 , trend.getId());
                 break;
         }
     }

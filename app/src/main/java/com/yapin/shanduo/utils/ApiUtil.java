@@ -161,4 +161,8 @@ public class ApiUtil {
     //做任务
     public final static String GETVIPLEVEL = ConfigUtil.configUrl() + "/vip/getVipLevel" ;
 
+
+    //单个活动详情
+    public final static String ACTIVITY_INFO = ConfigUtil.configUrl() + "activity/oneActivity" ;
+
 }
