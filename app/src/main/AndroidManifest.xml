@@ -376,8 +376,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activity.ScanActivity" />
-        <activity android:name=".ui.activity.MyCodeActivity" />
         <activity
             android:name=".ui.activity.TrendInfoActivity"
             android:theme="@style/MyTheme"

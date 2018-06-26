@@ -7,21 +7,15 @@ import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.alipay.android.app.IAlixPay;
-import com.alipay.sdk.auth.AlipaySDK;
 import com.mob.MobSDK;
-import com.mob.tools.MobLog;
 import com.tencent.TIMManager;
 import com.tencent.TIMOfflinePushListener;
 import com.tencent.TIMOfflinePushNotification;
-import com.tencent.TIMOfflinePushSettings;
 import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.qalsdk.sdk.MsfSdkUtils;
-import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.db.DBHelper;
 import com.yapin.shanduo.im.utils.Foreground;
@@ -59,8 +53,6 @@ public class ShanDuoPartyApplication extends MultiDexApplication{
                 }
             });
         }
-        //扫码初始化
-//        ZXingLibrary.initDisplayOpinion(this);
 
         //微信支付注册
         IWXAPI msgApi = WXAPIFactory.createWXAPI(context, null);

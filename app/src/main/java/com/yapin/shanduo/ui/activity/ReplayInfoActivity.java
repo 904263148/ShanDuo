@@ -217,11 +217,11 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
                 }
                 String id;
                 if(replay_position == -1 ){
-                    id = comment.getUserId()+"";
-//                    replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,comment.getUserId()+"");
+                    id = comment.getId()+"";
+//                    replayPresenter.getData(comment.getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,comment.getUserId()+"");
                 }else{
-                    id = list.get(replay_position).getUserId()+"";
-//                    replayPresenter.getData(list.get(replay_position).getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,list.get(replay_position).getUserId()+"");
+                    id = list.get(replay_position).getId()+"";
+//                    replayPresenter.getData(list.get(replay_position).getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,list.get(replay_position).getUserId()+"");
                 }
                 replayPresenter.getData(comment.getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,id);
                 etComment.setText("");

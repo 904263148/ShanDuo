@@ -7,5 +7,5 @@ import com.yapin.shanduo.presenter.OnLoadListener;
  */
 public interface TrendReplayLoadModel {
 
-    void load(OnLoadListener<String> listener , String dynamicId , String comment , String typeId , String ommentId , String respondent);
+    void load(OnLoadListener<String> listener , String dynamicId , String comment , String typeId , String ommentId , String replyCommentId);
 }

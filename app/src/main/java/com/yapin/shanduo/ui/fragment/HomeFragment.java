@@ -3,12 +3,8 @@ package com.yapin.shanduo.ui.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,23 +16,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
-import com.uuzuche.lib_zxing.activity.CaptureFragment;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.ui.activity.PublishActivity;
-import com.yapin.shanduo.ui.activity.ScanActivity;
-import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.activity.SiginActivity;
 import com.yapin.shanduo.ui.activity.SmartRefreshActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
-
-import javax.xml.transform.Result;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -135,34 +122,6 @@ public class HomeFragment extends Fragment{
                 StartActivityUtil.start(activity , this , SiginActivity.class );
                 break;
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != activity.RESULT_OK){
-            return;
-        }
-        /**
-         * 处理二维码扫描结果
-         */
-        if (requestCode == OPEN_SCAN) {
-            //处理扫描结果（在界面上显示）
-            if (null != data) {
-                Bundle bundle = data.getExtras();
-                if (bundle == null) {
-                    return;
-                }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    ToastUtil.showShortToast(context, "解析结果:" + result);
-                    Log.d("Scan_Result","解析结果:" + result);
-                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    ToastUtil.showShortToast(context, "解析二维码失败");
-                    Log.d("Scan_Result","解析二维码失败");
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

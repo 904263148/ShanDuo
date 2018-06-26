@@ -22,6 +22,6 @@ public interface TrendReplayContract {
     }
 
     interface Presenter{
-        void getData(String dynamicId, String comment, String typeId, String ommentId, String respondent);
+        void getData(String dynamicId, String comment, String typeId, String ommentId, String replyCommentId);
     }
 }

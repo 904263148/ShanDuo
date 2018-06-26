@@ -18,7 +18,7 @@ public class TrendReplayPresenter implements TrendReplayContract.Presenter{
     }
 
     @Override
-    public void getData(String dynamicId, String comment, String typeId, String ommentId, String respondent) {
+    public void getData(String dynamicId, String comment, String typeId, String ommentId, String replyCommentId) {
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String success) {
@@ -34,6 +34,6 @@ public class TrendReplayPresenter implements TrendReplayContract.Presenter{
             public void networkError() {
                 view.networkError();
             }
-        } , dynamicId , comment , typeId , ommentId , respondent);
+        } , dynamicId , comment , typeId , ommentId , replyCommentId);
     }
 }

@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class TrendReplayModelImpl implements TrendReplayLoadModel{
     @Override
-    public void load(final OnLoadListener<String> listener, String dynamicId, String comment, String typeId, String ommentId, String respondent) {
+    public void load(final OnLoadListener<String> listener, String dynamicId, String comment, String typeId, String ommentId, String replyCommentId) {
         Context context = ShanDuoPartyApplication.getContext();
         if (!NetWorkUtil.isNetworkAvailable(context)) {
             listener.networkError();
@@ -35,7 +35,7 @@ public class TrendReplayModelImpl implements TrendReplayLoadModel{
         params.put("comment" , comment);
         params.put("typeId" , typeId);
         params.put("commentId" , ommentId);
-        params.put("respondent" , respondent);
+        params.put("replyCommentId" , replyCommentId);
         OkHttp.post(context, ApiUtil.TREND_REPLAY, params, new JavaOkCallback() {
             @Override
             public void onFailure(String msg) {

@@ -26,10 +26,8 @@ import com.tencent.qcloud.presentation.viewfeatures.FriendshipManageView;
 import com.tencent.qcloud.ui.NotifyDialog;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.im.ui.AddFriendActivity;
 import com.yapin.shanduo.im.ui.ChatActivity;
 import com.yapin.shanduo.model.entity.ShanDuoUserProf;
-import com.yapin.shanduo.model.entity.ShanduoUser;
 import com.yapin.shanduo.presenter.AddFriendPresenter;
 import com.yapin.shanduo.presenter.DeleteFriendPresenter;
 import com.yapin.shanduo.presenter.UserProfPresenter;
@@ -42,11 +40,9 @@ import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
 import com.yapin.shanduo.utils.PrefJsonUtil;
-import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
-import com.yapin.shanduo.widget.CircleImageView;
 import com.yapin.shanduo.widget.LoadingView;
 
 import java.util.ArrayList;
@@ -59,8 +55,6 @@ import butterknife.OnClick;
 
 public class UserProfActivity extends BaseActivity implements OpenPopupWindow, PopupWindow.OnDismissListener , UserProfContract.View , AddFriendContract.View , FriendshipManageView , DeleteFriendContract.View{
 
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
     @BindView(R.id.iv_head)
     ImageView ivHead;
     @BindView(R.id.tv_home_age)
@@ -89,8 +83,6 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     TextView tvName;
     @BindView(R.id.tv_id)
     TextView tvId;
-    @BindView(R.id.iv_head_bg)
-    ImageView ivBg;
     @BindView(R.id.ll_add)
     LinearLayout llAdd;
     @BindView(R.id.tv_delete_friend)
@@ -115,6 +107,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_prof);
+
         ButterKnife.bind(this);
         profPresenter = new UserProfPresenter();
         profPresenter.init(this);
