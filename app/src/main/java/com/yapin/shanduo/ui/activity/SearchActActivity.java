@@ -86,6 +86,7 @@ public class SearchActActivity extends RightSlidingActivity implements  View.OnK
         layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setOnLoadMoreListener(this);
         adapter = new ActivityInfoAdapter(context ,activity , list ,10);
         recyclerView.setAdapter(adapter);
     }

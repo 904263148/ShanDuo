@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.HomeCarouselPresenter;
@@ -47,14 +48,14 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
     @BindView(R.id.refresh)
     VpSwipeRefreshLayout refreshLayout;
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
     @BindView(R.id.iv_banner)
     ImageView ivBanner;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
     private Context context;
     private Activity activity;
@@ -114,13 +115,7 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
         adapter = new TrendTabAdapter(getChildFragmentManager() , tabList , "");
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 55 , 55);
-            }
-        });
+        slidingTabLayout.setViewPager(viewPager);
 
         ShanDuoPartyApplication application = (ShanDuoPartyApplication)context.getApplicationContext();
         application.appBarLayout = appBarLayout;
@@ -191,12 +186,6 @@ public class HomeTrendFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         adapter.notifyDataSetChanged();
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 55 , 55);
-            }
-        });
     }
 
     @Override

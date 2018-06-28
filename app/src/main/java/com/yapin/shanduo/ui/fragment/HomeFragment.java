@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,13 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.PublishTrendActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.activity.SiginActivity;
 import com.yapin.shanduo.ui.activity.SmartRefreshActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
+import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 
@@ -119,7 +123,11 @@ public class HomeFragment extends Fragment{
                 StartActivityUtil.start(activity , this , SearchActActivity.class );
                 break;
             case R.id.iv_sign:
-                StartActivityUtil.start(activity , this , SiginActivity.class );
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class);
+                }else {
+                    StartActivityUtil.start(activity , this , SiginActivity.class );
+                }
                 break;
         }
     }

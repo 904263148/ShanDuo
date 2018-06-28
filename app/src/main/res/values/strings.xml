@@ -65,6 +65,7 @@
     <string name="tips_my_no_token">请先登录哦</string>
     <string name="tips_no_report">请选择举报内容</string>
     <string name="tips_loading">加载中#8230</string>
+    <string name="tips_no_message">空空如也~</string>
 
     <string name="title_home">首页</string>
     <string name="title_chat">聊天</string>
@@ -80,6 +81,7 @@
     <string name="Member_Center">\t会员中心</string>
     <string name="Set_up">\t设置</string>
     <string name="Loginandregistration">登录/注册</string>
+    <string name="title_my_message">我的消息</string>
 
     <string name="Accountandsecurity">账户与安全</string>
     <string name="Messagenotification">消息通知</string>

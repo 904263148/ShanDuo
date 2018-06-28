@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:alpha="0.95"
     >
 
     <LinearLayout
         android:id="@+id/ll_publish_act"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/icon_publish_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/ll_publish_trend"
+        android:layout_marginBottom="123dp"
+        android:background="@color/white"
         >
 
         <ImageView
@@ -24,21 +28,22 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_act"
             android:gravity="center"
-            android:textSize="8dp"
+            android:textSize="@dimen/egg_font_size_xxx"
             android:textColor="@color/home_title_color"
-            android:paddingTop="2dp"
             />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_publish_trend"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/icon_publish_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/iv_dismiss"
+        android:layout_marginBottom="105dp"
+        android:background="@color/white"
         >
 
         <ImageView
@@ -51,12 +56,22 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_trend"
             android:gravity="center"
-            android:textSize="8dp"
+            android:textSize="@dimen/egg_font_size_xxx"
             android:textColor="@color/home_title_color"
-            android:paddingTop="2dp"
             />
 
     </LinearLayout>
 
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/iv_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/icon_publish_cross"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        />
+
+</RelativeLayout>

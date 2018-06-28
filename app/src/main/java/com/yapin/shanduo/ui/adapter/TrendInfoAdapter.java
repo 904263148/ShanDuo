@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.activity.MainActivity;
@@ -209,6 +210,20 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     break;
             }
 
+            holder.shineButton.init(activity);
+
+            if(list.get(position).isPraise()){
+                holder.shineButton.setChecked(true);
+            }else {
+                holder.shineButton.setChecked(false);
+            }
+            holder.shineButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onLikeClick(list.get(position).getId() , position);
+                }
+            });
+
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
@@ -289,6 +304,8 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         TextView tvDate;
         @BindView(R.id.tv_lv)
         TextView tvLv;
+        @BindView(R.id.shine_button)
+        ShineButton shineButton;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -239,7 +239,6 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                return;
                             }
                         }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                     @Override

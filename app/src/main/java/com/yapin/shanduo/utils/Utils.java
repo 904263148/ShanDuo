@@ -8,9 +8,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -502,4 +507,5 @@ public class Utils {
             return TIMGroupMemberRoleType.Normal;
         }
     }
+
 }

@@ -105,7 +105,7 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             holder.tvLv.setText("LV" + list.get(position).getLevel()+"");
 
-            Drawable drawable = null;
+            Drawable drawable;
             if ("0".equals(list.get(position).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);
                 holder.tvAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);

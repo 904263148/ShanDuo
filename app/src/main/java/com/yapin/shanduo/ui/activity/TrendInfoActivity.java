@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.tencent.qcloud.tlslibrary.helper.Util;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
@@ -129,6 +130,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     NestedScrollView scrollView;
     @BindView(R.id.loading_view)
     LoadingView loadingView;
+    @BindView(R.id.shine_button)
+    ShineButton shineButton;
 
     private Context context;
     private Activity activity;
@@ -299,8 +302,24 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 break;
         }
 
+        shineButton.init(activity);
+        if(trend.isPraise()){
+            shineButton.setChecked(true);
+        }else {
+            shineButton.setChecked(false);
+        }
+        shineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
+                    return;
+                }
+                likePresenter.onLike(trend.getId());
+            }
+        });
+        
         layoutManager = new LinearLayoutManager(context);
-
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -382,11 +401,11 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 StartActivityUtil.start(activity , PlaceActivity.class , bundle);
                 break;
             case R.id.tv_like_count:
-                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
-                    return;
-                }
-                likePresenter.onLike(trend.getId());
+//                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+//                    StartActivityUtil.start(activity , LoginActivity.class , Constants.OPEN_LOGIN);
+//                    return;
+//                }
+//                likePresenter.onLike(trend.getId());
                 break;
             case R.id.iv_back:
                 Bundle bundle1 = new Bundle();
@@ -461,6 +480,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         if(resultCode != RESULT_OK) return;
         if(requestCode == OPEN_REPLAY){
             onRefresh();
+        }else {
+
         }
     }
 
@@ -488,7 +509,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("comment" , list.get(position));
+        bundle.putParcelable("comment" , trend);
         StartActivityUtil.start(activity , ReplayInfoActivity.class , bundle , OPEN_REPLAY);
     }
 

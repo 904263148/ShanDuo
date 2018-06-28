@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.HomeCarouselPresenter;
@@ -60,14 +61,14 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
     @BindView(R.id.refresh)
     VpSwipeRefreshLayout refreshLayout;
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
     @BindView(R.id.iv_banner)
     ImageView ivBanner;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
     private Context context;
     private Activity activity;
@@ -130,33 +131,26 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
         viewPager.addOnPageChangeListener(this);
+        slidingTabLayout.setViewPager(viewPager);
 
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 30 , 30);
-            }
-        });
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                if(tab.getPosition() == 2 && TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity ,HomeActivityFragment.this , LoginActivity.class ,OPEN_LOGIN);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+//        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                if(tab.getPosition() == 2 && TextUtils.isEmpty(PrefUtil.getToken(context))){
+//                    StartActivityUtil.start(activity ,HomeActivityFragment.this , LoginActivity.class ,OPEN_LOGIN);
+//                }
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
 
         ShanDuoPartyApplication application = (ShanDuoPartyApplication)context.getApplicationContext();
         application.appBarLayout = appBarLayout;
@@ -231,12 +225,6 @@ public class HomeActivityFragment extends Fragment implements SwipeRefreshLayout
     public void onRefresh() {
 //        activityFragment.onRefresh(viewPager.getCurrentItem());
         adapter.notifyDataSetChanged();
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 30 , 30);
-            }
-        });
     }
 
 

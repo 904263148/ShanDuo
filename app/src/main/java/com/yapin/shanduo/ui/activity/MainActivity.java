@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,6 +22,10 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.Types.BoomType;
+import com.nightonke.boommenu.Types.ButtonType;
+import com.nightonke.boommenu.Types.PlaceType;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.ActivityInfo;
@@ -221,6 +226,9 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
                     StartActivityUtil.start(activity , PublishTrendActivity.class , OPEN_OTHER_ACTIVITY);
                 }
                 break;
+            case R.id.iv_dismiss:
+                publishPopupWindow.dismiss();
+                break;
         }
     }
 
@@ -254,9 +262,30 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         homeFragment.setTitleHidden(alpha);
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+//        boomMenuButton.init(
+//                new Drawable[]{ R.drawable.icon_trend_publish, R.drawable.icon_trend_publish}, // 子按钮的图标Drawable数组，不可以为null
+//                new String [] {"" ,""},     // 子按钮的文本String数组，可以为null
+//                new int [][] {new int [] {R.color.white ,R.color.bg_color} , new int [] {R.color.white ,R.color.bg_color}},    // 子按钮的背景颜色color二维数组，包括按下和正常状态的颜色，不可为null
+//                ButtonType.HAM,     // 子按钮的类型
+//                BoomType.PARABOLA,  // 爆炸类型
+//                PlaceType.CIRCLE_2_2,  // 排列类型
+//                null,               // 展开时子按钮移动的缓动函数类型
+//                null,               // 展开时子按钮放大的缓动函数类型
+//                null,               // 展开时子按钮旋转的缓动函数类型
+//                null,               // 隐藏时子按钮移动的缓动函数类型
+//                null,               // 隐藏时子按钮缩小的缓动函数类型
+//                null,               // 隐藏时子按钮旋转的缓动函数类型
+//                null                // 旋转角度
+//        );
+    }
+
     public void openPublishPopup(){
         publishPopupWindow = new PopupWindow(publishPopView, LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.MATCH_PARENT);
         //设置背景,这个没什么效果，不添加会报错
         publishPopupWindow.setBackgroundDrawable(new BitmapDrawable());
         //设置点击弹窗外隐藏自身
@@ -265,14 +294,15 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         //设置动画
         publishPopupWindow.setAnimationStyle(R.style.PopupWindow);
         //设置位置
-        publishPopupWindow.showAtLocation(ivAdd, Gravity.BOTTOM, 0, 200);
+        publishPopupWindow.showAtLocation(ivAdd, Gravity.BOTTOM, 0, 0);
         //设置消失监听
         publishPopupWindow.setOnDismissListener(this);
         //设置背景色
-        setBackgroundAlpha(0.5f);
+        setBackgroundAlpha(1f);
 
         publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
         publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
+        publishPopView.findViewById(R.id.iv_dismiss).setOnClickListener(this);
     }
 
     //设置屏幕背景透明效果
