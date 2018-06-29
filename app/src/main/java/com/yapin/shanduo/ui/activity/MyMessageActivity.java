@@ -174,9 +174,9 @@ public class MyMessageActivity extends RightSlidingActivity implements MyMessage
     @Override
     public void onReplayClick(MyMessageInfo.Message message, String str) {
         if("1".equals(message.getType())){
-            replayPresenter.getData(message.getDynamicId() , Utils.stringToUnicode(str) , message.getType() , "" , "");
+            replayPresenter.getData(message.getDynamicId() , str , "2" , message.getId() , message.getId());
         }else {
-            replayPresenter.getData(message.getDynamicId() , Utils.stringToUnicode(str) , message.getType() , message.getCommentId() , message.getId()+"");
+            replayPresenter.getData(message.getDynamicId() , str , "2" , message.getCommentId() , message.getId());
         }
     }
 

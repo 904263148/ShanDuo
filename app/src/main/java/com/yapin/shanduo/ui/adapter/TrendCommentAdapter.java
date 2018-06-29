@@ -86,6 +86,7 @@ public class TrendCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvAge.setText(list.get(position).getAge() +"");
 
             holder.tvOneComment.setText(Utils.unicodeToString(list.get(position).getComment()));
+//            holder.tvOneComment.setText(list.get(position).getComment());
 
             if(list.get(position).getUserId() == Integer.parseInt(PrefJsonUtil.getProfile(context).getUserId())){
                 holder.tvDelete.setVisibility(View.VISIBLE);

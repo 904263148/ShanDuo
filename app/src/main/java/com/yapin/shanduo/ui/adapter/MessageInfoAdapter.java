@@ -109,7 +109,7 @@ public class MessageInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 holder.tvComment.setText(Html.fromHtml("<font color = '#5e75ff'>" + message.getName() + "：</font><font color = '#333333'>" + Utils.unicodeToString(message.getComment()) + "</font>"));
             }
 
-            holder.etReplay.setHint("回复"+message.getName()+"：");
+            holder.etReplay.setHint("回复"+message.getReplyName()+"：");
             holder.etReplay.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {

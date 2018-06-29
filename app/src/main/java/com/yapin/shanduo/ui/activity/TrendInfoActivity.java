@@ -389,7 +389,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 }
 
                 String unicode = Utils.stringToUnicode(etComment.getText().toString().trim());
-                replayPresenter.getData(trend.getId() , unicode , TYPEID , "" ,"");
+                replayPresenter.getData(trend.getId() , etComment.getText().toString().trim() , TYPEID , "" ,"");
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 break;
@@ -509,7 +509,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("comment" , trend);
+        bundle.putParcelable("comment" , list.get(position));
         StartActivityUtil.start(activity , ReplayInfoActivity.class , bundle , OPEN_REPLAY);
     }
 

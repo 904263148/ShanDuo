@@ -223,7 +223,8 @@ public class ReplayInfoActivity extends RightSlidingActivity implements TrendSec
                     id = list.get(replay_position).getId()+"";
 //                    replayPresenter.getData(list.get(replay_position).getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,list.get(replay_position).getUserId()+"");
                 }
-                replayPresenter.getData(comment.getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,id);
+//                replayPresenter.getData(comment.getDynamicId() , Utils.stringToUnicode(etComment.getText().toString().trim()) , TYPE_ID , comment.getId() ,id);
+                replayPresenter.getData(comment.getDynamicId() , etComment.getText().toString().trim() , TYPE_ID , comment.getId() ,id);
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 break;
