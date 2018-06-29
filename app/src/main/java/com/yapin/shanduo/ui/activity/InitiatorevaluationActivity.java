@@ -118,8 +118,6 @@ public class InitiatorevaluationActivity extends BaseActivity implements Initiat
         tv_name.setText(Utils.unicodeToString(name));
 //        Log.i("idaaaa", activityId+"");
 
-
-
     }
 
     @OnClick({R.id.iv_finish , R.id.but_evaluate})
@@ -148,7 +146,7 @@ public class InitiatorevaluationActivity extends BaseActivity implements Initiat
 //                }else{
 //                    Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
 //                }
-                evaluationcontent = Utils.stringToUnicode(et_Inputbox.getText().toString().trim())+sb.toString();
+                evaluationcontent = et_Inputbox.getText().toString().trim()+sb.toString();
 
 //                Log.i("dddadada", beEvaluated.toString()+"");
 

@@ -31,7 +31,8 @@
                 android:text="胖虎"
                 android:textSize="15dp" />
 
-            <com.yapin.shanduo.widget.RatingBarView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.yapin.shanduo.widget.RatingBarView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/custom_ratingbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -8,9 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
@@ -41,7 +43,6 @@ import butterknife.OnClick;
 /**
  * Created by dell on 2018/5/3.
  */
-//,MyDynamicsAdapter.onItemLongClick  MyDynamicsAdapter.OnItemClickListener ,
 public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View ,
         LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnLikeClickListener ,
         LikeContract.View , MyDynamicsAdapter.Onpopupwindow ,DeletedynamicContract.View{
@@ -63,7 +64,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     Button bt_delete;
     private MyDynamicsAdapter adapter;
     private LinearLayoutManager layoutManager;
-    private int position;
 
     private int page = 1;
     private int pageSize = 10;
@@ -72,7 +72,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
     private MyDynamicsPresenter presenter;
     private DeletedynamicPresenter deletedynamicPresenter;
-    private LikePresenter likePresenter;
     private CustomBottomSheetDialogFragment fragment;
 
     private List<TrendInfo.Trend> list = new ArrayList<>();
@@ -86,7 +85,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
      * 记录选中的ｃｈｅｃｋｂｏｘ
      */
     private List<String> checkList = new ArrayList<String>();
-    private String string;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +99,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         layoutManager = new LinearLayoutManager(context);
         fragment = new CustomBottomSheetDialogFragment();
         initView();
-//        initListener();
     }
 
     @Override
@@ -110,17 +107,12 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        if (adapter == null) {
             adapter = new MyDynamicsAdapter(context, activity, list);
             recyclerView.setAdapter(adapter);
-//        }else {
-//            adapter.notifyDataSetChanged();
-//        }
-//        adapter.setOnItemClickListener(this);
+
         adapter.setLikeClickListener(this);
         adapter.setOnpopupwindow(this);
-//        adapter.setonItemLongClick(this);
-//        ll_button.setVisibility(View.GONE);
+
         adapter.setonItemLongClick(new MyDynamicsAdapter.onItemLongClick() {
             @Override
             public boolean onItemLongClick(View view, int pos , String id) {
@@ -148,9 +140,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
                 }
             }
         });
-        if ( string == "删除成功"){
-            adapter.notifyDataSetChanged();
-        }
         adapter.notifyDataSetChanged();
         presenter.getdynamics( PrefUtil.getLat(context), PrefUtil.getLon(context) ,page+"" , pageSize+"");
         recyclerView.setOnLoadMoreListener(this);
@@ -164,12 +153,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
         });
     }
 
-    /**
-     * 点击监听
-     */
-//    private void initListener() {
-//
-//    }
 
     @OnClick({R.id.tv_md_cancel , R.id.tv_md_Release ,R.id.bt_delete})
     public void onClick(View view){
@@ -192,13 +175,11 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
                     }
                     result.append(string);
                 }
-//                Log.i("deleteparamsstr", "load:----"+result);
-//                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+                Log.i("checkList", "onClick:--"+checkList.toString());
                 deletedynamicPresenter.Deletedynamic(result.toString());
                 break;
         }
     }
-
 
     /**
      * 设置刷新和加载更多的状态
@@ -219,16 +200,18 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     @Override
     public void success(String data) {
         ToastUtil.showShortToast(context,data);
-        data = string;
-//        adapter.notifyDataSetChanged();
-        ll_button.setVisibility(View.GONE);
-    }
+        if (isShowCheck) {
+            ll_button.setVisibility(View.GONE);
+            adapter.setShowCheckBox(false);
+            adapter.notifyDataSetChanged();
+            checkList.clear();
+        } else {
+            adapter.setShowCheckBox(true);
+            adapter.notifyDataSetChanged();
+            ll_button.setVisibility(View.VISIBLE);
+        }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        adapter.notifyDataSetChanged();
-//    }
+    }
 
     @Override
     public void show(List<TrendInfo.Trend> data, int totalPage) {
@@ -279,13 +262,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
     }
 
-//    @Override
-//    public void onItemClick(int position) {
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("trendInfo" , list.get(position));
-//        bundle.putInt("id" , 1);
-//        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
-//    }
 
     @Override
     public void onLikeClick(String id) {

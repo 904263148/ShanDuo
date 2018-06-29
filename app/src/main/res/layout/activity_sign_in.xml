@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:textColor="@color/mainfont"
             android:text="@string/Signin_receiveaprize"
             />

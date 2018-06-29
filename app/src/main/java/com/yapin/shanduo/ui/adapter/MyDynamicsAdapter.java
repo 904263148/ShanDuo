@@ -73,11 +73,10 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private TrendGridViewAdapter adapter;
 
-    public MyDynamicsAdapter(Context context, Activity activity, List<TrendInfo.Trend> list) {
+    public MyDynamicsAdapter(Context context, Activity activity, List<TrendInfo.Trend> list ) {
         this.context = context;
         this.activity = activity;
         this.list = list;
-
     }
 
     @NonNull
@@ -135,7 +134,7 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         if (showCheckBox) {
                             holder.item_checkbox.setChecked(!holder.item_checkbox.isChecked());
                         }
-                        onItemClickListener.onCheckbox(view, position ,list.get(position).getId());
+                        onItemClickListener.onCheckbox(view, position ,list.get(position).getId() );
                     }else{
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("trendInfo", list.get(position));

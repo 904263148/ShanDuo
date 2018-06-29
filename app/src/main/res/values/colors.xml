@@ -12,6 +12,8 @@
     <color name="textview_text_color">#333333</color>
     <color name="bg_pressed_color">#F4F9FF</color>
 
+    <color name="back_rl_color">#5D74FF</color>
+
     <color name="bg_main_color">#F0F0F0</color>
     
     <color name="font_color_gray">#999999</color>

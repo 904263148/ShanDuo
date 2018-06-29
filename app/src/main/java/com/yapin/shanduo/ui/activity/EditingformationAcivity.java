@@ -51,6 +51,7 @@ import com.yapin.shanduo.utils.PrefJsonUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
+import com.yapin.shanduo.widget.EmojiEditText;
 import com.yapin.shanduo.widget.ScrollGridLayoutManager;
 
 import java.io.BufferedInputStream;
@@ -354,7 +355,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                             View view = LayoutInflater.from(activity).inflate(R.layout.nicknamepop_up, null);
                             //    设置我们自己定义的布局文件作为弹出框的Content
                             builder2.setView(view);
-                            final EditText et_nickname = (EditText)view.findViewById(R.id.nickname);
+                            final EmojiEditText et_nickname = (EmojiEditText)view.findViewById(R.id.nickname);
                             builder2.setPositiveButton("确定", new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -389,7 +390,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         public void onClick(DialogInterface dialog, int which)
                         {
                             signature = tv_Personalitysignature.getText().toString().trim();
-                            presenter.modify("","","","",Utils.stringToUnicode(signature),"","","", "" , "");
+                            presenter.modify("","","","",signature,"","","", "" , "");
                         }
                     });
                     builder3.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -407,7 +408,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     builder4.setTitle("请输入你要修改的家乡");
                     View view2 = LayoutInflater.from(activity).inflate(R.layout.hometown, null);
                     builder4.setView(view2);
-                    final EditText tv_Hometown = (EditText)view2.findViewById(R.id.hometown);
+                    final EmojiEditText tv_Hometown = (EmojiEditText)view2.findViewById(R.id.hometown);
                     builder4.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -432,7 +433,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     builder5.setTitle("请输入你要修改的学校");
                     View view3 = LayoutInflater.from(activity).inflate(R.layout.school, null);
                     builder5.setView(view3);
-                    final EditText tv_School = (EditText)view3.findViewById(R.id.school);
+                    final EmojiEditText tv_School = (EmojiEditText)view3.findViewById(R.id.school);
                     builder5.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -459,7 +460,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     View view4 = LayoutInflater.from(activity).inflate(R.layout.occupation, null);
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder6.setView(view4);
-                    final EditText tv_Occupation = (EditText)view4.findViewById(R.id.Occupation);
+                    final EmojiEditText tv_Occupation = (EmojiEditText)view4.findViewById(R.id.Occupation);
                     builder6.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override

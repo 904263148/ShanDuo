@@ -264,7 +264,7 @@ public class SiginActivity extends BaseActivity implements SigninContract.View ,
                 tv_sigin_Title.setText("明天可以领取88闪多豆");
                 tv_sigin_todayc.setVisibility(View.INVISIBLE);
                 tv_sigin_todaya.setVisibility(View.INVISIBLE);
-                tv_sigin_todayd.setVisibility(View.INVISIBLE);
+                tv_sigin_todayb.setVisibility(View.INVISIBLE);
                 tv_sigin_todaye.setVisibility(View.INVISIBLE);
                 tv_sigin_todayf.setVisibility(View.INVISIBLE);
                 tv_sigin_todayg.setVisibility(View.INVISIBLE);
@@ -299,6 +299,7 @@ public class SiginActivity extends BaseActivity implements SigninContract.View ,
                 tv_sigin_todayd.setVisibility(View.INVISIBLE);
                 tv_sigin_todaya.setVisibility(View.INVISIBLE);
                 tv_sigin_todayb.setVisibility(View.INVISIBLE);
+                tv_sigin_todayc.setVisibility(View.INVISIBLE);
                 tv_sigin_todayd.setVisibility(View.INVISIBLE);
                 tv_sigin_todayf.setVisibility(View.INVISIBLE);
                 tv_sigin_todayg.setVisibility(View.INVISIBLE);

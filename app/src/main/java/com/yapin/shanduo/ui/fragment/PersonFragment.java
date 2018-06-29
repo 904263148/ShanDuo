@@ -63,7 +63,7 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
       private TextView tv_nickname;
       private ImageView ib_Headportrait;
       private TextView tv_sex;
-      private RelativeLayout ll_person_a;
+      private LinearLayout ll_person_a;
       private LinearLayout ll_person_aa;
       private TextView tv_login_reg;
       private TextView tv_id;
@@ -72,6 +72,7 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
       private TextView tv_friend_count;
       private TextView tv_act_count;
       private TextView tv_trend_count;
+      private LinearLayout ll_zhangs;
 
     public static PersonFragment newInstance() {
         PersonFragment fragment = new PersonFragment();
@@ -104,6 +105,7 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
         tv_friend_count = view.findViewById(R.id.tv_friend_count);
         tv_act_count = view.findViewById(R.id.tv_act_count);
         tv_trend_count = view.findViewById(R.id.tv_trend_count);
+        ll_zhangs = view.findViewById(R.id.ll_zhangs);
         initViewinfo();
         return view;
     }
@@ -202,11 +204,12 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
         if(TextUtils.isEmpty(PrefUtil.getToken(context))){
             ll_person_a.setVisibility(View.GONE);
             ll_person_aa.setVisibility(View.VISIBLE);
+            ll_zhangs.setVisibility(View.GONE);
         }else {
             presenter.start();
             ll_person_aa.setVisibility(View.GONE);
             ll_person_a.setVisibility(View.VISIBLE);
-
+            ll_zhangs.setVisibility(View.VISIBLE);
             tv_friend_count.setText(PrefJsonUtil.getProfile(context).getAttention()+"");
             tv_act_count.setText(PrefJsonUtil.getProfile(context).getActivity()+"");
             tv_trend_count.setText(PrefJsonUtil.getProfile(context).getDynamic()+"");
@@ -220,9 +223,9 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
             if ("0".equals(PrefJsonUtil.getProfile(context).getGender())) {
                 drawable = activity.getResources().getDrawable(R.drawable.icon_women);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_women);
-                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_women_bg));
+//                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_women_bg));
             } else {
-                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_man_bg));
+//                ll_person_a.setBackgroundDrawable(getResources().getDrawable(R.drawable.icon_man_bg));
                 drawable = activity.getResources().getDrawable(R.drawable.icon_men);
                 tv_sex.setBackgroundResource(R.drawable.rounded_tv_sex_men);
             }

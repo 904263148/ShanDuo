@@ -80,8 +80,10 @@
     <string name="My_wallet">\t我的钱包</string>
     <string name="Member_Center">\t会员中心</string>
     <string name="Set_up">\t设置</string>
+    <string name="Customer_service">\t客服中心</string>
     <string name="Loginandregistration">登录/注册</string>
     <string name="title_my_message">我的消息</string>
+
 
     <string name="Accountandsecurity">账户与安全</string>
     <string name="Messagenotification">消息通知</string>

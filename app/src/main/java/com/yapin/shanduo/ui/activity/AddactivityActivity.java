@@ -158,13 +158,6 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                         mode = et_add_Modeofconsumption.getText().toString().trim();
                     }
                 });
-//                builder1.setNegativeButton("取消", new DialogInterface.OnClickListener()
-//                {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which)
-//                    {
-//                    }
-//                });
                 builder1.show();
             }
         });
@@ -215,10 +208,9 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                 activityName =  et_add_title.getText().toString().trim();
                 womanNumber = et_add_numberofgirls.getText().toString().trim();
                 manNumber = et_add_Numberofboys.getText().toString().trim();
-//                Selection.setSelection((Spannable) et_add_Numberofboys, et_add_Numberofboys.length());
                 detailedAddress = tv_add_place_remarks.getText().toString().trim();
                 activityAddress = tv_add_place.getText().toString().trim();
-                remarks =  Utils.stringToUnicode(et_add_title_remarks.getText().toString().trim());
+                remarks =  et_add_title_remarks.getText().toString().trim();
                 activityCutoffTime =tv_add_Deadline.getText().toString().trim();
                 activityStartTime=tv_add_starttime.getText().toString().trim();
                 presenter.addactivity(activityName,activityStartTime,activityAddress,mode,manNumber,womanNumber,remarks,activityCutoffTime,lon,lat,detailedAddress);
