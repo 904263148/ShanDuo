@@ -210,7 +210,12 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
             adapter.notifyDataSetChanged();
             ll_button.setVisibility(View.VISIBLE);
         }
+        notifyDataSetChanged();
+    }
 
+    public void notifyDataSetChanged(){
+        presenter.getdynamics(PrefUtil.getLat(context), PrefUtil.getLon(context) , page+"" , pageSize+"");
+        adapter.notifyDataSetChanged();
     }
 
     @Override

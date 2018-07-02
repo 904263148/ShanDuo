@@ -114,7 +114,7 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
     private String payId;
     private String passord = "";
 
-    int a;
+    int a ;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -155,6 +155,9 @@ public class AddactivityActivity extends RightSlidingActivity implements Addacti
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
+                        if (mode == null){
+                            et_add_Modeofconsumption.setText(emotion[0]);
+                        }
                         mode = et_add_Modeofconsumption.getText().toString().trim();
                     }
                 });

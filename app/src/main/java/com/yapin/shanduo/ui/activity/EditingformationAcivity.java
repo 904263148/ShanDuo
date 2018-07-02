@@ -356,6 +356,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                             //    设置我们自己定义的布局文件作为弹出框的Content
                             builder2.setView(view);
                             final EmojiEditText et_nickname = (EmojiEditText)view.findViewById(R.id.nickname);
+                            et_nickname.setText(PrefJsonUtil.getProfile(context).getName());
                             builder2.setPositiveButton("确定", new DialogInterface.OnClickListener()
                             {
                                 @Override
@@ -384,6 +385,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder3.setView(view1);
                     final EditText tv_Personalitysignature = (EditText)view1.findViewById(R.id.Personalitysignature);
+                    tv_Personalitysignature.setText(Utils.unicodeToString(PrefJsonUtil.getProfile(context).getSignature()));
                     builder3.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -409,6 +411,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     View view2 = LayoutInflater.from(activity).inflate(R.layout.hometown, null);
                     builder4.setView(view2);
                     final EmojiEditText tv_Hometown = (EmojiEditText)view2.findViewById(R.id.hometown);
+                    tv_Hometown.setText(PrefJsonUtil.getProfile(context).getHometown());
                     builder4.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -434,6 +437,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     View view3 = LayoutInflater.from(activity).inflate(R.layout.school, null);
                     builder5.setView(view3);
                     final EmojiEditText tv_School = (EmojiEditText)view3.findViewById(R.id.school);
+                    tv_School.setText(PrefJsonUtil.getProfile(context).getSchool());
                     builder5.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -461,6 +465,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     //    设置我们自己定义的布局文件作为弹出框的Content
                     builder6.setView(view4);
                     final EmojiEditText tv_Occupation = (EmojiEditText)view4.findViewById(R.id.Occupation);
+                    tv_Occupation.setText(PrefJsonUtil.getProfile(context).getOccupation());
                     builder6.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
