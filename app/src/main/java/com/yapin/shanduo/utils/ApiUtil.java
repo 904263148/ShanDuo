@@ -166,4 +166,7 @@ public class ApiUtil {
 
     //我的消息
     public final static String MY_MESSAGE = ConfigUtil.configUrl() + "jdynamic/mymessage" ;
+
+    //单个动态详情
+    public final static String TREND_INFO = ConfigUtil.configUrl() + "jdynamic/bydynamic" ;
 }

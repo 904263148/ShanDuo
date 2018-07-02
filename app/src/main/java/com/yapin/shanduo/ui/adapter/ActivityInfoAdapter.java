@@ -96,12 +96,14 @@ public class ActivityInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.tvEndTime.setText("报名截止日期:"+list.get(position).getActivityCutoffTime());
             GlideUtil.load(context , activity , ApiUtil.IMG_URL+ list.get(position).getHeadPortraitId() ,holder.ivHead);
 
-            holder.ivHead.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onHeadClick(list.get(position).getUserId());
-                }
-            });
+            if(type != 6){
+                holder.ivHead.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onHeadClick(list.get(position).getUserId());
+                    }
+                });
+            }
 
             holder.tvLv.setText("LV" + list.get(position).getLevel()+"");
 

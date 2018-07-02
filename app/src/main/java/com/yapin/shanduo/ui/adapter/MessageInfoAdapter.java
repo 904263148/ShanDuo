@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.ActivityInfo;
 import com.yapin.shanduo.model.entity.MyMessageInfo;
+import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.utils.ApiUtil;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.GlideUtil;
@@ -139,6 +140,13 @@ public class MessageInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 }
             });
 
+            holder.llTrend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onTrendClick(message.getDynamicId());
+                }
+            });
+
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType_show());
@@ -160,6 +168,8 @@ public class MessageInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         void onItemClick(int position);
 
         void onReplayClick(MyMessageInfo.Message message , String str);
+
+        void onTrendClick(String trendId);
     }
 
     private OnItemClickListener listener;

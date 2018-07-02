@@ -163,6 +163,8 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
             url = Constants.TREND_SHARE_URL + id;
         }
 
+        Log.d("share_url" , url);
+
         sp.setTitle("闪多");
         sp.setTitleUrl(url); // 标题的超链接
         sp.setText("闪多");

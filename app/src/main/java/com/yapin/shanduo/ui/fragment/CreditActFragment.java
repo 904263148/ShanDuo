@@ -38,12 +38,10 @@ public class CreditActFragment extends Fragment implements CreditDetailContract.
     private int position = 0;
     private String userId = "";
     private Context context;
-    private Activity activity;
 
     private CreditDetailPresenter presenter;
     private List<CreditItem> list= new ArrayList<>();
     private CreditItem footerItem = new CreditItem();
-    private LinearLayoutManager layoutManager;
     private CreditDetailAdapter adapter;
 
     private int page = 1;
@@ -86,13 +84,13 @@ public class CreditActFragment extends Fragment implements CreditDetailContract.
     @Override
     public void initView() {
         context = ShanDuoPartyApplication.getContext();
-        activity = getActivity();
-        layoutManager = new LinearLayoutManager(context);
+        Activity activity = getActivity();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new CreditDetailAdapter(context, activity , list , position);
+        adapter = new CreditDetailAdapter(context, activity, list , position);
         recyclerView.setAdapter(adapter);
         recyclerView.setOnLoadMoreListener(this);
 //        recyclerView.setNestedScrollingEnabled(false);

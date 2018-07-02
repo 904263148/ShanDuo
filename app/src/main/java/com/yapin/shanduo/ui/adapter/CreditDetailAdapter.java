@@ -75,7 +75,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 GlideUtil.load(context, activity, ApiUtil.IMG_URL + item.getPresenter_head(), viewHolder.ivPresenterHead);
 
                 viewHolder.tvMode.setText(Utils.unicodeToString(item.getMode()));
-                viewHolder.tvActName.setText(Utils.unicodeToString(item.getActivity_name()));
+                viewHolder.tvActName.setText("主题"+Utils.unicodeToString(item.getActivity_name()));
                 int level = item.getVipGrade();
                 if (level == 0) {
                     viewHolder.tvVip.setVisibility(View.GONE);
@@ -88,7 +88,7 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     viewHolder.tvVip.setText("SVIP" + (level - 10));
                     viewHolder.tvVip.setBackgroundResource(R.drawable.rounded_tv_svip);
                 }
-                Drawable drawable = null;
+                Drawable drawable;
                 if ("0".equals(item.getGender())) {
                     drawable = activity.getResources().getDrawable(R.drawable.icon_women);
                     viewHolder.tvHomeAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
@@ -228,18 +228,6 @@ public class CreditDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public int getItemViewType(int position) {
         return list.get(position).getType();
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int position, int type);
-
-        void onItemClick(int position);
-    }
-
-    private OnItemClickListener listener;
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

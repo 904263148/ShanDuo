@@ -23,18 +23,18 @@
             />
 
         <RelativeLayout
+            android:id="@+id/rl_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/iv_head"
+            android:layout_toEndOf="@+id/iv_head"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             >
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="小猪佩奇"
                 android:textColor="@color/home_title_color"
                 android:textSize="12sp"
                 android:paddingBottom="2dp"
@@ -44,13 +44,12 @@
                 android:id="@+id/tv_vip"
                 android:layout_width="25dp"
                 android:layout_height="10dp"
-                android:text="SVIP2"
                 android:textSize="7sp"
                 android:layout_below="@+id/tv_name"
                 android:background="@drawable/rounded_tv_vip"
                 android:textColor="@color/color_white"
-                android:layout_toRightOf="@+id/tv_home_age"
-                android:layout_marginLeft="2dp"
+                android:layout_toEndOf="@+id/tv_home_age"
+                android:layout_marginStart="2dp"
                 android:gravity="center"
                 />
 
@@ -58,40 +57,40 @@
                 android:id="@+id/tv_home_age"
                 android:layout_width="25dp"
                 android:layout_height="10dp"
-                android:text="23"
                 android:textSize="7sp"
-                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp"
                 android:background="@drawable/rounded_tv_sex_women"
                 android:textColor="@color/color_white"
                 android:gravity="center"
-                android:drawableLeft="@drawable/icon_women"
+                android:drawableStart="@drawable/icon_women"
                 android:drawablePadding="2dp"
                 android:layout_below="@+id/tv_name"
                 />
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center|right"
-            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/rl_tag"
+            android:gravity="end"
+            android:layout_alignTop="@+id/rl_tag"
             >
 
             <TextView
                 android:id="@+id/tv_act_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="主题:一起吃火锅"
                 android:textSize="@dimen/egg_font_size_big"
                 android:textColor="@color/home_title_color"
+                android:gravity="end"
+                android:layout_marginStart="10dp"
                 />
 
             <TextView
                 android:id="@+id/tv_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AA制"
                 android:textSize="@dimen/egg_font_size_big"
                 android:textColor="@color/home_title_color"
                 />

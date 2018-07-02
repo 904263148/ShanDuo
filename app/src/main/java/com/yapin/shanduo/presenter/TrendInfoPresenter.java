@@ -18,7 +18,6 @@ public class TrendInfoPresenter implements TrendInfoContract.Presenter{
     public void init(TrendInfoContract.View view){
         this.view = view;
         loadModel = new TrendFirstFirstReplayModelImpl();
-        view.initView();
     }
 
     @Override

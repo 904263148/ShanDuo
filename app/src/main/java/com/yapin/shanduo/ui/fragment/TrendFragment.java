@@ -214,10 +214,12 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
         if(Constants.IS_LIKE.equals(data)){
             ToastUtil.showShortToast(context , R.string.tips_like);
             list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() + 1 );
+            list.get(LikePosition).setPraise(true);
         }else {
             ToastUtil.showShortToast(context , R.string.tips_unlike);
             if(list.get(LikePosition).getPraise() == 0) return;
             list.get(LikePosition).setPraise( list.get(LikePosition).getPraise() - 1 );
+            list.get(LikePosition).setPraise(false);
         }
         adapter.notifyDataSetChanged();
     }
@@ -262,12 +264,12 @@ public class TrendFragment extends Fragment implements HomeTrendContract.View , 
 
     @Override
     public void onLikeClick(String id , int position) {
-        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
-        }else {
+//        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+//            StartActivityUtil.start(activity , this , LoginActivity.class , Constants.OPEN_LOGIN_ACTIVITY);
+//        }else {
             LikePosition = position;
             likePresenter.onLike(id);
-        }
+//        }
     }
 
     @Override

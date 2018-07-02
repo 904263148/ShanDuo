@@ -18,6 +18,7 @@ import com.yapin.shanduo.ui.adapter.MessageInfoAdapter;
 import com.yapin.shanduo.ui.contract.MyMessageContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
 import com.yapin.shanduo.utils.Constants;
+import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.LoadMoreRecyclerView;
@@ -55,7 +56,6 @@ public class MyMessageActivity extends RightSlidingActivity implements MyMessage
     private TrendReplayPresenter replayPresenter;
     private MessageInfoAdapter adapter;
     private List<MyMessageInfo.Message> list = new ArrayList<>();
-    private LinearLayoutManager layoutManager;
     private MyMessageInfo.Message footerItem = new MyMessageInfo.Message();
 
     @Override
@@ -75,7 +75,7 @@ public class MyMessageActivity extends RightSlidingActivity implements MyMessage
         activity = this;
 
         footerItem.setType_show(Constants.TYPE_FOOTER_LOAD);
-        layoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new MessageInfoAdapter(context ,activity ,list);
@@ -178,6 +178,13 @@ public class MyMessageActivity extends RightSlidingActivity implements MyMessage
         }else {
             replayPresenter.getData(message.getDynamicId() , str , "2" , message.getCommentId() , message.getId());
         }
+    }
+
+    @Override
+    public void onTrendClick(String trendId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("trendId" , trendId);
+        StartActivityUtil.start(activity , TrendInfoActivity.class , bundle);
     }
 
     @Override

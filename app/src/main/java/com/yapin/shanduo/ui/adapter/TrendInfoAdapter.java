@@ -135,12 +135,16 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }
             });
 
-            holder.tvLikeCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onLikeClick(list.get(position).getId() , position);
-                }
-            });
+            if( !(TextUtils.isEmpty(PrefUtil.getToken(context))) ){
+                holder.tvLikeCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onLikeClick(list.get(position).getId() , position);
+                    }
+                });
+            }else {
+                ToastUtil.showShortToast(context , R.string.tips_my_no_token);
+            }
 
             holder.tvMile.setOnClickListener(new View.OnClickListener() {
                 @Override

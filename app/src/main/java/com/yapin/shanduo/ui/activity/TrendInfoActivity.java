@@ -35,6 +35,7 @@ import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.presenter.DeleteFriendPresenter;
 import com.yapin.shanduo.presenter.DeleteReplayPresenter;
 import com.yapin.shanduo.presenter.LikePresenter;
+import com.yapin.shanduo.presenter.TrendDetailPresenter;
 import com.yapin.shanduo.presenter.TrendInfoPresenter;
 import com.yapin.shanduo.presenter.TrendReplayPresenter;
 import com.yapin.shanduo.ui.adapter.GridViewAdapter;
@@ -42,6 +43,7 @@ import com.yapin.shanduo.ui.adapter.TrendCommentAdapter;
 import com.yapin.shanduo.ui.adapter.TrendGridViewAdapter;
 import com.yapin.shanduo.ui.contract.DeleteReplayContract;
 import com.yapin.shanduo.ui.contract.LikeContract;
+import com.yapin.shanduo.ui.contract.TrendDetailContract;
 import com.yapin.shanduo.ui.contract.TrendInfoContract;
 import com.yapin.shanduo.ui.contract.TrendReplayContract;
 import com.yapin.shanduo.ui.fragment.CustomBottomSheetDialogFragment;
@@ -68,7 +70,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class TrendInfoActivity extends RightSlidingActivity implements TrendInfoContract.View , TrendCommentAdapter.OnItemClickListener
-        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View , DeleteReplayContract.View ,TrendGridViewAdapter.OnItemClickListener{
+        , LoadMoreRecyclerView.OnLoadMoreListener ,SwipeRefreshLayout.OnRefreshListener , TrendReplayContract.View  , LikeContract.View , DeleteReplayContract.View ,TrendGridViewAdapter.OnItemClickListener , TrendDetailContract.View{
 
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
@@ -140,7 +142,6 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     private TrendInfoPresenter presenter;
 
-    private LinearLayoutManager layoutManager;
     private int page = 1;
     private int pageSize = 10;
     private boolean isRefresh = false;
@@ -172,7 +173,11 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         setContentView(R.layout.activity_trend_info);
 
         ButterKnife.bind(this);
-        trend = getIntent().getParcelableExtra("trendInfo");
+
+        String trendId = getIntent().getStringExtra("trendId");
+
+        TrendDetailPresenter detailPresenter = new TrendDetailPresenter();
+
         presenter = new TrendInfoPresenter();
         presenter.init(this);
         replayPresenter = new TrendReplayPresenter();
@@ -181,10 +186,22 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         likePresenter.init(this);
         deleteReplayPresenter = new DeleteReplayPresenter();
         deleteReplayPresenter.init(this);
+
+        if(TextUtils.isEmpty(trendId)){
+            initView();
+        }else {
+            detailPresenter.init(this);
+            detailPresenter.getData(trendId);
+        }
     }
 
     @Override
-    public void initView(){
+    public void  initView(){
+        trend = getIntent().getParcelableExtra("trendInfo");
+        setTrendDetail(trend);
+    }
+
+    private void setTrendDetail(final TrendInfo.Trend trend){
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 
@@ -197,7 +214,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         GlideUtil.load(context, activity,ApiUtil.IMG_URL+ trend.getPortraitId(), ivHead);
         tvName.setText(Utils.unicodeToString(trend.getName()));
 
-        Drawable drawable = null;
+        Drawable drawable;
         if ("0".equals(trend.getGender())) {
             drawable = activity.getResources().getDrawable(R.drawable.icon_women);
             tvAge.setBackgroundResource(R.drawable.rounded_tv_sex_women);
@@ -268,7 +285,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                         showImages(ivImg1 , 0 , thumUrlsImageView , trend.getPicture());
                     }
                 });
-                
+
                 break;
             case 2:
                 gridview.setVisibility(View.GONE);
@@ -291,7 +308,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                         showImages(ivImg2 , 1 , thumUrlsImageView2 , trend.getPicture());
                     }
                 });
-                
+
                 break;
             default:
                 gridview.setVisibility(View.VISIBLE);
@@ -318,8 +335,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                 likePresenter.onLike(trend.getId());
             }
         });
-        
-        layoutManager = new LinearLayoutManager(context);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -388,7 +405,7 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
                     return;
                 }
 
-                String unicode = Utils.stringToUnicode(etComment.getText().toString().trim());
+//                String unicode = Utils.stringToUnicode(etComment.getText().toString().trim());
                 replayPresenter.getData(trend.getId() , etComment.getText().toString().trim() , TYPEID , "" ,"");
                 etComment.setText("");
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -469,6 +486,11 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
     }
 
     @Override
+    public void show(TrendInfo.Trend data) {
+        setTrendDetail(data);
+    }
+
+    @Override
     public void loading() {
         if (!isRefresh && !isLoading)
             loadDialog.show();
@@ -480,8 +502,6 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
         if(resultCode != RESULT_OK) return;
         if(requestCode == OPEN_REPLAY){
             onRefresh();
-        }else {
-
         }
     }
 

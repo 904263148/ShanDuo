@@ -183,7 +183,7 @@ public class GroupManagerPresenter {
      * @param members 群成员
      * @param callBack 回调
      */
-    public static void createGroup(String name, String type, List<String> members, TIMValueCallBack<String> callBack){
+    public static void createGroup(String name, String type, List<String> members, long maxNum , TIMValueCallBack<String> callBack){
         List<TIMGroupMemberInfo> memberinfos = new ArrayList<>();
         for (String member : members) {
             TIMGroupMemberInfo newMember = new TIMGroupMemberInfo();
@@ -194,6 +194,7 @@ public class GroupManagerPresenter {
         groupGroupParam.setGroupName(name);
         groupGroupParam.setMembers(memberinfos);
         groupGroupParam.setGroupType(type);
+        groupGroupParam.setMaxMemberNum(maxNum);
         TIMGroupManager.getInstance().createGroup(groupGroupParam, callBack);
     }
 
