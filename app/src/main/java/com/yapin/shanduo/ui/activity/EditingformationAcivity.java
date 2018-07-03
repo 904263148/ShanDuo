@@ -248,7 +248,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     break;
                 case R.id.fl_rg:     //性别
                     a = 1;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("请选择性别");
                     final String[] sex = {"女", "男"};
                     //    设置一个单项选择下拉框
@@ -257,6 +257,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                      * 第二个参数代表索引，指定默认哪一个单选框被勾选上，0表示默认'男' 会被勾选上
                      * 第三个参数给每一个单选项绑定一个监听器
                      */
+                    final AlertDialog dialoga = builder.show();
                     builder.setSingleChoiceItems(sex, Integer.parseInt(PrefJsonUtil.getProfile(context).getGender()),new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -274,10 +275,13 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     {
 
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-//                            Log.i("gender",gender.toString()+"");
-                            presenter.modify("",gender,"","","","","","", "" , "");
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (gender == null) {
+                                dialoga.dismiss();
+                            } else {
+                                presenter.modify("", gender, "", "", "", "", "", "", "", "");
+                                dialoga.dismiss();
+                            }
                         }
                     });
                     builder.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -285,6 +289,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
+                            dialoga.dismiss();
                         }
                     });
                     builder.show();
@@ -316,6 +321,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
                     final String[] emotions = {"保密" , "已婚", "未婚"};
                     //    设置一个单项选择下拉框
+                    final AlertDialog dialogb = builder1.show();
                     builder1.setSingleChoiceItems(emotions, Integer.parseInt(PrefJsonUtil.getProfile(context).getEmotion()), new DialogInterface.OnClickListener()
                     {
                         @Override
@@ -333,9 +339,13 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     builder1.setPositiveButton("确定", new DialogInterface.OnClickListener()
                     {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-                            presenter.modify("","","",emotion,"","","","", "" , "");
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (emotion == null) {
+                                dialogb.dismiss();
+                            } else {
+                                presenter.modify("", "", "", emotion, "", "", "", "", "", "");
+                                dialogb.dismiss();
+                            }
                         }
                     });
                     builder1.setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -343,6 +353,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                         @Override
                         public void onClick(DialogInterface dialog, int which)
                         {
+                            dialogb.dismiss();
                         }
                     });
                     builder1.show();

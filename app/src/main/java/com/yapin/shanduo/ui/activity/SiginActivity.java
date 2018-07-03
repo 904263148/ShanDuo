@@ -141,13 +141,10 @@ public class SiginActivity extends BaseActivity implements SigninContract.View ,
 
     }
 
-    @OnClick({R.id.iv_back ,R.id.ll_sigina ,R.id.ll_siginb ,R.id.ll_siginc ,R.id.ll_sigind ,R.id.ll_sigine ,
+    @OnClick({R.id.ll_sigina ,R.id.ll_siginb ,R.id.ll_siginc ,R.id.ll_sigind ,R.id.ll_sigine ,
             R.id.ll_siginf ,R.id.ll_siging ,R.id.tv_Gotorelease , R.id.tv_Gotosignup ,R.id.tv_Toshare})
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.iv_back:
-                finish();
-                break;
             case R.id.ll_sigina:
                 checkcheckinPresenter.setcheck();
                 break;

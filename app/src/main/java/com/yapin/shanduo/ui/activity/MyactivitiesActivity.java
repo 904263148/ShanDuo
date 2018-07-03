@@ -74,14 +74,14 @@ public class MyactivitiesActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tv_my_finish})
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.tv_my_finish:
-                finish();
-                break;
-        }
-    }
+//    @OnClick({R.id.tv_my_finish})
+//    public void onClick(View view){
+//        switch (view.getId()){
+//            case R.id.tv_my_finish:
+//                finish();
+//                break;
+//        }
+//    }
 
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
         Class<?> tabLayout = tabs.getClass();

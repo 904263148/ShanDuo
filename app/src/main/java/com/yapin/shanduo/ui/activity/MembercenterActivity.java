@@ -183,12 +183,9 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
         }
 
 
-    @OnClick({R.id.iv_back , R.id.charge_vip})
+    @OnClick({ R.id.charge_vip})
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.iv_back:
-                finish();
-                break;
             case R.id.charge_vip:
                 openPublishPopup();
                 break;

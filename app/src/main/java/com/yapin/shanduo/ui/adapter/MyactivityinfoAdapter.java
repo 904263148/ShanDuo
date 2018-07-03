@@ -230,6 +230,11 @@ public class MyactivityinfoAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         holder.tvJoin.setText("已评价");
                         holder.tvJoin.setClickable(false);
                         holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.myactivity_shape));
+                    }else if (typeid == 8){
+                        holder.tvevaluation.setVisibility(View.GONE);
+                        holder.tvJoin.setText("去评价");
+                        holder.tvJoin.setClickable(false);
+                        holder.tvJoin.setBackground(activity.getResources().getDrawable(R.drawable.myactivity_shape));
                     }
                 }
             }

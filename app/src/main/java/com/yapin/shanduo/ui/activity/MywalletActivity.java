@@ -58,10 +58,6 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
     private Context context;
     private Activity activity;
 
-//    private PopupWindow popupWindow;
-//    private View popView;
-//    private PopupView popupView;
-
     private static final int TRANSACTIONRECORD=1;
 
     private PayDialogFragment payDialogFragment;
@@ -83,8 +79,6 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
 
         presenter = new MywalletPresenter();
         presenter.init(context,this);
-        //设置PopupWindow的View
-//        popView = LayoutInflater.from(this).inflate(R.layout.popwindow_commonroof, null);
         initView();
         presenter.mywallet();
 
@@ -96,14 +90,10 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
         activity = this;
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_recharge ,R.id.ll_Transactionrecord})
+    @OnClick({ R.id.ll_recharge ,R.id.ll_Transactionrecord})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
-                onBackPressed();
-                break;
             case R.id.ll_recharge:
-//                openPopupWindow();
                 payDialogFragment = PayDialogFragment.newInstance(Constants.RECHARGE , 3 , "" , "" ,"");
                 payDialogFragment.setDismissListener(MywalletActivity.this);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -6,33 +6,11 @@
     android:orientation="vertical"
     >
 
-    <FrameLayout
-        android:background="@color/colorPrimary"
+    <com.tencent.qcloud.ui.TemplateTitle
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="11dp"
-        >
-
-        <TextView
-            android:textSize="15dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/mainfont"
-            android:text="@string/My_activities" />
-
-        <ImageButton
-            android:background="@color/colorAccent"
-            android:id="@+id/tv_my_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
-            android:src="@drawable/image_return"
-            android:textColor="@color/font_color_gray"
-            />
-
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        app:canBack="true"
+        app:titleText="@string/My_activities" />
 
     <android.support.design.widget.TabLayout
         android:background="@color/colorAccent"

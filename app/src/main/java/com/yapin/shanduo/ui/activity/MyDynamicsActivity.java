@@ -272,6 +272,12 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     public void onLikeClick(String id) {
 
     }
+
+//    @Override
+//    public void onLikeClicka(String id, int position) {
+//
+//    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sackcentury.shinebuttonlib.ShineButton;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.model.entity.TrendInfo;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
@@ -53,8 +54,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private Context context;
     private List<TrendInfo.Trend> list;
-    private List<Boolean> listCheck;
-    private OpenPopupWindow openPopupWindow;
     private Activity activity;
 
     /**
@@ -169,7 +168,6 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (list.get(position).getLocation().equals("")){
                 holder.tvMile.setVisibility(View.GONE);
             }
-            Log.i("getDistance", "initView:--- "+list.get(position).getDistance());
 
             holder.tvContent.setText(Utils.unicodeToString(list.get(position).getContent()));
 
@@ -281,7 +279,18 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     holder.gridview.setAdapter(adapter);
                     break;
             }
-
+//            holder.shineButton.init(activity);
+            if(list.get(position).isPraise()){
+                holder.shineButton.setChecked(true);
+            }else {
+                holder.shineButton.setChecked(false);
+            }
+//            holder.shineButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    likeClickListener.onLikeClicka(list.get(position).getId() , position);
+//                }
+//            });
         } else {
             FooterHolder holder = (FooterHolder) viewHolder;
             holder.footerLoading.onLoad(Constants.TYPE_FOOTER_FULL == list.get(position).getType());
@@ -330,12 +339,14 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public interface OnLikeClickListener {
         void onLikeClick(String id);
+//        void onLikeClicka(String id , int position);
     }
 
     private OnLikeClickListener likeClickListener;
 
     public void setLikeClickListener(OnLikeClickListener likeClickListener) {
         this.likeClickListener = likeClickListener;
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -380,6 +391,8 @@ public class MyDynamicsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         CheckBox item_checkbox;
         @BindView(R.id.rl_detele)
         RelativeLayout rl_detele;
+        @BindView(R.id.shine_button)
+        ShineButton shineButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
