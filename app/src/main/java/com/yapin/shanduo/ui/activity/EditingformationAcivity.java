@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -296,8 +297,7 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     break;
                 case R.id.fl_date:     //出生年月
                     a = 2;
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(EditingformationAcivity.this,
-                            R.style.MyDatePickerDialogTheme,
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(EditingformationAcivity.this,R.style.MyDatePickerDialogTheme,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -315,6 +315,30 @@ public class EditingformationAcivity extends BaseActivity implements ModifyContr
                     //datePicker.setMinDate();
                     datePicker.setMaxDate(System.currentTimeMillis());
                     datePickerDialog.show();
+//                    Calendar cal = Calendar.getInstance();
+//                    final DatePickerDialog mDialog =new DatePickerDialog(this,null,
+//                            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+//                    //手动设置按钮
+//                    mDialog.setButton(DialogInterface.BUTTON_POSITIVE,"完成",new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog,int which){
+//                            //通过mDialog.getDatePicker()获得dialog上的DatePicker组件，然后可以获取日期信息
+//                            DatePicker datePicker = mDialog.getDatePicker();
+//                            int year = datePicker.getYear();
+//                            int month = datePicker.getMonth();
+//                            int day = datePicker.getDayOfMonth();
+//                            System.out.println(year +","+ month +","+ day);
+//                        }
+//                    });
+//
+//                    //取消按钮，如果不需要直接不设置即可
+//                    mDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消",new DialogInterface.OnClickListener(){
+//                        @Override
+//                        public void onClick(DialogInterface dialog,int which){
+//                            System.out.println("BUTTON_NEGATIVE~~");
+//                        }
+//                    });
+//                    mDialog.show();
                     break;
                 case R.id.fl_emot:    //感情状态
                     a = 3;
