@@ -487,7 +487,8 @@ public class TrendInfoActivity extends RightSlidingActivity implements TrendInfo
 
     @Override
     public void show(TrendInfo.Trend data) {
-        setTrendDetail(data);
+        trend = data;
+        setTrendDetail(trend);
     }
 
     @Override

@@ -125,7 +125,7 @@ public class CustomBottomSheetDialogFragment extends BottomSheetDialogFragment i
                 break;
             case R.id.share_delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setMessage(R.string.title_delete_act)
+                builder.setMessage(type == 0 ? R.string.title_delete_act : R.string.title_delete_trend)
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

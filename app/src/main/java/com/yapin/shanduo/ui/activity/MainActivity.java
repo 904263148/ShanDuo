@@ -81,13 +81,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     ImageView ivAdd;
     @BindView(R.id.tv_add)
     TextView tvAdd;
-
-    private Context context;
-    private Activity activity;
-
-    private PopupWindow publishPopupWindow;
-    private View publishPopView;
-
     @BindView(R.id.view_pager)
     AHBottomNavigationViewPager viewPager;
     @BindView(R.id.bottom_navigation)
@@ -110,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     private CustomBottomSheetDialogFragment fragment;
 
     private HomeFragment homeFragment;
+
+    private Context context;
+    private Activity activity;
+
+    private PopupWindow publishPopupWindow;
+    private View publishPopView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -265,22 +264,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-
-//        boomMenuButton.init(
-//                new Drawable[]{ R.drawable.icon_trend_publish, R.drawable.icon_trend_publish}, // 子按钮的图标Drawable数组，不可以为null
-//                new String [] {"" ,""},     // 子按钮的文本String数组，可以为null
-//                new int [][] {new int [] {R.color.white ,R.color.bg_color} , new int [] {R.color.white ,R.color.bg_color}},    // 子按钮的背景颜色color二维数组，包括按下和正常状态的颜色，不可为null
-//                ButtonType.HAM,     // 子按钮的类型
-//                BoomType.PARABOLA,  // 爆炸类型
-//                PlaceType.CIRCLE_2_2,  // 排列类型
-//                null,               // 展开时子按钮移动的缓动函数类型
-//                null,               // 展开时子按钮放大的缓动函数类型
-//                null,               // 展开时子按钮旋转的缓动函数类型
-//                null,               // 隐藏时子按钮移动的缓动函数类型
-//                null,               // 隐藏时子按钮缩小的缓动函数类型
-//                null,               // 隐藏时子按钮旋转的缓动函数类型
-//                null                // 旋转角度
-//        );
     }
 
     public void openPublishPopup(){

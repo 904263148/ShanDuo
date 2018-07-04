@@ -20,6 +20,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.LoginActivity;
+import com.yapin.shanduo.ui.activity.PublishActivity;
 import com.yapin.shanduo.ui.activity.PublishTrendActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.activity.SiginActivity;
@@ -103,7 +104,7 @@ public class HomeFragment extends Fragment{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
-                StartActivityUtil.start(activity ,this , SmartRefreshActivity.class , OPEN_SCAN);
+                StartActivityUtil.start(activity ,this , PublishActivity.class , OPEN_SCAN);
                 break;
             case R.id.tv_act:
                 tvAct.setTextColor(getResources().getColor(R.color.home_title_select_color));
