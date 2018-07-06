@@ -12,6 +12,10 @@
         <attr name="moreImg" format="reference"/>
         <!-- 右侧更多功能按钮文字 -->
         <attr name="moreText" format="string"/>
+        <!-- 标题栏背景颜色 -->
+        <attr name="backgroundColor" format="color"/>
+        <!-- 标题颜色 -->
+        <attr name="titleColor" format="color"/>
     </declare-styleable>
 
     <!-- 条形控制控件自定义属性 -->

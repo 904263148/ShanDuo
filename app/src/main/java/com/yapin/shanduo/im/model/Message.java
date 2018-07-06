@@ -61,14 +61,6 @@ public abstract class Message {
 
             GlideUtil.load(context  , ApiUtil.IMG_URL + PrefJsonUtil.getProfile(context).getPicture() , viewHolder.RightHead);
 
-//            Message mMessage = MessageFactory.getMessage(message);
-//            if (mMessage instanceof CustomMessage) {
-//                CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
-//                if(messageType == CustomMessage.Type.LOCATION){
-//                    viewHolder.rightMessage.setBackground(null);
-//                }
-//            }
-
             return viewHolder.rightMessage;
         }else{
             viewHolder.leftPanel.setVisibility(View.VISIBLE);
@@ -87,13 +79,6 @@ public abstract class Message {
                 viewHolder.sender.setVisibility(View.GONE);
                 GlideUtil.load(context  , FriendshipInfo.getInstance().getProfile(message.getConversation().getPeer()).getAvatarUrl() , viewHolder.leftHead);
             }
-//            Message mMessage = MessageFactory.getMessage(message);
-//            if (mMessage instanceof CustomMessage) {
-//                CustomMessage.Type messageType = ((CustomMessage) mMessage).getType();
-//                if(messageType == CustomMessage.Type.LOCATION){
-//                    viewHolder.leftMessage.setBackground(null);
-//                }
-//            }
             return viewHolder.leftMessage;
         }
 

@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,23 +19,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.yapin.shanduo.BuildConfig;
 import com.yapin.shanduo.R;
-import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.ui.activity.ClipImageActivity;
+import com.yapin.shanduo.ui.activity.PictureFolderActivity;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.FileUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
 
 import java.io.File;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.app.Activity.RESULT_OK;
 
 /**
  * 作者：L on 2018/6/15 0015 11:07
@@ -45,7 +39,6 @@ import static android.app.Activity.RESULT_OK;
 public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
 
     private View view;
-    private Context context;
     private Activity activity;
 
     //调用照相机返回图片文件
@@ -62,9 +55,14 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
 
     private ImageCropListener listener;
 
+    private int open_type;
+
+    private int pic_size;//...用于记录发布动态页面已有图片数量
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        open_type = Integer.parseInt(getTag());
     }
 
     @Nullable
@@ -72,9 +70,12 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.select_photo_layout, null);
         ButterKnife.bind(this, view);
-        context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
         return view;
+    }
+
+    public void setPicSize(int pic_size){
+        this.pic_size = pic_size;
     }
 
     @OnClick({R.id.tv_select_album , R.id.tv_take_pic , R.id.tv_cancel})
@@ -89,7 +90,14 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
                             READ_EXTERNAL_STORAGE_REQUEST_CODE);
                 }else {
                     //跳转到相册
-                    gotoPhoto();
+                    if(open_type == 1){
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("left", pic_size);
+                        bundle.putInt("source", 0);
+                        StartActivityUtil.start(activity, PictureFolderActivity.class, bundle , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW );
+                    }else {
+                        gotoPhoto();
+                    }
                 }
                 dismiss();
                 break;
@@ -162,7 +170,7 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
         } else {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
         }
-        activity.startActivityForResult(intent, REQUEST_CAPTURE);
+        activity.startActivityForResult(intent,open_type == 1 ? Constants.REQUEST_CODE_FOR_TAKE_PHOTO_SHOW : REQUEST_CAPTURE);
     }
 
     public interface ImageCropListener{

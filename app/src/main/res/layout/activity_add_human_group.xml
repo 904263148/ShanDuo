@@ -41,18 +41,21 @@
         android:background="@color/home_text_bg"
         />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/sliding_tab"
+        android:layout_width="280dp"
         android:layout_height="40dp"
-        android:background="@android:color/white"
-        android:layout_below="@+id/rl_ban"
-        app:tabIndicatorColor="@color/tab_indicator_color"
-        app:tabSelectedTextColor="@color/font_black_color"
-        app:tabTextColor="@color/font_gray_color"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabPadding="10dp"
+        android:layout_gravity="center_horizontal"
+        app:tl_indicator_color="@color/tab_indicator_color"
+        app:tl_indicator_width="30dp"
+        app:tl_indicator_height="3dp"
+        app:tl_indicator_corner_radius="1dp"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_indicator_style="NORMAL"
+        app:tl_tab_space_equal="true"
+        app:tl_textsize="15sp"
+        app:tl_textSelectColor="@color/home_title_color"
+        app:tl_textUnselectColor="@color/font_color_gray"
         />
 
     <TextView

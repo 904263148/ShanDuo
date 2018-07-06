@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yapin.shanduo.R;
@@ -24,7 +23,7 @@ import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
 import com.yapin.shanduo.ui.activity.MyDynamicsActivity;
-import com.yapin.shanduo.ui.activity.MywalletActivity;
+import com.yapin.shanduo.ui.activity.MyWalletActivity;
 import com.yapin.shanduo.ui.activity.MyactivitiesActivity;
 import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.contract.UserDetailContract;
@@ -160,7 +159,7 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
                     StartActivityUtil.start(activity , LoginActivity.class , MYWALLET);
                 }else {
-                    StartActivityUtil.start(activity , MywalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity , MyWalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
             case R.id.tv_login_reg:

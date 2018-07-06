@@ -3,6 +3,7 @@ package com.tencent.qcloud.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class TemplateTitle extends RelativeLayout {
     private String moreText;
     private int moreImg;
     private TextView tvMore;
-
+    private int backgroundColor ,titleColor;
 
     public TemplateTitle(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -35,6 +36,8 @@ public class TemplateTitle extends RelativeLayout {
             backText = ta.getString(R.styleable.TemplateTitle_backText);
             moreImg = ta.getResourceId(R.styleable.TemplateTitle_moreImg, 0);
             moreText = ta.getString(R.styleable.TemplateTitle_moreText);
+            backgroundColor = ta.getColor(R.styleable.TemplateTitle_backgroundColor , getResources().getColor(R.color.white));
+            titleColor = ta.getColor(R.styleable.TemplateTitle_backgroundColor , getResources().getColor(R.color.home_title_color));
             setUpView();
         } finally {
             ta.recycle();
@@ -44,6 +47,7 @@ public class TemplateTitle extends RelativeLayout {
     private void setUpView(){
         TextView tvTitle = (TextView) findViewById(R.id.title);
         tvTitle.setText(titleText);
+        tvTitle.setTextColor(titleColor);
         LinearLayout backBtn = (LinearLayout) findViewById(R.id.title_back);
         backBtn.setVisibility(canBack ? VISIBLE : INVISIBLE);
         if (canBack){
@@ -62,6 +66,8 @@ public class TemplateTitle extends RelativeLayout {
         }
         tvMore = (TextView) findViewById(R.id.txt_more);
         tvMore.setText(moreText);
+        RelativeLayout rlBg = (RelativeLayout) findViewById(R.id.rl_bg);
+        rlBg.setBackgroundColor(backgroundColor);
     }
 
 
@@ -132,9 +138,14 @@ public class TemplateTitle extends RelativeLayout {
         }
     }
 
-
-
-
-
+    /**
+     * 设置返回按钮事件
+     *
+     * @param resId 颜色资源
+     */
+    public void setTitleBgColor(int resId){
+        RelativeLayout rlBg = (RelativeLayout) findViewById(R.id.rl_bg);
+        rlBg.setBackgroundColor(getResources().getColor(resId));
+    }
 
 }

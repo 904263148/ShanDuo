@@ -328,8 +328,8 @@ public class ActivityFragment extends Fragment implements ActivityInfoAdapter.On
 
     @Override
     public void loading() {
-//        if (!isRefresh && !isLoading)
-//            loadDialog.show();
+        if (!isRefresh && !isLoading)
+            loadDialog.show();
     }
 
     @Override

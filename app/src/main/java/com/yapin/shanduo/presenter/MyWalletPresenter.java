@@ -2,33 +2,30 @@ package com.yapin.shanduo.presenter;
 
 import android.content.Context;
 
-import com.yapin.shanduo.model.MywalletModel;
+import com.yapin.shanduo.model.MyWalletModel;
 import com.yapin.shanduo.model.entity.FlickerPurseInfo;
-import com.yapin.shanduo.model.entity.TransactionrecordInfo;
-import com.yapin.shanduo.model.impl.MywalletModelImpl;
+import com.yapin.shanduo.model.impl.MyWalletModelImpl;
 import com.yapin.shanduo.ui.contract.MywalletContract;
-
-import java.util.List;
 
 /**
  * Created by dell on 2018/6/4.
  */
 
-public class MywalletPresenter implements MywalletContract.Presenter {
+public class MyWalletPresenter implements MywalletContract.Presenter {
 
     private  MywalletContract.View view;
-    private MywalletModel mywalletModel;
+    private MyWalletModel myWalletModel;
 
     public void init(Context context, MywalletContract.View view) {
         this.view = view;
         view.initView();
-        mywalletModel = new MywalletModelImpl();
+        myWalletModel = new MyWalletModelImpl();
     }
 
 
     @Override
     public void mywallet() {
-        mywalletModel.load(new OnLoadListener <FlickerPurseInfo>() {
+        myWalletModel.load(new OnLoadListener <FlickerPurseInfo>() {
             @Override
             public void onSuccess(FlickerPurseInfo success) {
                 view.success(success);

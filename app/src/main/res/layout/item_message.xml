@@ -28,33 +28,37 @@
                 android:layout_height="35dp"
                 android:src="@drawable/head_other"
                 android:layout_alignParentLeft="true"/>
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/leftAvatar"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/sender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_gray1"
-                    android:layout_marginLeft="6dp"
                     android:layout_marginBottom="3dp"
-                    android:textSize="12sp"
-                    android:text="name"/>
+                    android:layout_marginLeft="6dp"
+                    android:text="name"
+                    android:textColor="@color/text_gray1"
+                    android:textSize="12sp" />
+
                 <RelativeLayout
                     android:id="@+id/leftMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="10dp"
+                    android:layout_below="@+id/sender"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_chat_gray"
                     android:clickable="true"
-                    android:longClickable="true"
                     android:gravity="center"
-                    android:background="@drawable/bg_bubble_gray"/>
-            </LinearLayout>
+                    android:longClickable="true" />
+            </RelativeLayout>
 
 
         </RelativeLayout>
@@ -78,14 +82,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@id/rightAvatar"
-                android:background="@drawable/bg_bubble_blue"
+                android:background="@drawable/bg_chat_blue"
                 android:clickable="true"
                 android:gravity="center"
                 android:longClickable="true"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="20dp"
-                android:paddingTop="5dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                />
             <TextView
                 android:id="@+id/rightDesc"
                 android:layout_alignRight="@id/rightMessage"

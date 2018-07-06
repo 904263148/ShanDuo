@@ -1,48 +1,24 @@
 package com.yapin.shanduo.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.gyf.barlibrary.ImmersionBar;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.FlickerPurseInfo;
-import com.yapin.shanduo.model.entity.PayResult;
-import com.yapin.shanduo.model.entity.TransactionrecordInfo;
-import com.yapin.shanduo.presenter.MywalletPresenter;
+import com.yapin.shanduo.presenter.MyWalletPresenter;
 import com.yapin.shanduo.ui.contract.MywalletContract;
-import com.yapin.shanduo.ui.fragment.MyactivityFragment;
 import com.yapin.shanduo.ui.fragment.PayDialogFragment;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,37 +28,47 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/3.
  */
 //, PopupWindow.OnDismissListener, View.OnClickListener
-public class MywalletActivity extends BaseActivity implements MywalletContract.View ,PayDialogFragment.DialogDismiss  {
-
-    private MywalletPresenter presenter;
-    private Context context;
-    private Activity activity;
-
-    private static final int TRANSACTIONRECORD=1;
-
-    private PayDialogFragment payDialogFragment;
-
-    private static final int SDK_PAY_FLAG = 1;
+public class MyWalletActivity extends BaseActivity implements MywalletContract.View, PayDialogFragment.DialogDismiss {
 
     @BindView(R.id.tv_money)
     TextView tv_money;
     @BindView(R.id.tv_beans)
     TextView tv_beans;
+    @BindView(R.id.tv_money_one)
+    TextView tvMoneyOne;
+    @BindView(R.id.tv_refresh_count)
+    TextView tvRefreshCount;
 
+    private MyWalletPresenter presenter;
+    private Context context;
+    private Activity activity;
+
+    private static final int TRANSACTIONRECORD = 1;
+
+    private PayDialogFragment payDialogFragment;
+
+    private static final int SDK_PAY_FLAG = 1;
+
+    private ImmersionBar mImmersionBar; //沉浸式
 
     private FlickerPurseInfo flickerPurseInfo = new FlickerPurseInfo();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mywallet);
         ButterKnife.bind(this);
 
-        presenter = new MywalletPresenter();
-        presenter.init(context,this);
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.tab_indicator_color)
+                .statusBarAlpha(0.2f)
+                .statusBarDarkFont(true, 0.2f)
+                .init();
+
+        presenter = new MyWalletPresenter();
+        presenter.init(context, this);
         initView();
         presenter.mywallet();
-
-
     }
 
     public void initView() {
@@ -90,18 +76,21 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
         activity = this;
     }
 
-    @OnClick({ R.id.ll_recharge ,R.id.ll_Transactionrecord})
+    @OnClick({R.id.ll_recharge, R.id.ll_Transactionrecord , R.id.iv_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_recharge:
-                payDialogFragment = PayDialogFragment.newInstance(Constants.RECHARGE , 3 , "" , "" ,"");
-                payDialogFragment.setDismissListener(MywalletActivity.this);
+                payDialogFragment = PayDialogFragment.newInstance(Constants.RECHARGE, 3, "", "", "");
+                payDialogFragment.setDismissListener(MyWalletActivity.this);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 payDialogFragment.show(ft, "tag");
                 break;
             case R.id.ll_Transactionrecord:
-                StartActivityUtil.start(activity , TransactionrecordActivity.class , TRANSACTIONRECORD);
+                StartActivityUtil.start(activity, TransactionrecordActivity.class, TRANSACTIONRECORD);
+                break;
+            case R.id.iv_back:
+                onBackPressed();
                 break;
         }
     }
@@ -131,9 +120,12 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
     @Override
     public void success(FlickerPurseInfo data) {
 //        ToastUtil.showShortToast(context , data);
+        if(data == null) return;
         flickerPurseInfo = data;
-        tv_money.setText(flickerPurseInfo.getMoney()+"");
-        tv_beans.setText(flickerPurseInfo.getBeans()+"");
+        tv_money.setText(flickerPurseInfo.getMoney() + "");
+        tv_beans.setText(flickerPurseInfo.getBeans() + "");
+        tvMoneyOne.setText(data.getReward()+"");
+        tvRefreshCount.setText(data.getRefresh()+"");
     }
 
     @Override
@@ -143,12 +135,12 @@ public class MywalletActivity extends BaseActivity implements MywalletContract.V
 
     @Override
     public void networkError() {
-        ToastUtil.showShortToast(context,"网络连接异常");
+        ToastUtil.showShortToast(context, "网络连接异常");
     }
 
     @Override
     public void error(String msg) {
-        ToastUtil.showShortToast(context,msg);
+        ToastUtil.showShortToast(context, msg);
     }
 
     @Override

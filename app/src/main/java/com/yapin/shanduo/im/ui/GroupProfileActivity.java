@@ -313,7 +313,7 @@ public class GroupProfileActivity extends FragmentActivity implements GroupInfoV
                 break;
             case R.id.iv_head:
                 if(isGroupOwner){
-                    selectPhotoDialogFragment.show(getSupportFragmentManager() , "");
+                    selectPhotoDialogFragment.show(getSupportFragmentManager() , "0");
                 }
                 break;
         }

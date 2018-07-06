@@ -1,21 +1,14 @@
 package com.yapin.shanduo.ui.activity;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.yapin.shanduo.utils.ActivityTransitionUtil;
-import com.yapin.shanduo.utils.Constants;
-
 
 public class BaseActivity extends AppCompatActivity{
     private int isEvent; //右滑关闭页面设置

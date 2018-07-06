@@ -10,6 +10,8 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.TIMElem;
@@ -108,6 +110,7 @@ public class TextMessage extends Message {
             stringBuilder.insert(0," ");
         }
         tv.setText(stringBuilder);
+        tv.setPadding(30 ,20 , 26, 20);
         getBubbleView(viewHolder).addView(tv);
         showStatus(viewHolder);
     }

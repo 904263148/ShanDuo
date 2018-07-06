@@ -30,6 +30,6 @@
     <color name="colorMask">#66000000</color>
 
     <color name="publish_input">#5E75FF</color>
-
+    <color name="home_title_color">#333333</color>
 
 </resources>

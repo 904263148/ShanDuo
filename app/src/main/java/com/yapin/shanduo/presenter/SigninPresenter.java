@@ -2,7 +2,7 @@ package com.yapin.shanduo.presenter;
 
 import android.content.Context;
 
-import com.yapin.shanduo.model.SigninModel;
+import com.yapin.shanduo.model.SignModel;
 import com.yapin.shanduo.model.entity.SigninInfo;
 import com.yapin.shanduo.model.impl.SigninModelImpl;
 import com.yapin.shanduo.ui.contract.SigninContract;
@@ -14,7 +14,7 @@ import com.yapin.shanduo.ui.contract.SigninContract;
 public class SigninPresenter implements SigninContract.Presenter {
 
     private  SigninContract.View view;
-    private SigninModel signinModel;
+    private SignModel signinModel;
     private Context context;
 
     public void init(Context context, SigninContract.View view) {

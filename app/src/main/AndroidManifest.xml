@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.yapin.shanduo">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -66,7 +67,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.yapin.shanduo.fileProvider"
+            android:exported="false"
+            tools:replace="android:authorities"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="380003ad22c77846268687091133613c" />
@@ -318,7 +332,7 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/MyTheme"
             />
-        <activity android:name=".ui.activity.MywalletActivity" />
+        <activity android:name=".ui.activity.MyWalletActivity" />
         <activity android:name=".ui.activity.MapGaodeActivity" />
         <activity
             android:name=".ui.activity.PublishTrendActivity"

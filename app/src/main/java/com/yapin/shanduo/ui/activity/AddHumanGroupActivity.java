@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.adapter.AddTabAdapter;
@@ -25,11 +26,8 @@ public class AddHumanGroupActivity extends BaseActivity {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
-
-    private Context context;
-    private Activity activity;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
     private AddTabAdapter adapter;
 
@@ -40,23 +38,13 @@ public class AddHumanGroupActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        context = ShanDuoPartyApplication.getContext();
-        activity = this;
-
         List<String> tabList = new ArrayList<>();
         tabList.add("找人");
         tabList.add("找群");
 
         adapter = new AddTabAdapter(getSupportFragmentManager(), tabList);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 55 , 55);
-            }
-        });
-
+        slidingTabLayout.setViewPager(viewPager);
     }
 
     @OnClick({R.id.iv_back})

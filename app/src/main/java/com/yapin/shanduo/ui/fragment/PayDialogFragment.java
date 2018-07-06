@@ -3,7 +3,6 @@ package com.yapin.shanduo.ui.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,18 +28,16 @@ import com.alipay.sdk.app.PayTask;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.qcloud.sdk.Constant;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.FlickerPurseInfo;
 import com.yapin.shanduo.model.entity.PayOrder;
 import com.yapin.shanduo.model.entity.PayResult;
-import com.yapin.shanduo.presenter.MywalletPresenter;
+import com.yapin.shanduo.presenter.MyWalletPresenter;
 import com.yapin.shanduo.presenter.PayOrderPresenter;
 import com.yapin.shanduo.presenter.PeabeanPresenter;
 import com.yapin.shanduo.ui.activity.MainActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
-import com.yapin.shanduo.ui.activity.ScrollingActivity;
 import com.yapin.shanduo.ui.contract.MywalletContract;
 import com.yapin.shanduo.ui.contract.PayOrderContract;
 import com.yapin.shanduo.ui.contract.PeabeanContract;
@@ -134,7 +131,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
 
     private PayOrderPresenter payOrderPresenter;
     private PeabeanPresenter peabeanPresenter;
-    private MywalletPresenter presenter;
+    private MyWalletPresenter presenter;
 
     private FlickerPurseInfo flickerPurseInfo = new FlickerPurseInfo();
 
@@ -178,7 +175,7 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
         payOrderPresenter.init(this);
         peabeanPresenter = new PeabeanPresenter();
         peabeanPresenter.init(context ,this);
-        presenter = new MywalletPresenter();
+        presenter = new MyWalletPresenter();
         presenter.init(context,this);
         presenter.mywallet();
         initView();
@@ -249,6 +246,8 @@ public class PayDialogFragment extends DialogFragment implements PayOrderContrac
                 bt_Refresh.setVisibility(View.GONE);
                 bt_Settop.setVisibility(View.GONE);
                 bt_vip.setVisibility(View.GONE);
+                tvMemo1.setVisibility(View.GONE);
+                tvMemo2.setVisibility(View.GONE);
                 break;
 
         }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.model.entity.CreditItem;
@@ -50,8 +51,6 @@ public class KickingActivity extends AppCompatActivity implements CreditDetailCo
     CollapsingToolbarLayout toolbarLayout;
     @BindView(R.id.app_bar)
     AppBarLayout appBar;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.tv_score)
@@ -64,6 +63,8 @@ public class KickingActivity extends AppCompatActivity implements CreditDetailCo
     TextView textview;
     @BindView(R.id.ll_layoutkicking)
     LinearLayout ll_layoutkicking;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
     private KickingTabAdapter adapter;
     private int page = 1;
@@ -133,13 +134,7 @@ public class KickingActivity extends AppCompatActivity implements CreditDetailCo
 
         adapter = new KickingTabAdapter(getSupportFragmentManager(), tabList , userId);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout, 60, 60);
-            }
-        });
+        slidingTabLayout.setViewPager(viewPager);
 
         toolbarLayout.setTitle("");
 

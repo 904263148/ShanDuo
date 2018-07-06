@@ -30,6 +30,7 @@ import com.yapin.shanduo.presenter.UploadPresenter;
 import com.yapin.shanduo.ui.adapter.ShowPictureAdapter;
 import com.yapin.shanduo.ui.contract.PublishTrendContract;
 import com.yapin.shanduo.ui.contract.UploadContract;
+import com.yapin.shanduo.ui.fragment.SelectPhotoDialogFragment;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PictureUtil;
 import com.yapin.shanduo.utils.PrefUtil;
@@ -39,6 +40,7 @@ import com.yapin.shanduo.utils.Utils;
 import com.yapin.shanduo.widget.ScrollGridLayoutManager;
 import com.yapin.shanduo.widget.ShowAllRecyclerView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +59,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 
 @RuntimePermissions
-public class PublishTrendActivity extends BaseActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View{
+public class PublishTrendActivity extends BaseActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View , SelectPhotoDialogFragment.ImageCropListener{
 
     public static final int TYPE_SHOW = 0;
 
@@ -90,6 +92,9 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     private ShowPictureAdapter showAdapter;
 
     private UploadPresenter uploadPresenter;
+    private SelectPhotoDialogFragment selectPhotoDialogFragment;//..拍照或者选择图片的fragment
+    //调用照相机返回图片文件
+    private File tempFile;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,6 +114,10 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void initView(){
+
+        selectPhotoDialogFragment = new SelectPhotoDialogFragment();
+        selectPhotoDialogFragment.setImagePathListener(this);
+
         tv_pd_Publish.setText(Html.fromHtml("<u>发表</u>"));
         listShow.add("");
         ScrollGridLayoutManager layoutManager1 = new ScrollGridLayoutManager(this, 4);
@@ -128,7 +137,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 ToastUtil.showShortToast(context, context.getString(R.string.toast_count_picture));
                 return;
             }
-            showPopwindow();
+            selectPhotoDialogFragment.show(getSupportFragmentManager() , "1");
+            selectPhotoDialogFragment.setPicSize(Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
             return;
         }
         Bundle bundle = new Bundle();
@@ -163,26 +173,6 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 Intent intent =new Intent(activity ,MapGaodeActivity.class);
                 startActivityForResult(intent , 19);
                 break;
-
-            case R.id.ib_pick_photo:        //拍摄
-                if (listShow.size() == Constants.COUNT_MAX_SHOW_PICTURE) {
-                    ToastUtil.showShortToast(context, context.getString(R.string.toast_count_picture));
-                    return;
-                }
-                PublishTrendActivityPermissionsDispatcher.showAllWithCheck(PublishTrendActivity.this);
-                break;
-
-            case R.id.ib_take_photo:    //相册
-                if (listShow.size() == Constants.COUNT_MAX_SHOW_PICTURE) {
-                    ToastUtil.showShortToast(context, context.getString(R.string.toast_count_picture));
-                    return;
-                }
-                Bundle bundle = new Bundle();
-                bundle.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
-                bundle.putInt("source", 0);
-                StartActivityUtil.start(activity, PictureFolderActivity.class, bundle , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW );
-                break;
-
         }
     }
 
@@ -190,78 +180,6 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     public void setText(String data){
         tv_pd_address.setText(data);
         tv_pd_address.setVisibility(View.VISIBLE);
-    }
-
-
-    private void showPopwindow() {
-        View parent = ((ViewGroup) this.findViewById(android.R.id.content)).getChildAt(0);
-        View popView = View.inflate(this, R.layout.cameraselection, null);
-
-        Button btnCamera = (Button) popView.findViewById(R.id.btn_take_photo);
-        Button btnAlbum = (Button) popView.findViewById(R.id.btn_pick_photo);
-        Button btnCancel = (Button) popView.findViewById(R.id.btn_cancel);
-
-        int width = getResources().getDisplayMetrics().widthPixels;
-        int height = getResources().getDisplayMetrics().heightPixels;
-
-        final PopupWindow popWindow = new PopupWindow(popView,width,height);
-        popWindow.setAnimationStyle(R.style.take_photo_anim);
-        popWindow.setFocusable(true);
-        //设置背景,这个没什么效果，不添加会报错
-        popWindow.setBackgroundDrawable(new BitmapDrawable());
-        //设置点击弹窗外隐藏自身
-        popWindow.setFocusable(true);
-        popWindow.setOutsideTouchable(true);
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.btn_take_photo:
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("left", Constants.COUNT_MAX_SHOW_PICTURE - listShow.size());
-                        bundle.putInt("source", 0);
-                        StartActivityUtil.start(activity, PictureFolderActivity.class, bundle , Constants.REQUEST_CODE_FOR_SELECT_PHOTO_SHOW );
-                        popWindow.dismiss();
-                        lighton();
-                        break;
-                    case R.id.btn_pick_photo:
-                        PublishTrendActivityPermissionsDispatcher.showAllWithCheck(PublishTrendActivity.this);
-                        popWindow.dismiss();
-                        lighton();
-                        break;
-                    case R.id.btn_cancel:
-                        popWindow.dismiss();
-                        lighton();
-                        break;
-                }
-                popWindow.dismiss();
-            }
-        };
-
-        btnCamera.setOnClickListener(listener);
-        btnAlbum.setOnClickListener(listener);
-        btnCancel.setOnClickListener(listener);
-
-        ColorDrawable dw = new ColorDrawable(0x30000000);
-        popWindow.setBackgroundDrawable(dw);
-        popWindow.showAtLocation(parent, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        setBackgroundAlpha(0.5f);
-    }
-
-    //设置屏幕背景透明效果
-    public void setBackgroundAlpha(float alpha) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = alpha;
-        getWindow().setAttributes(lp);
-    }
-
-    /**
-     * 设置手机屏幕亮度显示正常
-     */
-    private void lighton() {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.alpha = 1f;
-        getWindow().setAttributes(lp);
     }
 
     @Override
@@ -280,7 +198,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 break;
             }
             case Constants.REQUEST_CODE_FOR_TAKE_PHOTO_SHOW:{
-                paths.add(PictureUtil.compressPicture(PictureUtil.currentPhotoPath));
+//                paths.add(PictureUtil.compressPicture(PictureUtil.currentPhotoPath));
+                paths.add(tempFile.toString());
                 break;
             }
             case Constants.RELEASEDYNAMICPOSITIONING:{
@@ -374,4 +293,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     void onAnyOneNeverAskAgain() {
     }
 
+    @Override
+    public void setImagePath(File path) {
+        this.tempFile = path;
+    }
 }

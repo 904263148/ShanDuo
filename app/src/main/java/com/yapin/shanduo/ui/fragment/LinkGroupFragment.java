@@ -89,7 +89,11 @@ public class LinkGroupFragment extends Fragment implements GroupListContract.Vie
             }
         });
 
-        presenter.getData();
+        if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+            loadingView.noData(R.string.tips_no_login);
+        }else {
+            presenter.getData();
+        }
     }
 
     @Override

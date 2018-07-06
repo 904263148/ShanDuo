@@ -451,12 +451,14 @@ public class SiginActivity extends BaseActivity implements SigninContract.View ,
     public void success(SigninInfo data) {
         signinInfo = data;
         initSignin();
-        presenter.getsignin();
+//        presenter.getsignin();
     }
 
     @Override
     public void success(String data) {
         ToastUtil.showShortToast(context,data);
+        signinInfo.setSignin(true);
+        initSignin();
     }
 
     @Override

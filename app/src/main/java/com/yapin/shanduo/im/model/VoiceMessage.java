@@ -99,6 +99,9 @@ public class VoiceMessage extends Message {
             tv.setLayoutParams(lp);
             linearLayout.addView(tv);
         }
+
+        linearLayout.setPadding(30 ,20 , 26, 20);
+
         clearView(viewHolder);
         getBubbleView(viewHolder).addView(linearLayout);
         getBubbleView(viewHolder).setOnClickListener(new View.OnClickListener() {

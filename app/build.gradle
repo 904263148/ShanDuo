@@ -52,6 +52,8 @@ android {
         }
         debug {
             buildConfigField("String", "BASE_API", project.BASE_API_DEBUG)
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
     }
@@ -63,6 +65,22 @@ android {
         }
     }
 
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
+    aaptOptions.cruncherEnabled = false
+    aaptOptions.useNewCruncher = false
+
+    buildscript {
+        repositories {
+            mavenCentral()
+            google()
+        }
+    }
 }
 
 greendao {
@@ -71,8 +89,6 @@ greendao {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // 导入腾讯云直播SDK jar
-    implementation fileTree(includes: ['*.jar'], dir: 'src/main/jniLibs')
     implementation 'com.android.support:multidex:1.0.0'
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -86,12 +102,13 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     implementation 'com.aurelhubert:ahbottomnavigation:1.3.3'
     //okhttp 网络连接
-    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
     implementation 'com.squareup.okio:okio:1.13.0'
     //glide 图片缓存
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //gson解析
-    implementation 'com.google.code.gson:gson:2.4'
+    implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.android.support:multidex:1.0.1'
     //permission
     implementation 'com.github.hotchemi:permissionsdispatcher:2.1.3'
@@ -105,14 +122,12 @@ dependencies {
         exclude module: 'support-v4'
     }
     //高德地图
-    implementation 'com.amap.api:3dmap:latest.integration'
-    implementation 'com.amap.api:search:latest.integration'
-    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.amap.api:3dmap:6.3.0'
+    implementation 'com.amap.api:search:6.1.0'
+    implementation 'com.amap.api:location:4.1.0'
     //腾讯IM
     implementation project(':presentation')
     implementation project(':ui')
-    implementation 'com.google.firebase:firebase-core:9.0.0'
-    implementation 'com.google.firebase:firebase-messaging:9.0.0'
     implementation files('libs/MobCommons-2018.0418.1102.jar')
     implementation files('libs/MobTools-2018.0419.1211.jar')
     implementation files('libs/ShareSDK-Core-3.1.4.jar')
@@ -123,12 +138,26 @@ dependencies {
     implementation files('libs/ShareSDK-Wechat-Core-3.1.4.jar')
     implementation files('libs/ShareSDK-Wechat-Moments-3.1.4.jar')
     //信鸽jar
-    implementation 'com.tencent.xinge:xinge:3.2.3_1-beta'
+    implementation 'com.tencent.xinge:xinge:3.2.2-release'
     //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
-    //扫码
-    implementation 'cn.yipianfengye.android:zxing-library:2.2'
-
     //汉字转拼音
     implementation 'com.belerweb:pinyin4j:2.5.0'
+    //支付宝支付
+    implementation files('libs/alipaySdk-20180403.jar')
+    //图片点击放大
+    implementation project(':picwatcherlib')
+    //右滑关闭
+    implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
+    //1.1.0 API改动过大，老用户升级需谨慎 下拉刷新
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-7'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-7'
+    //漂亮的加载动画
+    implementation 'com.wang.avi:library:2.1.3'
+    //点赞
+    implementation 'com.sackcentury:shinebutton:0.2.0'
+    //弹窗
+    implementation 'com.nightonke:boommenu:1.0.9'
+    //tablayout
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 }

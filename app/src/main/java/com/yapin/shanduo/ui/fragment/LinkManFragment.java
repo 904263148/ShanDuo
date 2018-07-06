@@ -1,46 +1,23 @@
 package com.yapin.shanduo.ui.fragment;
 
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
-import com.alipay.sdk.auth.AlipaySDK;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.yapin.shanduo.R;
-import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.im.ui.SearchFriendActivity;
-import com.yapin.shanduo.im.ui.SearchGroupActivity;
-import com.yapin.shanduo.model.entity.PayResult;
 import com.yapin.shanduo.ui.activity.AddHumanGroupActivity;
 import com.yapin.shanduo.ui.activity.SearchAllActivity;
 import com.yapin.shanduo.ui.adapter.LinkTabAdapter;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.StartActivityUtil;
-import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,10 +30,9 @@ public class LinkManFragment extends Fragment {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
-    private Context context;
     private Activity activity;
 
     private LinkTabAdapter adapter;
@@ -84,7 +60,6 @@ public class LinkManFragment extends Fragment {
     }
 
     public void initView(){
-        context = ShanDuoPartyApplication.getContext();
         activity = getActivity();
 
         List<String> tabList = new ArrayList<>();
@@ -94,13 +69,7 @@ public class LinkManFragment extends Fragment {
         viewPager.setOffscreenPageLimit(2);
         adapter = new LinkTabAdapter(getChildFragmentManager(), tabList);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 55 , 55);
-            }
-        });
+        slidingTabLayout.setViewPager(viewPager);
     }
 
     @OnClick({R.id.iv_add_friend , R.id.ll_search})

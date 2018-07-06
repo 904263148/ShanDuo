@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.gyf.barlibrary.ImmersionBar;
 import com.tencent.TIMConversationType;
 import com.tencent.TIMFriendResult;
@@ -69,8 +70,6 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     TextView tvActCount;
     @BindView(R.id.tv_trend_count)
     TextView tvTrendCount;
-    @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.tv_add_friend)
@@ -87,6 +86,8 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
     LinearLayout llAdd;
     @BindView(R.id.tv_delete_friend)
     TextView tvDelete;
+    @BindView(R.id.sliding_tab)
+    SlidingTabLayout slidingTabLayout;
 
     private Context context;
     private Activity activity;
@@ -134,13 +135,7 @@ public class UserProfActivity extends BaseActivity implements OpenPopupWindow, P
 
         adapter = new UserProfTabAdapter(getSupportFragmentManager(), tabList , userId);
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                Utils.setIndicator(tabLayout , 20 , 20);
-            }
-        });
+        slidingTabLayout.setViewPager(viewPager);
 
         profPresenter.getData(userId);
         loadingView.loading();

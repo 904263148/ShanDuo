@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tencent.TIMCallBack;
 import com.tencent.TIMImage;
 import com.tencent.TIMImageElem;
@@ -23,6 +24,7 @@ import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.adapters.ChatAdapter;
 import com.yapin.shanduo.im.ui.ImageViewActivity;
 import com.yapin.shanduo.im.utils.FileUtil;
+import com.yapin.shanduo.utils.GlideUtil;
 
 import java.io.IOException;
 
@@ -71,7 +73,9 @@ public class ImageMessage extends Message {
             case Sending:
 
                 ImageView imageView = new ImageView(ShanDuoPartyApplication.getContext());
+//                Glide.with(context).load
                 imageView.setImageBitmap(getThumb(e.getPath()));
+                imageView.setPadding(2 ,2 ,2 ,2);
                 clearView(viewHolder);
                 getBubbleView(viewHolder).addView(imageView);
                 break;
@@ -201,8 +205,11 @@ public class ImageMessage extends Message {
 
     private void showThumb(final ChatAdapter.ViewHolder viewHolder,String filename){
         Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.getCacheFilePath(filename));
-        ImageView imageView = new ImageView(ShanDuoPartyApplication.getContext());
+        Context context = ShanDuoPartyApplication.getContext();
+        ImageView imageView = new ImageView(context);
         imageView.setImageBitmap(bitmap);
+        imageView.setPadding(2 ,2 ,2 ,2);
+//        Glide.with(context).load(filename).transform(GlideUtil.transform(context , 10)).into(imageView);
         getBubbleView(viewHolder).addView(imageView);
     }
 

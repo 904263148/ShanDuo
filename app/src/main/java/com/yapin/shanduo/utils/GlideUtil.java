@@ -37,7 +37,7 @@ public class GlideUtil {
      * @param context context
      * @return transform
      */
-    private static GlideRoundTransform transform(Context context, int dp) {
+    public static GlideRoundTransform transform(Context context, int dp) {
         if (roundTransform == null) {
             roundTransform = new GlideRoundTransform(context, dp);
         }

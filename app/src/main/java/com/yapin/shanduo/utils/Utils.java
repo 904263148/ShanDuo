@@ -266,41 +266,9 @@ public class Utils {
         }
     }
 
-    //tablayout下划线文字同宽
-    public static void setIndicator (TabLayout tabs,int leftDip,int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-    }
-
-        /**
-         * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
-         */
+    /**
+     * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
+     */
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -422,7 +390,7 @@ public class Utils {
     }
     //信誉等级
     public static String getCredit(int score){
-        String level = "初窥门径";
+        String level;
         if(score < 21) {
             level = "初窥门径";
         }else if(score < 61){
@@ -443,11 +411,6 @@ public class Utils {
             level = "意境圆满";
         }
         return level;
-    }
-
-    //是否有表情
-    public static boolean isemojicharacter(char codepoint) {
-        return !((codepoint == 0x0) || (codepoint == 0x9) || (codepoint == 0xa) || (codepoint == 0xd) || ((codepoint >= 0x20) && codepoint <= 0xd7ff))|| ((codepoint >= 0xe000) && (codepoint <= 0xfffd)) || ((codepoint >= 0x10000) && (codepoint <= 0x10ffff));
     }
 
     /**

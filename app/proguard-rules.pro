@@ -125,6 +125,14 @@
 -keep class com.wang.avi.** { *; }
 -keep class com.wang.avi.indicators.** { *; }
 
+#腾讯IM
+-keep class com.tencent.**{*;}
+-dontwarn com.tencent.**
+-keep class tencent.**{*;}
+-dontwarn tencent.**
+-keep class qalsdk.**{*;}
+-dontwarn qalsdk.**
+
 #-------------------------3.与js互相调用的类------------------------
 
 

@@ -1,11 +1,10 @@
 package com.yapin.shanduo.model.impl;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
-import com.yapin.shanduo.model.SigninModel;
+import com.yapin.shanduo.model.SignModel;
 import com.yapin.shanduo.model.entity.SigninInfo;
 import com.yapin.shanduo.okhttp.JavaOkCallback;
 import com.yapin.shanduo.okhttp.OkHttp;
@@ -24,7 +23,7 @@ import java.util.Map;
  * Created by dell on 2018/6/8.
  */
 
-public class SigninModelImpl implements SigninModel{
+public class SigninModelImpl implements SignModel {
     @Override
     public void load(final OnLoadListener<SigninInfo> listener) {
         final Context context = ShanDuoPartyApplication.getContext();

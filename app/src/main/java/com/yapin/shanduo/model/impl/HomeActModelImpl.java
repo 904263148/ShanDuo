@@ -39,7 +39,7 @@ public class HomeActModelImpl implements HomeActLoadModel{
         }
         Map<String,String> params = new HashMap<>();
         if(type.equals("3") || "7".equals(type)){
-            params.put("token" , PrefJsonUtil.getProfile(context).getToken());
+            params.put("token" , PrefUtil.getToken(context));
         }
         params.put("type",type);
         params.put("lon", PrefUtil.getLon(context));

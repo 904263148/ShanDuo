@@ -143,7 +143,7 @@ public class TrendInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     }
                 });
             }else {
-                ToastUtil.showShortToast(context , R.string.tips_my_no_token);
+                holder.tvLikeCount.setClickable(false);
             }
 
             holder.tvMile.setOnClickListener(new View.OnClickListener() {

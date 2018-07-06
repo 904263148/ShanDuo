@@ -15,6 +15,24 @@ public class FlickerPurseInfo implements Parcelable {
     private Integer beans;      //闪多豆
     private Integer refresh;      //刷新次数
 
+    private double reward , rewards;
+
+    public double getReward() {
+        return reward;
+    }
+
+    public void setReward(double reward) {
+        this.reward = reward;
+    }
+
+    public double getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(double rewards) {
+        this.rewards = rewards;
+    }
+
     public FlickerPurseInfo(){}
 
     public FlickerPurseInfo(double money, Integer beans, Integer refresh) {
@@ -58,15 +76,19 @@ public class FlickerPurseInfo implements Parcelable {
         dest.writeDouble(this.money);
         dest.writeValue(this.beans);
         dest.writeValue(this.refresh);
+        dest.writeDouble(this.reward);
+        dest.writeDouble(this.rewards);
     }
 
     protected FlickerPurseInfo(Parcel in) {
         this.money = in.readDouble();
         this.beans = (Integer) in.readValue(Integer.class.getClassLoader());
         this.refresh = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.reward = in.readDouble();
+        this.rewards = in.readDouble();
     }
 
-    public static final Parcelable.Creator<FlickerPurseInfo> CREATOR = new Parcelable.Creator<FlickerPurseInfo>() {
+    public static final Creator<FlickerPurseInfo> CREATOR = new Creator<FlickerPurseInfo>() {
         @Override
         public FlickerPurseInfo createFromParcel(Parcel source) {
             return new FlickerPurseInfo(source);

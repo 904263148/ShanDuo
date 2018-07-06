@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.gyf.barlibrary.ImmersionBar;
 import com.nightonke.boommenu.BoomMenuButton;
 import com.nightonke.boommenu.Types.BoomType;
 import com.nightonke.boommenu.Types.ButtonType;
@@ -110,15 +111,22 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
     private PopupWindow publishPopupWindow;
     private View publishPopView;
 
+    private ImmersionBar mImmersionBar; //沉浸式
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.white)
+                     .statusBarAlpha(0.2f)
+                     .statusBarDarkFont(true , 0.2f)
+                     .init();
+
         //设置PopupWindow的View
         publishPopView = LayoutInflater.from(this).inflate(R.layout.publish_popupwindow , null);
-
         initView();
     }
 
@@ -145,7 +153,6 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         viewPager.setAdapter(adapter);
 
         fragment = new CustomBottomSheetDialogFragment();
-
         homeFragment = (HomeFragment) adapter.getItem(0);
 
     }
@@ -415,4 +422,10 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
+    }
 }
