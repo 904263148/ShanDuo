@@ -156,7 +156,7 @@ public class SelectPhotoDialogFragment extends BottomSheetDialogFragment {
     private void gotoCamera() {
         Log.d("evan", "*****************打开相机********************");
         //创建拍照存储的图片文件
-        tempFile = new File(FileUtil.checkDirPath(Environment.getExternalStorageDirectory().getPath() + "/image/"), System.currentTimeMillis() + ".jpg");
+        tempFile = new File(FileUtil.checkDirPath(Environment.getExternalStorageDirectory().getPath() + Constants.PICTURE_PATH), System.currentTimeMillis() + ".jpg");
 
         listener.setImagePath(tempFile);
 

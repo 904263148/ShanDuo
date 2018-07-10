@@ -22,6 +22,7 @@ public class UploadPresenter implements UploadContract.Presenter{
 
     @Override
     public void upload(List<String> paths) {
+        view.loading();
         loadModel.load(new OnLoadListener<String>() {
             @Override
             public void onSuccess(String data) {

@@ -337,6 +337,7 @@
         <activity
             android:name=".ui.activity.PublishTrendActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/MyTheme"
             />
 
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->

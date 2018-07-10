@@ -2,6 +2,7 @@ package com.yapin.shanduo.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,12 +26,14 @@ import android.widget.TextView;
 
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
+import com.yapin.shanduo.im.ui.ImagePreviewActivity;
 import com.yapin.shanduo.presenter.PublishTrendPresenter;
 import com.yapin.shanduo.presenter.UploadPresenter;
 import com.yapin.shanduo.ui.adapter.ShowPictureAdapter;
 import com.yapin.shanduo.ui.contract.PublishTrendContract;
 import com.yapin.shanduo.ui.contract.UploadContract;
 import com.yapin.shanduo.ui.fragment.SelectPhotoDialogFragment;
+import com.yapin.shanduo.utils.BitmapUtils;
 import com.yapin.shanduo.utils.Constants;
 import com.yapin.shanduo.utils.PictureUtil;
 import com.yapin.shanduo.utils.PrefUtil;
@@ -59,7 +62,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 
 @RuntimePermissions
-public class PublishTrendActivity extends BaseActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View , SelectPhotoDialogFragment.ImageCropListener{
+public class PublishTrendActivity extends RightSlidingActivity implements ShowPictureAdapter.OnItemClickListener , PublishTrendContract.View , View.OnClickListener, UploadContract.View , SelectPhotoDialogFragment.ImageCropListener{
 
     public static final int TYPE_SHOW = 0;
 
@@ -96,6 +99,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
     //调用照相机返回图片文件
     private File tempFile;
 
+    private Dialog loadDialog;//...加载
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +119,8 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void initView(){
+
+        loadDialog = ToastUtil.showLoading(activity);
 
         selectPhotoDialogFragment = new SelectPhotoDialogFragment();
         selectPhotoDialogFragment.setImagePathListener(this);
@@ -161,10 +168,11 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
                 if (lat==null){
                     lat = PrefUtil.getLat(context);
                 }
-                if (listShow.size() >=2) {
+                if (listShow.size() >= 2) {
                     listShow.remove(0);
                     uploadPresenter.upload(listShow);
                 }else{
+                    loading();
                     publishTrend("");
                 }
 
@@ -199,7 +207,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
             }
             case Constants.REQUEST_CODE_FOR_TAKE_PHOTO_SHOW:{
 //                paths.add(PictureUtil.compressPicture(PictureUtil.currentPhotoPath));
-                paths.add(tempFile.toString());
+                paths.add(BitmapUtils.compressImage(tempFile.toString()));
                 break;
             }
             case Constants.RELEASEDYNAMICPOSITIONING:{
@@ -235,6 +243,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void success(String data) {
+        loadDialog.dismiss();
         ToastUtil.showShortToast(context,"发表成功");
         finish();
     }
@@ -251,7 +260,7 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void loading() {
-
+        loadDialog.show();
     }
 
     @Override
@@ -261,12 +270,14 @@ public class PublishTrendActivity extends BaseActivity implements ShowPictureAda
 
     @Override
     public void error(String msg) {
-//        ToastUtil.showShortToast(context,msg);
+        loadDialog.dismiss();
+        ToastUtil.showShortToast(context,msg);
     }
 
     @Override
     public void showFailed(String msg) {
-
+        loadDialog.dismiss();
+        ToastUtil.showShortToast(context , msg);
     }
 
 

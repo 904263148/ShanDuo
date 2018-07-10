@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +33,7 @@ import com.tencent.qcloud.presentation.viewfeatures.ChatView;
 import com.tencent.qcloud.ui.ChatInput;
 import com.tencent.qcloud.ui.TemplateTitle;
 import com.tencent.qcloud.ui.VoiceSendingView;
+import com.yapin.shanduo.BuildConfig;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.adapters.ChatAdapter;
@@ -355,11 +358,23 @@ public class ChatActivity extends BaseActivity implements ChatView {
     public void sendPhoto() {
         Intent intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent_photo.resolveActivity(getPackageManager()) != null) {
+
             File tempFile = FileUtil.getTempFile(FileUtil.FileType.IMG);
+//            File tempFile = new File(com.yapin.shanduo.utils.FileUtil.checkDirPath(Environment.getExternalStorageDirectory().getPath() + Constants.PICTURE_PATH), System.currentTimeMillis() + ".jpg");
             if (tempFile != null) {
                 fileUri = Uri.fromFile(tempFile);
             }
-            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            //跳转到调用系统相机
+            intent_photo = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //设置7.0中共享文件，分享路径定义在xml/file_paths.xml
+                intent_photo.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Uri contentUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".fileProvider", tempFile);
+                intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, contentUri);
+            } else {
+                intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+            }
+//            intent_photo.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
             startActivityForResult(intent_photo, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         }
     }

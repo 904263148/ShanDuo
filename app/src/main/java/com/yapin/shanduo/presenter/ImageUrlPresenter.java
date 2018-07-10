@@ -1,10 +1,6 @@
 package com.yapin.shanduo.presenter;
 
-import android.content.Context;
-
-import com.yapin.shanduo.model.UploadLoadModel;
 import com.yapin.shanduo.model.impl.ImageUrlModelImpl;
-import com.yapin.shanduo.model.impl.UploadModelImpl;
 import com.yapin.shanduo.ui.contract.UploadContract;
 
 import java.util.List;

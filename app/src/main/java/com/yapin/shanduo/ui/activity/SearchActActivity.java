@@ -56,7 +56,6 @@ public class SearchActActivity extends RightSlidingActivity implements  View.OnK
     private SearchActPresenter presenter;
     private List<ActivityInfo.Act> list = new ArrayList<>();
     private ActivityInfoAdapter adapter;
-    private LinearLayoutManager layoutManager;
     private ActivityInfo.Act footerItem = new ActivityInfo.Act();
 
     @Override
@@ -83,7 +82,7 @@ public class SearchActActivity extends RightSlidingActivity implements  View.OnK
         inputSearch.setOnKeyListener(this);
 
         footerItem.setType(Constants.TYPE_FOOTER_LOAD);
-        layoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(this);

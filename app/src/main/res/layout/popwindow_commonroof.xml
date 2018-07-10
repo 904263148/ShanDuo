@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:gravity="center"
     >
@@ -314,7 +313,7 @@
                     android:id="@+id/iv_wechat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_com_wechat"
+                    android:src="@drawable/icon_wechat_pay_select"
                     />
 
                 <TextView
@@ -342,7 +341,7 @@
                     android:id="@+id/iv_alipay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_com_alipay"/>
+                    android:src="@drawable/icon_alipay_select"/>
 
                 <TextView
                     android:id="@+id/tv_alipay"

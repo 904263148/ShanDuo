@@ -12,14 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.TIMGroupManager;
 import com.tencent.TIMValueCallBack;
 import com.tencent.qcloud.presentation.presenter.GroupManagerPresenter;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.presenter.CheckGroupPresenter;
 import com.yapin.shanduo.presenter.CreateGroupPresenter;
-import com.yapin.shanduo.ui.activity.BaseActivity;
 import com.yapin.shanduo.ui.activity.RightSlidingActivity;
 import com.yapin.shanduo.ui.contract.CheckGroupContract;
 import com.yapin.shanduo.ui.contract.CreateGroupContract;

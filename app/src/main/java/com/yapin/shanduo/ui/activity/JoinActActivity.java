@@ -101,7 +101,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
 
     private JoinActUserPresenter presenter;
     private JoinActPresenter joinActPresenter;
-    private ActivityDetailPresenter detailPresenter;
 
     private GridViewAdapter adapter;
 
@@ -110,8 +109,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
     private int isJoin = 0 ; // 0 未参加  1 已参加
 
     private int type;
-    private String actId;
-    private Uri uri; //..推送参数uri
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -124,11 +121,11 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
         presenter.init(this);
         joinActPresenter = new JoinActPresenter();
         joinActPresenter.init(this);
-        uri = getIntent().getData();
+        Uri uri = getIntent().getData(); //..推送uri
         if (uri != null) {
-            actId= uri.getQueryParameter("actId");
+            String actId = uri.getQueryParameter("actId");
             type= Integer.parseInt(uri.getQueryParameter("type"));
-            detailPresenter = new ActivityDetailPresenter();
+            ActivityDetailPresenter detailPresenter = new ActivityDetailPresenter();
             detailPresenter.init(this);
             detailPresenter.getData(actId);
         }else {
@@ -217,7 +214,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-                                    return;
                                 }
                             }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override
@@ -233,7 +229,6 @@ public class JoinActActivity extends RightSlidingActivity implements JoinActUser
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-                                    return;
                                 }
                             }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                         @Override

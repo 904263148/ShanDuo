@@ -57,7 +57,7 @@ public class HomeActModelImpl implements HomeActLoadModel{
             @Override
             public void onResponse(String response) {
                 Log.d("act_result",response);
-                List<ActivityInfo.Act> list = new ArrayList<>();
+                List<ActivityInfo.Act> list;
                 ActivityInfo info = null;
                 try {
                     info = new Gson().fromJson( new JSONObject(response).get("result").toString() , ActivityInfo.class);

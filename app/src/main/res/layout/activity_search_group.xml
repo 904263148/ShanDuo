@@ -5,6 +5,7 @@
     android:orientation="vertical"
     tools:context=".im.ui.SearchGroupActivity"
     android:background="@color/bg_color"
+    android:fitsSystemWindows="true"
     >
     <LinearLayout
         android:id="@id/title"
