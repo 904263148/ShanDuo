@@ -362,7 +362,7 @@
             android:text="@string/Member_Center"/>
 
         <TextView
-            android:id="@+id/text_Customer_service"
+            android:id="@+id/text_customer_service"
             android:textColor="@color/textview_text_color"
             android:background="@color/color_white"
             android:paddingLeft="10dp"

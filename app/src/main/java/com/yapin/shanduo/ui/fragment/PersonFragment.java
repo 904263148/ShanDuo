@@ -19,6 +19,7 @@ import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.im.model.UserInfo;
 import com.yapin.shanduo.presenter.UserDetailPresenter;
+import com.yapin.shanduo.ui.activity.CustomerServiceActivity;
 import com.yapin.shanduo.ui.activity.EditingformationAcivity;
 import com.yapin.shanduo.ui.activity.LoginActivity;
 import com.yapin.shanduo.ui.activity.MembercenterActivity;
@@ -36,6 +37,7 @@ import com.yapin.shanduo.utils.StartActivityUtil;
 import com.yapin.shanduo.utils.ToastUtil;
 import com.yapin.shanduo.utils.Utils;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -58,6 +60,7 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
     private final int SETUP=7;
     private final int MEMBER_CENTER = 8;
     private final int SCROLLING = 9;
+    private final int CUSTOMER_SERVICE = 10;
 
       private TextView tv_nickname;
       private ImageView ib_Headportrait;
@@ -117,49 +120,53 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
         activity = getActivity();
 
     }
-    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter})
+    @OnClick({R.id.tv_MyDynamics,R.id.tv_Myactivities ,R.id.ll_person_a , R.id.text_setup , R.id.text_mywallet ,R.id.tv_login_reg , R.id.tv_member_center ,R.id.tv_Creditcenter , R.id.text_customer_service})
     public void onClick(View view){
         switch (view.getId()){
 
             case R.id.tv_member_center:     //会员中心
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , MEMBER_CENTER);
+                    StartActivityUtil.start(activity , this , LoginActivity.class , MEMBER_CENTER);
                 }else {
-                    StartActivityUtil.start(activity , MembercenterActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity  , this, MembercenterActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
 
             case R.id.tv_MyDynamics:    //我的动态
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , PUBLISH_ACT_OPEN_LOGIN);
+                    StartActivityUtil.start(activity  , this, LoginActivity.class , PUBLISH_ACT_OPEN_LOGIN);
                 }else {
-                    StartActivityUtil.start(activity , MyDynamicsActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity  ,  MyDynamicsActivity.class);
                 }
                 break;
 
             case R.id.tv_Myactivities:      //我的活动
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , MYACTIVITIESACTIVITY);
+                    StartActivityUtil.start(activity  , this, LoginActivity.class , MYACTIVITIESACTIVITY);
                 }else {
-                    StartActivityUtil.start(activity , MyactivitiesActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity  , MyactivitiesActivity.class );
                 }
                 break;
             case R.id.ll_person_a:      //个人信息
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , EDITING);
+                    StartActivityUtil.start(activity  , this, LoginActivity.class , EDITING);
                 }else {
-                    StartActivityUtil.start(activity , EditingformationAcivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity  , this, EditingformationAcivity.class , PUBLISH_MYDYNAMICS_LOGIN);
                 }
                 break;
             case R.id.text_setup:       //设置
-                    StartActivityUtil.start(activity , SetupActivity.class , SETUP);
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity  , this, LoginActivity.class , SETUP);
+                }else {
+                    StartActivityUtil.start(activity , SetupActivity.class);
+                }
                 break;
 
             case R.id.text_mywallet:        //我的钱包
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , MYWALLET);
+                    StartActivityUtil.start(activity  , this, LoginActivity.class , MYWALLET);
                 }else {
-                    StartActivityUtil.start(activity , MyWalletActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity  , MyWalletActivity.class);
                 }
                 break;
             case R.id.tv_login_reg:
@@ -167,9 +174,16 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
                 break;
             case R.id.tv_Creditcenter:    //信用中心
                 if(TextUtils.isEmpty(PrefUtil.getToken(context))){
-                    StartActivityUtil.start(activity , LoginActivity.class , SCROLLING);
+                    StartActivityUtil.start(activity , this , LoginActivity.class , SCROLLING);
                 }else {
-                    StartActivityUtil.start(activity, ScrollingActivity.class , PUBLISH_MYDYNAMICS_LOGIN);
+                    StartActivityUtil.start(activity , ScrollingActivity.class );
+                }
+                break;
+            case R.id.text_customer_service:
+                if(TextUtils.isEmpty(PrefUtil.getToken(context))){
+                    StartActivityUtil.start(activity , this , LoginActivity.class , CUSTOMER_SERVICE);
+                }else {
+                    StartActivityUtil.start(activity , CustomerServiceActivity.class );
                 }
                 break;
         }
@@ -178,21 +192,31 @@ public class PersonFragment extends Fragment implements UserDetailContract.View{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if( resultCode != Activity.RESULT_OK) return;
         switch (requestCode){
             case PUBLISH_ACT_OPEN_LOGIN:
+                StartActivityUtil.start(activity  ,  MyDynamicsActivity.class);
                 break;
             case MYACTIVITIESACTIVITY:
+                StartActivityUtil.start(activity  , MyactivitiesActivity.class );
                 break;
             case EDITING:
+
                 break;
             case MYWALLET:
+                StartActivityUtil.start(activity  , MyWalletActivity.class);
                 break;
             case MEMBER_CENTER:
+
                 break;
             case SCROLLING:
+                StartActivityUtil.start(activity , ScrollingActivity.class );
                 break;
             case SETUP:
+                StartActivityUtil.start(activity , SetupActivity.class);
+                break;
+            case CUSTOMER_SERVICE:
+                StartActivityUtil.start(activity , CustomerServiceActivity.class );
                 break;
         }
     }

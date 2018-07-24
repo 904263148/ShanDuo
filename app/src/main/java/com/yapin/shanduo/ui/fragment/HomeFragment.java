@@ -2,11 +2,9 @@ package com.yapin.shanduo.ui.fragment;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +18,11 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.yapin.shanduo.R;
 import com.yapin.shanduo.app.ShanDuoPartyApplication;
 import com.yapin.shanduo.ui.activity.LoginActivity;
-import com.yapin.shanduo.ui.activity.PublishActivity;
-import com.yapin.shanduo.ui.activity.PublishTrendActivity;
 import com.yapin.shanduo.ui.activity.SearchActActivity;
 import com.yapin.shanduo.ui.activity.SiginActivity;
-import com.yapin.shanduo.ui.activity.SmartRefreshActivity;
 import com.yapin.shanduo.ui.adapter.HomeViewPagerAdapter;
 import com.yapin.shanduo.utils.PrefUtil;
 import com.yapin.shanduo.utils.StartActivityUtil;
-import com.yapin.shanduo.utils.ToastUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,7 +98,7 @@ public class HomeFragment extends Fragment{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.btn_scan:
-                StartActivityUtil.start(activity ,this , PublishActivity.class , OPEN_SCAN);
+//                StartActivityUtil.start(activity ,this , PublishActivity.class , OPEN_SCAN);
                 break;
             case R.id.tv_act:
                 tvAct.setTextColor(getResources().getColor(R.color.home_title_select_color));

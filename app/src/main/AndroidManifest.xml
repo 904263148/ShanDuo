@@ -95,12 +95,13 @@
             />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.PublishActivity" />
         <activity android:name=".ui.activity.PictureFolderActivity" />
         <activity android:name=".ui.activity.PictureActivity" />
         <activity android:name=".ui.activity.EditingformationAcivity" />
         <activity android:name=".ui.activity.StartpageActivity" />
-        <activity android:name=".ui.activity.MyDynamicsActivity" />
+        <activity android:name=".ui.activity.MyDynamicsActivity"
+            android:theme="@style/MyTheme"
+            />
         <activity android:name=".ui.activity.MyactivitiesActivity"
             android:launchMode="singleTop"
             >
@@ -112,7 +113,9 @@
                     android:path="/notify_user_act" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MembercenterActivity" />
+        <activity android:name=".ui.activity.MembercenterActivity"
+            android:theme="@style/MyTheme"
+            />
         <activity android:name=".ui.activity.SetupActivity" />
         <activity android:name=".ui.activity.InitiatorevaluationActivity" />
         <activity android:name=".ui.activity.ParticipantevaluationActivity" />
@@ -127,7 +130,9 @@
         <activity android:name=".ui.activity.KickingActivity" />
         <activity android:name=".ui.activity.VerificationcodeActivity" />
         <activity android:name=".ui.activity.CodeLogpwdActivity" />
-        <activity android:name=".ui.activity.SiginActivity" />
+        <activity android:name=".ui.activity.SiginActivity"
+            android:theme="@style/MyTheme"
+            />
         <activity
             android:name=".im.ui.HomeActivity"
             android:launchMode="singleTop" />
@@ -458,14 +463,16 @@
         <activity
             android:name=".ui.activity.SearchActActivity"
             android:theme="@style/MyTheme"
-            >
-        </activity>
+            />
         <activity android:name=".ui.activity.PictureReviewActivity" />
         <activity android:name=".ui.activity.FirstUseActivity" />
         <activity android:name=".ui.activity.ReportActivity"/>
         <activity android:name=".ui.activity.ClipImageActivity"/>
         <activity android:name=".ui.activity.SmartRefreshActivity"/>
         <activity android:name=".ui.activity.MyMessageActivity"/>
+        <activity android:name=".ui.activity.CustomerServiceActivity"
+            android:theme="@style/MyTheme"
+            />
     </application>
 
 </manifest>

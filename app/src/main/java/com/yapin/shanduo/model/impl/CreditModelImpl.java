@@ -61,6 +61,19 @@ public class CreditModelImpl implements CreditLoadModel{
                     e.printStackTrace();
                 }
 
+                if( info.getList() == null || info.getList().size() == 0 ){
+                    CreditItem creditTop = new CreditItem();
+                    creditTop.setType(Constants.TYPE_BOTTOM);
+                    if(info.getMap() != null){
+                        creditTop.setFather_head(info.getMap().getHead_portrait_id());
+                        creditTop.setFather_id(info.getMap().getId());
+                        creditTop.setFather_reputation(info.getMap().getReputation());
+                    }
+                    list.add(creditTop);
+                    listener.onSuccess(list , info.getTotalpage());
+                    return;
+                }
+
                 for (CreditInfo.Credit credit: info.getList()){
 
                     CreditItem creditTop = new CreditItem();
@@ -70,6 +83,7 @@ public class CreditModelImpl implements CreditLoadModel{
                         creditTop.setFather_id(info.getMap().getId());
                         creditTop.setFather_reputation(info.getMap().getReputation());
                     }
+
                     creditTop.setMode(credit.getMode());
                     creditTop.setActivity_name(credit.getActivity_name());
                     creditTop.setBirthday(credit.getBirthday());

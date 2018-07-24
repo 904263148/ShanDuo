@@ -44,6 +44,8 @@ import com.yapin.shanduo.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -293,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements OpenPopupWindow, 
         publishPopView.findViewById(R.id.ll_publish_act).setOnClickListener(this);
         publishPopView.findViewById(R.id.ll_publish_trend).setOnClickListener(this);
         publishPopView.findViewById(R.id.iv_dismiss).setOnClickListener(this);
+
     }
 
     //设置屏幕背景透明效果

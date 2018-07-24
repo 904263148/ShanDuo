@@ -108,7 +108,7 @@ public class ScrollingActivity extends AppCompatActivity implements CreditDetail
     }
 
     public void setData(){
-        GlideUtil.load(context , activity , ApiUtil.IMG_URL + list.get(0).getFather_head() , ivHead);
+        GlideUtil.load(context, activity, ApiUtil.IMG_URL + list.get(0).getFather_head(), ivHead);
         tvScore.setText(list.get(0).getFather_reputation()+"");
 
         tvScoreDes.setText(Utils.getCredit(list.get(0).getFather_reputation()));

@@ -10,7 +10,7 @@ public class PrefUtil {
 
     public static void setToken(Context context, String token) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(TOKEN, token).commit();
+        sp.edit().putString(TOKEN, token).apply();
     }
 
     public static String getToken(Context context) {
@@ -23,7 +23,7 @@ public class PrefUtil {
 
     public static void setLon(Context context, String token) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(LON, token).commit();
+        sp.edit().putString(LON, token).apply();
     }
 
     public static String getLon(Context context) {
@@ -33,7 +33,7 @@ public class PrefUtil {
 
     public static void setLat(Context context, String token) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(LAT, token).commit();
+        sp.edit().putString(LAT, token).apply();
     }
 
     public static String getLat(Context context) {
@@ -44,7 +44,7 @@ public class PrefUtil {
     private static final String City = "City";
     public static void setcity(Context context, String token) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(City, token).commit();
+        sp.edit().putString(City, token).apply();
     }
 
     public static String getcity(Context context) {
@@ -57,7 +57,7 @@ public class PrefUtil {
 
     public static void setFirstUse(Context context, int type) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putInt(FIRSTUSE, type).commit();
+        sp.edit().putInt(FIRSTUSE, type).apply();
     }
 
     public static int getFirstUse(Context context) {
@@ -68,7 +68,7 @@ public class PrefUtil {
     private static final String CITY = "city";
     public static void setCity(Context context, String place) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString(CITY, place).commit();
+        sp.edit().putString(CITY, place).apply();
     }
 
     public static String getCity(Context context) {

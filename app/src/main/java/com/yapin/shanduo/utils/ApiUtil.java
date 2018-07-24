@@ -169,4 +169,7 @@ public class ApiUtil {
 
     //单个动态详情
     public final static String TREND_INFO = ConfigUtil.configUrl() + "jdynamic/bydynamic" ;
+
+    //客服
+    public final static String CUSTOMER_SERVICE = ConfigUtil.configUrl() + "juser/service" ;
 }

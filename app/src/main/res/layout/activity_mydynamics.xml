@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     >
 
     <FrameLayout
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:paddingLeft="15dp"
@@ -27,19 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20dp"
+            android:textSize="@dimen/egg_font_size_xxx"
             android:textColor="@color/mainfont"
             android:text="@string/My_dynamics"
             />
 
         <TextView
             android:id="@+id/tv_md_Release"
-            android:layout_gravity="right|center"
+            android:layout_gravity="end|center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="@string/title_activity"
             android:textColor="@color/signin"
-            android:textSize="20dp"
+            android:textSize="@dimen/egg_font_size_xxx"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             />
 
     </FrameLayout>
@@ -61,16 +65,16 @@
         android:layout_height="match_parent"
         />
 
-    <com.yapin.shanduo.widget.LoadingView
-        android:id="@+id/loading_my_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     </LinearLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
+    <com.yapin.shanduo.widget.LoadingView
+        android:id="@+id/loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        />
 
     <LinearLayout
         android:visibility="gone"

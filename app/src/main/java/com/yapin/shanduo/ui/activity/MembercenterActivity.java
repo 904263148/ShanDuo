@@ -46,7 +46,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/5/25.
  */
 
-public class MembercenterActivity extends BaseActivity implements PopupWindow.OnDismissListener ,ChargeVipDialogFragment.DialogDismiss ,
+public class MembercenterActivity extends RightSlidingActivity implements PopupWindow.OnDismissListener ,ChargeVipDialogFragment.DialogDismiss ,
         GetVipLevelContract.View{
 
     private Context context;
@@ -195,9 +195,7 @@ public class MembercenterActivity extends BaseActivity implements PopupWindow.On
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode != RESULT_OK){
-            return;
-        }
+        if(resultCode != RESULT_OK) return;
     }
 
     public void openPublishPopup(){

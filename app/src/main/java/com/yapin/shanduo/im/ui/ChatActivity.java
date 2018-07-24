@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.TIMConversationType;
@@ -76,6 +77,7 @@ public class ChatActivity extends BaseActivity implements ChatView {
     private ListView listView;
     private ChatPresenter presenter;
     private ChatInput input;
+    private TextView tvShadow;
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int IMAGE_STORE = 200;
     private static final int FILE_CODE = 300;
@@ -105,6 +107,14 @@ public class ChatActivity extends BaseActivity implements ChatView {
         ActivityTransitionUtil.startActivityTransition(activity);
     }
 
+    public static void navToChat(Activity activity, String identify, TIMConversationType type , int openUi){
+        Intent intent = new Intent(activity, ChatActivity.class);
+        intent.putExtra("identify", identify);
+        intent.putExtra("type", type);
+        intent.putExtra("openUi" , openUi);
+        activity.startActivity(intent);
+        ActivityTransitionUtil.startActivityTransition(activity);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,6 +127,10 @@ public class ChatActivity extends BaseActivity implements ChatView {
 
         identify = getIntent().getStringExtra("identify");
         type = (TIMConversationType) getIntent().getSerializableExtra("type");
+
+        int openUi = getIntent().getIntExtra("openUi" , 0);
+
+        tvShadow = findViewById(R.id.tv_shadow);
         presenter = new ChatPresenter(this, identify, type);
         input = (ChatInput) findViewById(R.id.input_panel);
         input.setChatView(this);
@@ -157,6 +171,11 @@ public class ChatActivity extends BaseActivity implements ChatView {
         TemplateTitle title = (TemplateTitle) findViewById(R.id.chat_title);
         switch (type) {
             case C2C:
+
+                if(openUi == 1){
+                    tvShadow.setVisibility(View.VISIBLE);
+                }
+
                 title.setMoreImg(R.drawable.icon_user_info);
                 if (FriendshipInfo.getInstance().isFriend(identify)){
                     title.setMoreImgAction(new View.OnClickListener() {

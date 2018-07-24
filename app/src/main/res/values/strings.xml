@@ -66,6 +66,7 @@
     <string name="tips_no_report">请选择举报内容</string>
     <string name="tips_loading">加载中#8230</string>
     <string name="tips_no_message">空空如也~</string>
+    <string name="tips_no_customer">暂无客服</string>
 
     <string name="title_home">首页</string>
     <string name="title_chat">聊天</string>
@@ -147,6 +148,7 @@
 
     <string name="shanduo_search_hint">搜索闪多号或手机号</string>
     <string name="title_join">报名</string>
+    <string name="title_customer">客服</string>
     <string name="title_details">活动详情</string>
 
     <string name="confirm_join">确认报名</string>

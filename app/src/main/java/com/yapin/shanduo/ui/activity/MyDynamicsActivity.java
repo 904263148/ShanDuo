@@ -43,7 +43,7 @@ import butterknife.OnClick;
 /**
  * Created by dell on 2018/5/3.
  */
-public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContract.View ,
+public class MyDynamicsActivity extends RightSlidingActivity implements MyDynamicsContract.View ,
         LoadMoreRecyclerView.OnLoadMoreListener ,MyDynamicsAdapter.OnLikeClickListener ,
         LikeContract.View , MyDynamicsAdapter.Onpopupwindow ,DeletedynamicContract.View{
 
@@ -52,8 +52,6 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
 
     @BindView(R.id.recycler_my_view)
     LoadMoreRecyclerView recyclerView;
-    @BindView(R.id.loading_my_view)
-    LoadingView loadingView;
     @BindView(R.id.sr_refresh)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.ll_button)
@@ -62,6 +60,9 @@ public class MyDynamicsActivity extends BaseActivity implements MyDynamicsContra
     Button bt_edit;
     @BindView(R.id.bt_delete)
     Button bt_delete;
+    @BindView(R.id.loading_view)
+    LoadingView loadingView;
+
     private MyDynamicsAdapter adapter;
     private LinearLayoutManager layoutManager;
 

@@ -96,15 +96,15 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
             StartActivityUtil.start(this , FirstUseActivity.class);
             finish();
         }else {
-            if (TextUtils.isEmpty(PrefUtil.getToken(context))) {
-                StartActivityUtil.start(this, MainActivity.class);
-                finish();
-            } else {
+//            if (TextUtils.isEmpty(PrefUtil.getToken(context))) {
+//                StartActivityUtil.start(this, MainActivity.class);
+//                finish();
+//            } else {
                 //登录之前要初始化群和好友关系链缓存
                 FriendshipEvent.getInstance().init();
                 GroupEvent.getInstance().init();
                 LoginBusiness.loginIm(PrefJsonUtil.getProfile(context).getUserId(), PrefJsonUtil.getProfile(context).getUserSig(), this);
-            }
+//            }
         }
     }
 
@@ -139,21 +139,24 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
                 dialog.show(getString(R.string.kick_logout), getSupportFragmentManager(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        navToHome();
+                        PrefUtil.setToken(context , "");
+                        StartActivityUtil.start(SplashActivity.this, MainActivity.class);
+                        finish();
                     }
                 });
                 break;
             case 6200:
                 Toast.makeText(this,getString(R.string.login_error_timeout),Toast.LENGTH_SHORT).show();
-                navToHome();
+//                navToHome();
+                StartActivityUtil.start(SplashActivity.this, MainActivity.class);
+                finish();
                 break;
             default:
                 Toast.makeText(this,getString(R.string.login_error),Toast.LENGTH_SHORT).show();
-                StartActivityUtil.start(this , FirstUseActivity.class);
+                StartActivityUtil.start(this , MainActivity.class);
                 finish();
                 break;
         }
-
     }
 
     /**
@@ -237,6 +240,8 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
 
     private void init(){
 
+        PrefUtil.setLat(context , "113.93");
+        PrefUtil.setLon(context , "22.54");
         Utils.setLocation(context);
 
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
@@ -247,20 +252,6 @@ public class SplashActivity extends FragmentActivity implements SplashView,TIMCa
         TlsBusiness.init(getApplicationContext());
         //设置刷新监听
         RefreshEvent.getInstance();
-//        String id =  TLSService.getInstance().getLastUserIdentifier();
-//        UserInfo.getInstance().setId(id);
-//        UserInfo.getInstance().setUserSig(TLSService.getInstance().getUserSig(id));
-
-//        UserInfo.getInstance().setId("123456789");
-//        UserInfo.getInstance().setUserSig("eJxlj0tvgkAYRff8CjLrpg4Mw2ATFzw09mWDUijdTIgz2i8iUBir1Pjfa2mb0vRuz8m9uUdN13UU3S0us*Wy3BWKq7aSSL-SEUYXv7CqQPBMcVKLf1AeKqglz1ZK1h00KKUmxn0HhCwUrODHMIlFbeYMe0ojNrzb*TKsc4HjmOSPAusO3o9D-9p3VT4d7J4TzwOax-X8-WY2jVQ4mexvw7kf78WYKSYKyyMuuI9tw6KBl2ThNhGQ50FgP7w*zWJ-kyZkEZQvqk2ztJWpvR6NepMKtvL7lGkNMbOY0aNvsm6gLDrBxAY9-8KfQdpJ*wCTJF1E");
-
-//        UserInfo.getInstance().setId("456789");
-//        UserInfo.getInstance().setUserSig("eJxlj8FOg0AQhu88BeFs7LLslq03hJKgSMXSqlwIlqU7ksIKW0s1vruKTcQ41*-7559513RdN5JweZ5vNs2*Vpk6Sm7oF7qBjLNfKCUUWa4yqy3*Qd5LaHmWl4q3AzQppRihsQMFrxWUcDIIndpsNuJdUWVDyc8C8pVmDFt-FNgO8Gb*6AaxlxISikni2usD8Mjzcejg6G3lxELUIihnLjRVM*dXah8HwomuX1gakEs8Sez7-nkRP3npqpU9bP3lLfOr7m63fljIAxJkVKlgx08fYYoxQ9PxQa*87aCpBwEjk5rYQt9jaB-aJ2noXEM_");
-
-//        UserInfo.getInstance().setId("123456");
-//        UserInfo.getInstance().setUserSig("eJxFkNtqg0AURf-F59LOJSNa6IMESUwUclHb*CKjM5FDvGWciGnpv9daQ1-X4rD3Pl9G6B*feduCSLlOqRLGq4GMpwnLoQUlU37WUo0YM8YIQg-bS9VBU4*CIMwwoQj9SxCy1nCGv0NCF8ycTQfFiAI3Wnor2AR5dbrsbR1En*XueHfD22rbD0XY05eYefzQ1vGyMP3EAdch2kmSjON15AabMtvhpMIfQ9fY*1g4XqBolfnXa3l4d09vjzBxSadxvy0WYz3LItSepYZKTrMIo9SkFps5z-PmVutU31s5feP7B3rVV3Y_");
-
-//        PrefJsonUtil.setProfile(context , "");
 
         if( !(TextUtils.isEmpty(PrefUtil.getToken(context))) ){
             UserInfo.getInstance().setUserSig(PrefJsonUtil.getProfile(context).getUserSig());

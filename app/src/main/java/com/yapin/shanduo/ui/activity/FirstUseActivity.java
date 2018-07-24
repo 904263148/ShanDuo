@@ -26,7 +26,7 @@ public class FirstUseActivity extends BaseActivity {
     @BindView(R.id.tv_skip)
     TextView tvSkip;
 
-    private int[] imgs = {R.drawable.icon_first_img1};
+    private int[] imgs = {R.drawable.icon_first_img1 , R.drawable.icon_first_img2};
 
     private Context context;
     private Activity activity;

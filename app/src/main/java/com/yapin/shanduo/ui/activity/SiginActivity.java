@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by dell on 2018/6/21.
  */
 
-public class SiginActivity extends BaseActivity implements SigninContract.View ,CheckcheckinContract.View ,
+public class SiginActivity extends RightSlidingActivity implements SigninContract.View ,CheckcheckinContract.View ,
         TaskContract.View{
 
     private SigninPresenter presenter;

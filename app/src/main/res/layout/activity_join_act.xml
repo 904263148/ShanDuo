@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/title_join"
-            android:textSize="15sp"
+            android:textSize="@dimen/egg_font_size_xxx"
             android:textColor="@color/home_title_color"
             />
 

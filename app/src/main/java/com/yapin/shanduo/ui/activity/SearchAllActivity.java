@@ -49,7 +49,6 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
     private UserProfAdapter adapter;
 
     private List<TokenInfo> list = new ArrayList<>();
-    private String type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,7 @@ public class SearchAllActivity extends RightSlidingActivity implements SearchHum
         context = ShanDuoPartyApplication.getContext();
         activity = this;
 
-        type = getIntent().getStringExtra("type");
+        String type = getIntent().getStringExtra("type");
 
         adapter = new UserProfAdapter(context ,R.layout.link_friend_item ,list);
         listView.setAdapter(adapter);
